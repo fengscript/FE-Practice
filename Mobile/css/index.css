@@ -1,0 +1,59 @@
+body{
+	background-image: url(../img/bg.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+	font-family: "微软雅黑","microsoft yahei";
+}
+#container{
+	display: flex;
+	justify-content: center;
+}
+.btn{
+	color: #FFFFFF;
+	width: 2.8rem;
+	height: 0.6rem;
+}
+
+.reg-area{
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 30%;
+}
+.msg-circle{
+
+	position: relative;
+	top: 0.6rem;
+	box-shadow: 1px 1px 5px #DDDDDD;
+	width: 1.2rem;
+	height: 1.2rem;
+	background: #FFFFFF;
+	border-radius: 0.6rem;
+}
+.msg-circle span{
+	color: #666666;
+	font-size: 0.27rem;
+}
+
+.msg-block{
+	flex-wrap: wrap;
+	background: #FFFFFF;	
+	width: 4.5rem;
+	height: 3.8rem;
+	border-radius: 0.1rem;
+}
+.msg-stu{
+	background: #3dbde8;
+	position: relative;
+	bottom: 0.27rem;
+	border-radius: 0.05rem;
+	font-size: 0.27rem;
+}
+.msg-bus{
+	background: #21b164;
+	position: relative;
+	top: 0.27rem;
+	border-radius: 0.05rem;
+	font-size: 0.27rem;
+}

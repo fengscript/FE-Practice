@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+<body>
+	
+	<ul id="ul">
+		<li class="li">1</li>
+		<li class="li">2</li>
+		<li class="li">3</li>
+		<li class="li">4</li>
+		<li class="li">5</li>
+		<li class="li">6</li>
+	</ul>
+	
+	<button id="delone">del one</button>
+	<button id="delall">del all</button>
+	<script type="text/javascript">
+	var aim = document.getElementById('ul');
+	
+	var lis = aim.getElementsByTagName('li')
+	
+	var son = aim.childNodes;
+	
+	var len = son.length;
+	
+	var btn1 = document.getElementById('delone');
+	var btn2 = document.getElementById('delall');
+	
+	btn1.addEventListener("click",delOne,false)
+	btn2.addEventListener("click",delAll,false)
+	
+
+	
+	
+	function delOne(){
+		if(aim.hasChildNodes()){
+			lis[0].parentNode.removeChild(lis[0])
+		}
+	}
+	
+	//因为有空白地方被当做文本节点存在，但是这样子一次删除两个，第一次click，还是没反应还没有搞清楚
+//		function delOne(){
+//			if(aim.hasChildNodes()){
+//				aim.removeChild(son);
+//				aim.removeChild(son[1]);
+//			}
+//		}
+	
+	
+	function delAll(){
+		for(var i=0; i<son.length ;i++){
+			aim.removeChild(son[0]);
+		}
+	}
+	
+//		function delAll(){
+//			for(var i=son.length;i>0;i--){
+//				aim.removeChild(son[0]);
+//			}
+//		}
+	
+	
+	</script>
+</body>
+</html>

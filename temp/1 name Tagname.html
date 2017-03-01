@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<code>
+			getElementsByName getElementsByTagName 获得的是一个 NodeList 对象
+			<br />
+			而 document.images 或 document.forms 返回的都是 HTMLCollection 对象
+		</code>
+		
+		
+		<br />
+		<input type="checkbox" name="a" value="1" />1
+		<input type="checkbox" name="a" value="2" />2
+		<input type="radio" name="a" value="3" />3
+		<input type="radio" name="a" value="4" />4
+		<br />
+		
+		<div class="a"></div>
+		<script type="text/javascript">
+			a = document.getElementsByName('a')
+			var  str = ' ';
+			for (var i=0; i < a.length; i++){
+				
+				str += a[i].tagName;
+				str +=' '
+			}
+			document.write(str)
+			
+			b = document.getElementsByTagName('input')
+			document.write('<br>'+b.length)
+			for(var j=0;j<b.length;j++){
+				document.write('<br>'+b[j].value)
+				
+			}
+		
+			var a = document.getElementsByClassName('a')[0];
+			a.textContent = 'aaaa'
+			
+		</script>
+	</body>
+</html>

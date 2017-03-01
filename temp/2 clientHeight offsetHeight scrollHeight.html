@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<style>
+			#div1{
+				margin-top: 50px;
+				width: 300px;
+				height: 1200px;
+				border: 1px solid red;
+				padding-top: 50px;
+				}
+			#div2{
+				width: 100px;
+				height: 100px;
+				border: 1px solid blue;
+				margin: 50px;
+				/*overflow: scroll;*/
+				word-wrap: break-word;
+			}
+			p{	
+				width: 200px;
+				height:200px;
+				position: fixed;
+				z-index: 999;
+				border: 1px solid blue;
+				background: red;
+				top: 0;
+				left: 400px;
+				
+			}
+		</style>
+		<div id="div1">
+			<span>111</span>
+			<div id="div2">
+				sadsasadsasadsasadsasadsasadsa
+				sadsasadsasadsasadsasadsasadsa
+				sadsasadsasadsasadsasadsasadsa
+				sadsasadsasadsasadsasadsasadsa
+				sadsasadsasadsasadsasadsasadsa
+				sadsasadsasadsasadsasadsasadsa
+				sadsasadsasadsasadsasadsasadsa
+				sadsasadsasadsasadsasadsasadsa
+				sadsasadsasadsasadsasadsasadsa
+			</div>
+		</div>
+		<p id = 'text'>111</p>
+		<script type="text/javascript">
+			var div1 = document.getElementsByTagName('div').item(0);
+			var p = document.getElementsByTagName('p').item(0);
+			var div2 = document.getElementsByTagName('div').item(1);
+//			var clientHeight = aim.clientHeight
+//				clientTop = aim.clientTop
+//				offsetHeiht = aim.offsetHeight
+//				scrollHeight = aim.scrollHeight
+//				scrollTop = aim.scrollTop;
+				function bind(aim){
+					var clientHeight = aim.clientHeight,
+						clientTop = aim.clientTop,
+						offsetHeiht = aim.offsetHeight,
+						scrollHeight = aim.scrollHeight,
+						scrollTop = aim.scrollTop,
+						pageXOffset = aim.pageXOffset,
+						pageYOffset = aim.pageYOffset;
+						// 这两个是event的属性
+//						offsetY = aim.offsetY,
+//						clientY = aim.clientY;
+						
+						aim.addEventListener('mousewheel',event,true)
+						
+						function event(e){
+							text.innerHTML = 'clientHeight='+clientHeight
+							+'<br>'+'offsetHeiht='+offsetHeiht
+							+'<br>'+'scrollHeight='+scrollHeight
+							+'<br>'+'scrollTop='+scrollTop
+							+'<br>'+'clientTop='+clientTop
+							+'<br>'+'pageXOffset='+pageXOffset
+							+'<br>'+'pageYOffset='+pageYOffset
+							+'<br>'+'offsetY='+e.offsetY
+							+'<br>'+'clientY='+e.clientY
+						}
+					}
+				bind(div2)
+				
+				
+			
+			
+			
+			
+			
+		</script>
+	</body>
+</html>

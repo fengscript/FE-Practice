@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<h3>
+			动态创建元素有2种方式：
+		</h3>
+		<h3>
+			1： document.creatElement 再 innerHTML填充
+			<br />
+			但是不适合原本里面有内容的元素
+		</h3>
+		<h3>
+			2： document.creatElement 再 creatTextNode
+			<br />
+			把TextNode appendChild到元素，再把创建的元素 append到文档
+		</h3>
+		<div id="box"></div>
+		
+		<div id="box2"></div>
+		
+		<script type="text/javascript">
+			var container = document.getElementById("box");
+			var container2 = document.getElementById("box2");
+			var box1 = document.createElement('div');
+			box1.innerHTML = '<h1> NEW ELE</h1>'
+			box1.textContent += " AND Add by textContent" 
+			container.appendChild(box1);
+			
+			var box2 = document.createElement('div');
+			var text = document.createTextNode('NEW ELE 2');
+			box2.appendChild(text);
+			container2.appendChild(box2)
+			
+			
+		</script>
+	</body>
+</html>

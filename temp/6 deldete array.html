@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		OLD
+		<div id="old"></div>
+		<br />
+		
+		NEW
+		<div id="new"></div>
+		
+		
+		<script type="text/javascript">
+			var arrayOld = [1,2,3,4,5,6,7,8];
+			
+			var arrayNew = arrayOld.splice(0,1)
+			var write1 = document.getElementById("old");
+			var write2 = document.getElementById("new");
+			
+			write1.textContent = arrayOld;
+			write2.textContent = arrayNew;
+			
+		</script>
+	</body>
+</html>

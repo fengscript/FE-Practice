@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<h3>
+			变量提升： 将函数声明提升到它所在作用域最开始的地方
+		</h3>
+		
+		
+		<script type="text/javascript">
+//		function fn(){
+//			document.write(a)	// not defined
+//
+//		}
+//		fn()
+//		
+		
+			function fn(){
+				document.write(a)	// not defined
+				var a = 'variable promote'
+				document.write('<br>')
+				document.write(a)
+			}
+			fn()
+			
+			
+			//上述代码按照以下逻辑运行
+//			function fn () {
+//			　　var a; // 变量提升，函数作用域范围内
+//			　　document.write(a)
+//			　　a = 'aaa';
+//			　　document.write(a)
+//			}
+//			fn();
+
+		</script>
+	</body>
+</html>

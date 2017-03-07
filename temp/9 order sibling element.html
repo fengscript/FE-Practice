@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+		<ul>
+			<li> item 1</li>
+			<li> item 2</li>
+			<li> item 3</li>
+			<li> item 4</li>
+			<li> item 5</li>
+		</ul>
+		
+		<ul>
+			<li> item a</li>
+			<li> item b</li>
+			<li> item c</li>
+			<li> item d</li>
+			<li> item e</li>
+		</ul>
+		
+		<script type="text/javascript">
+			function order(){
+				var parents = document.querySelector('ul');
+				if(parents.hasChildNodes()){
+					var len = parents.childNodes.length;
+					var arr = [];
+					for(var i=0; i<len;i++){
+						arr[i] = parents.childNodes[0]
+						parents.removeChild(parents.childNodes[0])
+					}
+					
+					for(var i = len-1;i>=0;i--){
+						parents.appendChild(arr[i])
+					}
+				}
+			}
+			
+			order()
+			
+			
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+<body>
+	<form action="">
+		<input type="text" name="aaa" id="text" value="123" />
+		<input type="button" name="button" id="text" value="GET VALUE" />
+	</form>
+	
+	<button id="all" onclick="modify()">获取所有input</button>
+	<script type="text/javascript">
+		var form = document.forms[0];
+		form.button.onclick=function(){
+			alert(form.aaa.value)
+		}
+		
+		
+		
+		function modify(){
+			var f = document.forms[0].elements;
+			for(var i=0;i<f.length;i++){
+				var b =f[i]
+				b.value=2
+			}
+		}
+		
+		
+	</script>
+</body>
+</html>

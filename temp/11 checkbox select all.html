@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<form action="">
+			<label for="selectAll">
+				
+				<input type="checkbox" name="selectAll" id="selectAll" value="" />
+				全选
+			</label>
+			<br />
+			<label for="A">
+				<input type="checkbox" name="A" id="A" value="" />
+				A
+			</label>
+			<label for="B">
+				<input type="checkbox" name="B" id="B" value="B" />
+				B
+			</label>
+			<label for="C">
+				<input type="checkbox" name="C" id="C" value="C" />
+				C
+			</label>
+		</form>
+
+		<script type="text/javascript">
+			var t = document.forms[0];  
+//document.forms[0]的方式不可靠
+//			var t = document.querySelectorAll('input[type=checkbox]')
+			var trigger = t.selectAll;
+			trigger.addEventListener('click',allToggle,false);
+			var aim = t.elements;
+			
+			function allToggle(){
+				if( this.tagName == 'INPUT' && this.type == 'checkbox' )
+				{
+					if(this.checked)selectAll(true)
+					else selectAll(false)
+				}
+			}
+			
+			function selectAll(flag){
+				for(var i = 0,len = aim.length; i < len; i++){
+					aim[i].checked = flag;
+				}
+			}
+	
+		</script>
+	</body>
+</html>

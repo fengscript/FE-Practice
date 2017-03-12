@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<style>
+			#con{
+				width: 200px;
+				height: 300px;
+				border: 1px solid red;
+				overflow-y: scroll;
+			}
+			#a{
+				width: 100px;
+				height: 500px;
+				border: 1px solid red;
+				background: green;
+			}
+		</style>
+		<div id="con">
+			<div id="a"></div>
+		</div>
+		
+		
+		<script type="text/javascript">
+			var a = document.getElementById("a");
+			var con = document.getElementById("con");
+			
+			con.scrollTop = 100
+		</script>
+	</body>
+</html>

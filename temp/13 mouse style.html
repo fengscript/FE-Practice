@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			div{width: 80px;height: 80px;border: 2px solid #00BCD4; margin: 10px;}
+		</style>
+	</head>
+	<body>
+		<div class="box" onmouseenter="mouse1()">1</div>
+		<div class="box" onmouseenter="mouse2()">2</div>
+		<div class="box" onmouseenter="mouse3()">3</div>
+		<div class="box" onmouseenter="mouse4()">4</div>
+		<div class="box" onmouseenter="mouse5()">5</div>
+		<div class="box" onmouseenter="mouse6()">6</div>
+		<script type="text/javascript">
+			function mouse1(){
+				var aim = document.getElementsByClassName('box')[0]
+//				var aim = document.querySelectorAll('.box')[0]
+				aim.style.cursor = "pointer"
+			}
+			function mouse2(){
+				var aim = document.getElementsByClassName('box')[1]
+				aim.style.cursor = "not-allowed"
+			}
+			function mouse3(){
+				var aim = document.getElementsByClassName('box')[2]
+				aim.style.cursor = "wait"
+			}
+			function mouse4(){
+				var aim = document.getElementsByClassName('box')[3]
+				aim.style.cursor = "move"
+			}
+			function mouse5(){
+				var aim = document.getElementsByClassName('box')[4]
+				aim.style.cursor = "crosshair"
+			}
+			function mouse6(){
+				var aim = document.getElementsByClassName('box')[5]
+				aim.style.cursor = "text"
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+	</head>
+	<body >
+		<style type="text/css">
+			div{
+				width: 200px;
+				height: 200px;
+				overflow-y: scroll;
+				margin: 20px;
+				border: 1px solid red;
+			}
+		</style>
+		<div id="inner" onscroll="scrollBottom()">
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+			阅读完才阔以点 + 倒计时<br />
+		</div>
+		
+		<input type="button" id="btn" value="注册（3）" disabled="disabled" ></input>
+		<script type="text/javascript">
+			var aim = document.getElementById('inner');
+			var btn = document.getElementById("btn")
+			
+			function scrollBottom(){
+//				if(aim.scrollTop + aim.offsetHeight > 300){
+				if(aim.scrollHeight - aim.scrollTop <= 200){
+					btn.disabled = false;
+					init();
+				}
+				
+				
+			}
+			
+
+			function init(){
+				var sec = 3;
+//				btn.style.cursor = 'not-allowed';
+				btn.disabled = true;
+				var timer = setInterval(function(){
+					sec--;
+					btn.value='注册（'+sec+'）';
+					if( sec == 0){
+						clearInterval(timer);
+						btn.disabled = false;
+						btn.value = '注册'
+					}
+				}, 1000)
+			}
+			
+	
+		</script>
+	</body>
+</html>

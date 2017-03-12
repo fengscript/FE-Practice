@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body style="text-align: center;" onload="init()">
+		<div style="height: 100px;overflow: hidden;" id="con">
+			<table align="left" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td id="con1" valign="top">
+						<img src="../../hover3D/20160314220420_49133/images/1.jpg"/>
+						<img src="../../hover3D/20160314220420_49133/images/2.jpg"/>
+						<img src="../../hover3D/20160314220420_49133/images/1.jpg"/>
+					</td>
+				</tr>
+				<tr>
+					<td id="con2" valign="top"></td>
+				</tr>
+			</table>
+		</div>
+		<div id="a"></div>
+ 
+ <script type="text/javascript">
+ 	var timer = null;
+ 	function init(){
+ 		var time = 30,
+			container = document.getElementById('con'),
+			d1 = document.getElementById("con1"),
+			d2 = document.getElementById("con2");
+ 		var a = document.getElementById("a");
+
+		d2.innerHTML = d1.innerHTML;
+		// d2.offsetHeight 是不变的 和 d1相等
+		// 于是，这里就相当于 一共竖排了6张图 3张为一组
+		function scroll(){
+			
+			if(d2.offsetHeight <= container.scrollTop){
+// 						container.scrollTop = 0
+				container.scrollTop -= d1.offsetHeight;
+// 						
+			}else{
+				container.scrollTop++;
+				// 开始给容器加 scrollTop，于是d1开始向上，
+				//加到跑完一个 d1的高度，容器的 scrollTop已经和 d1 d2的offsetHeight相等了，这里可以直接重置为0，但是可能有多跑的，于是，
+// 						container.scrollTop -= d1.offsetHeight，直接将con的scrollTop设为多跑的距离，即将 d1 往上拉了多跑的距离，就不会有闪现的感觉。
+				a.textContent =d1.offsetHeight+','+con.scrollTop
+			}
+		}
+		
+		timer = setInterval(scroll, time);
+		container.onmouseover = function(){
+			clearInterval(timer);
+		}
+		container.onmouseout = function(){
+			timer = setInterval(scroll, time);
+		}
+		
+		// 下面是只用容器包裹一层时候的实现
+		//只用一层时，因为 scrollTop 会跑到容器刚好容纳下 子元素时停止，所以，要再给scrollTop加上父容器的高度（可能还要考虑 border 滚动条宽、高），这样子父容器容纳不下子元素，才会一直加scrollTop
+		
+// 		function scroll(){
+// 			if(d1.offsetHeight <= container.scrollTop+100){
+// 				container.scrollTop = 0
+// 于是，加到跟   子元素的offsetHeight = 父元素 scroollTop+父元素clientHeight时，子元素在父元素内刚好滚动完，这时候再重置 父元素scrollTop
+// 但是这时候因为只有一层,所以直接重置,画面会闪一下,这就是为什么用了两层吧?
+//
+// 			}else{
+// 				container.scrollTop++;，
+// 				a.textContent = d1.offsetHeight+','+con.scrollTop
+// 			}
+// 		}
+ 				
+ 	}
+    
+ </script>
+ 
+
+	</body>
+</html>

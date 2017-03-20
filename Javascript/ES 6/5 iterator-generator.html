@@ -9,9 +9,15 @@
 <body>
 
 
-
   <script type="text/javascript">
-    
+  function* foo(x) {
+      yield x + 1;
+      yield x + 2;
+      return x + 3;
+  }
+  var a = foo(1)
+
+  document.write(a.next())
   </script>
 </body>
 </html>

@@ -8,6 +8,9 @@
 </head>
 <body>
   <canvas id="canvas" width="300px" height="300px"></canvas>
+  <span id="time"></span>
+  <br>
+  <span class="coord"></span>
   <script>
     var aim  = document.getElementById('canvas');
     var ctx = aim.getContext('2d');
@@ -15,6 +18,7 @@
         h = time.getHours(),
         m = time.getMinutes(),
         s = time.getSeconds();
+    var PI = Math.PI;
 // document.write()
 // function drawSenondLine(){
 //Math.PI/30*s
@@ -22,19 +26,34 @@
     ctx.beginPath();
     // ctx.moveTo(150,150);
     ctx.arc(150,150,100,0,Math.PI*2,true);
+    ctx.stroke();
+    ctx.moveTo(150,150)
 
+
+
+    // document.write(x,y);
+
+
+  
     setInterval(function(){
-      console.log('1')
+      if(s < 60){s++}else{s = 0}
+    console.log(s)
+    var angle = (s/60)*2*PI;
+    var r = 150;
+    var x,y;
+    x = Math.cos(angle) * r;
+    y = Math.sin(angle) * r;
+    
     ctx.moveTo(150,150);
-    ctx.lineTo(150, Math.PI/30*s
-);
+    ctx.lineTo(x,y);
+    // ctx.stroke()
     ctx.moveTo(150,150);
+
     }, 1000)
     // ctx.moveTo(150,150);
     // ctx.lineTo(150,50);
 
-
-    ctx.stroke();
+    
  
   </script>
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas id="canvas" width="300px" height="300px"></canvas>
+  <script>
+    var aim  = document.getElementById('canvas');
+    var ctx = aim.getContext('2d');
+    var time = new Date(),
+        h = time.getHours(),
+        m = time.getMinutes(),
+        s = time.getSeconds();
+// document.write()
+// function drawSenondLine(){
+//Math.PI/30*s
+// }
+    ctx.beginPath();
+    // ctx.moveTo(150,150);
+    ctx.arc(150,150,100,0,Math.PI*2,true);
+
+    setInterval(function(){
+      console.log('1')
+    ctx.moveTo(150,150);
+    ctx.lineTo(150, Math.PI/30*s
+);
+    ctx.moveTo(150,150);
+    }, 1000)
+    // ctx.moveTo(150,150);
+    // ctx.lineTo(150,50);
+
+
+    ctx.stroke();
+ 
+  </script>
+
+</body>
+</html>

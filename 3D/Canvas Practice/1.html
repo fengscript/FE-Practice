@@ -18,43 +18,49 @@
         h = time.getHours(),
         m = time.getMinutes(),
         s = time.getSeconds();
+				s+=1;
     var PI = Math.PI;
-// document.write()
-// function drawSenondLine(){
-//Math.PI/30*s
-// }
+
     ctx.beginPath();
-    // ctx.moveTo(150,150);
     ctx.arc(150,150,100,0,Math.PI*2,true);
     ctx.stroke();
     ctx.moveTo(150,150)
+		ctx.lineTo(150,0);
+		// ctx.stroke()
+
+
+    document.write(Math.sin(180*(PI/180)));
 
 
 
-    // document.write(x,y);
-
-
-  
     setInterval(function(){
-      if(s < 60){s++}else{s = 0}
+
+      if(s < 60){
+				s++
+			}else{
+				s = 0
+			}
     console.log(s)
-    var angle = (s/60)*2*PI;
-    var r = 150;
+    var angle = ((s+1)*60);
+		var radian = angle*PI/180;
+    var r = 100;
     var x,y;
-    x = Math.cos(angle) * r;
-    y = Math.sin(angle) * r;
-    
+		if(s<30)r=r;
+		if(s>30)r=-r;
+    x = Math.cos(radian) * r;
+    y = Math.sin(radian) * r;
+
     ctx.moveTo(150,150);
     ctx.lineTo(x,y);
-    // ctx.stroke()
+    ctx.stroke()
     ctx.moveTo(150,150);
-
+console.log(x,y)
     }, 1000)
     // ctx.moveTo(150,150);
     // ctx.lineTo(150,50);
 
-    
- 
+
+
   </script>
 
 </body>

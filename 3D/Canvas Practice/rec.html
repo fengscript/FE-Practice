@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas id="canvas" height="300px" width="300px"></canvas>
+  <input type="range" min="0" max="30" name="" value="">
+  <span class="text"></span>
+<script>
+var ctx = document.getElementById('canvas').getContext('2d');
+var range = document.querySelector('input')
+var text = document.querySelector('.text')
+
+
+range.addEventListener('change', change);
+function change (){
+ctx.beginPath();
+for(var i=1;i<range.value;i++){
+ctx.moveTo(0, i*10)
+ctx.lineTo(300, i*10);
+ctx.moveTo(i*10, 0)
+ctx.lineTo(i*10, 300)
+}
+ctx.stroke();
+
+
+}
+
+
+
+// ctx.moveTo(0, 10)
+// ctx.lineTo(300,10);
+// ctx.moveTo(0, 20)
+// ctx.lineTo(300,20);
+// ctx.moveTo(0, 30)
+// ctx.lineTo(300,30);
+// ctx.stroke()
+
+
+
+// for(var j=0;j<100;i+=10){
+//   ctx.lineTo(100, j);
+//   ctx.moveTo(0,0);
+// }
+
+
+</script>
+
+</body>
+</html>

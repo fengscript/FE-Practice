@@ -1,10 +1,10 @@
 import pickle
-shoplistfile='shoplist.data'
+storePractice='storePractice.data'
 shoplist=['apple', 'mango', 'carrot']
-f =	open(shoplistfile,'wb')
+f =	open(storePractice,'wb')
 pickle.dump(shoplist, f)
 f.close()
 del	shoplist
-f=open(shoplistfile, 'rb')
+f=open(storePractice, 'rb')
 storedlist=pickle.load(f)
 print(storedlist)

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+函数引用有 context 时，隐式绑定会把函数调用中的 this 绑定到这个 context
+
+但是当把引用又传递了一层时，会丢失隐式绑定，使得 this 默认的指向全局对象
+
+参数传递时候的隐式赋值也会丢失隐式绑定
+<script type="text/javascript">
+  function foo() {
+    console.log(this.a)
+  }
+  var obj = {
+    a:2,
+    foo:foo
+  }
+
+obj.foo()
+
+// 隐式绑定丢失
+
+function foo2(){
+  console.log(this.a2)
+}
+
+var obj2 = {
+  a2:2,
+  foo2:foo2
+}
+var bar = obj2.foo2;
+
+// obj2.foo2 是一个引用，但是引用的是 foo2 函数本身，而不是 obj2对象的属性
+var a2 = '我是全局对象的属性'
+
+bar()
+
+// 参数传递时候的隐式赋值
+
+function foo3() {
+  console.log(this.a3)
+}
+
+function doFoo(fn){
+  fn()
+}
+
+var obj3={
+  a3:2,
+  foo3:foo3
+}
+var a3 = '我也是全局对象的属性'
+doFoo( obj3.foo3 )
+
+</script>
+
+</body>
+</html>

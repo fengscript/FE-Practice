@@ -113,7 +113,7 @@ var ground = BABYLON.Mesh.CreateGround("ground", 6, 6, 2, scene);
 
 ### Vector3
 `BABYLON.Vector3(xValue, yValue, zValue)` 参数为浮点类型，可正负
-用来设置/存储:
+用来设置/存储:4
 - 网格,光源活着相机对象的位置(.position)属性的值
 - 网格对象的旋转(.rotation)属性的值
 - 网格对象的缩放(.scaling)属性的值
@@ -133,3 +133,8 @@ box.rotation = new BABYLON.Vector3(Math.PI/4, 0, 0);
 
 ## Material
 
+# Tips
+
+```
+camera.attachControl(canvas, true);
+```

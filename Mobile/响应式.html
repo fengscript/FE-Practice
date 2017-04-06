@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style media="screen">
+		html{font-size: 20px;}
+		body{margin: 0;padding: 0;}
+		footer, header{width: 100%;}
+		header{margin:0 auto;}
+		.clear{clear: both;}
+	  select{-webkit-appearance: button;font-size: 1rem;}
+		a{color:inherit;}
+		ul{list-style-type: none;}
+
+		.small-menu{display: none;float: right;}
+
+
+		.logo{max-width: 100%}
+		/*.logo-con{width: 60%;}*/
+		/*query*/
+		.content{width: 100%;}
+		.content div{
+			width: 25%;
+    	float: left;
+    	margin-left: 5%;
+		}
+		@media screen and (min-width:1441px) {
+			.logo-con{width: 80%;float: left;}
+			.large-menu {width: 15%;float: right;}
+		}
+		@media screen and (min-width:1025px) and (max-width:1440px) {
+
+			.large-menu li{float: left;margin-left: 2rem;}
+
+		}
+		@media screen and (min-width:751px) and (max-width:1024px) {
+			.large-menu {text-align: center;}
+		}
+		@media screen and (max-width:750px){
+			.large-menu {display: none}
+			.small-menu{display: block}
+			.content div{
+				width: 100%;
+				text-align: center;
+	    	margin-left: 5%;
+			}
+		}
+	</style>
+</head>
+<body>
+<header>
+
+	<div class="small-menu">
+		<form>
+			<select class="" name="">
+				<option class="" value="option">&#9776; List</option>
+				<optgroup label="Javascript">
+					<option class="" value="option">React</option>
+					<option class="" value="option">Vue</option>
+				</optgroup>
+				<optgroup label="Css">
+					<option class="" value="option">Bootstrap</option>
+					<option class="" value="option">Foundation</option>
+				</optgroup>
+			</select>
+		</form>
+	</div>
+
+		<ul class="large-menu">
+			<li><strong>Javascript:</strong></li>
+			<li><a href="#">React</a></li>
+			<li><a href="#">Vue</a></li>
+			<li><strong>Css:</strong></li>
+			<li><a href="#">Bootstrap</a></li>
+			<li><a href="#">Foundation</a></li>
+		</ul>
+
+	<div class="logo-con">
+		<img class='logo' src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1491475072528&di=2180c9bba4dccdaf8c334fce3b0e3514&imgtype=0&src=http%3A%2F%2Fbizhi.zhuoku.com%2F2010%2F05%2F11%2FUbuntu%2F1920x1200.png" alt="">
+	</div>
+
+</header>
+<div class="clear"></div>
+<section class="content">
+<div class="raw1">
+	<p>
+		春花秋月何时了<br>
+		往事知多少？<br>
+		小楼昨夜又东风<br>
+		故国不堪回首月明中<br>
+		雕栏玉砌应犹在<br>
+		只是朱颜改<br>
+		问君能有几多愁？<br>
+		恰似一江春水向东流<br>
+	</p>
+</div>
+<div class="raw2">
+	<p>
+		春花秋月何时了<br>
+		往事知多少？<br>
+		小楼昨夜又东风<br>
+		故国不堪回首月明中<br>
+		雕栏玉砌应犹在<br>
+		只是朱颜改<br>
+		问君能有几多愁？<br>
+		恰似一江春水向东流<br>
+	</p>
+</div>
+<div class="raw3">
+	<p>
+		春花秋月何时了<br>
+		往事知多少？<br>
+		小楼昨夜又东风<br>
+		故国不堪回首月明中<br>
+		雕栏玉砌应犹在<br>
+		只是朱颜改<br>
+		问君能有几多愁？<br>
+		恰似一江春水向东流<br>
+	</p>
+</div>
+</section>
+
+</body>
+</html>

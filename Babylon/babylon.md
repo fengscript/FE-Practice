@@ -51,3 +51,22 @@ var disc = BABYLON.Mesh.CreateDisc("disc", 5, 30, scene);
 10. ribbon
 11. tube
 12. ground
+
+### Vector3
+`BABYLON.Vector3(xValue, yValue, zValue)` 参数为浮点类型，可正负
+用来设置/存储:
+- 网格,光源活着相机对象的位置(.position)属性的值
+- 网格对象的旋转(.rotation)属性的值
+- 网格对象的缩放(.scaling)属性的值
+- 光源对象的方向(.direction)属性的值
+
+使用旋转时，用弧度单位：
+```
+box.rotation = new BABYLON.Vector3(Math.PI/4, 0, 0);
+//旋转 约 45度
+// Math.PI/2  = 90度  
+```
+
+### Color3
+`BABYLON.Color3(红, 绿, 蓝)`
+采用rgb颜色

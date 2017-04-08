@@ -7,28 +7,21 @@
   <title>Document</title>
 </head>
 <body>
-
-
-
   <script type="text/javascript">
-  function foo() {
-    console.log(this.a)
-  }
-var obj = {
-a:2,
-foo:foo
+
+arr = ['I','Like','javascript']
+
+
+
+
+for(var i in arr){
+  console.log(i)
 }
-var obj2 = {
-a:3
-}
 
-  var bar = obj.foo;
 
-  var a='全局'
-
-bar.bind(obj)
-bar()// 还是输出了全局
   </script>
+
+
 
 </body>
 </html>

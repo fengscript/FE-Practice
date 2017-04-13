@@ -1,24 +1,46 @@
 # previous
 ## 4种光源
 1. PointLight
+```
+PointLight(name, position, scene)
+```
+
 2. SpotLight
+```
+SpotLight(name, position, direction, angle, exponent, scene)
+```
+
+
 3. DirectionalLight
 4. HemisphericLight
 
 光源不是必需的，材料可以自发光
 ## 3种相机
 1. ArcRotateCamera
+```JS
+ArcRotateCamera(name, alpha, beta, radius, target, scene)
+```
+alpha:Alpha of the ArcRotateCamera (Rotation angle around Y axis)
+
+beta:Beta of the ArcRotateCamera (Rotation angle around X axis)
+
 2. FreeCamera
 3. TouchCamera
 
+TargetCamera
+```
+TargetCamera(name, position, scene)
+```
+
 ## basic object
 1. box
-   BABYLON.Mesh.CreateBox()
+   BABYLON.Mesh.CreateBox(name, size, scene, updatable, sideOrientation)
 ```
 var box = BABYLON.Mesh.CreateBox('box1', 2, scene)
 ```
 
 2. sphere
+CreateSphere(name, segments, diameter, scene, updatable, sideOrientation)
 ```
 var sphere = BABYLON.Mesh.CreateSphere("sphere", 10.0, 10.0, 场景, false,  BABYLON.Mesh.DEFAULTSIDE);
 ```
@@ -29,6 +51,7 @@ var sphere = BABYLON.Mesh.CreateSphere("sphere", 10.0, 10.0, scene);
 ```
 
 3. plane
+CreatePlane(name, size, scene, updatable, sideOrientation) 
 ```
 var plane = BABYLON.Mesh.CreatePlane("plane", 10.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
 ```
@@ -38,6 +61,7 @@ var plane = BABYLON.Mesh.CreatePlane("plane", 10.0, scene);
 ```
 4. disc
    规则多边形
+   CreateDisc(name, radius, tessellation, scene, updatable, sideOrientation) 
 ```
 var disc = BABYLON.Mesh.CreateDisc("disc", 5, 30, scene, false, BABYLON.Mesh.DEFAULTSIDE);
 //名字, 半径, 边数, 场景, 可更新否和可选的朝向
@@ -45,6 +69,7 @@ var disc = BABYLON.Mesh.CreateDisc("disc", 5, 30, scene);
 ```
 根据边数不同可以产生各种多边形
 5. cylinder
+CreateCylinder(name, height, diameterTop, diameterBottom, tessellation, subdivisions, scene, updatable, sideOrientation) 
 ```
 var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 3, 3, 3, 6, 1, 场景, false, BABYLON.Mesh.DEFAULTSIDE);
 //名称, 高度, 顶直径, 底直径, 边数, 高向细分度, 场景, 可更新否和可选的朝向
@@ -114,7 +139,7 @@ var ground = BABYLON.Mesh.CreateGround("ground", 6, 6, 2, scene);
 ### Vector3
 `BABYLON.Vector3(xValue, yValue, zValue)` 参数为浮点类型，可正负
 用来设置/存储:4
-- 网格,光源活着相机对象的位置(.position)属性的值
+- 网格,光源或者相机对象的位置(.position)属性的值
 - 网格对象的旋转(.rotation)属性的值
 - 网格对象的缩放(.scaling)属性的值
 - 光源对象的方向(.direction)属性的值
@@ -133,8 +158,74 @@ box.rotation = new BABYLON.Vector3(Math.PI/4, 0, 0);
 
 ## Material
 
-# Tips
 
+
+
+
+
+
+
+
+
+
+# Tips
+## 1 预处理
+### 对文档、容器做处理：
+```css
+html, body{
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0
+}
+#box{
+width: 100%;
+height: 100%;
+touch-action: none;
+
+}
+```
+
+### 渲染过程
+1. 获取canvas，初始化引擎
+new BABYLON.Engine(canvas, antialies, options, adaptToDeviceRatio);
+```JS
+  var engine = new BABYLON.Engine(canvas, true);
+```
+
+2. 创建场景类
+```js
+var createScene = function(){
+    var scene = new BABYLON.Scene(engine);
+    // increament
+    // ...
+    camera.setTarget(BABYLON.Vector3.Zero());
+
+    camera.attachControl(canvas, true);
+    return scene;
+}
+```
+
+3. 实例化场景
+```JS
+var scene = createScene();
+```
+
+4. 渲染
+```JS
+engine.runRenderLoop(function () {
+  scene.render()
+})
+
+window.addEventListener('resize', function () {
+  engine.resize()
+})
+
+```
+
+## 其他
+可触控
 ```
 camera.attachControl(canvas, true);
 ```

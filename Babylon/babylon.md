@@ -1,4 +1,7 @@
 # previous
+## Vector3
+坐标采用 左手笛卡尔坐标，大拇指指向自己为x正方向
+
 ## 4种光源
 1. PointLight
 ```
@@ -157,10 +160,24 @@ box.rotation = new BABYLON.Vector3(Math.PI/4, 0, 0);
 采用rgb颜色
 
 ## Material
+1. create
+```
+var materialName = new BABYLON.StandardMaterial('texture1', scene);
+```
 
+2. add material
+```js
+box.material = materialName;
+materialName.alpha = 0.5;
+```
 
-
-
+3. diffuse
+材质被一个光源点亮, 散射光就是材质对象的天然色
+```js
+materialName.diffuseColor = new BABYLON.Color3(1.0, 0.2, 0.7);
+//或者纹理
+materialName.diffuseTexture = new BABYLON.Texture("grass.png", scene);
+```
 
 
 
@@ -223,6 +240,13 @@ window.addEventListener('resize', function () {
 })
 
 ```
+
+## 常用属性
+### position
+
+
+
+
 
 ## 其他
 可触控

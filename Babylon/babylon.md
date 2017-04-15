@@ -159,7 +159,9 @@ box.rotation = new BABYLON.Vector3(Math.PI/4, 0, 0);
 `BABYLON.Color3(红, 绿, 蓝)`
 采用rgb颜色
 
+
 ## Material
+### Add Material Texture
 1. create
 ```
 var materialName = new BABYLON.StandardMaterial('texture1', scene);
@@ -253,3 +255,10 @@ window.addEventListener('resize', function () {
 ```
 camera.attachControl(canvas, true);
 ```
+
+### zoom speed
+```JS
+camera.wheelPrecision //越大越慢
+camera.pinchPrecision
+camera.zoomOnFactor
+JS

@@ -1,8 +1,13 @@
-# previous
+# 1 previous
 ## Vector3
 坐标采用 左手笛卡尔坐标，大拇指指向自己为x正方向
 
 ## 4种光源
+
+```js
+var light = new Babylon.HemisphericLight()
+```
+
 1. PointLight
 ```
 PointLight(name, position, scene)
@@ -13,9 +18,11 @@ PointLight(name, position, scene)
 SpotLight(name, position, direction, angle, exponent, scene)
 ```
 
-
 3. DirectionalLight
 4. HemisphericLight
+```js
+new HemisphericLight(name, direction, scene)
+```
 
 光源不是必需的，材料可以自发光
 ## 3种相机
@@ -35,7 +42,12 @@ TargetCamera
 TargetCamera(name, position, scene)
 ```
 
-## basic object
+# 2 basic object
+
+```js
+var obj = new Babylon.Mesh.CreateSth()
+```
+
 1. box
    BABYLON.Mesh.CreateBox(name, size, scene, updatable, sideOrientation)
 ```
@@ -129,6 +141,7 @@ var ground = BABYLON.Mesh.CreateGround("ground", 6, 6, 2, scene);
 名称, 宽度, 纵深, 子分段数, 场景
 ```
 
+## other properties
 ### 可更新
 这个参数, 在每个网格创建方法里出现，告知该网格在创建后是否可以被更新. 如果为 false (默认值), 则该网格数仅仅往GPU传送一次. 如果为 true, 则该网格数据可以被重新计算并在每帧刷新时传递给GPU.
 
@@ -159,9 +172,31 @@ box.rotation = new BABYLON.Vector3(Math.PI/4, 0, 0);
 `BABYLON.Color3(红, 绿, 蓝)`
 采用rgb颜色
 
+## object handle
+1. position
+```JS
+obj.position.x = 20； 
+```
 
-## Material
-### Add Material Texture
+2. rotation
+```JS
+obj.rotation.x = Math.PI / 6;
+```
+
+3. scaling
+```JS
+obj.scaling.x = 2;
+obj.scaling.y = 2;
+```
+
+4. move and related
+```JS
+box2.parent = box3;
+box2.position.z = -10;
+```
+
+# 3 Material
+## 3.1 Add Material Texture
 1. create
 ```
 var materialName = new BABYLON.StandardMaterial('texture1', scene);
@@ -170,16 +205,124 @@ var materialName = new BABYLON.StandardMaterial('texture1', scene);
 2. add material
 ```js
 box.material = materialName;
+```
+## 3.2 Handle Texture
+### 1. transparency
+通过 alpha设置
+```JS
 materialName.alpha = 0.5;
 ```
+使用了 alpha，需要声明
+```JS
+materialSphere1.diffuseTexture.hasAlpha = true;
+```
+这种情况下, alpha被用作alpha测试
 
-3. diffuse
-材质被一个光源点亮, 散射光就是材质对象的天然色
+### 2. diffuse 散射
+材质被一个光源照亮, 散射光就是材质对象的天然色
 ```js
 materialName.diffuseColor = new BABYLON.Color3(1.0, 0.2, 0.7);
 //或者纹理
 materialName.diffuseTexture = new BABYLON.Texture("grass.png", scene);
 ```
+
+可以对材质进行平移处理：
+```JS
+materialName.diffuseTexture.uOffset = 1.5;
+materialName.diffuseTexture.vOffset = 1.5;
+```
+
+平铺和重复
+```js
+materialName.diffuseTexture.uScale = 5.0;
+materialName.diffuseTexture.vScale = 5.0;
+```
+
+
+### 3. emissive 放射光
+放射光决定了对象自身的颜色
+```JS
+materialName.emissiveColor = new BABYLON.Color3(1, .2, .7);
+```
+
+或者，指定一个纹理
+```JS
+materialName.emissiveTexture = new BABYLON.Texture("grass.png", scene);
+```
+
+### 4. ambient 环境光
+环境光可以看做漫反射的第二层
+
+### 5. specular
+镜面光体现了一个光滑平面对光源的反射色，同上
+
+镜面反射光的大小/强度可以通过specularPower属性来设定:
+
+```JS
+materialSphere1.specularPower = 32;
+```
+
+当使用纹理时能够设置 materialName.useGlossinessFromSpecularMapAlpha 为真, 从而使用镜面映射alpha的光泽度
+
+默认情况下, 镜面光和alpha不相干, 但是可以设置materialSphere1.useSpecularOverAlpha 为真, 从而使alpha和镜面光成反比.
+
+
+### 6.backFaceCulling 背面剔除
+```JS
+materialSphere1.backFaceCulling = false;
+```
+这个渲染速度优化的技术决定了一个图形对象上的多边形是否可见. 如果它设置为TRUE或布尔1, 则Babylon引擎不会渲染使用了该材质的网格对象的隐藏面. 默认是设置为TRUE
+
+### 7. wireframe 线框
+```JS
+materialSphere1.wireframe = true;
+```
+
+# 4 Camera
+>In any Babylon.js scene, you can create as many cameras as you wish, but only one camera can be active at a time (unless you are using multi-viewports).
+
+```js
+var camera = new Babylon.FreeCamera()
+```
+
+## 4.1 FreeCamera 
+> FreeCamera does not automatically aim at a target, but after constructing a FreeCamera, you can easily set it to lock-on to a mesh or to a vector3 position
+
+>Like many of our cameras, you can also add control keys, or reassign them to other keys, such as keys 'w', 'a', 's', and 'd'.
+
+```JS
+new FreeCamera(name, position, scene)
+```
+### Properties
+1. position
+2. rotation
+3. speed
+4. inertia
+5. fov
+
+### Members
+1. ellipsoid : Vector3
+
+2. checkCollisions : boolean
+
+3. applyGravity : boolean
+
+4. inputs : FreeCameraInputsManager
+
+5. angularSensibility : number
+
+6. keysUp : number[]
+keysDown,keysLeft,keysRight 
+7. onCollide : (collidedMesh: AbstractMesh) => void
+
+### Methods
+1. attachControl(element, noPreventDefault) → void
+
+2. detachControl(element) → void
+
+3. dispose() → void
+
+4. getTypeName() → string
 
 
 
@@ -244,7 +387,7 @@ window.addEventListener('resize', function () {
 ```
 
 ## 常用属性
-### position
+
 
 
 

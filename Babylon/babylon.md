@@ -1,6 +1,6 @@
 # 1 previous
 ## Vector3
-坐标采用 左手笛卡尔坐标，大拇指指向自己为x正方向
+坐标采用 左手笛卡尔坐标
 
 ## 4种光源
 
@@ -25,7 +25,7 @@ new HemisphericLight(name, direction, scene)
 ```
 
 光源不是必需的，材料可以自发光
-## 3种相机
+## 3种主要相机
 1. ArcRotateCamera
 ```JS
 ArcRotateCamera(name, alpha, beta, radius, target, scene)
@@ -325,9 +325,189 @@ keysDown,keysLeft,keysRight
 4. getTypeName() → string
 
 
+## 4.2 ArcRotateCamera
+```JS
+var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), scene);
+//name, alpha, beta, radius, target, scene
+//alpha (in radians), beta (in radians), and radius (a number)
+```
+
+> By default, (with no .alpha and .beta values set), ArcRotateCameras aim in a +x direction. Ironically, there is no rotation property on an ArcRotateCamera, but there is a position property. Because the orientation of an ArcRotateCamera is relative to its target setting, it is wise to use a handy method called setPosition() to set the camera position.
+
+或者，创建一个空目标相机，再用`setPosition`指定瞄准目标：
+```JS
+ var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 0, BABYLON.Vector3.Zero(), scene);
+camera.setPosition(new BABYLON.Vector3(0, 15, -30));
+ ```
+> When we use that useful setPosition() method, we need not concern ourselves with alpha, beta, and radius. We just make sure we have a target property set ( which we did in the constructor with new BABYLON.Vector3.Zero() ), and then use setPosition() to put our camera exactly where we want it, in 3D space. The handy setPosition() method does the rest. Easy.
+
+在渲染循环中可以对激活相机设置动作进行动画：
+```JS
+var scene = createScene();
+engine.runRenderLoop(function () {
+  scene.activeCamera.alpha += .01;
+  scene.render()
+})
+```
+
+Ctrl + MouseLeft 可以平移相机，也可以设置为右键：
+>setting useCtrlForPanning to false in the attachControl call
+```JS
+camera.attachControl(canvas, noPreventDefault, useCtrlForPanning);
+```
+或者禁止掉
+```JS
+scene.activeCamera.panningSensibility = 0;
+```
+
+## 4.3 其他相机
+> 将被 Universal Camera 代替
+
+### 4.3.1 TouchCamera
+> TouchCamera is a camera that works closely with hand.js, and opens Babylon.js to the modern technology of DOM Gesture Events.
+
+```js
+var camera = new BABYLON.TouchCamera("TouchCamera", new BABYLON.Vector3(0, 1, -15), scene);
+//name, position, scene
+```
+以 FreeCamera 为基础，属性和方法继承自自有相机
+
+### 4.3.2 GamepadCamera
+>This camera works closely with Babylon.js Gamepad, Gamepads, and Xbox360Pad classes. More will be written about that, soon, and nearby.
+```js
+// Parameters : name, position, scene
+var camera = new BABYLON.GamepadCamera("Camera", new BABYLON.Vector3(0, 15, -45), scene);
+```
+
+### 4.3.3 DeviceOrientationCamera
+>The DeviceOrientationCamera is a camera that is specifically designed to react-to device orientation events. Device orientation is when you tilt your modern mobile device forward or back, left or right, to control cameras or other scene items
+
+```js
+// Parameters : name, position, scene
+var camera = new BABYLON.DeviceOrientationCamera("DevOr_camera", new BABYLON.Vector3(0, 1, -15), scene);
+```
+除了继承 自由相机的属性和方法外，还有两个重要的独有属性：
+- angularSensibility 
+- moveSensibility
+
+### 4.3.4 FollowCamera 
+
+>This camera is specifically designed to follow any scene item with a .position... as it moves. It can be set to follow from the rear, from the front, or from any angle. Its follow distance and movement speeds can be set, as well.
+
+绑定到一个 obj 或者一个 position `camera.lockedTarget`
+```JS
+// Parameters : name, position, scene
+var camera = new BABYLON.FollowCamera("FollowCam", new BABYLON.Vector3(0, 15, -45), scene);
+camera.lockedTarget = myMeshObject; // target any mesh or object with a "position" Vector3
+scene.activeCamera = camera;
+```
+其他有用属性：
+```JS
+camera.radius = 30; // how far from the object to follow
+camera.heightOffset = 8; // how high above the object to place the camera
+camera.rotationOffset = 180; // the viewing angle
+camera.cameraAcceleration = 0.05 // how fast to move
+camera.maxCameraSpeed = 20 // speed limit
+```
+
+### 4.3.5 VirtualJoysticksCamera
+```js
+// Parameters : name, position, scene
+var camera = new BABYLON.VirtualJoysticksCamera("VJ_camera", new BABYLON.Vector3(0, 1, -15), scene);
+```
+>The VirtualJoysticksCamera also uses a FreeCamera as its basis, so all the properties and methods of our familiar FreeCamera... are found on our VirtualJoysticksCamera as well.
 
 
 
+### 4.3.6 AnaglyphCamera 
+>The AnaglyphCamera is for use with red and cyan 3D glasses. It is very new to Babylon.js, and to be honest quite sexy. It uses post-processing filtering techniques. There are actually two types of AnaglyphCamera
+
+- AnaglyphArcRotateCamera
+```js
+// Parameters : name, alpha, beta, radius, target (in Vector3), eyeSpace (in degrees), scene
+var camera = new BABYLON.AnaglyphArcRotateCamera("aar_cam", -Math.PI/2, Math.PI/4, 20, new BABYLON.Vector3.Zero(), 0.033, scene);
+```
+
+- AnaglyphFreeCamera
+```JS
+// Parameters : name, position (in Vector3), eyeSpace (in degrees), scene
+var camera = new BABYLON.AnaglyphFreeCamera("af_cam", new BABYLON.Vector3(0, 1, -15), 0.033, scene);
+```
+
+### 4.3.7 VRDeviceOrientationFreeCamera 
+```js
+var camera = new BABYLON.VRDeviceOrientationFreeCamera ("Camera", new BABYLON.Vector3 (-6.7, 1.2, -1.3), scene, 0);
+```
+
+
+
+### 4.3.8 WebVRFreeCamera 
+```js
+// Parameters : name, position, scene
+var camera = new BABYLON.WebVRFreeCamera("WVR", new BABYLON.Vector3(0, 1, -15), scene);
+```
+### 4.3.9 Universal Camera 
+>the Universal Camera is now the default camera used by Babylon.js if nothing is specified
+
+
+## 4.4 Input
+>control the camera using keyboard/mouse on a desktop machine, using a finger/touch on a mobile device and a gamepad controller on Xbox One
+
+```js
+// First, set the scene's activeCamera... to be YOUR camera.
+scene.activeCamera = myCamera;
+// Then attach the activeCamera to the canvas.
+scene.activeCamera.attachControl(canvas, noPreventDefault);
+```
+简化：
+```js
+myCamera.attachControl(canvas);
+```
+>By default noPreventDefault is set to false
+
+
+# 5 lights
+## 5.1 Activating/Deactivating Lights
+- ` setEnabled(true/false) `
+- `intensity `
+
+
+## 5.2 types
+### 5.2.1 PointLight
+Properties:
+- diffuse :漫反射
+- spectular:反射颜色
+
+```js
+var light0 = new BABYLON.PointLight('pointlight', new BABYLON.Vector3(1, 10, -10), scene)
+```
+
+### 5.2.2 DirectionalLight
+```js
+var light0 = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
+// diffuse spectular
+```
+
+### 5.2.3 SpotLight
+```js
+//SpotLight(name, position, direction, angle, exponent, scene)
+//name  position  direction angle exponent 
+var light0 = new BABYLON.SpotLight("Spot0", new BABYLON.Vector3(0, 30, -10), new BABYLON.Vector3(0, -1, 0), 0.8, 2, scene);
+```
+
+>The angle defines the size (field of illumination) of the spotlight's conical beam (in radians), and the exponent defines the speed of the decay of the light with distance (the light's 'reach distance'). Just like the other lights, you can control the color of the light with the diffuse and specular properties:
+
+### 5.2.4 HemisphericLight
+var light0 = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
+
+提供三种反射颜色
+一种颜色提供给漫反射(天空的颜色-朝上的像素/面片)，一种是给地面的 (朝下的像素/面片的颜色), 以及一种给镜面反射的.
+```js
+var light0 = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
+light0.diffuse = new BABYLON.Color3(1, 1, 1);
+light0.specular = new BABYLON.Color3(1, 1, 1);
+light0.groundColor = new BABYLON.Color3(0, 0, 0);
+```
 
 
 # Tips
@@ -386,7 +566,10 @@ window.addEventListener('resize', function () {
 
 ```
 
-## 常用属性
+## 常用API
+### scene
+- activeCamera
+- activeCameras[]
 
 
 
@@ -405,3 +588,13 @@ camera.wheelPrecision //越大越慢
 camera.pinchPrecision
 camera.zoomOnFactor
 JS
+
+
+
+```tpircsavaj
+/*
+*POWER BY FYG
+*2017
+*BABYLONJS
+*/
+```

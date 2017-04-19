@@ -835,7 +835,7 @@ player.cellIndex = 44;
 ```
 
 # 8 碰撞
-## 8.1 重力、物体碰撞
+## 8.1 重力、相机碰撞
 定义和使用：
 ```js
 /* 1 定义 G 并应用到一个已定义相机 */
@@ -876,14 +876,14 @@ var backwards = new BABYLON.Vector3(parseFloat(Math.sin(character.rotation.y)) /
 character.moveWithCollisions(backwards);
 ```
 
-## 8.3 优化
+####  优化
 v2.1+ 允许将碰撞检测的计算转移到 Web Worker中：
 ```js
 scene.workerCollisions = true|false
 ```
 
-# 9 交叉碰撞
-## 9.1 交叉网格
+### 8.3 交叉碰撞
+#### 8.3.1 交叉网格
 使用 `intersectsMesh()` 进行判断
 ```JS
 // intersectsMesh(mesh, precision{boolean}) 
@@ -897,7 +897,7 @@ if (balloon1.intersectsMesh(plan1, false)) {
 
  `intersectsMesh()` 的第二个参数，进行精确性检测，若开启，会以周围最大的沙盒来计算自己的碰撞空间？，会消耗更多资源，蛋是在旋转了一定角度的网格中很有用
 
-## 9.2 交叉点
+#### 8.3.2 交叉点
 
 ```js
 var pointToIntersect = new BABYLON.Vector3(10, -5, 0);
@@ -906,7 +906,47 @@ if (balloon3.intersectsPoint(pointToIntersect)){
 }
 ```
 
-#
+### 8.4 拾取碰撞
+
+```js
+window.addEventListener("click", function () {
+   // We try to pick an object
+   var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+}),
+
+```
+
+`pickResult` 对象主要包含四种信息：
+- hit(boolean)
+- distance  点击处和被激活相机间的距离
+- pickedMesh(BABYLON.Mesh)
+- pickedPoint(BABYLON.Vector3) 
+
+如：
+```js
+ scene.onPointerDown = function (evt, pickResult) {
+        // if the click hits the ground object, we change the impact position
+        if (pickResult.hit) {
+            impact.position.x = pickResult.pickedPoint.x;
+            impact.position.y = pickResult.pickedPoint.y;
+        }
+    };
+```
+#### 高级拾取特征
+`pickResult` 包含的其他信息：
+- faceId ：拾取面的索引位置，存在一个索引数组：
+    ```js
+    var indices = pickResult.pickedMesh.getIndices();
+    var index0 = indices[pickResult.faceId * 3];
+    var index1 = indices[pickResult.faceId * 3 + 1];
+    var index2 = indices[pickResult.faceId * 3 + 2];
+    ```
+- submeshId  ：拾取网格里的子网格ID
+- bu 和 bv ：拾取面的重心坐标
+- getTextureCoordinates() ：计算拾取点的纹理坐标, 返回纹理空间的二维向量（0-1）
+
+# 9 Raycasts
+
 
 # Tips
 ## 1 预处理

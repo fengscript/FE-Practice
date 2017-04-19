@@ -34,31 +34,46 @@ touch-action: none;
 
   var createScene = function () { 
      var scene = new BABYLON.Scene(engine);
+     var camera = new BABYLON.ArcRotateCamera('camera',0,0,10,new BABYLON.Vector3(0,0,0), scene);
 
-     var camera = new BABYLON.FreeCamera('camera', new BABYLON.Vector3(0, 0, 20), scene);
-    camera.keysUp = '87';
-    camera.keysDown = '83';
-    camera.keysLeft = '65';
-    camera.keysRight = '68';
+    camera.keysUp = '87'
+    camera.keysDown = '83'
+    camera.keysLeft = '65'
+    camera.keysRight = '68'
 
-     var light = new BABYLON.HemisphericLight('l1', new BABYLON.Vector3(0, 50, 50), scene)
-
-     var box1 = BABYLON.Mesh.CreateBox('box1',4,scene)
+     var light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(10, 10, 30), scene)
 
 
-     var box2 = BABYLON.Mesh.CreateBox('box2',4,scene)
-    
 
-    // box1.position.z = 2
-    // box1.position.y = 2
-    box2.position.x = 8
+     var spriteManagerTrees = new BABYLON.SpriteManager("treesMgr", "./palm.png", 100, 2000, scene)
+
+ for (var i = 0; i < 10; i++) {
+        // var tree = new BABYLON.Sprite("tree", spriteManagerTrees);
+        //  tree.position.x = i;
+         for( var j = 0;j < 10; j++){
+           var tree = new BABYLON.Sprite("tree", spriteManagerTrees);
+            tree.position.y = j;
+            tree.position.x = i;
+         }
+        // tree.position.x = Math.random() * 10 - 5;
+        // tree.position.z = Math.random() * 10 - 5;
+        // tree.isPickable = true;
+
+    }
+
+
+
+
+  //  spriteManagerTrees.isPickable = true;
+
+
 // zoom rate
   camera.wheelPrecision= 10;
-  // camera.pinchPrecision= 1000;
+  camera.pinchPrecision= 1000;
   camera.zoomOnFactor= 1000;
 
 
-
+// camera.keys[]
      camera.setTarget(BABYLON.Vector3.Zero());
      camera.attachControl(canvas, true);
      return scene;

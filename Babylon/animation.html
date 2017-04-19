@@ -34,24 +34,43 @@ touch-action: none;
 
   var createScene = function () { 
      var scene = new BABYLON.Scene(engine);
-
-     var camera = new BABYLON.FreeCamera('camera', new BABYLON.Vector3(0, 0, 20), scene);
-    camera.keysUp = '87';
-    camera.keysDown = '83';
-    camera.keysLeft = '65';
-    camera.keysRight = '68';
-
-     var light = new BABYLON.HemisphericLight('l1', new BABYLON.Vector3(0, 50, 50), scene)
-
-     var box1 = BABYLON.Mesh.CreateBox('box1',4,scene)
+     var camera = new BABYLON.ArcRotateCamera('camera', 0, 1, 60, BABYLON.Vector3.Zero(), scene);
+     var light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(10, 10, 30), scene)
 
 
-     var box2 = BABYLON.Mesh.CreateBox('box2',4,scene)
-    
+     var box1 = BABYLON.Mesh.CreateBox('name', 6, scene);
 
-    // box1.position.z = 2
-    // box1.position.y = 2
-    box2.position.x = 8
+/*Animation*/
+var animationBox = new BABYLON.Animation('ani1', 'rotation.x',30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+
+
+var keys = []; 
+
+
+  keys.push({
+    frame: 0,
+    value: 0
+  });
+
+
+  keys.push({
+    frame: 50,
+    value: Math.PI
+  });
+
+
+  keys.push({
+    frame: 100,
+    value: Math.PI*2
+  });
+
+animationBox.setKeys(keys);
+box1.animations = [];
+box1.animations.push(animationBox);
+scene.beginAnimation(box1, 0, 100, true);
+
+
 // zoom rate
   camera.wheelPrecision= 10;
   // camera.pinchPrecision= 1000;

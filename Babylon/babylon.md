@@ -2,7 +2,9 @@
 ## Vector3
 坐标采用 左手笛卡尔坐标
 
-## 4种光源
+注意每次设定坐标，必须 new 出来 Vector3()
+
+## 4种常用光源
 
 ```js
 var light = new Babylon.HemisphericLight()
@@ -19,6 +21,9 @@ SpotLight(name, position, direction, angle, exponent, scene)
 ```
 
 3. DirectionalLight
+```
+new DirectionalLight(name, direction, scene)
+```
 4. HemisphericLight
 ```js
 new HemisphericLight(name, direction, scene)
@@ -35,9 +40,11 @@ alpha:Alpha of the ArcRotateCamera (Rotation angle around Y axis)
 beta:Beta of the ArcRotateCamera (Rotation angle around X axis)
 
 2. FreeCamera
-3. TouchCamera
+```
+FreeCamera(name, position, scene)
+```
+3. TargetCamera
 
-TargetCamera
 ```
 TargetCamera(name, position, scene)
 ```
@@ -483,6 +490,7 @@ var light0 = new BABYLON.PointLight('pointlight', new BABYLON.Vector3(1, 10, -10
 ```
 
 ### 5.2.2 DirectionalLight
+一个定向光是通过一个方向定义的,但是朝向一个特别的方向发射, 并且具有无限的范围. 默认情况，定向光建立在原点(0,0,0)的位置
 ```js
 var light0 = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
 // diffuse spectular
@@ -509,6 +517,396 @@ light0.specular = new BABYLON.Color3(1, 1, 1);
 light0.groundColor = new BABYLON.Color3(0, 0, 0);
 ```
 
+### default arguments
+```JS
+var light0 = new BABYLON.SpotLight("", new BABYLON.Vector3.Zero(), new BABYLON.Vector3.Zero(), 0, 0, scene);
+light0.name = "My Slowly and Discretely Constructed Spot Light"
+light0.position = new BABYLON.Vector3(0, 30, -10);
+light0.direction = new BABYLON.Vector3(0, -1, 0);
+light0.angle = 0.8;
+light0.exponent = 2;
+light0.intensity = 0.5;
+light0.diffuse = new BABYLON.Color3(1, 1, 1);
+light0.specular = new BABYLON.Color3(1, 1, 1);
+light0.setEnabled(1);
+```
+如上，所有参数都可以在设置一个“0”光源以后再进行设置
+
+### Normals and Backfaces
+
+>when a standard Babylon.js plane has its backface lit (the left plane), the lights have no affect, because its normals are not facing toward the lights. Conversely, when a standard plane has its frontface lit (the right plane), both lights work perfectly to light the plane, because its normals are facing toward the lights.
+
+# 6 Animation
+
+## 6.1 Basic Animation
+
+```js
+/*PARAMS
+* 1 name
+* 2 property concerned. This can be any mesh property, depending upon what you want to change. Here we want to scale an object on the X axis, so it will be “scaling.x”.
+* 3 Frames per second requested: highest FPS possible in this animation.
+* 4 Type of change
+* 5 Type of behavior
+*
+*
+* new Animation(name, targetProperty, framePerSecond, dataType, loopMode, enableBlending)
+*/
+
+// 创建一个动画对象
+var animationBox = new BABYLON.Animation("myAnimation", "scaling.x", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+// 创建一个动作序列
+  // 关键帧属性必须为 frame, value
+var keys = []; 
+  keys.push({
+    frame: 0,
+    value: 0
+  });
+
+  keys.push({
+    frame: 50,
+    value: Math.PI
+  });
+
+  keys.push({
+    frame: 100,
+    value: Math.PI*2
+  });
+
+// 动作序列绑定到动画对象
+animationBox.setKeys(keys);
+
+// 动画对象链接到物体对象
+box1.animations = [];
+box1.animations.push(animationBox);
+
+//启动动画
+scene.beginAnimation(box1, 0, 100, true);
+```
+**beginAnimation**
+```js
+//默认 (target, from, to, animatable)
+beginAnimation(target, from, to, loop, speedRatio, onAnimationEnd, animatable)
+```
+
+
+
+
+**targetProperty**
+- ratation
+  - ratotion.x
+- scaling
+  - scaling.x
+
+参数4：
+- BABYLON.Animation.ANIMATIONTYPE_FLOAT (a translation)
+- BABYLON.Animation.ANIMATIONTYPE_VECTOR2 (a direction)
+- BABYLON.Animation.ANIMATIONTYPE_VECTOR3
+- BABYLON.Animation.ANIMATIONTYPE_QUATERNION
+- BABYLON.Animation.ANIMATIONTYPE_MATRIX
+- BABYLON.Animation.ANIMATIONTYPE_COLOR3
+
+参数5：
+- BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE  (Use previous values and increment it)
+- BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE (Restart from initial value)
+- BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT  (Keep their final value)
+
+返回一个 BABYLON.Animatable ，可以通过 getAnimatableByTarget() 来控制单独动画，也可以通过 BABYLON.Animatable  对象的 scene.getAnimatableByTarget() 提供目标对象
+
+
+支持以下方法：
+* pause()
+* restart()
+* stop()
+* reset()
+
+```js
+var newAnimation = scene.beginAnimation(box1, 0, 100, true);
+//then pause:
+newAnimation.pause();
+```
+会应用到可动画对象数组 `._animations` 中的每一个动画对象上，也可以通过 `scene.getAnimatableByTarget()` 来获取最近运行的可动画对象，然后再进行处理。
+
+
+## 6.2 控制动画
+>Each Animation has a property called `currentFrame` that indicates the current animation key.
+对于高级的关键帧动画, 你也可以定义个函数实现在键之间插入过度效果. 默认情况下,这个函数如下:
+
+```js
+BABYLON.Animation.prototype.floatInterpolateFunction = function (startValue, endValue, gradient) {
+  return startValue + (endValue - startValue) * gradient;
+};
+
+BABYLON.Animation.prototype.quaternionInterpolateFunction = function (startValue, endValue, gradient) {
+  return BABYLON.Quaternion.Slerp(startValue, endValue, gradient);
+};
+
+BABYLON.Animation.prototype.vector3InterpolateFunction = function (startValue, endValue, gradient) {
+  return BABYLON.Vector3.Lerp(startValue, endValue, gradient);
+};
+
+```
+
+## 6.3 快速动画
+```js
+//CreateAndStartAnimation(name, node, targetProperty, framePerSecond, totalFrame, from, to, loopMode, easingFunction, onAnimationEnd) 
+
+// loopMode = 0（不循环） 或者1（循环）
+
+
+// 必选参数创建
+// Animation.CreateAndStartAnimation = function(name, mesh, tartgetProperty, framePerSecond, totalFrame, from, to, loopMode);
+
+
+BABYLON.Animation.CreateAndStartAnimation('boxscale', box1, 'scaling.x', 30, 120, 1.0, 1.5);
+```
+* 动画需要有预定义的关键帧 (仅有2个关键帧被创建:开始和结束)
+* 动画仅在 AbstractMesh 对象上有效
+* 动画在该函数调用后立即播放
+
+
+## 6.4 动画合成
+从 v 2.3+ 可以使用 `enableBlending = true` 开始一个动画。这个动画会被从最近动画的开始状态插入
+```js
+
+    // Creation of a basic animation with box 1
+    //----------------------------------------
+
+    var animationBox = new BABYLON.Animation("tutoAnimation", "position.z", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT,BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    // Animation keys
+    var keys = [];
+    keys.push({
+        frame: 0,
+        value: 0
+    });
+
+    keys.push({
+        frame: 20,
+        value: 10
+    });
+
+    keys.push({
+        frame: 100,
+        value: -20
+    });
+
+    animationBox.setKeys(keys);
+
+    box1.animations.push(animationBox);
+
+    scene.beginAnimation(box1, 0, 100, true);
+	
+	// Blending animation
+    var animation2Box = new BABYLON.Animation("tutoAnimation", "position.z", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+	BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+																
+	animation2Box.enableBlending = true;
+	animation2Box.blendingSpeed = 0.01;
+    // Animation keys
+    var keys = [];
+    keys.push({
+        frame: 0,
+        value: 0
+    });
+
+    keys.push({
+        frame: 20,
+        value: 10
+    });
+
+    keys.push({
+        frame: 100,
+        value: -30
+    });
+
+    animation2Box.setKeys(keys);
+	
+	document.getElementById("fpsLabel").addEventListener("click", function () {
+		animation2Box.reset();
+		scene.stopAnimation(box1);
+		scene.beginDirectAnimation(box1, [animation2Box], 0, 100, true);
+	});
+
+
+```
+
+## 6.5 缓动函数
+babylon 提供的缓动函数：
+* BABYLON.CircleEase()
+* BABYLON.BackEase(amplitude)
+* BABYLON.BounceEase(bounces, bounciness)
+* BABYLON.CubicEase()
+* BABYLON.ElasticEase(oscillations, springiness)
+* BABYLON.ExponentialEase(exponent)
+* BABYLON.PowerEase(power)
+* BABYLON.QuadraticEase()
+* BABYLON.QuarticEase()
+* BABYLON.QuinticEase()
+* BABYLON.SineEase()
+
+可以使用 `EasingMode` 属性来改变缓动函数的进出行为：
+* BABYLON.EasingFunction.EASINGMODE_EASEIN
+* BABYLON.EasingFunction.EASINGMODE_EASEOUT
+* BABYLON.EasingFunction.EASINGMODE_EASEINOUT
+
+```js
+var animationTorus = new BABYLON.Animation("torusEasingAnimation", "position", 30, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+var nextPos = torus.position.add(new BABYLON.Vector3(-80, 0, 0));
+
+var keysTorus = [];
+keysTorus.push({ frame: 0, value: torus.position });
+keysTorus.push({ frame: 120, value: nextPos });
+animationTorus.setKeys(keysTorus);
+
+// Creating an easing function
+var easingFunction = new BABYLON.CircleEase();
+
+// For each easing function, you can choose beetween EASEIN (default), EASEOUT, EASEINOUT
+easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+
+// Adding the easing function to the animation
+animationTorus.setEasingFunction(easingFunction);
+
+// Adding animation to my torus animations collection
+torus.animations.push(animationTorus);
+
+//Finally, launch animations on torus, from key 0 to key 120 with loop activated
+scene.beginAnimation(torus, 0, 120, true);
+```
+<http://www.babylonjs-playground.com/#2BLI9T#2>
+## 6.6 绑定事件
+```js
+// 3 parameters to create an event:
+// - The frame at which the event will be triggered
+// - The action to execute
+// - A boolean if the event should execute only once (false by default)
+var event1 = new BABYLON.AnimationEvent(50, function() { console.log("Yeah!"); }, true);
+// Attach your event to your animation
+animation.addEvent(event1);
+```
+
+
+# 7 Sprites
+> 精灵用来存储、管理带有 alpha 通道的2d图片，显示动画、粒子效果以及模拟复杂的三维对象
+
+## 7.1 Sprites manager
+>  只要使用精灵，就必须创建一个管理器
+
+```js
+// Create a sprite manager
+//PARAMS
+//name, resours, capacity, cell size, aim scene
+var spriteManagerTrees = new BABYLON.SpriteManager("treesManagr", "Assets/Palm-arecaceae.png", 1, 800, scene);
+```
+> 每个图片包含的 sprites 必须存储在 64像素 的方块中
+
+## 7.2 Create instance
+创建实例，链接到管理器
+```js
+var tree = new BABYLON.Sprite("tree", spriteManagerTrees);
+```
+
+特殊属性：
+- .size
+- .angle
+- invertU
+- weight
+- height
+
+```js
+player.size = 0.3;
+player.angle = Math.PI/4;
+player.invertU = -1;
+```
+
+## 7.2 Sprite animation
+加载一个集合了所有动画图像的图片，就可以利用 `sprite` 进行动画
+
+开始动画：
+```js
+// (start， end， loop， delay between frames)
+player.playAnimation(0, 43, true, 100);
+```
+
+定位到任何一帧 `cellIndex` ：
+```js
+player.cellIndex = 44;
+```
+
+# 8 碰撞
+## 8.1 重力、物体碰撞
+定义和使用：
+```js
+/* 1 定义 G 并应用到一个已定义相机 */
+scene.gravity = new BABYLON.Vector3(0, -9.81, 0);
+camera.applyGravity = true; 
+
+/*  2 定义一个椭圆包围相机来代表观察者视角 */
+// 默认值为 (0.5, 1, 0.5)
+camera.ellipsoid = new BABYLON.Vector3(1, 1, 1)
+
+/* 3 应用碰撞*/
+
+// 开启碰撞检测
+scene.collisionsEnabled = true;
+camera.checkCollisions = true;
+//声明要和相机碰撞的对象
+ground.checkCollisions = true;
+box.checkCollisions = true;
+```
+
+### 8.2 物体碰撞
+物体间碰撞通过 `mesh.ellipsoid` 属性 和 `mesh.moveWithCollisions(velocity)` 方法
+
+或者通过 `mesh.ellipsoidOffset` 在网格上移动椭圆镜头
+```js
+var speedCharacter = 8;
+var gravity = 0.15;
+var character = Your mesh;
+
+character.ellipsoid = new BABYLON.Vector3(0.5, 1.0, 0.5);
+character.ellipsoidOffset = new BABYLON.Vector3(0, 1.0, 0);
+
+var forwards = new BABYLON.Vector3(parseFloat(Math.sin(character.rotation.y)) / speedCharacter, gravity, parseFloat(Math.cos(character.rotation.y)) / speedCharacter);
+forwards.negate();
+character.moveWithCollisions(forwards);
+// or
+var backwards = new BABYLON.Vector3(parseFloat(Math.sin(character.rotation.y)) / speedCharacter, -gravity, parseFloat(Math.cos(character.rotation.y)) / speedCharacter);
+character.moveWithCollisions(backwards);
+```
+
+## 8.3 优化
+v2.1+ 允许将碰撞检测的计算转移到 Web Worker中：
+```js
+scene.workerCollisions = true|false
+```
+
+# 9 交叉碰撞
+## 9.1 交叉网格
+使用 `intersectsMesh()` 进行判断
+```JS
+// intersectsMesh(mesh, precision{boolean}) 
+if (balloon1.intersectsMesh(plan1, false)) {
+  balloon1.material.emissiveColor = new BABYLON.Color4(1, 0, 0, 1);
+} else {
+  balloon1.material.emissiveColor = new BABYLON.Color4(1, 1, 1, 1);
+}
+```
+为减少检测碰撞的计算开销，会在物体周围创建一个沙盒。
+
+ `intersectsMesh()` 的第二个参数，进行精确性检测，若开启，会以周围最大的沙盒来计算自己的碰撞空间？，会消耗更多资源，蛋是在旋转了一定角度的网格中很有用
+
+## 9.2 交叉点
+
+```js
+var pointToIntersect = new BABYLON.Vector3(10, -5, 0);
+if (balloon3.intersectsPoint(pointToIntersect)){
+  balloon3.material.emissiveColor = new BABYLON.Color4(1, 0, 0, 1);
+}
+```
+
+#
 
 # Tips
 ## 1 预处理
@@ -571,13 +969,35 @@ window.addEventListener('resize', function () {
 - activeCamera
 - activeCameras[]
 
+- beginAnimation(target, from, to, loop, speedRatio, onAnimationEnd, animatable)
+- beginDirectAnimation(target, animations, from, to, loop, speedRatio, onAnimationEnd)
 
 
+- registerBeforeRender(func) → void
+  >Registers in an array the given function which will be executed before rendering the scene
 
+- unregisterBeforeRender(func) → void
+
+- registerAfterRender(func)  → void
+- unregisterAfterRender(func) → void
+
+- scene.getAnimatableByTarget()
+
+
+### obj
+- parent
+>attaching an object, relatively to another, by creating a parent-child link between two meshes. This link implies that all parent transformations (position/rotation/scaling) will also be applied to the child’s transformations.
+
+
+- isPickable
+>isPickable, defines if the primitive can be picked/selected or not.
+```js
+spriteManagerTrees.isPickable = true;
+```
 
 
 ## 其他
-可触控
+可触控，可通过键鼠操控
 ```
 camera.attachControl(canvas, true);
 ```
@@ -591,7 +1011,7 @@ JS
 
 
 
-```tpircsavaj
+```js
 /*
 *POWER BY FYG
 *2017

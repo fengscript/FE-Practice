@@ -34,24 +34,17 @@ touch-action: none;
 
   var createScene = function () { 
      var scene = new BABYLON.Scene(engine);
-
-     var camera = new BABYLON.FreeCamera('camera', new BABYLON.Vector3(0, 0, 20), scene);
-    camera.keysUp = '87';
-    camera.keysDown = '83';
-    camera.keysLeft = '65';
-    camera.keysRight = '68';
-
-     var light = new BABYLON.HemisphericLight('l1', new BABYLON.Vector3(0, 50, 50), scene)
-
-     var box1 = BABYLON.Mesh.CreateBox('box1',4,scene)
+     var camera = new BABYLON.ArcRotateCamera('camera', 0, 1, 60, BABYLON.Vector3.Zero(), scene);
+     var light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(10, 10, 30), scene)
 
 
-     var box2 = BABYLON.Mesh.CreateBox('box2',4,scene)
-    
+     var box1 = BABYLON.Mesh.CreateBox('name', 6, scene);
 
-    // box1.position.z = 2
-    // box1.position.y = 2
-    box2.position.x = 8
+BABYLON.Animation.CreateAndStartAnimation('animation1', box1, 'scaling.x', 30, 30, 1.0, 1.5)
+
+
+
+
 // zoom rate
   camera.wheelPrecision= 10;
   // camera.pinchPrecision= 1000;

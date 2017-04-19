@@ -35,23 +35,34 @@ touch-action: none;
   var createScene = function () { 
      var scene = new BABYLON.Scene(engine);
 
-     var camera = new BABYLON.FreeCamera('camera', new BABYLON.Vector3(0, 0, 20), scene);
-    camera.keysUp = '87';
-    camera.keysDown = '83';
-    camera.keysLeft = '65';
-    camera.keysRight = '68';
-
-     var light = new BABYLON.HemisphericLight('l1', new BABYLON.Vector3(0, 50, 50), scene)
-
-     var box1 = BABYLON.Mesh.CreateBox('box1',4,scene)
+     var camera = new BABYLON.ArcRotateCamera('camera', 0, 1, 10, BABYLON.Vector3.Zero(), scene);
 
 
-     var box2 = BABYLON.Mesh.CreateBox('box2',4,scene)
-    
+/*HemisphericLight*/
+var light0 = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
+light0.range=0.003;
 
-    // box1.position.z = 2
-    // box1.position.y = 2
-    box2.position.x = 8
+
+
+
+
+
+
+    var plane = BABYLON.Mesh.CreateGround('plane', 40,40,50, scene);
+    plane.material = new BABYLON.StandardMaterial('black', scene)
+    plane.material.diffuseColor = new BABYLON.Color3(0, 0, 0)
+// plane.setPosition = new BABYLON.Vector3(0,0,0)
+      //  var box = BABYLON.Mesh.CreateBox('name', 4, scene);
+      /*create texture*/
+      // var material1 = new BABYLON.StandardMaterial('texture1', scene);
+
+
+
+
+      // material1.diffuseColor = new BABYLON.Color3(0.1, 0.49, 0.49);
+      // material1.diffuseTexture = new BABYLON.Texture('./1.jpg', scene)
+
+
 // zoom rate
   camera.wheelPrecision= 10;
   // camera.pinchPrecision= 1000;

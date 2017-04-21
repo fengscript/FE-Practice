@@ -655,7 +655,7 @@ BABYLON.Animation.prototype.vector3InterpolateFunction = function (startValue, e
 
 
 // 必选参数创建
-// Animation.CreateAndStartAnimation = function(name, mesh, tartgetProperty, framePerSecond, totalFrame, from, to, loopMode);
+// Animation.CreateAndStartAnimation = function(name, mesh, targetProperty, framePerSecond, totalFrame, from, to, loopMode);
 
 
 BABYLON.Animation.CreateAndStartAnimation('boxscale', box1, 'scaling.x', 30, 120, 1.0, 1.5);
@@ -785,6 +785,56 @@ var event1 = new BABYLON.AnimationEvent(50, function() { console.log("Yeah!"); }
 // Attach your event to your animation
 animation.addEvent(event1);
 ```
+### targetProperty API
+- rotation.x
+- scaling.x
+
+## 事件钩子
+* onDisposeObservable
+* onReadyObservable
+* onBeforeRenderObservable
+* onAfterRenderObservable
+* onReadyObservable
+* onBeforeCameraRenderObservable
+* onAfterCameraRenderObservable
+* onNewCameraAddedObservable
+* onCameraRemovedObservable
+* onNewLightAddedObservable
+* onLightRemovedObservable
+* onNewGeometryAddedObservable
+* onGeometryRemovedObservable
+* onNewMeshAddedObservable
+* onMeshRemovedObservable
+* onRenderingGroupObservable
+
+
+## 渲染生命周期
+'''JS
+scene.onDispose = function(){
+  //do something
+}
+'''
+- onDispose 场景配置完成后执行
+- beforeRender  场景渲染之前执行
+- afterRender 场景渲染之后执行
+- beforeCameraRender 相机渲染之后触发
+- afterCameraRender
+- registerBeforeRender
+
+## 鼠标事件
+### 属性
+* pointerDownPredicate : (Mesh: AbstractMesh)
+* pointerUpPredicate : (Mesh: AbstractMesh)
+* pointerMovePredicate : (Mesh: AbstractMesh)
+
+### 方法
+* onPointerMove : (evt: PointerEvent, pickInfo: PickingInfo)
+* onPointerDown : (evt: PointerEvent, pickInfo: PickingInfo)
+* onPointerUp : (evt: PointerEvent, pickInfo: PickingInfo)
+* onPointerPick : (evt: PointerEvent, pickInfo: PickingInfo)
+* onPrePointerObservable : Observable<PointerInfoPre>
+* onPointerObservable : Observable<PointerInfo>
+
 
 
 # 7 Sprites
@@ -876,6 +926,17 @@ var backwards = new BABYLON.Vector3(parseFloat(Math.sin(character.rotation.y)) /
 character.moveWithCollisions(backwards);
 ```
 
+#### Arc相机检测
+ArcRotateCamera 也可以检测碰撞：
+但是碰撞发生时，相机不会移动
+```js
+// 激活
+camera.checkCollisions = true
+camera.collisionRadius = new BABYLON.Vector3(0.5, 0.5, 0.5)
+```
+
+
+
 ####  优化
 v2.1+ 允许将碰撞检测的计算转移到 Web Worker中：
 ```js
@@ -893,9 +954,9 @@ if (balloon1.intersectsMesh(plan1, false)) {
   balloon1.material.emissiveColor = new BABYLON.Color4(1, 1, 1, 1);
 }
 ```
-为减少检测碰撞的计算开销，会在物体周围创建一个沙盒。
+为减少检测碰撞的计算开销，会在物体周围创建一个沙盒进行检测。
 
- `intersectsMesh()` 的第二个参数，进行精确性检测，若开启，会以周围最大的沙盒来计算自己的碰撞空间？，会消耗更多资源，蛋是在旋转了一定角度的网格中很有用
+ `intersectsMesh()` 的第二个参数，进行精确性检测，若开启，会以周围 OBB 碰撞沙盒来计算自己的碰撞空间，否则采用 AABB 碰撞沙盒检测，会消耗更多资源，蛋是在旋转了一定角度的网格中很有用
 
 #### 8.3.2 交叉点
 
@@ -945,7 +1006,141 @@ window.addEventListener("click", function () {
 - bu 和 bv ：拾取面的重心坐标
 - getTextureCoordinates() ：计算拾取点的纹理坐标, 返回纹理空间的二维向量（0-1）
 
+
+## AABB 和 OBB
+AABB碰撞检测
+axially aligned bounding box(轴对齐矩形边界框)
+
+轴对齐矩形边界框有一个限制，就是它的边必须垂直于坐标轴
+
+
+OBB碰撞检测
+OBB（Oriented Bounding Box）也称作有向包围盒
+
+
+AABB包围盒与OBB包围盒的最直接的区别就是，AABB包围盒是不可以旋转的，而OBB包围盒是可以旋转的，也就是有向的。
+
+二维场景AABB碰撞检测具有如下规则：
+物体A与物体B分别沿两个坐标轴做投影，只有在两个坐标轴都发生重叠的情况下，两个物体才意味着发生了碰撞。
+
+三维物体的AABB包围盒的八个顶点依旧可以用两个顶点来标识，如图：
+<http://note.youdao.com/noteshare?id=b783463a6d11035eb502de5ea141104e&sub=1B23909B11F145D49E0805C6DD04B8A6>
+只要确定了图中黑色点部分的坐标，就可以确定八个顶点的全部信息了。
+
+
 # 9 Raycasts
+<http://www.babylonjs-playground.com/#KNE0O#4>
+检测物体和 细线之间的碰撞或相交。
+可以想象成物体无间断的发射看不见的激光，碰到目标或者障碍物，则触发动作
+
+首先要 `box.isPickable = false`，因为射线起点要设置在box内部
+
+一条射线需要 起点、方向、长度
+```js
+var forward = new BABYLON.Vector3(0,0,1);        
+    forward = vecToLocal(forward, box);
+
+    var direction = forward.subtract(origin);
+    direction = BABYLON.Vector3.Normalize(direction);
+```
+完整构建：
+```js
+function mousemovef(){
+  //鼠标移动处理
+	    var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+
+	    if (pickResult.hit) {
+		    var diffX = pickResult.pickedPoint.x - box.position.x;
+		    var diffY = pickResult.pickedPoint.z - box.position.z;
+		    box.rotation.y = Math.atan2(diffX,diffY);			          
+    	}	
+    }
+
+    scene.onPointerMove = function () {
+        mousemovef();
+    };
+
+    function vecToLocal(vector, mesh){
+        var m = mesh.getWorldMatrix();
+        var v = BABYLON.Vector3.TransformCoordinates(vector, m);
+		return v;		 
+    }
+
+    function predicate(mesh){
+        if (mesh == box2 || mesh == box){
+            return false;
+        }
+        return true;
+    }
+
+    function castRay(){       
+        var origin = box.position;
+	
+	    var forward = new BABYLON.Vector3(0,0,1);		
+	    forward = vecToLocal(forward, box);
+	
+	    var direction = forward.subtract(origin);
+	    direction = BABYLON.Vector3.Normalize(direction);
+	
+	    var length = 100;
+	
+	    var ray = new BABYLON.Ray(origin, direction, length);
+
+// 如果射线接触到网格对象，则捕捉 hit 点
+// predicate 用来选择是否在特定对象上触发碰撞
+        var hit = scene.pickWithRay(ray, predicate);
+
+        if (hit.pickedMesh){
+		   hit.pickedMesh.scaling.y += 0.01;
+	    }
+    }
+ 
+    scene.registerBeforeRender(function () {
+        castRay();
+    });
+```
+或者，多选:
+```js
+var hits = scene.multiPickWithRay(ray);
+
+  if (hits){
+  for (var i=0; i<hits.length; i++){
+          hits[i].pickedMesh.scaling.y += 0.01;
+      }
+}
+```
+
+追踪：
+```js
+BABYLON.RayHelper.CreateAndShow(ray, scene, new BABYLON.Color3(1, 1, 0.1));
+// 或
+var rayHelper = new BABYLON.RayHelper(ray);
+rayHelper.show(scene);
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Tips

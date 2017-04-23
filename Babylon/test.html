@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./babylon.custom.js"></script>
+  <script src="./src/Oimo.js"></script>
+  <script src="./src/cannon.js"></script>
+
+  <style>
+html, body{
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0
+}
+#box{
+width: 100%;
+height: 100%;
+touch-action: none;
+}
+
+  </style>
+
+</head>
+<body>
+  <canvas id="box"></canvas>
+
+<script>
+  var PI = Math.PI;
+  var sin = Math.sin;
+  var cos = Math.cos;
+
+  var canvas = document.getElementById('box')
+  var engine = new BABYLON.Engine(canvas, true);
+
+  var createScene = function () {
+    var scene = new BABYLON.Scene(engine);
+    // var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(15,15,-15), scene);
+    // var camera = new BABYLON.ArcRotateCamera("ArcCamera",1,0.8,70, new BABYLON.Vector3(5,5,5), scene);
+    var camera = new BABYLON.ArcRotateCamera("ArcCamera",0,0,10, BABYLON.Vector3.Zero(), scene);
+    camera.setPosition(new BABYLON.Vector3(-50, 10, 0));
+    camera.attachControl(canvas, true);
+
+    // light
+    var light = new BABYLON.PointLight('light', BABYLON.Vector3.Zero(), scene)
+
+    // solar
+    var solar = BABYLON.Mesh.CreateSphere("solar", 20, 10, scene);
+    var solarMaterial = new BABYLON.StandardMaterial('solarMaterial', scene);
+    solarMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    solar.material = solarMaterial;
+    solar.position = new BABYLON.Vector3(0, 0, 0);
+
+    // earth
+    var earth = new BABYLON.Mesh.CreateSphere('earth',10,5,scene);
+
+    // var earthMaterial = new BABYLON.StandardMaterial('earthMaterial', scene);
+    // earthMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1)
+    // earth.material = earthMaterial;
+    earth.position = new BABYLON.Vector3(0, 0, 25);
+
+
+    // moon
+    var moon = new BABYLON.Mesh.CreateSphere('moon',10,1,scene);
+    // var moonMaterial = new BABYLON.StandardMaterial('moonMaterial', scene);
+    // moon.material = moonMaterial;
+    
+    moon.parent = earth;
+    moon.position = new BABYLON.Vector3(0, 0, 5);
+
+    earth.parent = solar;
+
+    //AINMATION
+//animation1
+    // scene.registerBeforeRender(function () { 
+    //   alpha += 0.01;
+      // earth.position.z += 0.1;
+    //  })
+
+//animation2
+// BABYLON.Animation.CreateAndStartAnimation('earthRotate', earth, 'rotation.y', 30, 120, 0, Math.PI*2);
+
+    
+//animation3
+    var alpha1 = 0,
+        alpha2 = 0;
+        var arr=[];
+    scene.beforeRender = function () {
+        earth.position = new BABYLON.Vector3(30 * Math.sin(alpha2), 0, -30 * Math.cos(alpha2));
+        // var lines = createCircle()
+        
+
+
+
+        moon.position = new BABYLON.Vector3(5 * Math.sin(alpha1), 0, -5 * Math.cos(alpha1));
+        alpha1 += 0.08;
+        alpha2 += 0.008;
+        console.log(moon.position.x,moon.position.y,moon.position.z)
+
+    };
+
+      // let r = 10;
+      // for(let i=0;i < 2*PI; i+=PI/30){
+      //   arr.push(new BABYLON.Vector3(sin(i)*r, 0, cos(i)*r))
+      //   var lines = BABYLON.Mesh.CreateLines("lines", arr, scene)
+      // }
+
+    var createCircle = function (x, y, z, r) { 
+      for(let i=0;i < 2*PI; i+=PI/30){
+        arr.push(new BABYLON.Vector3(x+sin(i)*r, y, z+cos(i)*r))
+        let lines = BABYLON.Mesh.CreateLines("lines", arr, scene);
+        // let linesColor = new BABYLON.StandardMaterial('lineColor', scene);
+        // linesColor.emissiveColor = new BABYLON.Color3(1,0.5,0.3)
+        // lines.material = linesColor;
+      }
+     }
+var circle = createCircle(moon.position.x,moon.position.y,moon.position.z+5,10);
+circle.parent=moon;
+    return scene;
+}
+
+
+
+
+
+
+
+var scene = createScene();
+engine.runRenderLoop(function () {
+  scene.render()
+})
+
+window.addEventListener('resize', function () {
+  engine.resize()
+})
+
+
+</script>
+
+
+</body>
+</html>

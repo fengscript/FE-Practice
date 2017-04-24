@@ -9,26 +9,7 @@
     </div>
 </template>
 <script>
-import Vue from 'vue'
-import Vuex from 'vuex'
-Vue.use(Vuex)
-const store=new Vuex.Store({
-  state:{
-    count:0
-  },
-  mutations:{
-    inc:state => state.count++,
-    dec:state => state.count--
-  }
-})
-// const Counter = {
-//     template:`<div>{{count}}</div>`,
-//     computed: {
-//         count(){
-//             return store.count
-//         }
-//     }
-// }
+import store from './store.js'
 
     export default{
         name:'test',

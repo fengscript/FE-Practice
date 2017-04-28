@@ -32,7 +32,7 @@ new HemisphericLight(name, direction, scene)
 光源不是必需的，材料可以自发光
 ## 3种主要相机
 1. ArcRotateCamera
-```JS
+```js
 ArcRotateCamera(name, alpha, beta, radius, target, scene)
 ```
 alpha:Alpha of the ArcRotateCamera (Rotation angle around Y axis)
@@ -181,23 +181,23 @@ box.rotation = new BABYLON.Vector3(Math.PI/4, 0, 0);
 
 ## object handle
 1. position
-```JS
+```js
 obj.position.x = 20； 
 ```
 
 2. rotation
-```JS
+```js
 obj.rotation.x = Math.PI / 6;
 ```
 
 3. scaling
-```JS
+```js
 obj.scaling.x = 2;
 obj.scaling.y = 2;
 ```
 
 4. move and related
-```JS
+```js
 box2.parent = box3;
 box2.position.z = -10;
 ```
@@ -216,11 +216,11 @@ box.material = materialName;
 ## 3.2 Handle Texture
 ### 1. transparency
 通过 alpha设置
-```JS
+```js
 materialName.alpha = 0.5;
 ```
 使用了 alpha，需要声明
-```JS
+```js
 materialSphere1.diffuseTexture.hasAlpha = true;
 ```
 这种情况下, alpha被用作alpha测试
@@ -234,7 +234,7 @@ materialName.diffuseTexture = new BABYLON.Texture("grass.png", scene);
 ```
 
 可以对材质进行平移处理：
-```JS
+```js
 materialName.diffuseTexture.uOffset = 1.5;
 materialName.diffuseTexture.vOffset = 1.5;
 ```
@@ -248,12 +248,12 @@ materialName.diffuseTexture.vScale = 5.0;
 
 ### 3. emissive 放射光
 放射光决定了对象自身的颜色
-```JS
+```js
 materialName.emissiveColor = new BABYLON.Color3(1, .2, .7);
 ```
 
 或者，指定一个纹理
-```JS
+```js
 materialName.emissiveTexture = new BABYLON.Texture("grass.png", scene);
 ```
 
@@ -265,7 +265,7 @@ materialName.emissiveTexture = new BABYLON.Texture("grass.png", scene);
 
 镜面反射光的大小/强度可以通过specularPower属性来设定:
 
-```JS
+```js
 materialSphere1.specularPower = 32;
 ```
 
@@ -275,13 +275,13 @@ materialSphere1.specularPower = 32;
 
 
 ### 6.backFaceCulling 背面剔除
-```JS
+```js
 materialSphere1.backFaceCulling = false;
 ```
 这个渲染速度优化的技术决定了一个图形对象上的多边形是否可见. 如果它设置为TRUE或布尔1, 则Babylon引擎不会渲染使用了该材质的网格对象的隐藏面. 默认是设置为TRUE
 
 ### 7. wireframe 线框
-```JS
+```js
 materialSphere1.wireframe = true;
 ```
 
@@ -297,7 +297,7 @@ var camera = new Babylon.FreeCamera()
 
 >Like many of our cameras, you can also add control keys, or reassign them to other keys, such as keys 'w', 'a', 's', and 'd'.
 
-```JS
+```js
 new FreeCamera(name, position, scene)
 ```
 ### Properties
@@ -333,7 +333,7 @@ keysDown,keysLeft,keysRight
 
 
 ## 4.2 ArcRotateCamera
-```JS
+```js
 var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), scene);
 //name, alpha, beta, radius, target, scene
 //alpha (in radians), beta (in radians), and radius (a number)
@@ -342,14 +342,14 @@ var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 1, 0.8, 10, new BABY
 > By default, (with no .alpha and .beta values set), ArcRotateCameras aim in a +x direction. Ironically, there is no rotation property on an ArcRotateCamera, but there is a position property. Because the orientation of an ArcRotateCamera is relative to its target setting, it is wise to use a handy method called setPosition() to set the camera position.
 
 或者，创建一个空目标相机，再用`setPosition`指定瞄准目标：
-```JS
+```js
  var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 0, BABYLON.Vector3.Zero(), scene);
 camera.setPosition(new BABYLON.Vector3(0, 15, -30));
  ```
 > When we use that useful setPosition() method, we need not concern ourselves with alpha, beta, and radius. We just make sure we have a target property set ( which we did in the constructor with new BABYLON.Vector3.Zero() ), and then use setPosition() to put our camera exactly where we want it, in 3D space. The handy setPosition() method does the rest. Easy.
 
 在渲染循环中可以对激活相机设置动作进行动画：
-```JS
+```js
 var scene = createScene();
 engine.runRenderLoop(function () {
   scene.activeCamera.alpha += .01;
@@ -359,11 +359,11 @@ engine.runRenderLoop(function () {
 
 Ctrl + MouseLeft 可以平移相机，也可以设置为右键：
 >setting useCtrlForPanning to false in the attachControl call
-```JS
+```js
 camera.attachControl(canvas, noPreventDefault, useCtrlForPanning);
 ```
 或者禁止掉
-```JS
+```js
 scene.activeCamera.panningSensibility = 0;
 ```
 
@@ -402,14 +402,14 @@ var camera = new BABYLON.DeviceOrientationCamera("DevOr_camera", new BABYLON.Vec
 >This camera is specifically designed to follow any scene item with a .position... as it moves. It can be set to follow from the rear, from the front, or from any angle. Its follow distance and movement speeds can be set, as well.
 
 绑定到一个 obj 或者一个 position `camera.lockedTarget`
-```JS
+```js
 // Parameters : name, position, scene
 var camera = new BABYLON.FollowCamera("FollowCam", new BABYLON.Vector3(0, 15, -45), scene);
 camera.lockedTarget = myMeshObject; // target any mesh or object with a "position" Vector3
 scene.activeCamera = camera;
 ```
 其他有用属性：
-```JS
+```js
 camera.radius = 30; // how far from the object to follow
 camera.heightOffset = 8; // how high above the object to place the camera
 camera.rotationOffset = 180; // the viewing angle
@@ -436,7 +436,7 @@ var camera = new BABYLON.AnaglyphArcRotateCamera("aar_cam", -Math.PI/2, Math.PI/
 ```
 
 - AnaglyphFreeCamera
-```JS
+```js
 // Parameters : name, position (in Vector3), eyeSpace (in degrees), scene
 var camera = new BABYLON.AnaglyphFreeCamera("af_cam", new BABYLON.Vector3(0, 1, -15), 0.033, scene);
 ```
@@ -518,7 +518,7 @@ light0.groundColor = new BABYLON.Color3(0, 0, 0);
 ```
 
 ### default arguments
-```JS
+```js
 var light0 = new BABYLON.SpotLight("", new BABYLON.Vector3.Zero(), new BABYLON.Vector3.Zero(), 0, 0, scene);
 light0.name = "My Slowly and Discretely Constructed Spot Light"
 light0.position = new BABYLON.Vector3(0, 30, -10);
@@ -809,7 +809,7 @@ animation.addEvent(event1);
 
 
 ## 渲染生命周期
-'''JS
+'''js
 scene.onDispose = function(){
   //do something
 }
@@ -823,6 +823,7 @@ scene.onDispose = function(){
 
 ## 鼠标事件
 ### 属性
+
 * pointerDownPredicate : (Mesh: AbstractMesh)
 * pointerUpPredicate : (Mesh: AbstractMesh)
 * pointerMovePredicate : (Mesh: AbstractMesh)
@@ -835,7 +836,38 @@ scene.onDispose = function(){
 * onPrePointerObservable : Observable<PointerInfoPre>
 * onPointerObservable : Observable<PointerInfo>
 
+## pick
+`scene.pick`
 
+```js
+var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+
+if (pickResult.hit) {
+  var diffX = pickResult.pickedPoint.x - box.position.x;
+  var diffY = pickResult.pickedPoint.z - box.position.z;
+  box.rotation.y = Math.atan2(diffX,diffY);			          
+}	
+```
+
+pick
+```js
+pick(x, y, predicate, fastCheck, camera) → PickingInfo
+```
+PickingInfo
+* hit : boolean
+* distance : number
+* pickedPoint : Vector3
+* pickedMesh : AbstractMesh
+* bu : number
+* bv : number
+* faceId : number
+* subMeshId : number
+* pickedSprite : Sprite
+
+Methods
+* getNormal(useWorldCoordinates, useVerticesNormals) → Vector3
+* getTextureCoordinates() → Vector2
+<http://doc.babylonjs.com/classes/2.5/pickinginfo>
 
 # 7 Sprites
 > 精灵用来存储、管理带有 alpha 通道的2d图片，显示动画、粒子效果以及模拟复杂的三维对象
@@ -946,7 +978,7 @@ scene.workerCollisions = true|false
 ### 8.3 交叉碰撞
 #### 8.3.1 交叉网格
 使用 `intersectsMesh()` 进行判断
-```JS
+```js
 // intersectsMesh(mesh, precision{boolean}) 
 if (balloon1.intersectsMesh(plan1, false)) {
   balloon1.material.emissiveColor = new BABYLON.Color4(1, 0, 0, 1);
@@ -1119,8 +1151,25 @@ rayHelper.show(scene);
 ```
 
 
+# 10 Particle
+## 10.1 
+```js
+/* 1 创建粒子发射器 */
+var fountain = BABYLON.Mesh.CreateBox("fountain", 1.0, scene);
+// 发射器也可以是一个 vector3 的点
 
+/* 2 创建一个新的 未渲染 粒子系统 */
+var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene, customEffect);
+// new ParticleSystem(name, capacity, scene, customEffect)
 
+/* 3 设置粒子纹理 */
+// 每个粒子有相同的纹理模式 一个场景可以有多个粒子系统 每个粒子系统只能设置一种纹理模式  多个粒子系统可以共用一套发射器
+particleSystem.particleTexture = new BABYLON.Texture("Flare.png", scene);
+particleSystem.textureMask = new BABYLON.Color4(0.1, 0.8, 0.8, 1.0);
+
+/* 4 给粒子系统设置发射器 */
+
+```
 
 
 
@@ -1165,7 +1214,7 @@ touch-action: none;
 ### 渲染过程
 1. 获取canvas，初始化引擎
 new BABYLON.Engine(canvas, antialies, options, adaptToDeviceRatio);
-```JS
+```js
   var engine = new BABYLON.Engine(canvas, true);
 ```
 
@@ -1183,12 +1232,12 @@ var createScene = function(){
 ```
 
 3. 实例化场景
-```JS
+```js
 var scene = createScene();
 ```
 
 4. 渲染
-```JS
+```js
 engine.runRenderLoop(function () {
   scene.render()
 })
@@ -1238,11 +1287,11 @@ camera.attachControl(canvas, true);
 ```
 
 ### zoom speed
-```JS
+```js
 camera.wheelPrecision //越大越慢
 camera.pinchPrecision
 camera.zoomOnFactor
-JS
+js
 
 
 
@@ -1250,6 +1299,6 @@ JS
 /*
 *POWER BY FYG
 *2017
-*BABYLONJS
+*BABYLONjs
 */
 ```

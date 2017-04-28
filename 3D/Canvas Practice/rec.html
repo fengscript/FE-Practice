@@ -15,20 +15,37 @@ var ctx = document.getElementById('canvas').getContext('2d');
 var range = document.querySelector('input')
 var text = document.querySelector('.text')
 
+CanvasRenderingContext2D.prototype.clear =
+  CanvasRenderingContext2D.prototype.clear || function (preserveTransform) {
+    if (preserveTransform) {
+      this.save();
+      this.setTransform(1, 0, 0, 1, 0, 0);
+    }
 
-range.addEventListener('change', change);
+    this.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    if (preserveTransform) {
+      this.restore();
+    }
+};
+
+
 function change (){
-ctx.beginPath();
-for(var i=1;i<range.value;i++){
-ctx.moveTo(0, i*10)
-ctx.lineTo(300, i*10);
-ctx.moveTo(i*10, 0)
-ctx.lineTo(i*10, 300)
-}
-ctx.stroke();
+  ctx.clear();
+  ctx.beginPath();
+  for(var i=1;i<range.value;i++){
+    ctx.moveTo(0, i*10)
+    ctx.lineTo(300, i*10);
+    ctx.moveTo(i*10, 0)
+    ctx.lineTo(i*10, 300);
 
-
-}
+  }
+  ctx.stroke();
+  }
+  range.addEventListener('change', function () {
+    console.log(range.value);
+    change();
+  });
 
 
 

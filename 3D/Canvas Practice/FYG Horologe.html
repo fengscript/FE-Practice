@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas id="canvas" width="300px" height="300px"></canvas>
+  <span id="time"></span>
+  <br>
+  <span class="coord"></span>
+  <script>
+    var aim  = document.getElementById('canvas');
+    var ctx = aim.getContext('2d');
+    var time = new Date(),
+        h = time.getHours(),
+        m = time.getMinutes(),
+        s = time.getSeconds();
+				s+=1;
+    var PI = Math.PI;
+
+    ctx.beginPath();
+    ctx.arc(150,150,100,0,Math.PI*2,true);
+    ctx.stroke();
+    ctx.moveTo(150,150)
+		ctx.lineTo(150,0);
+		// ctx.stroke()
+
+
+    document.write(Math.sin(180*(PI/180)));
+
+
+
+    setInterval(function(){
+
+      if(s < 60){
+				s++
+			}else{
+				s = 0
+			}
+    console.log(s)
+    var angle = ((s+1)*60);
+		var radian = angle*PI/180;
+    var r = 100;
+    var x,y;
+		if(s<30)r=r;
+		if(s>30)r=-r;
+    x = Math.cos(radian) * r;
+    y = Math.sin(radian) * r;
+
+    ctx.moveTo(150,150);
+    ctx.lineTo(x,y);
+    ctx.stroke()
+    ctx.moveTo(150,150);
+console.log(x,y)
+    }, 1000)
+    // ctx.moveTo(150,150);
+    // ctx.lineTo(150,50);
+
+
+
+  </script>
+
+</body>
+</html>

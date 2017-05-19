@@ -11,7 +11,7 @@ echo "<br>";
 myTest();
 myTest();
 myTest();
-// 
+echo "I'm out x".$x;
 
 $a = 10;
 var_dump($a);
@@ -42,7 +42,21 @@ for($x=0;$x<$arrlength;$x++)
 $age=array("Peter"=>"35","Ben"=>"37","Joe"=>"43");
 echo "Peter is " . $age['Peter'] . " years old.";
 
+$x = 5;
 
+function test(){
+$y=10;
+global $x;
+echo "x: $x";
+echo "</br>";
+echo "y:$y";
+$z = $x+$y;
+echo "</br>";
+echo "z = x + y:——$z";
+}
+test();
+echo "</br>";
+echo $GLOBALS['x'];
 
 
 

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./babylon.custom.js"></script>
+
+
+  <style>
+    html,
+    body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0
+    }
+
+    #box {
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+  </style>
+
+</head>
+
+<body>
+  <canvas id="box"></canvas>
+
+  <script>
+    var canvas = document.getElementById('box')
+    var engine = new BABYLON.Engine(canvas, true);
+
+    var createScene = function () {
+      var scene = new BABYLON.Scene(engine);
+      // var light = new BABYLON.SpotLight('light',new BABYLON.Vector3(0, 30, -10),new BABYLON.Vector3(0,-20,0),0.8,2,scene);
+
+      var light2 = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
+      // var light0 = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
+
+      var camera = new BABYLON.ArcRotateCamera('camera', 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), scene);
+      // var camera = new BABYLON.FreeCamera('camera',new BABYLON.Vector3(10,-10,10),scene)
+
+      var sphere = new BABYLON.Mesh.CreateSphere('sphere', 20, 3, scene)
+      sphere.position = BABYLON.Vector3.Zero();
+      var material = new BABYLON.StandardMaterial('mat', scene);
+      material.diffuseTexture = new BABYLON.Texture('./img/3.jpg', scene);
+      sphere.material = material;
+
+      // var plane = new BABYLON.Mesh.CreatePlane('plane', 10, scene);
+      // var ground = new BABYLON.Mesh.CreateGround('plane',6,6,2, scene);
+      var ground = new BABYLON.Mesh.CreateBox("box", 4, scene)
+      ground.position = new BABYLON.Vector3(0, -4, 0);
+      // ground.scaling.y = 0.01;
+      // plane.rotation.x = 1.5
+
+      // var groundMaterial = new BABYLON.StandardMaterial('groundmat', scene);
+      // ground.material = groundMaterial;
+      // mirrorMaterial.backFaceCulling = false;  
+
+      // mirrorPlane
+
+      var mirrorMaterial = new BABYLON.StandardMaterial("mirror", scene);
+      // mirrorMaterial.emissiveColor = BABYLON.Color3.Black();
+      // mirrorMaterial.diffuseColor = BABYLON.Color3.Black();
+      
+
+      // mirrorMaterial.specularColor = BABYLON.Color3.Black();
+
+      // mirrorMaterial.alpha = 0.4;
+      mirrorMaterial.reflectionTexture = new BABYLON.MirrorTexture("mirrorTexture", 512, scene, true);
+      mirrorMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, -1, 0, -2);
+      mirrorMaterial.reflectionTexture.renderList = [sphere];
+      mirrorMaterial.position = new BABYLON.Vector3(0, -5, 0)
+      // mirrorMaterial.reflectionTexture.level = 1.0;
+      // mirrorMaterial.reflectionTexture.samples = 8;
+      ground.material = mirrorMaterial;
+
+      // probe
+
+      // var probe = new BABYLON.ReflectionProbe("main", 512, scene);
+      // probe.renderList.push(sphere);
+      // groundMaterial.refractionTexture = probe.cubeTexture;
+      // ground.alpha = .4;
+
+
+      // groundMaterial.refractionFresnelParameters = new BABYLON.FresnelParameters();
+      // groundMaterial.refractionFresnelParameters.bias = 0.5;
+      // groundMaterial.refractionFresnelParameters.power = 16;
+      // ground.refractionFresnelParameters.leftColor = BABYLON.Color3.Black();
+      // ground.refractionFresnelParameters.rightColor = BABYLON.Color3.White();
+      // ground.indexOfRefraction = 1.05;
+
+
+      // FresnelParameters
+
+      // material.reflectionFresnelParameters = new BABYLON.FresnelParameters();
+      // material.reflectionFresnelParameters.leftColor = BABYLON.Color3.White();
+      // material.reflectionFresnelParameters.rightColor = BABYLON.Color3.Black();
+      // material.reflectionFresnelParameters.leftColor = BABYLON.Color3.Black();
+      // material.reflectionFresnelParameters.rightColor = BABYLON.Color3.White();
+      // material.reflectionFresnelParameters.power = 1;
+
+      scene.activeCamera = camera;
+      // camera.setTarget(BABYLON.Vector3.Zero());
+      camera.attachControl(canvas, true);
+      return scene;
+    }
+
+
+
+
+
+
+
+    var scene = createScene();
+    engine.runRenderLoop(function () {
+      // scene.activeCamera.alpha += .01;
+      scene.render()
+    })
+
+    window.addEventListener('resize', function () {
+      engine.resize()
+    })
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+  <script>
+    var test = {  
+      _Name : "Lilei",  
+      _Age : 20,  
+        
+      //_Name的只读  
+        
+      get name() {return this._Name;},  
+      //_Age的读写  
+      set age(age) {this._Age = age;},   
+      get age() {return this._Age;}  
+    }
+
+    // var test2 = function Person(name, age) { 
+function Person(name, age) { 
+      this.name = name;
+      this.age = age;
+      this.gender = 'woman'
+      this.sayHello = function () {
+        document.write('hello');
+      }
+      Person.prototype.gender = 'man'
+      // Person.age = 'FYGFYG';
+      if( !this.sayName){
+      // if( typeof this.sayName != 'function'){
+        Person.prototype.sayName = function () {
+          document.write(this.name)
+        };
+        Person.prototype.sayAge = function () {
+          document.write(this.age)
+        };
+      }
+     }
+    
+
+      var me =new Person('fyg line1',25);
+      me.sayName();
+      me.sayAge();
+      document.write(me.gender)
+      me.sayHello();
+
+      var you = new Person('FYG', 225)
+      you.sayName()
+      you.sayHello()
+      document.write(you.gender)
+
+      var three = Person("three",100);
+      window.sayHello();
+  </script>
+  </body>
+</html>

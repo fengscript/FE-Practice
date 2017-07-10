@@ -11,24 +11,47 @@ var light = new Babylon.HemisphericLight()
 ```
 
 1. PointLight
-```
+```JS
 PointLight(name, position, scene)
 ```
-
-2. SpotLight
+如
+```JS
+var light0 = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(1, 10, 1), scene);
+light0.diffuse = new BABYLON.Color3(1, 0, 0);
+light0.specular = new BABYLON.Color3(1, 1, 1);
 ```
+2. SpotLight
+```JS
 SpotLight(name, position, direction, angle, exponent, scene)
 ```
-
-3. DirectionalLight
+> The angle defines the size (field of illumination) of the spotlight's conical beam (in radians), and the exponent defines the speed of the decay of the light with distance (the light's 'reach distance'). Just like the other lights, you can control the color of the light with the diffuse and specular properties:
+如
+```JS
+var light0 = new BABYLON.SpotLight("Spot0", new BABYLON.Vector3(0, 30, -10), new BABYLON.Vector3(0, -1, 0), 0.8, 2, scene);
+light0.diffuse = new BABYLON.Color3(1, 0, 0);
+light0.specular = new BABYLON.Color3(1, 1, 1);
 ```
+3. DirectionalLight
+```js
 new DirectionalLight(name, direction, scene)
+```
+如
+```js
+var light0 = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
+light0.diffuse = new BABYLON.Color3(1, 0, 0);
+light0.specular = new BABYLON.Color3(1, 1, 1);
 ```
 4. HemisphericLight
 ```js
 new HemisphericLight(name, direction, scene)
 ```
-
+如
+```JS
+var light0 = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
+light0.diffuse = new BABYLON.Color3(1, 1, 1);
+light0.specular = new BABYLON.Color3(1, 1, 1);
+light0.groundColor = new BABYLON.Color3(0, 0, 0);
+```
 光源不是必需的，材料可以自发光
 ## 3种主要相机
 1. ArcRotateCamera

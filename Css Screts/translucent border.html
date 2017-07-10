@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+  body{background:#000010;}
+  
+  .a{width: 20em;height: 20em;
+      margin: 2em;
+      border: 1em solid hsla(0,10%,100%,.5);
+      background: white;
+    }
+  
+  .a:last-child{
+      background-clip: padding-box;
+    }
+  </style>
+
+<div class="a">默认情况下，背景会延伸到边框所在的区域下层</div>
+
+
+<div class="a"> background-clip 属性初始值是 border-box ，意味着背景会被元素的 border box（边框的外沿框）裁切掉。如果不希望背景侵入边框所在的范围，把它的值设为 padding-box ，这样浏览器就会用内边距的外沿来把背景裁切掉。</div>
+</body>
+</html>

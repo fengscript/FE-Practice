@@ -80,18 +80,18 @@ var obj = new Babylon.Mesh.CreateSth()
 
 1. box
    BABYLON.Mesh.CreateBox(name, size, scene, updatable, sideOrientation)
-```
+```js
 var box = BABYLON.Mesh.CreateBox('box1', 2, scene)
 ```
 
 2. sphere
 CreateSphere(name, segments, diameter, scene, updatable, sideOrientation)
-```
+```js
 var sphere = BABYLON.Mesh.CreateSphere("sphere", 10.0, 10.0, 场景, false,  BABYLON.Mesh.DEFAULTSIDE);
 ```
 名字, 细分段数 (高度细节或不需), 大小, 将被放到的场景, 是否可更新?(如果该网格后面必须被更新) 和可选的面朝向
 后面两个参数可省略，为：
-```
+```js
 var sphere = BABYLON.Mesh.CreateSphere("sphere", 10.0, 10.0, scene);
 ```
 
@@ -115,14 +115,14 @@ var disc = BABYLON.Mesh.CreateDisc("disc", 5, 30, scene);
 根据边数不同可以产生各种多边形
 5. cylinder
 CreateCylinder(name, height, diameterTop, diameterBottom, tessellation, subdivisions, scene, updatable, sideOrientation) 
-```
+```js
 var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 3, 3, 3, 6, 1, 场景, false, BABYLON.Mesh.DEFAULTSIDE);
 //名称, 高度, 顶直径, 底直径, 边数, 高向细分度, 场景, 可更新否和可选的朝向
 
 var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 3, 3, 3, 6, 1, scene);
 ```
 哈，圆锥
-```
+```js
 BABYLON.Mesh.CreateCylinder("cylinder", 3, 0, 3, 40, 2, scene);
 ```
 
@@ -832,11 +832,12 @@ animation.addEvent(event1);
 
 
 ## 渲染生命周期
-'''js
+
+```js
 scene.onDispose = function(){
   //do something
 }
-'''
+```
 - onDispose 场景配置完成后执行
 - beforeRender  场景渲染之前执行
 - afterRender 场景渲染之后执行

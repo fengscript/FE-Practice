@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    ul{
+        width: 300px;
+        height: 300px;
+        border: 2px solid red;
+    }
+    li{
+        margin-top: 20px;
+        background: paleturquoise;
+        height: 30px;
+        line-height: 30px;
+    }
+    </style>
+
+</head>
+<body>
+    <ul>ul
+        <li id="a">1</li>
+        <li id="b">2</li>
+        <li id="c">3</li>
+        <li id="d">4</li>
+        <li id="e">5</li>
+    </ul>
+
+<div></div>
+
+<script>
+    var ul = document.getElementsByTagName('ul')[0];
+    var li = document.getElementsByTagName('li');
+    var div = document.getElementsByTagName('div')[0];
+    ul.addEventListener('click', function (e) {
+        var e = e || window.event;
+            var target = e.target || e.srcElement;
+            if(target.nodeName.toLocaleLowerCase() == "li"){
+                switch (target.id) {
+                    case 'a':
+                    console.log('a');
+                        break;
+                    case 'c':
+                        alert("c")
+                        break;
+                    default:
+                        break;
+                }
+            }
+    },false);
+
+    function write(text) {
+        div.textContent = "I'm  "+text;
+    };
+</script>
+</body>
+</html>

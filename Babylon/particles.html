@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./babylon.custom.js"></script>
+
+
+  <style>
+    html,
+    body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0
+    }
+
+    #box {
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+  </style>
+
+</head>
+
+<body>
+  <canvas id="box"></canvas>
+<a href="http://www.babylonjs-playground.com/#KNE0O#4">http://www.babylonjs-playground.com/#KNE0O#4</a>
+playground
+<a href="http://www.babylonjs-playground.com/?12">http://www.babylonjs-playground.com/?12</a>
+  <script>
+    var canvas = document.getElementById('box')
+    var engine = new BABYLON.Engine(canvas, true);
+
+    var createScene = function () {
+      var scene = new BABYLON.Scene(engine);
+      // var light = new BABYLON.SpotLight('light',new BABYLON.Vector3(0, 30, -10),new BABYLON.Vector3(0,-20,0),0.8,2,scene);
+
+      // var light2 = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
+      var light0 = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
+
+      var camera = new BABYLON.ArcRotateCamera('camera', 1, 0.8, 30, new BABYLON.Vector3(0, 0, 0), scene);
+      // var camera = new BABYLON.FreeCamera('camera',new BABYLON.Vector3(10,-10,10),scene)
+      var ground = BABYLON.Mesh.CreateGround("ground",20,20,1,scene);
+          ground.position.y = -1.5;
+          ground.material = new BABYLON.StandardMaterial("groundMat", scene);
+          ground.material.diffuseColor = new BABYLON.Color3(.4, .4, .4);
+          // ground.material.emissiveColor = new BABYLON.Color3(.4, .4, .4);
+      var sphere = BABYLON.Mesh.CreateSphere('sphere', 20, 3, scene);
+      sphere.material = new BABYLON.StandardMaterial("sphereMat", scene);
+
+     
+//  Particles
+//  1 定义一个粒子发射器  也可以是一个 vector3点  这里直接用上面的 sphere 
+//  2 创建一个粒子系统
+ var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+//  3 设置粒子的材质
+particleSystem.particleTexture = new BABYLON.Texture("img/flare.png", scene);
+particleSystem.textureMask = new BABYLON.Color4(0.1, 0.8, 0.8, 1.0);
+//  4 设置发射器
+particleSystem.emitter = sphere;
+
+
+ particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
+particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
+
+ particleSystem.start();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      scene.registerBeforeRender(function () {
+        
+      })
+
+
+      scene.activeCamera = camera;
+      // camera.setTarget(BABYLON.Vector3.Zero());
+      camera.attachControl(canvas, true);
+      return scene;
+    }
+
+
+
+
+    var scene = createScene();
+    engine.runRenderLoop(function () {
+
+      scene.render()
+    })
+
+    window.addEventListener('resize', function () {
+      engine.resize()
+    })
+  </script>
+
+
+</body>
+
+</html>

@@ -11,47 +11,24 @@ var light = new Babylon.HemisphericLight()
 ```
 
 1. PointLight
-```JS
+```
 PointLight(name, position, scene)
 ```
-如
-```JS
-var light0 = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(1, 10, 1), scene);
-light0.diffuse = new BABYLON.Color3(1, 0, 0);
-light0.specular = new BABYLON.Color3(1, 1, 1);
-```
+
 2. SpotLight
-```JS
+```
 SpotLight(name, position, direction, angle, exponent, scene)
 ```
-> The angle defines the size (field of illumination) of the spotlight's conical beam (in radians), and the exponent defines the speed of the decay of the light with distance (the light's 'reach distance'). Just like the other lights, you can control the color of the light with the diffuse and specular properties:
-如
-```JS
-var light0 = new BABYLON.SpotLight("Spot0", new BABYLON.Vector3(0, 30, -10), new BABYLON.Vector3(0, -1, 0), 0.8, 2, scene);
-light0.diffuse = new BABYLON.Color3(1, 0, 0);
-light0.specular = new BABYLON.Color3(1, 1, 1);
-```
+
 3. DirectionalLight
-```js
-new DirectionalLight(name, direction, scene)
 ```
-如
-```js
-var light0 = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
-light0.diffuse = new BABYLON.Color3(1, 0, 0);
-light0.specular = new BABYLON.Color3(1, 1, 1);
+new DirectionalLight(name, direction, scene)
 ```
 4. HemisphericLight
 ```js
 new HemisphericLight(name, direction, scene)
 ```
-如
-```JS
-var light0 = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
-light0.diffuse = new BABYLON.Color3(1, 1, 1);
-light0.specular = new BABYLON.Color3(1, 1, 1);
-light0.groundColor = new BABYLON.Color3(0, 0, 0);
-```
+
 光源不是必需的，材料可以自发光
 ## 3种主要相机
 1. ArcRotateCamera
@@ -80,18 +57,18 @@ var obj = new Babylon.Mesh.CreateSth()
 
 1. box
    BABYLON.Mesh.CreateBox(name, size, scene, updatable, sideOrientation)
-```js
+```
 var box = BABYLON.Mesh.CreateBox('box1', 2, scene)
 ```
 
 2. sphere
 CreateSphere(name, segments, diameter, scene, updatable, sideOrientation)
-```js
+```
 var sphere = BABYLON.Mesh.CreateSphere("sphere", 10.0, 10.0, 场景, false,  BABYLON.Mesh.DEFAULTSIDE);
 ```
 名字, 细分段数 (高度细节或不需), 大小, 将被放到的场景, 是否可更新?(如果该网格后面必须被更新) 和可选的面朝向
 后面两个参数可省略，为：
-```js
+```
 var sphere = BABYLON.Mesh.CreateSphere("sphere", 10.0, 10.0, scene);
 ```
 
@@ -115,14 +92,14 @@ var disc = BABYLON.Mesh.CreateDisc("disc", 5, 30, scene);
 根据边数不同可以产生各种多边形
 5. cylinder
 CreateCylinder(name, height, diameterTop, diameterBottom, tessellation, subdivisions, scene, updatable, sideOrientation) 
-```js
+```
 var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 3, 3, 3, 6, 1, 场景, false, BABYLON.Mesh.DEFAULTSIDE);
 //名称, 高度, 顶直径, 底直径, 边数, 高向细分度, 场景, 可更新否和可选的朝向
 
 var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 3, 3, 3, 6, 1, scene);
 ```
 哈，圆锥
-```js
+```
 BABYLON.Mesh.CreateCylinder("cylinder", 3, 0, 3, 40, 2, scene);
 ```
 
@@ -838,6 +815,7 @@ scene.onDispose = function(){
   //do something
 }
 ```
+
 - onDispose 场景配置完成后执行
 - beforeRender  场景渲染之前执行
 - afterRender 场景渲染之后执行
@@ -1173,45 +1151,6 @@ BABYLON.RayHelper.CreateAndShow(ray, scene, new BABYLON.Color3(1, 1, 0.1));
 var rayHelper = new BABYLON.RayHelper(ray);
 rayHelper.show(scene);
 ```
-
-
-# 10 Particle
-## 10.1 
-```js
-/* 1 创建粒子发射器 */
-var fountain = BABYLON.Mesh.CreateBox("fountain", 1.0, scene);
-// 发射器也可以是一个 vector3 的点
-
-/* 2 创建一个新的 未渲染 粒子系统 */
-var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene, customEffect);
-// new ParticleSystem(name, capacity, scene, customEffect)
-
-/* 3 设置粒子纹理 */
-// 每个粒子有相同的纹理模式 一个场景可以有多个粒子系统 每个粒子系统只能设置一种纹理模式  多个粒子系统可以共用一套发射器
-particleSystem.particleTexture = new BABYLON.Texture("Flare.png", scene);
-particleSystem.textureMask = new BABYLON.Color4(0.1, 0.8, 0.8, 1.0);
-
-/* 4 给粒子系统设置发射器 */
-
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

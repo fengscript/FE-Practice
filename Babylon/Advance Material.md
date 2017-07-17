@@ -1,14 +1,26 @@
 
 # Advance Material
 [http://doc.babylonjs.com/tutorials/advanced_texturing](http://doc.babylonjs.com/tutorials/advanced_texturing)
+
+http://www.babylonjs-playground.com/#EKFLA#13
 ## Mirror
+MirrorTexture 用于规则mesh
+
+ReflectionProbe 用于不规则mesh
+
+CubeTexture 用于没有mesh强行反射。。
 ### MirrorTexture
 https://www.babylonjs-playground.com/#12MKMN#0
 ```JS
+//Creation of a mirror material
 var mirrorMaterial = new BABYLON.StandardMaterial("texture4", scene);
-mirrorMaterial.reflectionTexture = new BABYLON.MirrorTexture("mirror", 512, scene, true);
+mirrorMaterial.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
+mirrorMaterial.reflectionTexture = new BABYLON.MirrorTexture("mirror", 512, scene, true); //Create a mirror texture
 mirrorMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, -1.0, 0, -10.0);
-mirrorMaterial.reflectionTexture.renderList = [sphere1, sphere2];
+mirrorMaterial.reflectionTexture.renderList = [sphere1, sphere2, sphere3, videoPlane];
+mirrorMaterial.reflectionTexture.level = 0.6;//Select the level (0.0 > 1.0) of the reflection
+    
+mirrorMaterial.reflectionTexture.depth = 0.6;
 mirror.blurKernel = 32
 mirror.blurRatio = 0.5
 ```
@@ -31,6 +43,12 @@ var probe = new BABYLON.ReflectionProbe("main", 512, scene);
 	mainMaterial.indexOfRefraction = 1.05;
 ```
 ### CubeTexture - skybox
+6张图片
+
+*n_x | y | z 是对应轴的相反方向
+
+*p_x | y | z 是对应轴的正方向
+
 http://www.babylonjs-playground.com/#IRZYH
 ```JS
 var reflectionTexture = new BABYLON.CubeTexture("images/sky1/ceramic" , scene);

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./babylon.custom.js"></script>
+
+
+  <style>
+    html,
+    body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0
+    }
+
+    #box {
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+  </style>
+
+</head>
+
+<body>
+  <canvas id="box"></canvas>
+<a href="http://www.babylonjs-playground.com/#KNE0O#4"></a>
+  <script>
+    var canvas = document.getElementById('box')
+    var engine = new BABYLON.Engine(canvas, true);
+
+    var createScene = function () {
+      var scene = new BABYLON.Scene(engine);
+      // var light = new BABYLON.SpotLight('light',new BABYLON.Vector3(0, 30, -10),new BABYLON.Vector3(0,-20,0),0.8,2,scene);
+
+      // var light2 = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
+      // var light0 = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
+
+      var camera = new BABYLON.ArcRotateCamera('camera', 1, 0.8, 30, new BABYLON.Vector3(0, 0, 0), scene);
+      // var camera = new BABYLON.FreeCamera('camera',new BABYLON.Vector3(10,-10,10),scene)
+      var ground = BABYLON.Mesh.CreateGround("ground",20,20,1,scene);
+          ground.position.y = -1.5;
+          ground.material = new BABYLON.StandardMaterial("groundMat", scene);
+          // ground.material.diffuseColor = new BABYLON.Color3(.4, .4, .4);
+          ground.material.emissiveColor = new BABYLON.Color3(.4, .4, .4);
+      var sphere = BABYLON.Mesh.CreateSphere('sphere', 20, 3, scene);
+      sphere.material = new BABYLON.StandardMaterial("sphereMat", scene);
+      sphere.material.emissiveColor = new BABYLON.Color3(1,1,1);
+      // sphere.position = BABYLON.Vector3.Zero();
+      // sphere.position = BABYLON.Vector3.Zero();
+
+      var box = BABYLON.Mesh.CreateBox("box", 2, scene)
+      var matetrialBox = new BABYLON.StandardMaterial("box", scene);
+      box.material = matetrialBox;
+      box.position = new BABYLON.Vector3(4, 0, 4);
+      matetrialBox.emissiveColor = new BABYLON.Color3(1,1,1);
+
+      var line = BABYLON.Mesh.CreateLines("lines", [
+        new BABYLON.Vector3(0, 0, 0),
+        new BABYLON.Vector3(10, 0, 0),
+      ], scene);
+      // line.position = BABYLON.Vector3.Zero();
+      line.parent = sphere;
+
+
+      
+      var mouseMove = function () {
+        var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+       if (pickResult.hit) {
+          console.log(pickResult);
+          var diffX = pickResult.pickedPoint.x - line.position.x;
+          var diffY = pickResult.pickedPoint.z - line.position.z;
+          sphere.rotation.y = Math.atan2(diffX,diffY);
+        }
+      }
+
+      scene.onPointerMove = function () {
+        mouseMove();
+      };
+
+
+
+      var castRay = function () {
+        var origin = sphere.position;
+
+        var forward = new BABYLON.Vector3(0, 0, 1);
+        forward = vecToLocal(forward, sphere);
+
+        var direction = forward.subtract(origin);
+        direction = BABYLON.Vector3.Normalize(direction);
+        var length = 100;
+        var ray = new BABYLON.Ray(origin, direction, length);
+        // ray.show(scene, new BABYLON.Color3(1, 1, 0.1));
+
+        var hit = scene.pickWithRay(ray);
+        if (hit.pickedMesh) {
+          var r = hit.pickedMesh.material.diffuseColor.r;
+        
+            hit.pickedMesh.material.emissiveColor.r += 0.01;
+
+        }
+      }
+      sphere.isPickable = false;
+      // box.isPickable = false;
+
+      // function castRay() {
+      //   var origin = sphere.position;
+
+      //   var forward = new BABYLON.Vector3(0, 0, 1);
+      //   forward = vecToLocal(forward, box);
+
+      //   var direction = forward.subtract(origin);
+      //   direction = BABYLON.Vector3.Normalize(direction);
+
+      //   var length = 100;
+
+      //   var ray = new BABYLON.Ray(origin, direction, length);
+      //   ray.show(scene, new BABYLON.Color3(1, 1, 0.1));
+
+      //   var hit = scene.pickWithRay(ray);
+
+      //   if (hit.pickedMesh) {
+      //     var r = hit.pickedMesh.material.diffuseColor.r;
+      //     if(r <= 1){
+      //       hit.pickedMesh.material.diffuseColor.r += 0.01;
+      //     }else{
+      //       return false;
+      //     }
+        // }
+      // }
+
+      function vecToLocal(vector, mesh) {
+        var m = mesh.getWorldMatrix();
+        var v = BABYLON.Vector3.TransformCoordinates(vector, m);
+        return v;
+      }
+
+      scene.registerBeforeRender(function () {
+        castRay();
+      })
+
+
+      scene.activeCamera = camera;
+      // camera.setTarget(BABYLON.Vector3.Zero());
+      camera.attachControl(canvas, true);
+      return scene;
+    }
+
+
+
+
+    var scene = createScene();
+    engine.runRenderLoop(function () {
+
+      scene.render()
+    })
+
+    window.addEventListener('resize', function () {
+      engine.resize()
+    })
+  </script>
+
+
+</body>
+
+</html>

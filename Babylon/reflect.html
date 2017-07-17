@@ -47,48 +47,67 @@
 
       var sphere = new BABYLON.Mesh.CreateSphere('sphere', 20, 3, scene)
       sphere.position = BABYLON.Vector3.Zero();
-
-
       var material = new BABYLON.StandardMaterial('mat', scene);
-      // material.diffuseTexture = new BABYLON.CubeTexture('./img/sunny/sunny', scene);
-    material.reflectionTexture = new BABYLON.CubeTexture('./img/sunny/sunny', scene);
-    // material.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    material.diffuseColor = BABYLON.Color3.Black();
-    material.emissiveColor = BABYLON.Color3.Black();
-    material.specularColor = BABYLON.Color3.Black();
-    
-    // material.alpha = 0.5;
-       material.specularPower = 16;
+      material.diffuseTexture = new BABYLON.Texture('./img/3.jpg', scene);
       sphere.material = material;
-      sphere.disableLighting = true;
 
       var ground = new BABYLON.Mesh.CreatePlane('plane', 10, scene);
       // var ground = new BABYLON.Mesh.CreateGround('plane',6,6,2, scene);
       // var ground = new BABYLON.Mesh.CreateBox("box", 4, scene)
       ground.position = new BABYLON.Vector3(0, -4, 0);
-      ground.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
+      // ground.scaling.y = 0.01;
+      // ground.rotation.x = 1.5
+ground.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
+      // var groundMaterial = new BABYLON.StandardMaterial('groundmat', scene);
+      // ground.material = groundMaterial;
+      
 
-      // skybox
-      var sky = BABYLON.Mesh.CreateBox('sky',100,scene);
-      var skyMaterial = new BABYLON.StandardMaterial("skybox", scene);
-      skyMaterial.backFaceCulling = false;
-      skyMaterial.reflectionTexture = new BABYLON.CubeTexture('./img/sunny/sunny', scene);
-      skyMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-      skyMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-      skyMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-      skyMaterial.disableLighting = true;
-      sky.material =skyMaterial;
+
+
+      var mirrorMaterial = new BABYLON.StandardMaterial("mirror", scene);
+      // mirrorMaterial.emissiveColor = BABYLON.Color3.Black();
+      // mirrorMaterial.diffuseColor = BABYLON.Color3.Black();
+      
+
+      // mirrorMaterial.specularColor = BABYLON.Color3.Black();
+
+      // mirrorMaterial.alpha = 0.4;
+      mirrorMaterial.reflectionTexture = new BABYLON.MirrorTexture("mirrorTexture", 512, scene, true);
+      mirrorMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, -1, 0, -2);
+      mirrorMaterial.reflectionTexture.renderList = [sphere];
+      mirrorMaterial.position = new BABYLON.Vector3(0, -5, 0)
+      // mirrorMaterial.reflectionTexture.level = 1.0;
+      // mirrorMaterial.reflectionTexture.samples = 8;
+      ground.material = mirrorMaterial;
+      mirrorMaterial.backFaceCulling = false; 
+      mirrorMaterial.diffuseColor = new BABYLON.Color3(.4, .4, .4);
 
       
+      
+      // probe
+
+      // var probe = new BABYLON.ReflectionProbe("main", 512, scene);
+      // probe.renderList.push(sphere);
+      // groundMaterial.refractionTexture = probe.cubeTexture;
+      // ground.alpha = .4;
+
+
+      // groundMaterial.refractionFresnelParameters = new BABYLON.FresnelParameters();
+      // groundMaterial.refractionFresnelParameters.bias = 0.5;
+      // groundMaterial.refractionFresnelParameters.power = 16;
+      // ground.refractionFresnelParameters.leftColor = BABYLON.Color3.Black();
+      // ground.refractionFresnelParameters.rightColor = BABYLON.Color3.White();
+      // ground.indexOfRefraction = 1.05;
+
+
       // FresnelParameters
 
-      material.reflectionFresnelParameters = new BABYLON.FresnelParameters();
+      // material.reflectionFresnelParameters = new BABYLON.FresnelParameters();
       // material.reflectionFresnelParameters.leftColor = BABYLON.Color3.White();
       // material.reflectionFresnelParameters.rightColor = BABYLON.Color3.Black();
-      material.reflectionFresnelParameters.leftColor = BABYLON.Color3.Black();
-      material.reflectionFresnelParameters.rightColor = BABYLON.Color3.White();
-      // material.reflectionFresnelParameters.power = 5;
-      material.reflectionFresnelParameters.bias = 0.1;
+      // material.reflectionFresnelParameters.leftColor = BABYLON.Color3.Black();
+      // material.reflectionFresnelParameters.rightColor = BABYLON.Color3.White();
+      // material.reflectionFresnelParameters.power = 1;
 
       scene.activeCamera = camera;
       // camera.setTarget(BABYLON.Vector3.Zero());

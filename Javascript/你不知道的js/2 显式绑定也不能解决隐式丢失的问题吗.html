@@ -26,8 +26,9 @@ a:3
 
   var a='全局'
 
-bar.bind(obj)
-bar()// 还是输出了全局
+bar.call(obj)
+bar()
+// 还是输出了全局
   </script>
 
 </body>

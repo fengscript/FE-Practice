@@ -58,7 +58,7 @@ playground
 //  Particles
 //  1 定义一个粒子发射器  也可以是一个 vector3点  这里直接用上面的 sphere 
 //  2 创建一个粒子系统
- var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+ var particleSystem = new BABYLON.ParticleSystem("particles", 20, scene);
 //  3 设置粒子的材质
 particleSystem.particleTexture = new BABYLON.Texture("img/particle-fog.png", scene);
 // particleSystem.textureMask = new BABYLON.Color4(0.1, 0.8, 0.8, 1.0);
@@ -78,12 +78,12 @@ particleSystem.maxEmitBox = new BABYLON.Vector3(2, 10, 0);
 //给个颜色  Colors of all particles (splited in 2 + specific color before dispose)
 // particleSystem.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 1.0);
 // particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
-particleSystem.color1 = new BABYLON.Color4(1, 1, 1.0, 1.0);
-particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+particleSystem.color1 = new BABYLON.Color4(1, 1, 1, .1);
+particleSystem.colorDead = new BABYLON.Color4(1, 1, 1, 0.0);
 
 // Size of each particle (random between...)
-particleSystem.minSize = 0.05;
-particleSystem.maxSize = 30;
+particleSystem.minSize = 4;
+particleSystem.maxSize = 5;
 
 // Life time of each particle (random between...)
 // particleSystem.minLifeTime = 1;
@@ -92,9 +92,10 @@ particleSystem.maxSize = 30;
 particleSystem.emitRate = 1300;
 // 一次性发射， 会覆盖 emitRate
 // particleSystem.manualEmitCount = 300;
+
 // BLENDMODE_ONEONE 初始颜色不适用 alpha 叠加到最终颜色上
 // BLENDMODE_STANDARD 适用粒子的 alpha 渲染颜色和粒子颜色
-particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
 
 //Gravity
 // 火焰一般在 Y 轴

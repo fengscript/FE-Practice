@@ -1,35 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
 </head>
+
 <body>
 
 
 
   <script type="text/javascript">
-  function foo() {
-    console.log(this.a)
-  }
-var obj = {
-a:2,
-foo:foo
-}
-var obj2 = {
-a:3
-}
+    function foo() {
+      console.log(this.a)
+    }
+    var obj = {
+      a: 2,
+      foo: foo
+    }
 
-  var bar = obj.foo;
 
-  var a='全局'
+    var bar = obj.foo;
 
-bar.call(obj)
-bar()
-// 还是输出了全局
+    var a = '全局';
+
+    bar.call(obj)
+    bar();
+    // 还是输出了全局??
+
+
+    function foo2() {
+      console.log(this.a);
+    };
+
+    var obj2 = {
+      a2: 2,
+      foo2: foo2
+    };
+
+    var bar2 = foo2.call(obj2);
+
+    var a2 = '全局';
+
+    // bar2.call(obj);
+    bar2();
+
   </script>
-
 </body>
+
 </html>

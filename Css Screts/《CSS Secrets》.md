@@ -12,7 +12,7 @@ function $$(selector, context) {
 ## 2 一些回退机制
 - 有厂商前缀的语法，保持标准语法在最后
 - 指定一个渐变色作为背景时候，应该在前面添加一行实色背景的声明，这个实色背景最好取渐变色的平均色值
-- Modernizr    ? 
+- Modernizr    ?
 - @supports
 - 或者，手动检测属性是否被支持，思路是在任一元素的element.style 对象上检查该属性是否存在：
 
@@ -26,7 +26,7 @@ function testProperty(property) {
 	root.classList.add('no-' + property.toLowerCase());
 	return false;
 }
-```	
+```
 
 但是这样子检测时候会改变元素样式，所以来一个 隐藏的元素检测：
 ```JS
@@ -51,7 +51,7 @@ function testValue(id, value, property) {
 	line-height: 1.5;
 
 * 易于维护和代码精简不可兼得
-比如一个 
+比如一个
 border-width:10px 10px 10px 0;
 可以写成：
 border-width:10px;
@@ -404,6 +404,22 @@ animation: ants 12s linear infinite;
 }
 ```
 
+```
+# background 的简写
+background-color
+background-position：top top | x% y% | xpos ypos
+background-size：length | percentage | cover | contain;
+    cover:把背景图像扩展至足够大，以使背景图像完全覆盖背景区域。
+    cotain：把图像图像扩展至最大尺寸，以使其宽度和高度完全适应内容区域。
+background-repeat
+background-origin：padding-box | border-box | content-box;
+    规定背景图片的定位区域，背景图像相对于内边距框、边框盒、内容框来定位
+background-clip：border-box | padding-box | content-box;
+    规定背景的绘制区域，背景被裁剪到边框盒、内边距框、内容框。
+background-attachment: scroll | fixed;
+    页面的其余部分滚动时，背景图像不会移动
+background-image
+```
 
 # 3 形状
 ## 1 自适应椭圆
@@ -417,16 +433,17 @@ animation: ants 12s linear infinite;
 
 
 
+# 8 过渡与动画
+## 缓动效果
 
+> 用 height 而不是变形属性来实现提示框的展示动画，可能会发现从 height: 0（或其他值）到 height: auto 的过渡并不会生效。这是因为 auto是一个关键字，无法解析为一个可动画的值。在这种场景下，可以改为对 max-height 属性进行过渡，并给这个属性指定一个足够大的值来作为展示状态。
 
+```CSS
+input:not(:focus) + .callout { transform: scale(0); }
+.callout {
+transform-origin: 1.4em -.4em;
+transition: .5s cubic-bezier(.25,.1,.3,1.5);
+}
+```
 
-
-
-
-
-
-
-
-
-
-
+>

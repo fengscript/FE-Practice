@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <h2>easing function</h2>
+  <section id="container">
+    <ball></ball>
+  </section>
+  <style>
+    #container {
+      width: 80px;
+      height: 500px;
+      border: 1px solid greenyellow;
+      text-align: center;
+    }
+
+    ball {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      border: 1px solid red;
+      border-radius: 50%;
+
+      animation: 3s bounce cubic-bezier(.1, .25, 1, .25) forwards;
+    }
+
+    @keyframes bounce {
+      60%,
+      80%,
+      to {
+        transform: translateY(400px);
+        animation-timing-function: ease;
+      }
+      70% {
+        transform: translateY(300px);
+      }
+      90% {
+        transform: translateY(360px);
+      }
+    }
+  </style>
+  <h2>easing function</h2>
+  <input type="text" name="a" value="">
+  <div class="callout">一些提示文字</div>
+  <style>
+    input:not(:focus)+.callout {
+      transform: scale(0);
+      /* transition-timing-function: ease; */
+      /* 如果没有上面这句， 当 blur 触发时，因为是同一个缓动函数 cubic-bezier(.25, .1, .3, 1.5) 所以会scale到 1.5去，所以最终消失掉时候还会放大，再消失，所以需要再加一个缓动函数覆盖掉他*/
+
+      transition: .25s;
+      /* 因为 blur 时候， 按上上面那句，是ease走的（transition默认的 animation-timing-function 就是 ease），持续时间 0.5s，但是之前focus时候没有按ease走了0.5秒，这里按ease走了0.5秒就感觉  blur 时候变慢了，所以需要修改一下 blur 时候的animation-duration,又因为同时需要修改 timing-function，所以用一个 transition 覆盖掉（默认会应用 ease）*/
+    }
+
+    .callout {
+      transform-origin: 1.4em -.4em;
+      transition: .5s cubic-bezier(.25, .1, .3, 1.5) transform;
+      /* 防止颜色之类的属性被应用上 错误的 缓动函数，这里指定一下 transition-property 为 transform */
+    }
+    /*甚至可以通过transition-delay 属性把各个属性的过渡过程排成列队，这个属性的值实际上就是 transition简写属性中的第二个时间值。举例 来 说， 如 果 width 和 height都需要过渡效果，而且你希望高度先变化然后宽度再变化（很多弹出框脚本库已经把这种动画效果推广开来了），就可以这样写： transition: .5s height,.8s .5s width; （ 也 就 是 说，让 width 过渡的延时正好等于height 过渡的持续时间）。  */
+</style>
+
+</body>
+
+</html>

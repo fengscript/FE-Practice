@@ -43,29 +43,29 @@ function testValue(id, value, property) {
 ```
 ## 3 一些技巧
 * 当某些值相互依赖时，应该把它们的相互关系用代码表达出来
-比如：
-	font-size: 20px;
-	line-height: 30px;
-可以换成：
-	font-size: 20px;
-	line-height: 1.5;
+  比如：
+  font-size: 20px;
+  line-height: 30px;
+  可以换成：
+  font-size: 20px;
+  line-height: 1.5;
 
 * 易于维护和代码精简不可兼得
-比如一个
-border-width:10px 10px 10px 0;
-可以写成：
-border-width:10px;
-border-left-width:0;
+  比如一个
+  border-width:10px 10px 10px 0;
+  可以写成：
+  border-width:10px;
+  border-left-width:0;
 
 * currentColor
-hr:{
-	height: .5em;
-	background:currentColor;
-}
+  hr:{
+  height: .5em;
+  background:currentColor;
+  }
 
 * inherit 总是绑定到父元素的计算值
 * 要给按钮实现 hover、click的明暗色调变化时，可以叠加一个半透明的黑色或者白色：
-`background: #58a linear-gradient(hsla(0,0%,100%,.2),transparent);`
+  `background: #58a linear-gradient(hsla(0,0%,100%,.2),transparent);`
 
 * inherit 总是会绑定到父元素的计算值
 * 合理简写，保持代码 DRY 如：
@@ -84,21 +84,21 @@ background-repeat: no-repeat;
 > 列表扩散规则:如果只为某个属性提供一个值，那它就会扩散并应用到列表中的每一项
 
 > `background: url(tr.png) no-repeat top right / 2em 2em,`
-`/` 是为了消除歧义，top right 是 background-position ，而 2em 2em 是
-background-size 加上斜杠防止 2em 被理解为background-position
+> `/` 是为了消除歧义，top right 是 background-position ，而 2em 2em 是
+> background-size 加上斜杠防止 2em 被理解为background-position
 
 
 ## 4 响应式设计的一些最佳实践
 - 使用百分比,或者和 视口相关的单位。（vw， vh，wmin， vmax）
 - 需要在较大分辨率下得到固定宽度时，使用 max-width 而不是
-width ，因为它可以适应较小的分辨率，而无需使用媒体查询。
+  width ，因为它可以适应较小的分辨率，而无需使用媒体查询。
 - 不要忘记为替换元素（比如 img 、 object 、 video 、 iframe 等）设
-置一个 max-width ，值为 100% 。
+  置一个 max-width ，值为 100% 。
 - 背景图片需要完整地铺满一个容器，不管容器的尺寸如何变化，
-`background-size: cover` 这个属性都可以做到
+  `background-size: cover` 这个属性都可以做到
 - 在使用多列文本时，指定` column-width` （列宽）而不是指定
-`column-count` （列数），这样它就可以在较小的屏幕上自动显示为单
-列布局。
+  `column-count` （列数），这样它就可以在较小的屏幕上自动显示为单
+  列布局。
 
 
 # 2 background  border
@@ -136,7 +136,7 @@ box-shadow 是层层叠加，所以第二道阴影应该是 10+5 px
 
 Attention:
 - 投影的行为跟边框不完全一致，因为它不会影响布局，而且也不会
-受到 box-sizing 属性的影响。但可以通过内边距或外边距来额外模拟出边框所需要占据的空间
+  受到 box-sizing 属性的影响。但可以通过内边距或外边距来额外模拟出边框所需要占据的空间
 - 假“边框”出现在元素的外圈不会响应鼠标事件，如果需要，可以给box-shadow 属性加上 inset 关键字，来使投影绘制在元素的内圈
 
 
@@ -156,7 +156,7 @@ background-position: right 20px bottom 10px;
 ```
 
 > 默认情况下， background-position 是以 padding box 为准的，这样边
-框才不会遮住背景图片
+> 框才不会遮住背景图片
 
 但是这时候如果需要上面的值设定跟 padding 一样时，若对 padding 有任何修改，则需要一起修改 right、bottom后面的值。更 DRY 的方式如下：
 
@@ -425,7 +425,7 @@ background-image
 ## 1 自适应椭圆
 对于圆角，如果指定任何大于 100px 的半径，仍然可以得到一个圆形
 > 规范：当任意两个相邻圆角的半径之和超过 border box 的尺寸时，用户代理必须按比例减小各个边框半径所使用的值，直到它们不会相互重叠
-为止。
+> 为止。
 
 `border-radius` 可以单独指定水平和垂直半径，只要用一个斜杠（ / ）分隔这两个值
 
@@ -438,7 +438,31 @@ background-image
 
 > 用 height 而不是变形属性来实现提示框的展示动画，可能会发现从 height: 0（或其他值）到 height: auto 的过渡并不会生效。这是因为 auto是一个关键字，无法解析为一个可动画的值。在这种场景下，可以改为对 max-height 属性进行过渡，并给这个属性指定一个足够大的值来作为展示状态。
 
-```CSS
+
+
+缓动函数：除了内置，也可以用`cubic-bizier:(x1, y1, x2, y2)`自由指定两个锚点，参数值若超过1，则向反方向运动 
+
+
+
+```css
+input:not(:focus)+.callout {
+      transform: scale(0);
+      /* transition-timing-function: ease; */
+      /* 如果没有上面这句， 当 blur 触发时，因为是同一个缓动函数 cubic-bezier(.25, .1, .3, 1.5) 所以会scale到 1.5去，所以最终消失掉时候还会放大，再消失，所以需要再加一个缓动函数覆盖掉他*/
+
+      transition: .25s;
+      /* 因为 blur 时候， 按上上面那句，是ease走的（transition默认的 animation-timing-function 就是 ease），持续时间 0.5s，但是之前focus时候没有按ease走了0.5秒，这里按ease走了0.5秒就感觉  blur 时候变慢了，所以需要修改一下 blur 时候的animation-duration,又因为同时需要修改 timing-function，所以用一个 transition 覆盖掉（默认会应用 ease）*/
+    }
+
+    .callout {
+      transform-origin: 1.4em -.4em;
+      transition: .5s cubic-bezier(.25, .1, .3, 1.5) transform;
+      /* 防止颜色之类的属性被应用上 错误的 缓动函数，这里指定一下 transition-property 为 transform */
+    }
+    /*甚至可以通过transition-delay 属性把各个属性的过渡过程排成列队，这个属性的值实际上就是 transition简写属性中的第二个时间值。举例 来 说， 如 果 width 和 height都需要过渡效果，而且你希望高度先变化然后宽度再变化（很多弹出框脚本库已经把这种动画效果推广开来了），就可以这样写： transition: .5s height,.8s .5s width; （ 也 就 是 说，让 width 过渡的延时正好等于height 过渡的持续时间）。  */
+```
+
+```css
 input:not(:focus) + .callout { transform: scale(0); }
 .callout {
 transform-origin: 1.4em -.4em;
@@ -446,4 +470,94 @@ transition: .5s cubic-bezier(.25,.1,.3,1.5);
 }
 ```
 
->
+还可以通过 transition-delay 属性把各个属性的过渡过程排成列队
+
+```css
+transition:  animation-name, animation-duration, animation-timing-function, animation-delay, animation-iteration-count, animation-direction animation-fill-mode
+// 默认值
+animation-name: none
+animation-duration: 0s
+animation-timing-function: ease
+animation-delay: 0s
+animation-iteration-count: 1
+animation-direction: normal
+animation-fill-mode: none
+animation-play-state: running
+```
+
+所以，可以直接写成：
+```css
+transition: .5s height, .8s .5s width
+```
+
+## 逐帧动画
+> 2004 年，Mozilla 发起了一个建议：在 PNG 格式中增加对逐帧动画的支持，就像 GIF 格式同时支持静态图像和动画一样。这种格式被称作 `APNG`
+
+>基于贝塞尔曲线的调速函数都会在关键帧之间进行插值运算，从而产生平滑的过渡效果
+
+> animation 的 steps() 会根据你指定的步进数量，把整个动画切分为多帧，而且整个动画会在帧与帧之间硬切，不会做任何插值处理
+
+> steps() 还接受可选的第二个参数，其值可以是 start 或 end（默认值）。这个参数用于指定动画在每个循环周期的什么位置发生帧的切换动作
+
+
+如，对一个 雪碧图的“转菊花”进度图做处理时，可以这样做：
+```css
+@keyframes loader {
+to { background-position: -550px 0; }
+}
+.loader {
+width: 66px; 
+height: 66px;
+background: url(img/loader.png) 0 0;
+animation: loader 1s infinite steps(8);
+/* 把文本隐藏起来 */
+text-indent: 200%;
+white-space: nowrap;
+overflow: hidden;
+}
+```
+
+## 闪烁
+让文字闪烁，可以使用动画
+```css
+    @keyframes blink-smooth {
+      to {
+        color: transparent
+      }
+    }
+
+    div1 {
+      animation: 1s blink-smooth 3;
+    }
+```
+上面的动画，颜色出现时候很突兀，而且动画一直处于加速中
+>animation-direction 的唯一作用就是反转每一个循环周期（ reverse ），或第偶数个循环周期（ alternate ），或第奇数个循环周期 （ alternate-reverse ）。它的伟大之处在于，它会同时反转调整函数，从而产生更加逼真的动画效果
+
+所以可以这样处理
+
+```css
+animation: .5s blink-smooth 6 alternate;
+```
+
+因为现在一次淡入淡出的过程是由两个循环周期组成的，所以将 动画循环的次数翻倍,将持续时间减半,而得到平滑的闪烁效果
+
+当只要直接闪烁，不要过渡时，若使用 `step()`：
+
+```css
+animation: 1s blink 3 steps(1); 
+```
+
+但是这样子相当于 `steps(1, end)` ，它表示当前颜色与 `transparent` 之间的过渡会在一次步进中完成，于是颜色值的切换只会发生在动画周期的末尾, 总之, `step` **起始值贯穿于整个动画周期，而终止值只在动画结尾的无限短的时间点处出现**，step(2) 也一样，所以，需要调整动画的关键帧，让切换动作发生在 50% 处：
+
+```css
+    @keyframes blink {
+      50% {
+        color: transparent
+      }
+    }
+
+    div3 {
+      animation: 1s blink 3 steps(1);
+      /* 或用step-end */
+    }
+```

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div1>
+    我是突兀的闪烁效果
+  </div1>
+  <style>
+    div1 {
+      font-size: 24px;
+    }
+
+    @keyframes blink-smooth {
+      to {
+        color: transparent
+      }
+    }
+
+    div1 {
+      animation: 1s blink-smooth 3;
+    }
+  </style>
+
+  <h2>上面的动画，颜色出现时候很突兀，而且动画一直处于加速中，用 animation-direction处理一下</h2>
+
+  <div2>
+    我是平滑的闪烁效果
+  </div2>
+  <style>
+    div2 {
+      font-size: 24px;
+    }
+
+    @keyframes blink-smooth {
+      to {
+        color: transparent
+      }
+    }
+
+    div2 {
+      animation: .5s blink-smooth 6 alternate;
+    }
+  </style>
+<h2>或者不要平滑过渡，直接闪烁，首先尝试 animation: 1s blink 3 steps(1); 但是这样子相当于 steps(1, end) ，它表示当前颜色与 transparent 之间的过渡会在一次步进中完成，于是颜色值的切换只会发生在动画周期的末尾, 起始值贯穿于整个动画周期，而终止值只在动画结尾的无限短的时间点处出现，step(2) 也一样，所以，调整动画的关键帧，
+让切换动作发生在 50% 处</h2>
+  <div3>
+    我是普通的闪烁效果
+  </div3>
+  <style>
+    div3 {
+      font-size: 24px;
+    }
+
+    @keyframes blink {
+      50% {
+        color: transparent
+      }
+    }
+
+    div3 {
+      animation: 1s blink 3 steps(1);
+      /* 或用step-end */
+    }
+  </style>
+</body>
+
+
+</html>

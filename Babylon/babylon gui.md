@@ -7,7 +7,7 @@ var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"
 // 2 创建一个元素 
 var panel = new BABYLON.GUI.StackPanel();
 // 3 将元素绑定到实例化的对象上
-advancedTexture.addControl(panel);   
+advancedTexture.addControl(panel);
 
 var button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
 button.width = 0.2;
@@ -56,14 +56,6 @@ var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane);
 # 3 控件
 控件是对 UI 的抽象，有两种控件：纯控件、容器
 
-所有控件共有的属性：
-- alpha
-- color
-- fontFamily
-- fontSize
-- zIndex
-- isVisible 
-
 控件可以添加到 AdvancedDynamicTexture 实例或容器中：
 ```JS
 container.addControl(control);
@@ -78,13 +70,13 @@ text.linkWithMesh(ground);
 
 
 ## Container
-### Rectangle
 
-### Ellipse
+### Rectangle
 - thickness
 - cornerRadius
+- container.background
 
-```JS
+```javascript
 var rect1 = new BABYLON.GUI.Rectangle();
 rect1.width = 0.2;
 rect1.height = "40px";
@@ -94,6 +86,10 @@ rect1.thickness = 4;
 rect1.background = "green";
 advancedTexture.addControl(rect1); 
 ```
+
+### Ellipse
+- thickness
+
 
 ### StackPanel
 根据方向来堆叠子对象，所有的子对象都必须有一个定义的宽、高
@@ -115,7 +111,7 @@ picker.onValueChangedObservable.add(function(value) { // value is a color3
 });
 ```
 
-## Element
+## Element Control
 ### TextBlock
 用于显示文本的控件
 - textWrapping
@@ -130,7 +126,6 @@ text1.fontSize = 24;
 advancedTexture.addControl(text1);    
 ```
 
-
 ### Button
 - ImageButton
 - SimpleButton
@@ -143,10 +138,11 @@ var button = BABYLON.GUI.Button.CreateImageButton("but", "Click Me", "textures/g
 //只有文本
 var button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
 
+//只有图片
 var button = BABYLON.GUI.Button.CreateImageOnlyButton("but", "textures/grass.png");
 
 //
- var button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
+var button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
 button.width = 0.2;
 button.height = "40px";
 button.color = "white";
@@ -163,6 +159,7 @@ advancedTexture.addControl(button);
 - color
 - background
 - checkSizeRadio
+
 
 ```JS
 var panel = new BABYLON.GUI.StackPanel();
@@ -224,8 +221,9 @@ var panel = new BABYLON.GUI.StackPanel();
 - sourceLeft
 - sourceTop
 - sourceWidth
-- sourceTopt
-- 
+- sourceTop
+
+
 ```javascript
 var image = new BABYLON.GUI.Image("but", "textures/grass.png");
 image.width = 0.2;
@@ -233,7 +231,18 @@ image.height = "40px";
 advancedTexture.addControl(image);    
 ```
 
-# 4 属性
+# 4 公共属性
+
+## general properties
+所有控件共有的属性：
+- alpha
+- color
+- fontFamily
+- fontSize
+- zIndex
+- isVisible 
+
+
 ## 事件属性
 序号 | 属性 | 说明
 ---|--- | ---
@@ -257,7 +266,7 @@ createRectangle().horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT
 
 ## Position and size
 
-- left
+-  left
 -  top
 -  width
 -  height
@@ -280,6 +289,12 @@ myAdvancedDynamicTexture.idealWidth = 600
 myAdvancedDynamicTexture.idealHeight = 400
 ```
 
+强制使用理想尺寸
+```javascript
+ myAdvancedDynamicTexture.renderAtIdealSize = true.
+```
+
+
 ### Rotation and Scaling
 Property    |	Type    |	Default |	Comments
 --|--|--|--
@@ -289,7 +304,7 @@ scaleY  |	number  |	1   |
 transformCenterX    |	number  |	0.5 |	Define the center of transformation on X axis. Value is between 0 and 1
 transformCenterY    |	number  |	0.5 |	Define the center of transformation on Y axis. Value is between 0 and 1
 
-> Please be aawre that transformations are done at rendering level so after all computations. This means that alignment or positioning will be done first without taking transform in account.
+> Please be aware that transformations are done at rendering level so after all computations. This means that alignment or positioning will be done first without taking transform in account.
 
 # 快捷函数
 快速创建一个 StackPanel（基于选项的水平或垂直），并将添加您的控件加上一个TextBlock

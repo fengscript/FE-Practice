@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="babylon.custom.js" charset="utf-8"></script>
+  <style media="screen">
+    html,
+    body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="app"></canvas>
+  <script type="text/javascript">
+    window.addEventListener('DOMContentLoaded', function () {
+      var canvas = document.getElementById('app');
+      var engine = new BABYLON.Engine(canvas, true);
+      var createScene = function () {
+        var scene = new BABYLON.Scene(engine);
+
+        var camera = new BABYLON.ArcRotateCamera('camera', 3 * Math.PI / 2, Math.PI / 8, 50, BABYLON.Vector3.Zero(),
+          scene);
+
+        camera.setTarget(BABYLON.Vector3.Zero());
+
+        camera.attachControl(canvas, false);
+
+        var light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(0, 1, 0), scene);
+        // BOX
+
+        // var groundPlane = BABYLON.Mesh.CreatePlane("ground", 200, scene);
+
+        var groundMat = new BABYLON.StandardMaterial('ground', scene);
+        groundMat.diffuseTexture = new BABYLON.Texture("./img/earth.png", scene);
+        groundMat.backFaceCulling = false;
+
+        var groundPlane = BABYLON.Mesh.CreateGroundFromHeightMap("groundMat", "./img/earthheightmap.jpg", 200,
+          200, 250, 0, 40, scene, false, null);
+        groundPlane.material = groundMat;
+
+
+
+
+
+
+
+
+
+
+
+
+        return scene;
+      }
+      var scene = createScene();
+      engine.runRenderLoop(function () {
+        scene.render();
+      })
+
+      window.addEventListener('resize', function () {
+        engine.resize();
+      })
+
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./src/babylon.3.0.1.js" charset="utf-8"></script>
+  <style media="screen">
+    html,
+    body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="app"></canvas>
+  <script type="text/javascript">
+    window.addEventListener('DOMContentLoaded', function () {
+      var canvas = document.getElementById('app');
+      var engine = new BABYLON.Engine(canvas, true);
+      var createScene = function () {
+        var scene = new BABYLON.Scene(engine);
+
+        var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 90, BABYLON.Vector3.Zero(), scene);
+
+        camera.attachControl(canvas, false);
+
+        // light
+        var light1 = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(-1, -2, -1), scene);
+        light1.position = new BABYLON.Vector3(20, 40, 20);
+        light1.intensity = 0.5;
+
+        var lightSphere = BABYLON.Mesh.CreateSphere("sphere", 10, 2, scene);
+        lightSphere.position = light1.position;
+        lightSphere.material = new BABYLON.StandardMaterial("light", scene);
+        lightSphere.material.emissiveColor = new BABYLON.Color3(1, 1, 0);
+
+        var light2 = new BABYLON.SpotLight("light2", new BABYLON.Vector3(30, 40, 20), new BABYLON.Vector3(-1, -2, -
+          1), 1.1, 16, scene);
+        light2.intensity = .5;
+
+        var lightSphere2 = BABYLON.Mesh.CreateSphere("sphere", 10, 2, scene);
+        lightSphere2.position = light2.position;
+        lightSphere2.material = new BABYLON.StandardMaterial("light", scene);
+        lightSphere2.material.emissiveColor = new BABYLON.Color3(1, 1, 0);
+
+        // torus
+        var torus = BABYLON.Mesh.CreateTorus("torus", 4, 2, 30, scene, false);
+        // ground
+        var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "./img/heightMap.png", 100, 100, 100, 0,
+          10, scene, false);
+
+        var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
+        groundMaterial.diffuseTexture = new BABYLON.Texture("./img/ground.jpg", scene);
+        groundMaterial.diffuseTexture.uScale = 6;
+        groundMaterial.diffuseTexture.vScale = 6;
+        groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+        ground.position.y = -2.05;
+        ground.material = groundMaterial;
+
+
+        // shadow
+        var shadowGenerator = new BABYLON.ShadowGenerator(1024, light1);
+        shadowGenerator.getShadowMap().renderList.push(torus);
+        shadowGenerator.useExponentialShadowMap = true;
+        ground.receiveShadows = true;
+
+        var shadowGenerator2 = new BABYLON.ShadowGenerator(1024, light2);
+        shadowGenerator2.getShadowMap().renderList.push(torus);
+        shadowGenerator2.usePossionSampling = true;
+        ground.receiveShadows = true;
+
+
+        // Animation
+        var alpha = 0;
+        scene.registerBeforeRender(function () {
+          // var a = 1;
+          // ball.rotate(BABYLON.Axis.X, a, BABYLON.Space.LOCAL);
+          // a+=.1;
+
+          torus.rotation.x += 0.01;
+          torus.rotation.z += 0.02;
+          torus.position = new BABYLON.Vector3(Math.cos(alpha) * 30, 10, Math.sin(alpha) * 30);
+          alpha += 0.01;
+        })
+
+
+        return scene;
+      }
+      var scene = createScene();
+      engine.runRenderLoop(function () {
+        scene.render();
+      })
+
+      window.addEventListener('resize', function () {
+        engine.resize();
+      })
+
+    })
+  </script>
+</body>
+
+</html>

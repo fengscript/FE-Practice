@@ -75,8 +75,10 @@
         // shadow
         var shadowGenerator = new BABYLON.ShadowGenerator(1024, light1);
         shadowGenerator.getShadowMap().renderList.push(torus);
-        shadowGenerator.useExponentialShadowMap = true;
+        // shadowGenerator.useExponentialShadowMap = true;
         ground.receiveShadows = true;
+        // shadowGenerator.useCloseExponentialShadowMap = true;
+        // shadowGenerator.useBlurCloseExponentialShadowMap = true;
 
         var shadowGenerator2 = new BABYLON.ShadowGenerator(1024, light2);
         shadowGenerator2.getShadowMap().renderList.push(torus);

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./src/babylon.3.0.1.js" charset="utf-8"></script>
+  <style media="screen">
+    html,
+    body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="app"></canvas>
+  <script type="text/javascript">
+    window.addEventListener('DOMContentLoaded', function () {
+      var canvas = document.getElementById('app');
+      var engine = new BABYLON.Engine(canvas, true);
+
+      var createScene = function () {
+        var scene = new BABYLON.Scene(engine);
+
+        var camera = new BABYLON.ArcRotateCamera('camera', 3 * Math.PI / 2, Math.PI / 8, 50, BABYLON.Vector3.Zero(),
+          scene);
+
+        camera.setTarget(BABYLON.Vector3.Zero());
+
+        camera.attachControl(canvas, false);
+
+        var light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(0, 1, 0), scene);
+        // BOX
+        // var box1 = BABYLON.Mesh.CreateBox('box1', 4, scene);
+
+        var sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {
+          segments: 32,
+          diameter: 4
+        })
+        // var sphere = BABYLON.MeshBuilder.CreateSphere('sphere',{segments:10, diameter:4, diameterX:6})
+        // var cone = BABYLON.MeshBuilder.CreateCylinder("cone", {diameterTop: 0, tessellation: 4}, scene);
+
+
+        // var plane1 = BABYLON.MeshBuilder.CreatePlane("plane", {width: 5}, scene);
+
+        // var tiledGround = BABYLON.MeshBuilder.CreateTiledGround("tgd", {subdivisions: {w:8, h:6} }, scene);
+
+        // var disc = BABYLON.MeshBuilder.CreateDisc("disc", {tessellation: 3}, scene); // makes a triangle
+
+        // var icosphere = BABYLON.MeshBuilder.CreateIcoSphere("ico", {radius: 5, radiusY: 8, subdivisions: 6}, scene);
+
+        // var torus = BABYLON.MeshBuilder.CreateTorus("torus", {thickness: 0.2}, scene);
+        // var torus = BABYLON.MeshBuilder.CreateTorusKnot("tk", {}, scene);
+
+        // var decal = BABYLON.MeshBuilder.CreateDecal("decal", mesh,  {position: myPos}, scene);
+
+
+
+
+
+        return scene;
+
+
+      }
+      var scene = createScene();
+      engine.runRenderLoop(function () {
+        scene.render();
+      })
+
+      window.addEventListener('resize', function () {
+        engine.resize();
+      })
+
+    })
+  </script>
+</body>
+
+</html>

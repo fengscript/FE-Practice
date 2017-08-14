@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <script src="./babylon.custom.js"></script>
+  <script src="./src/babylon.3.0.1.js"></script>
   <script src="./src/Oimo.js"></script>
   <script src="./src/cannon.js"></script>
 
@@ -43,7 +43,7 @@ touch-action: none;
     // Need a free camera for collisions
     var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, -8, -20), scene);
     camera.attachControl(canvas, true);
-
+    camera.speed = 0.1;
     //Ground
     var ground = BABYLON.Mesh.CreatePlane("ground", 20.0, scene);
     ground.material = new BABYLON.StandardMaterial("groundMat", scene);

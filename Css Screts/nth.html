@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>nth-child</title>
+</head>
+
+<body>
+    <style>
+        .section1-li-div:nth-child(1) {
+            color: red;
+        }
+
+        .section1-li-div:nth-child(2) {
+            color: blue;
+        }
+
+        .section1-li-div:nth-child(3) {
+            color: yellow;
+        }
+    </style>
+    <section class="section1">
+        <h3>section1</h3>
+        <h5>list1</h5>
+        <ol class="list1">
+            <code>        
+                .section1-li-div:nth-child(1){
+                    color: red;
+                }
+                <br>
+                .section1-li-div:nth-child(2){
+                    color: blue;
+                }
+                <br>
+                .section1-li-div:nth-child(3){
+                    color: yellow;
+                }
+            </code>
+            <li clsass="li1 section1-li">
+                <div class=" section1-li-div">section1 - li1 - div1
+                </div>
+                <div class=" section1-li-div">section1 - li1 - div2
+                </div>
+            </li>
+            <li clsass="li2 section1-li">
+                <div class=" section1-li-div">section1 - li2 - div1
+                </div>
+            </li>
+            <li clsass="li3 section1-li">
+                <div class=" section1-li-div">section1 - li3 - div1
+                </div>
+                <div class=" section1-li-div">section1 - li3 - div2
+                </div>
+            </li>
+        </ol>
+    </section>
+
+
+    <style>
+        .list2 :first-child {
+            color: red
+        }
+
+        .list2 :nth-child(3) {
+            color: blue
+        }
+    </style>
+    <section class="section2">
+        <h3>section2</h3>
+        <h5>list2</h5>
+        <ol class="list2">
+            <li clsass="li1 section2-list2-li">section2 - li1
+                <code> .list2 :first-child{color: red}</code>
+            </li>
+            <li clsass="li2 section2-list2-li">section2 - li2
+                <code></code>
+            </li>
+            <li clsass="li3 section2-list2-li">section2 - li3
+                <code>.list2 :nth-child(3){color: blue}</code>
+            </li>
+            <li clsass="li4 section2-list2-li">section2 - li4
+                <code></code>
+            </li>
+        </ol>
+    </section>
+
+
+    <style>
+        .list3 li:nth-of-type(2) {
+            color: red;
+        }
+    </style>
+    <section class="section1">
+        <h3>section3</h3>
+        <h5>list3</h5>
+        <ol class="list3">
+            <code>        
+
+            </code>
+            <li>
+                <div class=" section3-li-item">section3 - li1 - div1
+                </div>
+                <div class=" section3-li-item">section3 - li1 - div2
+                </div>
+            </li>
+            <li>
+                <div class=" section3-li-item">section3 - li2 - p1
+                </div>
+                <div class=" section3-li-item">section3 - li2 - p2
+                </div>
+            </li>
+            <li>
+                <div class=" section3-li-item">section3 - li3 - div1
+                </div>
+                <div class=" section3-li-item">section3 - li3 - div2
+                </div>
+            </li>
+        </ol>
+    </section>
+
+    <code>
+        伪元素 .class :nth-child( n ) 会选择此 class 的父元素中，第 n 个有此 class 的（clsass）的元素，若第 n 个元素没有此 class ，则不会生效
+    </code>
+    <style>
+        .nav_after:nth-child(4) {
+            background-color: pink;
+        }
+    </style>
+
+    <ul class="clearfix">
+        <li>1</li>
+        <li class="nav_after">2</li>
+        <li>3</li>
+        <li class="nav_after">4</li>
+        <li>5</li>
+        <li class="nav_after">6</li>
+        <li>7</li>
+        <li class="nav_after">8</li>
+    </ul>
+
+
+
+</body>
+
+</html>

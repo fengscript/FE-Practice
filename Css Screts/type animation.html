@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input class="h1" type="text" name="" value="">
+
+    <h1>what hell！</h1>
+
+    <style>
+        @keyframes typing {
+            from {
+                width: 0
+            }
+        }
+
+        @keyframes caret {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        h1 {
+            width: 15ch;
+            /* 文本的宽度 */
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: .05em solid;
+            animation: typing 6s steps(15),
+            caret 1s steps(1) infinite;
+        }
+    </style>
+</body>
+
+</html>

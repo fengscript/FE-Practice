@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        section {
+            border: 1px solid greenyellow;
+        }
+    </style>
+    <section>
+        <h3>没有 setTimeout</h3>
+        <input type="text" name="input1" value="" class="input1"><span class="span1"></span>
+    </section>
+    <section>
+        <h3>有 setTimeout</h3>
+        <input type="text" name="input2" value="" class="input2"><span class="span2"></span>
+    </section>
+
+    <script>
+        var trigger1 = document.querySelector('.input1');
+        var trigger2 = document.querySelector('.input2');
+        var print1 = document.querySelector('.span1');
+        var print2 = document.querySelector('.span2');
+
+
+        trigger1.addEventListener('keydown', function (e) {
+            print1.innerText = this.value;
+        })
+
+
+        trigger2.addEventListener('keydown', function (e) {
+            setTimeout(function () {
+                print2.innerText = trigger2.value;
+            }, 0)
+        })
+    </script>
+
+
+</body>
+
+</html>

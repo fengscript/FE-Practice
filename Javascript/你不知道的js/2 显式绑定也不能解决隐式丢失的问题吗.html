@@ -17,7 +17,7 @@
       console.log(this.a)
     }
     var obj = {
-      a: 2,
+      a: 1,
       foo: foo
     }
 
@@ -30,22 +30,35 @@
     bar();
     // 还是输出了全局??
 
-
+// 显式绑定函数引用
     function foo2() {
-      console.log(this.a);
+      console.log("foo2="+this.a);
     };
 
     var obj2 = {
-      a2: 2,
+      a: 2,
       foo2: foo2
     };
 
-    var bar2 = foo2.call(obj2);
+    var bar2 = obj2.foo2;
+    bar2.call(obj2);
 
-    var a2 = '全局';
+// 显式绑定函数传参
+    function foo3() {
+      console.log(this.a);
+    }
 
-    // bar2.call(obj);
-    bar2();
+    function doFoo(fn) {
+      fn();
+    }
+
+    var obj3 = {
+      a:3,
+      foo:foo3
+    }
+
+    doFoo.apply(obj3,[obj3.foo])
+
 
   </script>
 </body>

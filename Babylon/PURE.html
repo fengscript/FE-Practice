@@ -41,37 +41,20 @@ window.addEventListener('DOMContentLoaded', function(){
     var light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(0, 1, 0), scene);
 // BOX
     var box1 = BABYLON.Mesh.CreateBox('box1', 4, scene);
-    var box2 = new BABYLON.Mesh.CreateBox('box1', 5, scene);
+ 
 
-    box1.position = new BABYLON.Vector3(0, 5, 0);
-    box2.position = new BABYLON.Vector3(0, -5, 0);
 
-    box1.material = new BABYLON.StandardMaterial('mat1', scene);
-    box1.material.diffuseColor = new BABYLON.Color3(255/255, 0/255, 0/255);;
-    console.log(box1);
-    console.log(box2);
-		// var ground = BABYLON.Mesh.CreateGround("ground", 6, 6, 2, scene);
-// 盘片
-// var disc = BABYLON.Mesh.CreateDisc("disc", 6, 10, scene);
 
-// 柱体
-// var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 3, 3, 3, 5, 2, scene);
-	// 哈哈  三角锥 BABYLON.Mesh.CreateCylinder("cylinder", 3, 0, 3, 3, 2, scene);
 
-	// 圆锥 BABYLON.Mesh.CreateCylinder("cylinder", 3, 0, 3, 40, 2, scene);
-// TORUS
-	// var torus = BABYLON.Mesh.CreateTorus("torus", 5, 1, 10, scene);
 
-// knot
-// var knot = BABYLON.Mesh.CreateTorusKnot("knot", 2, 0.3, 128, 64, 2, 3, scene);
 
-// LINE
-// var lines = BABYLON.Mesh.CreateLines("lines", [
-//     new BABYLON.Vector3(-10, 0, 0),
-// ], scene);
 
-// ribbon
 
+
+
+
+
+ 
 		return scene;
 
 

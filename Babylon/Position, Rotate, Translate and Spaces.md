@@ -1,5 +1,5 @@
-
 # rotation 和 position
+## rotation
 `pilot.rotation = new BABYLON.Vector3(alpha, beta, gamma)`
 
 this is equivalent to
@@ -25,7 +25,7 @@ pilot.rotation = new new BABYLON.Vector3(Math.PI/2, 0, 0);
 > Just as pilot.position sets a position vector based from the world origin (0, 0, 0) so pilot.rotation sets, say, an 'orientation vector' starting from a local orientation matching the world orientation of (0, 0, 0). It is the last set rotation that is achieved.
 
 
-和 `.position` 设置一个位置一样，每次会基于世界原点`(0，0，0)`开始移动，旋转也会这样子设置。即，一个 `方向向量`从局部方向开始匹配世界方向的`(0, 0, 0)，即 从最初的状态开始旋转，所以每次会覆盖上次的旋转。
+和 `.position` 设置一个位置一样，每次会基于世界原点`(0，0，0)`开始移动，旋转也会这样子设置。即，一个 `方向向量`从局部方向开始匹配世界方向的`(0, 0, 0)`，即 从最初的状态开始旋转，所以每次会覆盖上次的旋转。
 
 ```
 	pilot.rotation.y = Math.PI/2;
@@ -90,22 +90,28 @@ public translate(axis: Vector3, distance: number, space?: Space): AbstractMesh {
     return this;
 }
 ```
-`translate` 在移动时候，`BABYLON.Space.LOCAL` 会每次根据自身坐标轴移动叠加， `BABYLON.Space.WORLD`每次会用世界坐标加上自身坐标移动
+**`translate` 在移动时候，`BABYLON.Space.LOCAL` 会每次根据自身坐标轴移动叠加**
+
+**`BABYLON.Space.WORLD`每次会用自身当前位置，根据世界坐标轴移动**
+
+【**`BABYLON.Space.WORLD`每次会用世界坐标加上自身坐标移动**】
 
 > 如 translation (3, 3, 3) followed translation (2, 4, 1) results in the translation (5, 7, 4).
 
-根据世界轴的`translate`和position 表现一致
+根据世界轴的 `translate` 和 position 表现一致
 
 
 ## rotate
+**绕哪个轴旋转，即 去掉这个轴另外两个轴组成的面 绕这个轴来转动，比如，绕 y 轴转动，即 x-z 面绕 y轴转动**
+
 `rotate(axis, amount, space) → AbstractMesh`
 如
 ```JS
 pilot.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.WORLD);
 
 ```
-- 根据世界轴旋转时，自身轴跟着物体本身旋转，自身轴最终将变为最后一次绕世界轴旋转后的状态。
-- 根据自身轴旋转时，每次旋转都是根据最新的自身轴旋转。因为自身轴跟着物体旋转，每转一次，自身轴所有的方向都变了，下一次旋转时候会继续根据新方向旋转
+- **根据世界轴旋转时，自身轴跟着物体本身旋转，自身轴最终将变为最后一次绕世界轴旋转后的状态**。
+- **根据自身轴旋转时，每次旋转都是根据最新的自身轴旋转。因为自身轴跟着物体旋转，每转一次，自身轴所有的方向都变了，下一次旋转时候会继续根据新方向旋转**
 
 > local-axes means axes local to the pilot that maintain their original orientation to the pilot, ie as the pilot turns the local axes turn with it.
 
@@ -114,8 +120,8 @@ pilot.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.WORLD);
 
 ### BABYLON.Space.WORLD
 旋转会累积
-> http://www.babylonjs-playground.com/#UMR7M#20
+ http://www.babylonjs-playground.com/#UMR7M#20
 
 ### BABYLON.Space.LOCAL
-> http://www.babylonjs-playground.com/#UMR7M#36
+ http://www.babylonjs-playground.com/#UMR7M#36
 

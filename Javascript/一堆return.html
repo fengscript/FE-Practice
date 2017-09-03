@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+
+    <script>
+        function fun(n, o) {
+            document.fun(o);
+            // console.log(o);
+            return {
+                fun: function (m) {
+                    return fun(m, n)
+                }
+            }
+        }
+        // 等价于
+        // function _fun_(n, o) {
+        //     document.fun(o);
+        //     // console.log(o);
+        //     return {
+        //         fun: function (m) {
+        //             return _fun_(m, n)
+        //         }
+        //     }
+        // }
+        var a = fun(0);
+        a.fun(1);
+    </script>
+</body>
+
+</html>

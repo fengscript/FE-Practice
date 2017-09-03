@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h4>JS的词法作用域,JS变量作用域存在于函数体中即函数体，并且变量的作用域是在函数定义声明的时候就是确定的，而非在函数运行时。</h4>
+
+
+    <script>
+        var name = "global"
+
+        function foo(text) {
+            document.write(text);
+        }
+
+        function fooOuter(text) {
+            var name = "local"
+            foo(name);
+        }
+
+        fooOuter()
+    </script>
+    <h4>输出global 而不是local，并且和闭包没有任何关系。</h4>
+
+    <script>
+        function fooOuter2() {
+            var name = "local"
+            function foo() {
+                document.write(name);
+            }
+            foo(name);
+        }
+
+        fooOuter2()
+    </script>
+    <h4>函数声明时 name 变量作用域就在其外层函数中</h4>
+</body>
+
+</html>

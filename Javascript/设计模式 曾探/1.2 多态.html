@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>polymorphism</title>
+</head>
+
+<body>
+    <script>
+        // (function () {
+        //     var makeSound = function (animal) {
+        //         if (animal instanceof Duck) {
+        //             document.write("嘎嘎嘎");
+        //         } else if (animal instanceof Chicken) {
+        //             document.write("咯咯咯");
+        //         }
+        //     }
+
+        //     var Duck = function () {}
+        //     var Chicken = function () {}
+
+        //     makeSound( new Duck() )
+        //     makeSound( new Chicken() )
+        // })()
+
+        (function () {
+            var makeSound = function (animal) {
+                animal.sound();
+            }
+            var Duck = function () {}
+            Duck.prototype.sound = () => {
+                document.write("嘎嘎嘎");
+            }
+
+            var Chicken = function () {}
+            Chicken.prototype.sound = () => {
+                document.write("嘎嘎嘎");
+            }
+
+            makeSound( new Duck() )
+            makeSound( new Chicken() )
+        })()
+    </script>
+
+
+
+</body>
+
+</html>

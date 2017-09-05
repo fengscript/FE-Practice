@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>polymorphism</title>
+</head>
+
+<body>
+    <h3>1. this 在任何情况下都不指向函数的词法作用域 </h3>
+    <h3>2. this 在运行时绑定，它指向哪里完全取决于函数在哪里执行，只取决于函数的调用方式 </h3>
+    <script>
+        window.name = 'GLOBAL'
+        var getName = function () {
+            return this.name
+        };
+
+        document.write(getName())
+    </script>
+    <h3>这是 this 绑定规则的第一条：默认绑定 独立函数调用时， this指向全局，严格模式下指向 undefined </h3>
+    <h3>this 绑定规则的第二条：隐式绑定 调用位置有上下文时或者被某个对象拥有或者包含， this 会绑定到这个上下文对象</h3>
+    <script>
+        function foo() {
+            document.write( this.a );
+        }
+        var obj = {
+            a:2,
+            foo:foo
+        };
+
+        obj.foo()
+    </script>
+
+
+</body>
+
+</html>

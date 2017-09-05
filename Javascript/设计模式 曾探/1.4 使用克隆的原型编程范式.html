@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>polymorphism</title>
+</head>
+
+<body>
+    <h3>原型模式：不关心对象的具体类型，而是找到一个对象，然后通过克隆来创建一个一模一样的对象</h3>
+    <script>
+        var Plane = function () {
+            this.blood = 100;
+            this.attack = 1;
+            this.defense = 1;
+        }
+
+        var plane = new Plane();
+        plane.blood = 500;
+        plane.attack = 10;
+        plane.defense = 7;
+
+        var clonePlane = Object.create( plane );
+        document.write(clonePlane.blood)
+    </script>
+
+
+
+</body>
+
+</html>

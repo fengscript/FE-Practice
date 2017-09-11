@@ -9,6 +9,25 @@
 </head>
 
 <body>
+    <h1>this的指向</h1>
+    <h2>1. 作为普通函数调用，指向全局</h2>
+    <h2>2. 作为对象的方法调用，指向该对象</h2>
+    <h2>3. new 调用构造器时，构造器总会返回一个对象，通常 构造器里的对象指向返回的这个对象 若构造器显式返回一个 object 类型对象，则此次运算结果最终会返回这个对象，而不是this
+    </h2>
+    <script>
+        var myClass = function () {
+            this.name = "fyg";
+            return {
+                name: 'FYG'
+            };
+        };
+
+        var obj = new myClass();
+        document.write( obj.name )
+    </script>
+    <h2>4. 作为普通函数调用，指向全局</h2>
+
+
     <h3>1. this 在任何情况下都不指向函数的词法作用域 </h3>
     <h3>2. this 在运行时绑定，它指向哪里完全取决于函数在哪里执行，只取决于函数的调用方式 </h3>
     <script>
@@ -23,17 +42,33 @@
     <h3>this 绑定规则的第二条：隐式绑定 调用位置有上下文时或者被某个对象拥有或者包含， this 会绑定到这个上下文对象</h3>
     <script>
         function foo() {
-            document.write( this.a );
+            document.write(this.a);
         }
         var obj = {
-            a:2,
-            foo:foo
+            a: 2,
+            foo: foo
         };
 
         obj.foo()
     </script>
 
+    <h1>this 丢失</h1>
+    <h2>getName 方法作为 obj 对象的属性调用时，this 指向obj 对象，因此第一次输出 obj3 的name</h2>
+    <h2>而用另外一个变量 getName2 引用 obj3.getName 时，调用 getName2 时，是普通函数调用，所以 this 指向全局。</h2>
+    <script>
+        var obj3 = {
+            name : 'fyg',
+            getName(){
+                return this.name
+            }
+        }
 
+        document.write( obj3.getName() );
+
+        var getName2 = obj3.getName;
+        document.write( getName2() );
+
+    </script>
 </body>
 
 </html>

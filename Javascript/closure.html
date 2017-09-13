@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h2> 1. 通过闭包，将循环的索引以闭包的参数传递进去 </h2>
+    <h2> 2. 通过闭包，将循环的索引以局部变量传递给闭包内部，然后在内部使用 </h2>
+    <h2> 3. 使用 let </h2>
+    <h2> 4. 通过返回一个闭包，在返回的闭包内部实现函数，闭包会延续外部变量生命周期 </h2>
+
+    <script>
+        var closure1 = function () {
+            for (var i = 0; i < 5; i++) {
+                (function (i) {
+                    setTimeout(function () {
+                        document.write(i);
+                    }, i * 1000);
+                })(i)
+            }
+        }
+
+        var closure2 = function () {
+            for (var i = 0; i < 5; i++) {
+                (function () {
+                    var j = i;
+                    setTimeout(function () {
+                        document.write(j);
+                    }, j * 1000);
+                })()
+            }
+        }
+
+        var closure3 = function () {
+            for (let i = 0; i < 5; i++) {
+
+                setTimeout(function () {
+
+                    document.write(i);
+
+                }, i * 1000);
+
+            }
+        }
+
+        var closure4 = function () {
+            for (var i = 0; i < 5; i++) {
+                return function () {
+                    counter(i)
+                }
+
+            }
+        }
+
+        function counter(i) {
+            setTimeout(function () {
+                document.write(i);
+            }, i * 1000);
+        }
+        // for (var i = 0; i < 5; i++) {
+        //     (i) => {
+        //         setTimeout(() => {
+        //             document.write(i);
+        //         }, i * 1000);
+        //     }
+
+        // }
+
+        // closure1();
+        // closure2();
+        // closure3();
+        // closure4();
+
+
+// 返回一个闭包
+        function showHelp(help) {
+            document.getElementById('help').innerHTML = help;
+        }
+
+        function makeHelpCallback(help) {
+            return function () {
+                showHelp(help);
+            };
+        }
+
+        function setupHelp() {
+            var helpText = [{
+                    'id': 'email',
+                    'help': 'Your e-mail address'
+                },
+                {
+                    'id': 'name',
+                    'help': 'Your full name'
+                },
+                {
+                    'id': 'age',
+                    'help': 'Your age (you must be over 16)'
+                }
+            ];
+
+            for (var i = 0; i < helpText.length; i++) {
+                var item = helpText[i];
+                document.getElementById(item.id).onfocus = makeHelpCallback(item.help);
+            }
+        }
+
+        setupHelp();
+    </script>
+</body>
+
+</html>

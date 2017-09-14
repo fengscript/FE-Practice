@@ -5,24 +5,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
+    <title>clousure</title>
 </head>
 
 <body>
 
     <script>
+        // var mult = function () {
+        //     var a = 1;
+        //     for (var i = 0, l = arguments.length; i < l; i++) {
+        //         console.log(i);
+        //         a = a * arguments[i]
+
+        //     }
+        //     return a;
+        // }
+
+        //     document.write(mult(2, 3))
+        // 做缓存
+
+        var cache = {};
+
         var mult = function () {
+            var args = Array.prototype.join.call(arguments, ',');
+            if (cache[args]) {
+                return cache[args]
+            }
+
             var a = 1;
             for (var i = 0, l = arguments.length; i < l; i++) {
-                console.log(i);
-                a = a * arguments[i]
-
+                a = a * arguments[i];
             }
-            return a;
-        }
 
-            document.write(mult(2, 3))
-        
+            return cache[args] = a;
+        }
+        document.write(mult(1, 2, 3));
+
+
+
+        // function map(f) {
+        //     var mapped = new Array(this.length);
+
+        //     for (var i = 0; i < this.length; i++) {
+        //         mapped[i] = f(this[i], i);
+        //     }
+
+        //     return mapped;
+        // }
+        // [1, 2, 3]::map(x => x * 2);
+
+
+        // var fyg = {
+        //     name:"FYG",
+        //     age:25
+        // };
+        // fyg::sayName();
+        // sayName.call(fyg)
+
+        // fyg::sayName();
+        var {
+            x,
+            ...y
+        } = {
+            x: 1,
+            a: 2,
+            b: 3
+        }
+        console.log(x, y);
     </script>
 
 

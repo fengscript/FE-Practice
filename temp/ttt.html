@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="box-wraper">
+        <div class="box">❤</div>
+        <div class="box">❤</div>
+        <div class="box">❤</div>
+        <div class="box">❤</div>
+    </div>
+
+
+    <style>
+        .box {
+            width: 50px;
+            height: 50px;
+            background: red;
+            margin: 50px;
+            display: inline-block;
+        }
+    </style>
+    <script>
+        var aim = document.getElementsByClassName('box');
+        var arr = [].slice.call(aim)
+
+        var orentatioNum = 0;
+        
+        var orentation = "";
+        
+
+        var n = 0;
+
+        setInterval(function() {
+            if (n <= 50) {
+                n++;
+                orentatioNum = (Math.random() * 3 + 1).toFixed(0);
+            }else{
+                n = 0;
+            }
+            switch (orentatioNum) {
+            case '1':
+                orentation = "translateX(" + n + "px)";
+                break;
+            case '2':
+                orentation = "translateX(" + (-n) + "px)";
+
+                break;
+            case '3':
+                orentation = "translateY(" + n + "px)";
+
+                break;
+            case '4':
+                orentation = "translateY(" + (-n) + "px)";
+
+                break;
+
+            default:
+                break;
+        }
+            Array.from(aim, item => {
+                item.style.transform = orentation;
+            })
+            console.log(orentation);
+        }, 100);
+
+
+
+        
+        // item.addEventListener("mouseover",function () {
+        //     this.style.backgroundColor = "blue"
+        // })
+    </script>
+</body>
+
+</html>

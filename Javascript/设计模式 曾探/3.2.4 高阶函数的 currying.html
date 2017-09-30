@@ -11,8 +11,82 @@
 <body>
 
     <script>
+        var cost = (function () {
+            var args = [];
 
+            return function () {
+                console.log(arguments);
+                if (arguments.length === 0) {
+                    var money = 0;
+                    for (var i = 0, l = args.length; i < l; i++) {
+                        money += args[i];
+                    }
+                    return money;
+                } else {
+                    [].push.apply(args, arguments);
+                    return args;
+                }
+            }
+        })()
 
+        cost(100)
+        cost(200)
+
+        // document.write(cost(300))
+        // document.write(cost())
+
+        var cost2 = function () {
+            var args = [];
+            var temp = (function () {
+                if (arguments.length === 0) {
+                var money = 0;
+                for (var i = 0, l = args.length; i < l; i++) {
+                    money += args[i];
+                }
+                console.log(args);
+            } else {
+                [].push.apply(args, arguments);
+                return args;
+            }
+            })()
+            
+            
+        }
+
+        cost2(100)
+        cost2(100)
+        // document.write( cost2(200) )
+        document.write( cost2() )
+        
+
+        // 或者来一个柯里化函数
+        var currying = function (fn) {
+            var args = [];
+
+            return function () {
+                if (arguments.length === 0) {
+
+                    return fn.apply(this, args)
+                } else {
+                    [].push.apply(args, arguments);
+                    return arguments.callee;
+                }
+            }
+        };
+
+        var cost = (function () {
+            var money = 0;
+            return function () {
+                for (var i = 0, l = arguments.length; i < l; i++) {
+                    money += arguments[i];
+
+                }
+                return money;
+            }
+        })()
+
+        // 转换为柯里化函数
+        var cost = currying(cost);
     </script>
 
 

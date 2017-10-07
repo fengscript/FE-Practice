@@ -10,9 +10,12 @@
 
     <script>
             var a = [1,2,3,4];
-            console.log(a[a.length-1]);
+            document.write(a[a.length-1]);
 
+            document.write("<br>")
 
+            var b = Array.prototype.slice.call(a,2);
+            document.write(b)
 
     </script>
 

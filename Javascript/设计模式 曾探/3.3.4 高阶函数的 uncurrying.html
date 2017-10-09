@@ -22,10 +22,17 @@
        var push = Array.prototype.push.uncurrying();
 
        (function () {
-            push(arguments,4);
-            console.log(arguments);
+            push(arguments,4);  // 这里的 arguments 就是 传进来的(1,2,3)
+            console.log(arguments); // 但是，这里的 arguments，是前面 push 的所有的 arguments，所以就是 1,2,3,4
             document.write(arguments);
        })(1,2,3)
+
+    //    貌似这里传进去的参数统统会被当成 arguments 的第一项，于是
+    //    var obj = Array.prototype.shift.call(arguments); 先推出去了第一项给 obj
+    //      arguments 里面就剩下了第二项 4  
+
+    //  后面的 return self.apply(obj, arguments); 再把所有参数按顺序进行 this.apply()执行
+
     </script>
 
 

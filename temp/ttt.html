@@ -28,52 +28,75 @@
         }
     </style>
     <script>
+        // var Float = function (param) {  }
+
         var aim = document.getElementsByClassName('box');
-        var arr = [].slice.call(aim)
-
+        var arr = [].slice.call(aim);
         var orentatioNum = 0;
-        
         var orentation = "";
-        
-
         var n = 0;
 
-        setInterval(function() {
+        var orentationCal = function () {
+            return (Math.random() * 3 + 1).toFixed(0);
+        }
+
+        var move = function (aim, rate, distance) {
+            var rate = rate || 300;
+            var distance = distance || 1000;
+            var countNum = 0;
+            var move = "";
+            setInterval(function () {
+                if (countNum < distance){
+                    move = 
+                }
+
+                    aim.style.transform = move;
+
+            }, rate);
+        }
+
+        arr.map(function (element) {
+
+        })
+        // setInterval(function() {
+        //     console.log(orentationCal())
+        // }, 100);
+
+        setInterval(function () {
             if (n <= 50) {
                 n++;
                 orentatioNum = (Math.random() * 3 + 1).toFixed(0);
-            }else{
+            } else {
                 n = 0;
             }
             switch (orentatioNum) {
-            case '1':
-                orentation = "translateX(" + n + "px)";
-                break;
-            case '2':
-                orentation = "translateX(" + (-n) + "px)";
+                case '1':
+                    orentation = "translateX(" + n + "px)";
+                    break;
+                case '2':
+                    orentation = "translateX(" + (-n) + "px)";
 
-                break;
-            case '3':
-                orentation = "translateY(" + n + "px)";
+                    break;
+                case '3':
+                    orentation = "translateY(" + n + "px)";
 
-                break;
-            case '4':
-                orentation = "translateY(" + (-n) + "px)";
+                    break;
+                case '4':
+                    orentation = "translateY(" + (-n) + "px)";
 
-                break;
+                    break;
 
-            default:
-                break;
-        }
+                default:
+                    break;
+            }
             Array.from(aim, item => {
                 item.style.transform = orentation;
             })
-            console.log(orentation);
         }, 100);
 
 
 
-        
+
         // item.addEventListener("mouseover",function () {
         //     this.style.backgroundColor = "blue"
         // })

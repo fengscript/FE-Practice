@@ -40,17 +40,17 @@
             return (Math.random() * 3 + 1).toFixed(0);
         }
 
-        var move = function (aim, rate, distance) {
+        var Move = function (aim, rate, distance) {
             var rate = rate || 300;
             var distance = distance || 1000;
             var countNum = 0;
-            var move = "";
+            var moveStr = "";
             setInterval(function () {
                 if (countNum < distance){
-                    move = 
+                    moveStr = 
                 }
 
-                    aim.style.transform = move;
+                    aim.style.transform = moveStr;
 
             }, rate);
         }
@@ -62,37 +62,37 @@
         //     console.log(orentationCal())
         // }, 100);
 
-        setInterval(function () {
-            if (n <= 50) {
-                n++;
-                orentatioNum = (Math.random() * 3 + 1).toFixed(0);
-            } else {
-                n = 0;
-            }
-            switch (orentatioNum) {
-                case '1':
-                    orentation = "translateX(" + n + "px)";
-                    break;
-                case '2':
-                    orentation = "translateX(" + (-n) + "px)";
+        // setInterval(function () {
+        //     if (n <= 50) {
+        //         n++;
+        //         orentatioNum = (Math.random() * 3 + 1).toFixed(0);
+        //     } else {
+        //         n = 0;
+        //     }
+        //     switch (orentatioNum) {
+        //         case '1':
+        //             orentation = "translateX(" + n + "px)";
+        //             break;
+        //         case '2':
+        //             orentation = "translateX(" + (-n) + "px)";
 
-                    break;
-                case '3':
-                    orentation = "translateY(" + n + "px)";
+        //             break;
+        //         case '3':
+        //             orentation = "translateY(" + n + "px)";
 
-                    break;
-                case '4':
-                    orentation = "translateY(" + (-n) + "px)";
+        //             break;
+        //         case '4':
+        //             orentation = "translateY(" + (-n) + "px)";
 
-                    break;
+        //             break;
 
-                default:
-                    break;
-            }
-            Array.from(aim, item => {
-                item.style.transform = orentation;
-            })
-        }, 100);
+        //         default:
+        //             break;
+        //     }
+        //     Array.from(aim, item => {
+        //         item.style.transform = orentation;
+        //     })
+        // }, 100);
 
 
 

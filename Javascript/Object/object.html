@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="box"></div>
+    <button class="btn" id="a">工厂模式弹出框</button>
+
+
+    <script>
+        var Alert = function (width, str) {
+            var o = new Object();
+            // o.width = width;
+            // o.str = str;
+
+            o.init = function () {
+                // var box = `<div></div>`;
+                var box = document.createElement("div");
+                box.style.cssText =
+                `
+                width:${width}px;
+                height : 300px;
+                border:1px solid #ccc;
+                position:absolute;
+                top:0;
+                bottom:0;
+                left:0;
+                right:0;
+                margin: auto;
+                text-align:center;
+                padding-top:40px;
+                `;
+                console.log(str)
+                box.textContent = str;
+                document.body.appendChild(box);
+                return box;
+            };
+
+            o.destroy = function () {
+                if(box){
+                    console.log('box');
+                }
+            }
+            return o
+        }
+
+        var alert1 = new Alert(300,'11111111111');
+        alert1.init();
+        alert1.destroy();
+        var alert2 = new Alert(100,'22222222');
+        alert2.init();
+
+
+    </script>
+
+</body>
+
+</html>

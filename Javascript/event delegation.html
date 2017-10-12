@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    ul {
+      width: 100px;
+      text-decoration: none;
+      list-style: none;
+    }
+
+    li {
+      height: 20px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .btn-box {
+      position: absolute;
+      right: 40px;
+      top: 300px;
+    }
+
+    .btn {
+      /* width: 80px; */
+      height: 30px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+  <ul id="ul">
+    <li class="li">1</li>
+    <li class="li">2</li>
+    <li class="li">3</li>
+    <li class="li">4</li>
+    <li class="li">5</li>
+  </ul>
+
+  <div id="box"></div>
+
+  <div class="btn-box">
+    <button class="btn" id="dom01" onclick="add1()">DOM 0级绑定事件1</button>
+    <button class="btn" id="dom02" onclick="add2()">DOM 0级绑定事件2</button>
+    <button class="btn" id="dom21" onclick="add3()">DOM 2级绑定事件1</button>
+    <button class="btn" id="dom22" onclick="add4()">DOM 2级绑定事件2</button>
+    <button class="btn" id="add" onclick="add()">绑定事件</button>
+    <button class="btn" id="cancel" onclick="cancel()">解绑事件</button>
+  </div>
+
+
+
+
+
+  <script>
+    var write = function (str) {
+      var aim = document.getElementById('box');
+      aim.textContent += str;
+      aim.textContent += "\n";
+    }
+
+    Array.from(document.querySelectorAll('.li'), function (item) {
+      item.onclick = function () {
+        write(this.textContent);
+      }
+    })
+
+    var add1 = function () {
+      document.onclick = function () {
+        alert("第一次绑定 dom0 级事件")
+      }
+    }
+    var add2 = function () {
+      document.onclick = function () {
+        alert("第二次绑定 dom0 级事件")
+      }
+    }
+    var add3 = function () {
+      document.addEventListener('click', ev => {
+        alert("第一次绑定 dom2 级事件")
+      });
+    }
+    var add4 = function () {
+      document.addEventListener('click', ev => {
+        alert("第二次绑定 dom2 级事件")
+      });
+    }
+    var pop = function () {
+      alert("一个事件");
+    }
+
+    var add = function () {
+      document.addEventListener('click', pop, false);
+    }
+    var cancel = function () {
+      document.removeEventListener('click', pop, false);
+    }
+
+
+
+
+function a(e) {
+  e.stopPropagation();
+  e.preventDefault();
+  return false;
+}
+
+
+
+
+
+    // var Dom = {
+    //   show: function (e) {
+    //     e.style.display = "block";
+    //   },
+    //   hide: function (e) {
+    //     e.style.display = "none";
+    //   }
+    // }
+
+    // var aim = document.querySelector('body');
+    // aim.addEventListener("click", function (e) {
+    //   console.log(e);
+    //   console.log(e.target.nodeName.toLowerCase());
+    //   if (e.target.nodeName.toLowerCase() == "div") {
+    //     Dom.hide(e.target);
+    //     console.log(e.target.textContent);
+    //   }
+
+    // }, false)
+  </script>
+
+
+</body>
+
+</html>

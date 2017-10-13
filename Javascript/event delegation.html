@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <script src="http://libs.cdnjs.net/jquery/3.1.1/jquery.min.js"></script>
   <style>
     ul {
       width: 100px;
@@ -32,16 +33,34 @@
       height: 30px;
       margin-top: 40px;
     }
+
+    #father {
+      width: 300px;
+      height: 300px;
+      border: 1px solid red;
+      margin-top: 100px;
+    }
+
+    #son {
+      width: 100px;
+      height: 100px;
+      border: 1px solid blue;
+    }
+
+    #jquery {
+      width: 300px;
+      margin-top: 100px;
+    }
   </style>
 </head>
 
 <body>
   <ul id="ul">
-    <li class="li">1</li>
-    <li class="li">2</li>
-    <li class="li">3</li>
-    <li class="li">4</li>
-    <li class="li">5</li>
+    <li class="li" id="li-1">1</li>
+    <li class="li" id="li-2">2</li>
+    <li class="li" id="li-3">3</li>
+    <li class="li" id="li-4">4</li>
+    <li class="li" id="li-5">5</li>
   </ul>
 
   <div id="box"></div>
@@ -53,24 +72,39 @@
     <button class="btn" id="dom22" onclick="add4()">DOM 2级绑定事件2</button>
     <button class="btn" id="add" onclick="add()">绑定事件</button>
     <button class="btn" id="cancel" onclick="cancel()">解绑事件</button>
+    <button class="btn" id="addevt" onclick="addevt()">普通绑定事件</button>
+    <button class="btn" id="delegateevt" onclick="delegateevt()">事件代理</button>
+    <button class="btn" id="pop" onclick="capture()">捕获阶段</button>
+    <button class="btn" id="capture" onclick="pop()">冒泡阶段</button>
   </div>
 
 
+  <div id="father">
+    父 div
+    <div id="son">
+      子 div
+    </div>
+  </div>
 
-
-
+  <div id="jquery">
+    <ul id="ul2">
+      <li class="li2" id="li2-1">1</li>
+      <li class="li2" id="li2-2">2</li>
+    </ul>
+  </div>
+  <button class="btn2" id="jqueryEvt">普通事件</button>
+  <button class="btn2" id="jqueryAdd">add</button>
+  <button class="btn2" id="jqueryDelegate">事件代理</button>
+  <!-- <p>111</p> -->
   <script>
-    var write = function (str) {
-      var aim = document.getElementById('box');
-      aim.textContent += str;
-      aim.textContent += "\n";
-    }
-
-    Array.from(document.querySelectorAll('.li'), function (item) {
-      item.onclick = function () {
-        write(this.textContent);
-      }
-    })
+    // $("body").delegate("p", "click", function(){
+    //   $(this).after("<p>Another paragraph!</p>");
+    // });
+    // Array.from(document.querySelectorAll('.li'), function (item) {
+    //   item.onclick = function () {
+    //     write(this.textContent);
+    //   }
+    // })
 
     var add1 = function () {
       document.onclick = function () {
@@ -103,16 +137,102 @@
       document.removeEventListener('click', pop, false);
     }
 
+    // 代理
+    var write = function (str) {
+      var aim = document.getElementById('box');
+      aim.textContent += str;
+      aim.textContent += "\n";
+    }
+
+    var addevt = function () {
+      var arr = [].slice.call(document.querySelectorAll('.li'))
+      arr.map((item) => {
+        item.onclick = function () {
+          write(this.textContent);
+        }
+      })
+    }
+
+    var delegateevt = function () {
+      var ul = document.getElementById('ul');
+
+      ul.addEventListener("click", function (e) {
+        var e = e || window.event;
+        var target = e.target || e.srcElement;
+        if (target.localName == "li") {
+          var t = target.id.replace("li-", "");
+          write(t)
+        }
+
+      }, false)
+    }
+
+
+    var father = document.getElementById('father');
+    var son = document.getElementById('son');
+
+    var capture = function () {
+      father.addEventListener("click", function () {
+        alert("事件发生在 父div")
+      }, true);
+      son.addEventListener("click", function () {
+        alert("事件发生在 子div");
+      }, true)
+    }
+
+    var pop = function () {
+      father.addEventListener("click", function () {
+        alert("事件发生在 父div")
+      }, false);
+      son.addEventListener("click", function () {
+        alert("事件发生在 子div");
+      }, false)
+    }
+
+    function a(e) {
+      e.stopPropagation();
+      e.cancelBubble = true;
+      e.preventDefault();
+      return false;
+    }
+
+    $("#jqueryEvt").click(function () {
+      $("#ul2 li").click(function () {
+        $(this).css({
+          "color": "white",
+          "background": "#ccc"
+        })
+      })
+      // $(".li2").css({
+      //   "color": "white",
+      //   "background": "#ccc"
+      // })
+    })
+    $("#jqueryAdd").click(function () {
+      var t = "<li class='li2'>新增加 li</li>";
+      // var jt = $("<li>新增加 li</li>");
+      $("#ul2").append(t);
+      // $(".li2").clone().appendTo("#ul2");
+    })
 
 
 
-function a(e) {
-  e.stopPropagation();
-  e.preventDefault();
-  return false;
-}
-
-
+    $("#jqueryDelegate").click(function () {
+      $("body").on("click", "#ul2 li", function () {
+        $(this).css({
+          "color": "white",
+          "background": "#ccc"
+        })
+      })
+    })
+    // $("#jqueryDelegate").click(function () {
+    //   $("#ul2").on("click", $("#ul2 li"), function () {
+    //     $("#ul2 li").css({
+    //       "color": "white",
+    //       "background": "#ccc"
+    //     })
+    //   })
+    // })
 
 
 

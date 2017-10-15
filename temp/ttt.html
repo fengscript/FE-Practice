@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,6 +23,7 @@
             position: absolute;
             left: 0;
         }
+
         .box {
             width: 50px;
             height: 50px;
@@ -30,6 +31,9 @@
             margin: 50px;
             display: inline-block;
             position: absolute;
+            -webkit-transition: all;
+            -moz-transition: all;
+            transition: all;
         }
     </style>
     <script>
@@ -43,45 +47,42 @@
             return (Math.random() * 3 + 1).toFixed(0);
         }
         var box1 = document.getElementById("box1");
-        // var Move = function (aim, rate, distance) {
-            var rate = rate || 16;
-            var distance = distance || 1000;
-            var countNum = 0;
-            var moveStr = "";
-            
-            function step(timestep){
-            box1.style.cssText = 
+
+        var rate = rate || 16;
+        var distance = distance || 1000;
+        var countNum = 0;
+        var moveStr = "";
+
+        function step(timestep) {
+            box1.style.cssText =
+                `
+            transform:translateX(${countNum}px);
             `
-            transform:translateX(1000px);
-            transition:all 10s ease
-            `
-                countNum += .4;
-                // box1.style.cssText = `translateX(${countNum}px)`;
-                // box1.style.cssText = `left:${countNum}px`;
-                if (countNum < distance) {
-                    window.requestAnimationFrame(step);
-                }
+            countNum += .3;
+            if (countNum < distance) {
+                window.requestAnimationFrame(step);
             }
+        }
         // };
         step()
-                // window.requestAnimationFrame(step);
-                // Move(box1)
-            // aim.style.cssText = 
-            // `
-            // transform:translateX(1000px);
-            // transition:all 10s ease
-            // `
-            // aim.style.transition = "all 10s ease";
-            // aim.style.transform = "translateX(" + 1000 + "px)";
-            // aim.style.transform = "translateX(" + 0 + "px)";
-            // setInterval(function () {
-            //     if (countNum < distance){
-            //         moveStr = "translateX(" + countNum + "px)";
-            //         countNum+=0.1
-            //         console.log(countNum)
-            //     }
-            // aim.style.transform = moveStr;
-            // }, rate);
+        // window.requestAnimationFrame(step);
+        // Move(box1)
+        // aim.style.cssText = 
+        // `
+        // transform:translateX(1000px);
+        // transition:all 10s ease
+        // `
+        // aim.style.transition = "all 10s ease";
+        // aim.style.transform = "translateX(" + 1000 + "px)";
+        // aim.style.transform = "translateX(" + 0 + "px)";
+        // setInterval(function () {
+        //     if (countNum < distance){
+        //         moveStr = "translateX(" + countNum + "px)";
+        //         countNum+=0.1
+        //         console.log(countNum)
+        //     }
+        // aim.style.transform = moveStr;
+        // }, rate);
 
         // Move(box1)
         // arr.map(function (element) {

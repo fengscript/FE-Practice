@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+
+
+    <script>
+        // 实用的透明单例
+        // 在页面创建唯一的 节点
+        // var CreateDiv = (function () {
+        //     var instance;
+
+        //     var CreateDiv = function (html) {
+        //         if (instance) {
+        //             return this.instance
+        //         }
+        //         this.html = html;
+        //         this.init();
+        //         return instance = this;
+        //     }
+
+        //     CreateDiv.prototype.init = function () {
+        //         var div = document.createElement("div");
+        //         div.innerHTML = this.html;
+        //         document.body.appendChild(div);
+        //     };
+        //     return CreateDiv;
+        // })()
+        // var a = new CreateDiv('fyg');
+
+        // 用代理实现
+        var CreateDiv = function (html) {
+            this.html = html;
+            this.init();
+        };
+        CreateDiv.prototype.init = function () {
+            var div = document.createElement("div");
+            div.innerHTML = this.html;
+            document.body.appendChild(div);
+        };
+
+        var ProxySingletonCreateDiv = (function () {
+            var instance;
+            return function (html) {
+                if (!instance) {
+                    instance = new CreateDiv(html)
+                }
+                return instance
+            }
+        })()
+
+        var a = new ProxySingletonCreateDiv("fyg")
+    </script>
+</body>
+
+</html>

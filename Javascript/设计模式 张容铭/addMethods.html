@@ -27,6 +27,7 @@
   </div>
 <script>
   Function.prototype.addMethod = function (name, fn) {
+    // 这里 . 是不行的，往  Function.prototype 上添加 name 时候，还没传进去 name，所以 undefined
     this[name] = fn;
     return this;
   }

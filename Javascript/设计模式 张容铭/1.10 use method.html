@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+<script>
+// 函数方式调用
+  // var Write = function () {};
+  // Write.chinase = function () {
+  //   document.write("输出");
+  //   return this;
+  // }
+  // Write.english = function () {
+  //   document.write("output");
+  //   return this;
+  // }
+  // Write.chinase().english();
+
+
+
+  // 类 调用
+var Write = function () {}
+Write.prototype.chinase = function () {
+  document.write("输出");
+  return this;
+}
+Write.prototype.english = function () {
+  document.write("output")
+  return this;
+}
+
+var write = new Write();
+write.chinase().english();
+  
+</script>
+
+
+</body>
+</html>

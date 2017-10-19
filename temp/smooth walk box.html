@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>smooth walk box</title>
+</head>
+
+<body>
+    <div id="box"></div>
+
+
+    <style>
+       #box{
+           position: absolute;
+           width: 100px;
+           height: 100px;
+           background: red;
+           -webkit-transition: all 1s ease;
+           -moz-transition: all 1s ease;
+           transition: all 1s ease;
+       }
+    </style>
+    <script>
+        var aim = document.getElementById('box');
+
+        document.addEventListener('click', function (e) {
+            aim.innerHTML = `
+                x:${e.x}
+                <br>
+                y:${e.y}
+            `;
+
+            aim.style.left = e.x+"px";
+            aim.style.top = e.y+"px";
+
+        },false);
+
+
+        
+    </script>
+</body>
+
+</html>

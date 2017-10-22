@@ -16,24 +16,76 @@
     <script>
         // 执行的时候才会创建实例的惰性单例
 
-       var getSingle = function (fn) {
-           var result;
-           return function () {
-               return result || (result = fn.apply(this, arguments))
-           }
-       }
+        var getSingle = function (fn) {
+            var result;
+            return function () {
+                console.log(result)
+                return result || (result = fn.apply(this, arguments))
+            }
+        }
 
-       var createDiv=function () {
-           var div = document.createElement('div');
-           div.innerHTML = "一个div";
-        //    div.style.display = 'none';
-           document.body.appendChild(div);
-           return div;
-       }
+        var createDiv = function () {
+            var div = document.createElement('div');
+            div.innerHTML = "一个div";
+            //    div.style.display = 'none';
+            document.body.appendChild(div);
+            return div;
+        }
 
-       var createSingleDiv = getSingle(createDiv);
+        var createSingleDiv = getSingle(createDiv);
 
-       var div = createSingleDiv()
+        var div = createSingleDiv();
+        var div2 = createSingleDiv();
+
+        // 修改后的
+        var ImgScale = function (url) {
+            this.url = url;
+            this.imgElement = document.createElement('img');
+            this.imgElement.src = this.url;
+            this.imgElement.id = "imgPreviewInstance";
+            this.imgElement.style.cssText =
+                `
+                position:absolute;
+                top:0;
+                left:0;
+                bottom:0;
+                right:0;
+                width:80%;
+                margin:auto;
+                z-index:99;
+                cursor:pointer;
+                -webkit-transition: all .3s ease-in-out;
+                -moz-transition: all .3s ease-in-out;
+                transition: all .3s ease-in-out;
+                `;
+            document.body.appendChild(this.imgElement);
+
+            var t = document.getElementById('imgPreviewInstance');
+            t.addEventListener('click', function () {
+                t.style.opacity = 0;
+                window.setTimeout(function () {
+                    t.style.display = "none";
+                }, 1000)
+            }, false)
+        };
+
+        var ImgScaleInstance = (function () {
+            var _instance;
+            return function (url) {
+                if (!_instance) {
+                    _instance = new ImgScale(url)
+                } else {
+                    document.getElementById('imgPreviewInstance').src = url;
+                    document.getElementById('imgPreviewInstance').style.opacity = 1;
+                    document.getElementById('imgPreviewInstance').style.display = "block";
+                }
+
+                return _instance;
+            }
+        })()
+        document.getElementById('render-img-all').addEventListener('click', function (e) {
+            UIcontrol.ImgPreview("./img/render-img-all.jpg");
+        });
     </script>
 </body>
 

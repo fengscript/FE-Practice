@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        var Button = function (id, size, color) {
+            var name = 'button';
+            var sayName = function () {
+                console.log(name)
+            }
+
+            this.id = id;
+            this.sayId = function () {
+                console.log(this.id)
+            }
+
+            Button.prototype.bgColor = "red";
+            Button.prototype.sayBgcolor = function () {
+                console.log(Button.prototype.color)
+            };
+
+            sayName();
+            sayId();
+        }
+        Button(01, '20px', 'red')
+            Button.prototype.sayBgcolor();
+
+    </script>
+</body>
+</html>

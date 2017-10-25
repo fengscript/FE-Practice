@@ -1,37 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
-    
+1. this 上的方法可以访问到私有的属性和方法
+2. 类中 var 的变量和方法为私有，构造出的对象访问不到
+3. this 定义的属性和方法直接复制给了构造出来的对象
 
     <script>
         var Button = function (id, size, color) {
             var name = 'button';
             var sayName = function () {
-                console.log(name)
+                // console.log(name);
+                return name;
             }
 
             this.id = id;
             this.sayId = function () {
-                console.log(this.id)
+                return this.id;
+                // console.log(this.id);
+                // console.log(name);
+            }
+            this.createFlag = function (staticFlag) {
+                staticFlag = true;
+                return staticFlag;
             }
 
-            Button.prototype.bgColor = "red";
-            Button.prototype.sayBgcolor = function () {
-                console.log(Button.prototype.color)
-            };
+            var sayThis = function () {
+                return (this.id)
+            }
+            // sayThis();
 
-            sayName();
-            sayId();
+
+            // this.prototype.color = "blue";
+            // this.prototype.sayColor = function () {
+            //     console.log(this.prototype.color)
+            // };
+
+            // Button.prototype.bgColor = "red";
+            // Button.prototype.sayBgcolor = function () {
+            //     console.log(Button.prototype.bgColor)
+            // };
+
+            // sayName();
+            // this.sayId();
         }
-        Button(01, '20px', 'red')
-            Button.prototype.sayBgcolor();
 
+        // 静态私有属性
+        Button.type = "dynamic"
+        // 公有属性
+        Button.prototype = {
+            create:false,
+            display:function () {
+                console.log("create");
+            }
+        }
+       var btn = new Button(01, '20px', 'red');
+       console.log(btn.sayId());
+    //    console.log(btn.sayName());
+    //    btn.sayName();
+
+       var btn2 = new Button(02, '40px', 'blue');
+       console.log(btn2.sayId());
+    //    console.log(btn2.sayName());
+
+        console.log(btn.createFlag(Button.prototype.create)); //私有属性必须用 Class.props 调用
+       console.log(btn2.id);
+       btn2.display(); // 公有属性直接使用    
     </script>
 </body>
+
 </html>

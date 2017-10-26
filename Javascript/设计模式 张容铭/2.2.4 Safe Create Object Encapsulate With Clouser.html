@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        var Book = (function () {
+            // 静态私有属性、方法
+            var bookNum = 0;
+            var Checkbook = function (name) {}
+
+            // 创建类
+            function book(newId, newName, newPrice) {
+                // 私有变量
+                var name, price;
+                // 私有方法
+                function checkId(id) {};
+
+                // 安全检测
+                if (this instanceof Book) {
+                    // 特权方法
+                    this.getName = function () {};
+                    this.setName = function () {};
+
+                    // 公有属性、方法
+                    this.id = newId;
+                    this.copy = function () {};
+                    bookNum++;
+                    if (bookNum > 100) {
+                        throw new Error("仅出版 100 本书")
+                    }
+                }
+
+
+                // 构造器
+                this.setName(name);
+                this.setPrice(price);
+            }
+
+            // 构造原型
+            _book.prototype = {
+                // 静态公有属性、方法
+                isJsBook: false,
+                display: function (arguments) {}
+            };
+            // 返回类
+            return _book;
+        })()
+    </script>
+</body>
+
+</html>

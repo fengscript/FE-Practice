@@ -9,9 +9,7 @@
 </head>
 
 <body>
-1. this 上的方法可以访问到私有的属性和方法
-2. 类中 var 的变量和方法为私有，构造出的对象访问不到
-3. this 定义的属性和方法直接复制给了构造出来的对象
+    1. this 上的方法可以访问到私有的属性和方法 2. 类中 var 的变量和方法为私有，构造出的对象访问不到 3. this 定义的属性和方法直接复制给了构造出来的对象
 
     <script>
         var Button = function (id, size, color) {
@@ -52,27 +50,66 @@
             // this.sayId();
         }
 
-        // 静态私有属性
+        // 静态私有属性 
         Button.type = "dynamic"
-        // 公有属性
+        // 静态公有属性和方法
         Button.prototype = {
-            create:false,
-            display:function () {
+            create: false,
+            display: function () {
                 console.log("create");
             }
         }
-       var btn = new Button(01, '20px', 'red');
-       console.log(btn.sayId());
-    //    console.log(btn.sayName());
-    //    btn.sayName();
+        var btn = new Button(01, '20px', 'red');
+        console.log(btn.sayId());
+        //    console.log(btn.sayName());
+        //    btn.sayName();
 
-       var btn2 = new Button(02, '40px', 'blue');
-       console.log(btn2.sayId());
-    //    console.log(btn2.sayName());
+        var btn2 = new Button(02, '40px', 'blue');
+        console.log(btn2.sayId());
+        //    console.log(btn2.sayName());
 
         console.log(btn.createFlag(Button.prototype.create)); //私有属性必须用 Class.props 调用
-       console.log(btn2.id);
-       btn2.display(); // 公有属性直接使用    
+        console.log(btn2.id);
+        btn2.display(); // 公有属性直接使用  
+
+
+        // 完整的创建
+        var Book = function (id, name, price) {
+            // 私有属性
+            var num = 1;
+            // 私有方法
+            function checkId(id) {};
+
+            // 安全检测
+            if (this instanceof Book) {
+                // 特权方法
+                this.getName = function () {};
+                this.setName = function () {};
+
+                // 对象公有属性、方法
+                this.id = newId;
+                this.copy = function () {};
+                bookNum++;
+                if (bookNum > 100) {
+                    throw new Error("仅出版 100 本书")
+                };
+
+                // 构造器
+                this.setName(name);
+                this.setPrice(price);
+            }
+        }
+        // 类静态公有属性、方法（对象不能直接访问，可以通过类自身访问）
+        Book.bookNum = 0;
+        Book.Checkbook = function (name) {}
+
+        // 类公有属性、方法 （可以从实例化的对象中用 this 访问）
+        Book.prototype = {
+            isJsBook: false,
+            display: function (arguments) {}
+        };
+
+        
     </script>
 </body>
 

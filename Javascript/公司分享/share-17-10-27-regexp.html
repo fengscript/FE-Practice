@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>regexp</title>
+</head>
+
+<body>
+    test() exec() ` test() ` : ` regexObj.test( str ) ` 
+    
+    test() 方法执行一个检索，用来查看正则表达式与指定的字符串是否匹配。返回 true 或 false。 
+    
+    
+    ` exec() ` : `
+    regexObj.exec( str ) ` exec() 方法在一个指定字符串中执行一个搜索匹配。返回一个结果数组或 null。 返回的数组将完全匹配成功的文本作为第一项，将正则括号里匹配成功的作为数组填充到后面。
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <input id="input" type="text" name="" value="">
+    <button id="testPhone" type="submit">手机号检测</button>
+    <button id="testCharacter" type="submit">只能输入汉字</button>
+    <button id="testLetter" type="submit">只能输入数字</button>
+    <script>
+        var testString = '1381381313a8'
+
+        var regexp = /a/g;
+        var regexp2 = new RegExp("a");
+
+        console.log(regexp.test(testString));
+
+        var phoneTest = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+        var characterTest = /[\u4e00-\u9fa5]/gm;
+        var numTest = /^\d+$/;
+
+
+        
+        var aim;
+        window.setTimeout(function () {
+            document.addEventListener('keyup', function () {
+                aim = document.getElementById('input').value;
+            })
+        },0)
+        document.getElementById('testPhone').addEventListener('click', function (e) {
+            if (phoneTest.test(aim)) {
+                alert("通过")
+            }else{
+                alert("格式错误")
+            }
+        });
+        document.getElementById('testCharacter').addEventListener('click', function (e) {
+            if (characterTest.test(aim)) {
+                alert("通过")
+            }else{
+                alert("格式错误，只能输入汉字")
+            }
+        });
+        document.getElementById('testLetter').addEventListener('click', function (e) {
+            if (numTest.test(aim)) {
+                alert("通过")
+            }else{
+                alert("格式错误，只能输入数字")
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>

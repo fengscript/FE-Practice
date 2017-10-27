@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <ul class="ul">
+        <span class="list">1</span>
+        <li class="list">
+            <span class="list-span">2-1</span>
+            <span class="list-span">2-2</span>
+        </li>
+        <li class="list">
+            <span class="list-span">3</span>
+        </li>
+        <li class="list">4</li>
+        <li class="list">5</li>
+    </ul>
+
+    <style>
+        li:nth-child(even) {
+            color: red;
+        }
+
+        li:nth-of-type(2) {
+            color: blue;
+        }
+
+        .list:nth-child(2) .list-span:nth-child(2){
+            color: green;
+        }
+    </style>
+
+
+    <script>
+        var Name = (function () {
+            var name = "fyg";
+
+            var sayName = function () {
+                console.log(name)
+            }
+            return {
+                sayName: sayName
+            }
+        })()
+
+        var sayName = function () {
+            console.log("Another sayName Function")
+        }
+
+        sayName()
+        Name.sayName()
+    </script>
+</body>
+
+</html>

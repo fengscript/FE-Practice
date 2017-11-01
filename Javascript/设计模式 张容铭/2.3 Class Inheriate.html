@@ -9,11 +9,20 @@
 </head>
 
 <body>
+    1 实例出来的新对象复制了父类的属性和方法，自身的 _proto_ 指向了父类的 prototype ，因此，也拥有了父类原型对象上的属性和方法
 
-    <script>
+    2 将新创建的对象指给子类的 prototype 时，子类的 prototype 就可以访问到父类的 prototype 上的属性和方法。 另外，也能因此访问到父类的 构造函数内的属性和方法。
+
+    3 instanceof 判断 左对象是否是右类的实例，所以判断继承会返回false
+    但是 SubClass.prototype 是 SuperClass 的实例，因为前者后者的一个实例被赋给了前者
+
+    4 类式继承有两个缺点 
+        i 子类型通过 prototype 对父类实例化继承了父类，所以父类中的共有属性如果是引用属性，就会在子类中被所有实例公用，所以一个子类的实例更改继承来的共有属性，会影响其他实例
+        <script>
         //类式继承
         function SuperClass(arguments) {
             this.superValue = true;
+            this.books = ['javascript','css','html']
         }
         SuperClass.prototype.getSuperValue = function () {
             return this.superValue
@@ -31,11 +40,22 @@
         }
 
 
+        var instance = new SubClass();
+        document.write(instance.getSuperValue())    
+        document.write(instance.getSubValue())
 
+ 
+        document.write(SubClass instanceof SuperClass)  //返回 false
+        document.write(SubClass.prototype instanceof SuperClass)  //返回 true
 
+        // 测试 继承来的共有引用类型属性会在子类的实例上共同影响
+        var instance1 = new SubClass();
+        var instance2 = new SubClass();
 
-
-
+        console.log(instance1.books);
+        instance1.books.shift();
+        console.log(instance2.books);//被影响到了
+        
 
 
 

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+
+    <script>
+        // 即根据不同参数进行不同的计算
+
+        function Add() {
+            // 无参数
+            function zero() {
+                return "no num input";
+            }
+            // 一个参数
+            function one(num) {
+                return 1 + num;
+            }
+            // 两个参数
+            function two(num1, num2) {
+                return num1 + num2;
+            }
+
+            // 总处理
+            this.add = function () {
+                var arg = arguments,
+                    len = arg.length;
+                switch (len) {
+                    case 0:
+                        return zero();
+                        break;
+                    case 1:
+                        return one(arg[0]);
+                        break;
+                    case 2:
+                        return two(arg[0], arg[1]);
+                        break;
+                }
+            }
+        }
+
+
+        // use
+        var A = new Add();
+
+        console.log(A.add())
+        console.log(A.add(2))
+        console.log(A.add(3, 4))
+    </script>
+</body>
+
+</html>

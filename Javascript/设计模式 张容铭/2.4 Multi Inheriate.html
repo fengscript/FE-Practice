@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    
+
+
+    <script>
+        // 首先，继承单对象属性的 extend 方法，即 浅复制
+
+        var extend = function (target, source) {
+            for (var property in source) {
+                if (source.hasOwnProperty(property)) {
+                    targetr[property] = source[property];
+                };
+            }
+            return target
+        }
+
+        // 多继承可以看做是将多个对象的属性复制到源对象中去，实现对多个对象的属性的继承
+
+        var mix = function () {
+            var i = 1,
+                len = arguments.length,
+                target = arguments[0],  //  第一个参数设为目标参数
+                arg;
+
+            // 遍历被继承的对象
+            for (; i < len; i++) {
+                // 缓存当前对象
+                arg = arguments[i];
+
+                for (var property in arg) {
+                    if (arg.hasOwnProperty(property)) {
+                        target[property] = arg[property];
+                        
+                    }
+                }
+                // 返回目标对象
+                return target
+            }
+        }
+
+        // 可以直接绑到 Object上去
+        Object.prototype.mix = function () {
+            // ......
+        }
+    </script>
+</body>
+
+</html>

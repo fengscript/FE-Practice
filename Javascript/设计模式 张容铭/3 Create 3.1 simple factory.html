@@ -14,6 +14,27 @@
 
     <script>
        
+        // simple factouy
+        function createBook (name, time, type) {
+            // 借助一个临时对象，增强
+            var o = new Object();
+            o.name = name;
+            o.time = time;
+            o.type = type;
+            o.getName = function () {
+                console.log(this.name)
+            }
+        return o;
+        }
+
+        var book1 = createBook('jsbook', 2014, "js")
+        book1.getName();
+
+
+        //另一种
+        var LoginAlert = function (text) {
+            this.context = text;
+        }
     </script>
 </body>
 

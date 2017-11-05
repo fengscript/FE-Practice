@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    又叫静态工厂方法
+
+
+    <script>
+        // simple factouy
+        function createBook(name, time, type) {
+            // 借助一个临时对象，增强
+            var o = new Object();
+            o.name = name;
+            o.time = time;
+            o.type = type;
+            o.getName = function () {
+                console.log(this.name)
+            }
+            return o;
+        }
+
+        var book1 = createBook('jsbook', 2014, "js")
+        book1.getName();
+
+
+        // 比如
+        var LoginAlert = function (text) {
+            this.context = text;
+        }
+        LoginAlert.prototype.show = function () {}
+
+        var LoginConfirm = function (text) {
+            this.context = text;
+        }
+        LoginConfirm.prototype.show = function () {}
+
+        // 制造一个基类
+        var PopFactor = function (type) {
+            switch (type) {
+                case 'alert':
+                    return new LoginAlert()
+                    break;
+
+                case 'confirm':
+                    return new LoginConfirm()
+                    break;
+            }
+        }
+
+        // 上面的基类可以继续抽取共同点使用工厂方法
+        function createPop (type, text) {
+            var o = new Object();
+            o.content = text;
+            o.show = function () {};
+            if (type == 'alert') {
+                // alertFunction
+            }
+            if (type == 'confirm') {
+                // confirmFunction
+            }
+
+            return o;
+        }
+        // use
+        var userNameAlert = createPop("alert","用户名错误")
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    通过对产品类的抽象使其创建业务主要负责用于创建多类产品的实例
+
+
+    <script>
+        // safety factory class
+        var Factory = function (type, content) {
+            if (this instanceof Factory) {
+                var s = new this[type](content);
+                return s;
+            }else{
+                return new Factory(type, content)
+            }
+        }
+
+        // strangth
+        Factory.prototype = {
+            Java:function (content) {},
+            Javascript:function (content) {},
+            UI:function (content) {
+                this.content = content;
+                (function (content) {
+                    var div = document.createElement("div");
+                    div.innerHTML = content;
+                    div.style.color = "red";
+                    document.getElementById('container').appendChild(div)
+                })(content)
+            }
+        }
+
+        // use
+        var data = [
+            {type:'Javascript', content:'jjjjjjjjjjjs'},
+            {type:'Java', content:'JJJJJJJJJJJava'},
+            {type:'UI', content:'UUUUUUUUUUUUi'},
+        ];
+
+        for (var i = 0; i >= 0; i--) {
+            Factory(s[i].type, s[i].content)
+        }
+    </script>
+</body>
+
+</html>

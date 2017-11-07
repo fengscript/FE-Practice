@@ -17,7 +17,7 @@
     <br>
     抽象类中定义的方法只是显性的定义一些功能，但没有具体的实现。所以经常用来作为父类创建一些子类
 
-
+    抽象工厂模式创建出的不是一个真实的对象实例，而是一个类簇，制定了类的结构，区别于简单工厂模式创建单一对象，工厂方法模式创建多类对象。
     <div id="container"></div>
 
     <script>
@@ -85,7 +85,7 @@
         }
 
 
-        //use
+        // 子对象
         var BMW = function (price, speed) {
             this.price = price;
             this.speed = speed;
@@ -100,7 +100,7 @@
             return this.speed;
         }
 
-
+        //use
         var myCar = new BMW(1000, 10000000)
         console.log(myCar.getPrice());
         console.log(myCar.getSpeed());
@@ -108,7 +108,6 @@
         // 通过抽象工厂，就能知道每个子类到底是属于哪一种类别的了，他们也就具备了该类所具有的属性和方法了。
 
 
-        // 感觉不是很懂了
     </script>
 </body>
 

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    抽象工厂模式：通过对类的工厂模式进行抽象，使其业务用于对产品类簇的创建，而不是负责创建某一类产品的实例
+    
+    <br>
+    abstract 是保留字 - -！
+
+    <br>
+    抽象类中定义的方法只是显性的定义一些功能，但没有具体的实现。所以经常用来作为父类创建一些子类
+
+
+    <div id="container"></div>
+
+    <script>
+        // 模拟抽象类？？？
+        // 这里不是很懂
+        var Car = function () {};
+        Car.prototype = {
+            get:function () {
+                throw new Error("未创建抽象类")
+            }
+        }
+
+        // var aaa = new Car();
+        // aaa.get()
+
+
+        /**
+        * 抽象工厂模式
+        */
+
+
+        //抽象工厂方法
+        //抽象工厂用来创建子类，这里其实是通过子类继承父类并且增强来实现的。
+        var VehicleFactory = function (subType, superType) {
+            if (typeof VehicleFactory[superType] === "function") {
+                // 缓存一下类
+                function F() {};
+
+                // 继承父类属性和方法
+                F.prototype = new VehicleFactory[superType]();
+                // 指回 constructor
+                subType.constructor = subType;
+
+                // 子类原型继承父类
+                subType.prototype = new F();
+            }else{
+                // 不存在抽象类
+                throw new Error("未创建抽象类")
+            }
+        }
+
+        // 小汽车抽象类
+        VehicleFactory.Car = function () {
+            this.type = "car";
+        }
+        VehicleFactory.Car.prototype = {
+            getPrice:function () {
+                throw new Error("抽象方法不能调用")
+            },
+            getSpeed:function () {
+                throw new Error("抽象方法不能调用")
+            }
+        }
+        // 公交车抽象类
+        VehicleFactory.Bus = function () {
+            this.type = "bus";
+        }
+        VehicleFactory.Car.prototype = {
+            getPrice:function () {
+                throw new Error("抽象方法不能调用")
+            },
+            getSpeed:function () {
+                throw new Error("抽象方法不能调用")
+            }
+        }
+
+
+        //use
+        var BMW = function (price, speed) {
+            this.price = price;
+            this.speed = speed;
+        }
+
+        //抽象工厂实现对Car抽象类的继承
+        VehicleFactory(BMW, 'Car');
+        BMW.prototype.getPrice = function () {
+            return this.price;
+        }
+        BMW.prototype.getSpeed = function () {
+            return this.speed;
+        }
+
+
+        var myCar = new BMW(1000, 10000000)
+        console.log(myCar.getPrice());
+        console.log(myCar.getSpeed());
+
+        // 通过抽象工厂，就能知道每个子类到底是属于哪一种类别的了，他们也就具备了该类所具有的属性和方法了。
+
+
+        // 感觉不是很懂了
+    </script>
+</body>
+
+</html>

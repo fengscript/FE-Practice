@@ -11,23 +11,51 @@
 <body>
     通过对产品类的抽象使其创建业务主要负责用于创建多类产品的实例
 
+    要创建多类多选， 3 中的简单工厂方法就不适用了，就可以用工厂方法模式
+    这样子创建对象的方式避免了使用者与对象类的耦合，用户不必关心创建该对象的具体类，只需要调用工厂方法即可
+
+
+    <div id="container"></div>
 
     <script>
+        // 如，对以下类  可以进行抽象综合
+
+        //   先来一个绿色的 java
+        var Java = function (content) {
+            this.content = content;
+            (function (content) {
+                var div = document.createElement("div");
+                div.innerHTML = content;
+                div.style.color = "green";
+                document.getElementById('container').appendChild(div)
+            })(content)
+        }
+
+        //   再来一个红色的 php
+        var Php = function (content) {
+            this.content = content;
+            (function (content) {
+                var div = document.createElement("div");
+                div.innerHTML = content;
+                div.style.color = "red";
+                document.getElementById('container').appendChild(div)
+            })(content)
+        }
+
+        // 抽象综合
         // safety factory class
         var Factory = function (type, content) {
             if (this instanceof Factory) {
                 var s = new this[type](content);
                 return s;
-            }else{
+            } else {
                 return new Factory(type, content)
             }
         }
 
-        // strangth
+        // 在工厂原型中创建所有类型数据对象的基类
         Factory.prototype = {
-            Java:function (content) {},
-            Javascript:function (content) {},
-            UI:function (content) {
+            Java: function (content) {
                 this.content = content;
                 (function (content) {
                     var div = document.createElement("div");
@@ -35,18 +63,45 @@
                     div.style.color = "red";
                     document.getElementById('container').appendChild(div)
                 })(content)
+            },
+            Javascript: function (content) {
+                this.content = content;
+                (function (content) {
+                    var div = document.createElement("div");
+                    div.innerHTML = content;
+                    div.style.color = "blue";
+                    document.getElementById('container').appendChild(div)
+                })(content)
+            },
+            UI: function (content) {
+                this.content = content;
+                (function (content) {
+                    var div = document.createElement("div");
+                    div.innerHTML = content;
+                    div.style.color = "green";
+                    document.getElementById('container').appendChild(div)
+                })(content)
             }
         }
 
+        // 这样子后面再添加其他类，只需要在工厂原型里面增加即可
         // use
-        var data = [
-            {type:'Javascript', content:'jjjjjjjjjjjs'},
-            {type:'Java', content:'JJJJJJJJJJJava'},
-            {type:'UI', content:'UUUUUUUUUUUUi'},
+        var data = [{
+                type: 'Javascript',
+                content: 'jjjjjjjjjjjs'
+            },
+            {
+                type: 'Java',
+                content: 'JJJJJJJJJJJava'
+            },
+            {
+                type: 'UI',
+                content: 'UUUUUUUUUUUUi'
+            },
         ];
 
-        for (var i = 0; i >= 0; i--) {
-            Factory(s[i].type, s[i].content)
+        for (var i = 0; i < data.length; i++ ){
+            Factory(data[i].type, data[i].content);
         }
     </script>
 </body>

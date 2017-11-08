@@ -12,6 +12,8 @@
 但是当把引用又传递了一层时，会丢失隐式绑定，使得 this 默认的指向全局对象
 
 参数传递时候的隐式赋值也会丢失隐式绑定
+
+闭包内部 this 也会指向全局
 <script type="text/javascript">
   function foo() {
     console.log(this.a)
@@ -55,7 +57,14 @@ var obj3={
   foo3:foo3
 }
 var a3 = '我也是全局对象的属性'
-doFoo( obj3.foo3 )
+doFoo( obj3.foo3 );
+
+
+
+  (function ddd() {
+    console.log("aaa")
+    console.log(this)
+  })()
 
 </script>
 

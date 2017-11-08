@@ -13,12 +13,12 @@
     将复杂对象的表现层和构建层相互分离，同样的构建过程可以采用不同的表示
     <br> 工厂模式主要是为了创建对象实例或者类簇，关心的是最终产出，而不关心创建的过程，仅仅需要知道最终创建的结果，所以通过工厂模式得到的都是对象实例或类簇。
 
-    <br> 建造者模式目的也是为了创建对象，但是更多的会关心创建的过程，甚至于创建对象的每一个细节。
+    <br> 建造者模式目的也是为了创建对象，但是更多的会关心创建的过程，甚至于创建对象的每一个细节。 创建出来的是一个复合对象
     <script>
         // 创建一个 人类
         var Human = function (param) {
             this.skill = param && param.skill || "保密";
-            this.hpbby = param && param.hobby || "保密";
+            this.hobby = param && param.hobby || "保密";
         }
 
         Human.prototype = {
@@ -31,22 +31,32 @@
         }
 
         //实例化姓名类
-        var Named = function (name) {
-            var that = this;
+        var Named = function (param) {
+            this.name = param && param.name;
             //构造器
             // 构造函数解析姓名的姓与名
-            (function (name, that) {
-                that.wholeName = name;
-                if (name.indexOf(' ') > -1) {
-                    that.FirstName = name.slice(0, name.indexOf(' '));
-                    that.SecondName = name.slice(0, name.indexOf(' '));
-                }
-            })(name, that)
+
+            if (this.name.indexOf(' ') > -1) {
+                this.FirstName = this.name.slice(0, this.name.indexOf(' '));
+                this.SecondName = this.name.slice(this.name.indexOf(' '));
+            }
+
+            // 或者下面的，需要想想为什么用下面的
+
+            // var that = this;
+            // (function (name, that) {
+            //     that.wholeName = name;
+            //     if (name.indexOf(' ') > -1) {
+            //         that.FirstName = name.slice(0, name.indexOf(' '));
+            //         that.SecondName = name.slice(name.indexOf(' '));
+            //     }
+            // })(that.name, that)
         }
 
         // 实例化职位类
-        var Work = function (work) {
+        var Work = function (param) {
             var that = this;
+            that.work = param && param.work;
             //构造器
             // 构造函数通过传入的职位特征来设置相应职位及描述
             (function (work, that) {
@@ -64,8 +74,62 @@
                         that.work = 'UI设计师';
                         that.workDescript = 'UI设计师啊啊啊';
                 }
-            })(work, that)
+            })(that.work, that)
         }
+
+        // 增强
+        Work.prototype.changeWork = function (work) {
+            this.work = work
+        }
+        Work.prototype.changeDescript = function (sentence) {
+            this.changeDescript = sentence
+        }
+
+
+        // 创建一个 建造者 类，组合调用上面三个类，实现创建一个完整的 应聘者 类的目的
+        var Person = function (name, work, skill) {
+            // 创建应聘者缓存对象
+            var _person = new Human(skill);
+
+            //对缓存对象进行修饰
+            _person.name = new Named(name);
+            _person.work = new Work(work);
+
+            return _person;
+        }
+
+        // use
+        var FYG = {
+            name: "feng yanggang",
+            skill: "coder",
+            work: "code"
+        }
+
+        var person = new Person(FYG)
+
+
+
+        console.log(person.skill);
+        console.log(person.name.FirstName);
+        console.log(person.name.SecondName);
+        console.log(person.work.work);
+        console.log(person.work.workDescript);
+
+
+
+
+
+        // 测试传入参数
+        var person = {
+            name: 'Me',
+            age: 25
+        }
+
+        function test(args) {
+            var a = args && args.name || "fyg";
+            console.log(a);
+        }
+        test(person)
     </script>
 </body>
 

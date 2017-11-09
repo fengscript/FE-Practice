@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    类式继承是通过子类的原型对父类实例化来实现
+
+    <br> 构造函数继承是通过在子类的构造函数作用环境中执行一次父类的构造函数实现的，组合取他们的优点
+    <script>
+        // 组合式继承
+        // 父类
+        function SuperClass(name) {
+            // 值类型共有属性
+            this.name = name;
+
+            // 引用类型共有属性
+            this.books = ["javascript", "css", "html"];
+        }
+        // 父类原型共有方法
+        SuperClass.prototype.getName = function () {
+            console.log(this.name)
+        }
+
+        // 声明子类
+        function SubClass(name, time) {
+            // 构造函数式继承父类 name 属性
+            SuperClass.call(this, name);
+            // 子类中新增共有属性
+            this.time = time;
+        }
+        // 类式继承 子类原型继承父类
+        SubClass.prototype = new SuperClass();
+
+        // 子类中新增原型方法
+        SubClass.prototype.getTime = function () {
+            console.log(this.time)
+        }
+
+
+        // use
+        var instance1 = new SubClass('instance1', 2017);
+        instance1.books.push('react book');
+        instance1.getTime();
+        instance1.getName();
+        
+        var instance2 = new SubClass('instance2', 2017);
+        console.log(instance2.books);
+        instance2.getTime();
+        instance2.getName();
+        
+    </script>
+
+</body>
+
+</html>

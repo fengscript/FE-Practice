@@ -10,10 +10,51 @@
 
 <body>
 
-    用原型实例指向创建对象的类，使用于创建新的对象的类共享原型对象的属性及方法
-
+    将原型对象指向创建对象的类，使这些类共享原型对象的方法和属性 因为 js 是基于原型链实现对象之间的继承，所以这种继承是基于对属性和方法的共享，而不是复制
     <script>
+        // 一个轮播图
+        var LoopImage = function (imgArr, container) {
+            this.imagesArr = imgArr;
+            this.container = container;
+            this.createImage = function () {};
+            this.changeImage = function () {};
+        }
+
+        // 上下滑动切换类
+        var SlideLoopImg = function (imgArr, container) {
+            // 构造函数继承轮播类
+            LoopImage.call(this, imgArr, container);
+
+            // 重写继承到的切换下一张图片方法
+            this.changeImage = function () {
+                console.log("Slide Change")
+            }
+        }
         
+        // 渐隐切换类
+        var FadeLoopImg = function (imgArr, container, arrow) {
+            // 继承轮播类
+            LoopImage.call(this, imgArr, container);
+
+            // 重写继承到的切换下一张图片方法
+            this.arrow = arrow;
+
+            this.changeImage = function () {
+                console.log("FadeLoopImg Change")
+            }
+        }
+        // 实例化一个渐隐切换类
+        var fadeImg = new FadeLoopImg([
+            '1.jpg',
+            '2.jpg',
+        ],'slide',[
+            'left.png',
+            'right.png',
+        ]);
+
+        fadeImg.changeImage()
+
+
 
     </script>
 </body>

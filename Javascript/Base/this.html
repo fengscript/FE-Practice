@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+        var name = "the window";
+
+        var object = {
+            name: "my object",
+            getName: function () {
+                return this.name;
+            }
+        };
+
+
+        console.log(object.getName())   // my object
+        console.log((object.getName)())     // my object
+        console.log(object.getName = object.getName);   //ƒ () {return this.name;}
+        console.log((object.getName = object.getName)());   //the window
+        // (object.getName = object.getName)() 赋值表达式的求值结果是右值，所以该表达式的值是 getName 函数，即相当于 var b; b = object.getName; b()
+
+        // 直接执行函数时，this 指向 window
+    </script>
+</body>
+
+</html>

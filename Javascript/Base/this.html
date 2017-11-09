@@ -29,6 +29,21 @@
         // (object.getName = object.getName)() 赋值表达式的求值结果是右值，所以该表达式的值是 getName 函数，即相当于 var b; b = object.getName; b()
 
         // 直接执行函数时，this 指向 window
+
+
+
+        function test () {
+            var a = "b";
+            this.a = "a";
+            console.log(a);
+            console.log(this.a);
+            console.log(this)   // 直接执行函数，this 指向 window
+        }
+        test();
+
+
+        var b = new test();
+        // 此时，内部的 this 指向 test
     </script>
 </body>
 

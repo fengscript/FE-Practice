@@ -5,14 +5,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>原型式继承</title>
 </head>
 
 <body>
-    
+    道格拉斯·克罗克福德：
+    借助原型 prototype 可以根据已有的对象创建新的对象，同时不必创建新的自定义对象
     <script>
+        // 原型式继承
+        function inheritObject (o) {
+            // 来一个过渡函数对象
+            function F () {};
+            // 过渡对象的原型继承父对象
+            F.prototype = o;
+            // 返回过渡对象的一个实例，该实例的原型继承了父对象
+            return new F();
+        }
+        // 是对类式继承的一个封装，过渡对象就相当于类式继承的子类，这里作为一个过渡对象出现，是为了创建要返回的新的实例化对象
+
+        // 类式继承的问题这里也会有，但是 F 作为过渡类，构造函数中无内容，开销小，也可以将F() 缓存起来，这样就有了 Object.create()
+
+        // test
+        var book = {
+            name:'js book',
+            alignBook:['css book','html book']
+        }
+
+        var newBook = inheritObject(book);
+        newBook.name = 'ajax book';
+        newBook.alignBook.push('new protocal')
+
+        var otherBook = inheritObject(book);
+        otherBook.name = 'server book';
+        otherBook.alignBook.push('php')
+
+        console.log(newBook.name);  //ajax book
+        console.log(newBook.alignBook);     // ["css book", "html book", "new protocal", "php"]
+
+        console.log(otherBook.name);    //server book
+        console.log(otherBook.alignBook);       //["css book", "html book", "new protocal", "php"]
         
-        
+        // 和类式继承一样，父类对象 book 中的值类型属性被复制，引用类型属性被共用
     </script>
 
 </body>

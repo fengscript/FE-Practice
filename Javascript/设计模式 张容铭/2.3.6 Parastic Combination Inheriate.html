@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>寄生组合式继承</title>
+</head>
+
+<body>
+    组合式继承的问题：子类不是父类的实例，子类的原型是父类的实例，这是由类式继承引起的。
+    <br> 寄生式继承依托于原型继承，原型继承又与类式继承类似，寄生组合式继承组合了寄生继承和构造函数继承。
+
+    <script>
+         // 原型式继承
+         function inheritObject (o) {
+            // 来一个过渡函数对象
+            function F () {};
+            // 过渡对象的原型继承父对象
+            F.prototype = o;
+            // 返回过渡对象的一个实例，该实例的原型继承了父对象
+            return new F();
+        }
+
+        function inheritPrototype(subClass, superClass) {
+            // 复制一份父类的原型副本保存在变量中
+            var p = inheritObject(superClass.prototype);
+            // 修正因为重写子类原型导致子类的 constructor 指向
+            p.constructor = subClass;
+            // 设置子类原型
+            subClass.prototype = p;
+        }
+
+        // 组合式继承通过构造函数继承的属性和方法是没问题的，这里通过寄生式继承重新继承父类的原型
+        // 仅仅需要继承父类的原型，而不用调用父类的构造函数（在构造函数继承中已经调用过了）
+
+        // test
+        // 定义父类
+        function SuperClass (name) {
+            this.name = name;
+            this.colors = ['red','blue'];
+        }
+        // 定义父类原型方法
+        SuperClass.prototype.getName = function () {
+            console.log(this.name)
+        }
+        // 定义子类
+        function SubClass (name, time) {
+            // 构造函数继承
+            SuperClass.call(this, name)
+            // 子类新增属性
+            this.time = time;
+        }
+        // 寄生式继承父类原型方法
+        inheritPrototype(SubClass, SuperClass);
+        // 子类新增原型方法
+        SubClass.prototype.getTime = function () {
+            console.log(this.time)
+        }
+
+        // use
+        var instance1 = new SubClass("fyg1",2016);
+        var instance2 = new SubClass("fyg2",2017);
+
+        instance1.colors.push("black");
+        console.log(instance1.colors)
+        console.log(instance2.colors)
+
+        instance2.getTime()
+        instance2.getName()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    原型模式即：将可复用的、可共享的、消耗大的操作从基类中提取出来放到其原型中，然后子类通过组合继承或者寄生组合式继承将方法和属性继承下俩，对于子类中那些需要重写的方法进行重写，这样子子类创建的对象既具有子类的属性和方法也共享了基类的原型方法
+    <script>
+        // 优化后如下：
+        // 一个轮播类
+        var LoopImage = function (imgArr, container) {
+            this.imagesArr = imgArr;
+            this.container = container;
+        }
+
+        LoopImage.prototype = {
+            createImage: function () {
+                console.log("LoopImage createImage function")
+            },
+
+            changeImage: function () {
+                console.log("LoopImage changeImage function")
+            }
+        }
+
+        // 上下滑动切换类
+        var SlideLoopImg = function (imgArr, container) {
+            // 构造函数继承轮播类
+            LoopImage.call(this, imgArr, container);
+
+        }
+        SlideLoopImg.prototype = new LoopImage();
+        // 重写继承到的切换下一张图片方法
+        SlideLoopImg.prototype.changeImage = function () {
+            console.log("SlideLoopImg changeImage function")
+        }
+
+        // 渐隐切换类
+        var FadeLoopImg = function (imgArr, container, arrow) {
+            // 继承轮播类
+            LoopImage.call(this, imgArr, container);
+            // 私有变量
+            this.arrow = arrow;
+        }
+        // 重写继承到的切换下一张图片方法
+        FadeLoopImg.prototype = new LoopImage();
+        // 重写继承到的切换下一张图片方法
+        FadeLoopImg.prototype.changeImage = function () {
+            console.log("FadeLoopImg changeImage function")
+        }
+
+        // USE
+        // 实例化一个渐隐切换类
+        var fadeImg = new FadeLoopImg([
+            '1.jpg',
+            '2.jpg',
+        ], 'slide', [
+            'left.png',
+            'right.png',
+        ]);
+
+        console.log(fadeImg.container);
+        fadeImg.changeImage()
+
+    </script>
+</body>
+
+</html>

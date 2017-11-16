@@ -67,6 +67,21 @@
         console.log(fadeImg.container);
         fadeImg.changeImage()
 
+        // 又因为，原型模式继承的特点是：无论何时，都可以随时对基类或者子类进行方法的拓展，且被实例化的对象或者类都能实时获取到这些方法。
+        // 原型对象是一个共享对象，无论是父类的实例对象或者是子类的继承，都是对它的一个指向引用，所以原型对象被共享，因此对原型对象方法的拓展，不论是子类还是父类的实例化对象都会继承到
+        // 如
+
+        LoopImage.prototype.getImageLength = function () {
+            return this.imagesArr.length;
+        }
+        FadeLoopImg.prototype.getContainer = function () {
+            return this.container;
+        };
+
+        console.log(fadeImg.getImageLength())
+        console.log(fadeImg.getContainer())
+        
+        // 缺点就是随时可以拓展，太随意修改类的属性，可能会影响到其他人使用的功能
     </script>
 </body>
 

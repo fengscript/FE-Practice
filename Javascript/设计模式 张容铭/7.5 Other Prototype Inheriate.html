@@ -9,9 +9,43 @@
 </head>
 
 <body>
-    
+    原型模式的最初思想是对对象的方法和属性进行复制来创建新对象 当创建一个实例对象的构造函数比较复杂，或者耗时比较长，或者要通过创建多个对象来实现时，因为对性能消耗过大，最好不要用 new 关键字来创建基类，而是通过原型模式来进行复制，创建
     <script>
-        
+        // 基于已经存在的模版对象克隆出新对象的模式
+
+        function prototypeExtennd() {
+            var F = function () {},
+                args = arguments,
+                i = 0,
+                len = args.length;
+            for (; i < len; i++) {
+                // 遍历模版对象的属性
+                for (var j in args[i]) {
+                    // 复制到缓存类中
+                    F.prototype[j] = args[i][j];
+                }
+            }
+            // 返回缓存类的一个实例
+            return new F()
+        }
+
+        // use
+        var penguin = prototypeExtennd({
+           speed:20,
+           swim:function () {
+               console.log("游泳速度为："+this.speed)
+           },
+           run:function () {
+               console.log("奔跑速度为："+speed)
+           },
+           jump:function () {
+               console.log("跳跃")
+           }
+        })
+// 通过 prototypeExtennd 创建的是一个对象，所以无需 new 去创建新的实例对象，可以直接使用
+        penguin.swim()
+        penguin.run(10)
+        penguin.jump()
     </script>
 </body>
 

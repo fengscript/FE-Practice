@@ -2,7 +2,8 @@
 //导入HTTP模块
 var http = require('http')
 
-var server = http.createServer(function (req, res) { 
+var server = http.createServer(function (req, res) {
+  // 参数是一个 requestListner 函数 有 request response 两个参数
   console.log(req.method + ':' + req.url);
   res.writeHead(200, 
     {'Content-Type':'text/html'}

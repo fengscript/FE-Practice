@@ -9,9 +9,48 @@
 </head>
 
 <body>
+    原型模式的最初思想是对对象的方法和属性进行复制来创建新对象 当创建一个实例对象的构造函数比较复杂，或者耗时比较长，或者要通过创建多个对象来实现时，因为对性能消耗过大，最好不要用 new 关键字来创建基类，而是通过原型模式来进行复制，创建
+
+    原型模式可以让多个对象分享同一个对象的属性与方法，这也是一种继承方式，但是这种继承的实现是不需要创建的，而是将原型对象分享给那些继承的对象。    有时需要让每个继承对象独立的拥有一份原型对象，此时需要对原型对象进行复制
     
+    所以原型对象更适合在创建复杂的对象时，对于需求一直改变导致对象结构不停变化，将那些比较稳定的属性和方法公用而提取的继承的实现。
     <script>
+        // 基于已经存在的模版对象克隆出新对象的模式
+
+        function prototypeExtennd() {
+            var F = function () {},
+                args = arguments,
+                i = 0,
+                len = args.length;
+            for (; i < len; i++) {
+                // 遍历模版对象的属性
+                for (var j in args[i]) {
+                    // 复制到缓存类中
+                    F.prototype[j] = args[i][j];
+                }
+            }
+            // 返回缓存类的一个实例
+            return new F()
+        }
         
+        // use
+        // 例如，没有提供 企鹅基类，只是提供了一些动作模版对象，通过实现对这些模版对象的继承来创建一个企鹅实例对象
+        var penguin = prototypeExtennd({
+           speed:20,
+           swim:function () {
+               console.log("游泳速度为："+this.speed)
+           },
+           run:function () {
+               console.log("奔跑速度为："+speed)
+           },
+           jump:function () {
+               console.log("跳跃")
+           }
+        })
+// 通过 prototypeExtennd 创建的是一个对象，所以无需 new 去创建新的实例对象，可以直接使用
+        penguin.swim()
+        penguin.run(10)
+        penguin.jump()
     </script>
 </body>
 

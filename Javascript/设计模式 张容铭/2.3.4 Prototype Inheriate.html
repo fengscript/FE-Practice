@@ -45,6 +45,12 @@
         console.log(otherBook.name);    //server book
         console.log(otherBook.alignBook);       //["css book", "html book", "new protocal", "php"]
         
+
+        //  Object.create()
+        var other3 = Object.create(book);
+        other3.name = "object.create() test";
+        console.log(other3.name);
+        console.log(other3.alignBook);
         // 和类式继承一样，父类对象 book 中的值类型属性被复制，引用类型属性被共用
     </script>
 

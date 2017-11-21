@@ -9,40 +9,10 @@
 </head>
 
 <body>
-    Adapter: 适配器模式
-    将一个类（对象）的接口（方法或属性）转化为另外一个接口，以满足用户需求，使类（对象）之间的接口不兼容问题通过适配器得到解决
+    Adapter: 适配器模式 将一个类（对象）的接口（方法或属性）转化为另外一个接口，以满足用户需求，使类（对象）之间的接口不兼容问题通过适配器得到解决
     <script>
-        // 外观模式实现一个兼容的事件绑定
-        var getEvent = function (event) {
-            return event || window.event;
-        }
-
-        var getTarget = function (event) {
-            var event = getEvent(event);
-            return ebent || event.srcElement;
-        }
-
-        var preventDefault = function (event) {
-            var event = getEvent(event);
-            if (event.preventDefault) {
-                event.preventDefault
-            } else {
-                event.returnValue = false;
-            }
-        }
-
-        var addEvent = function (dom, type, fn) {
-            if (dom.addEventListner) {
-                dom.addEventListener(type, fn, false);
-            } else if (dom.attachEvent) {
-                dom.attachEvent('on' + type, fn);
-            } else {
-                dom['on' + type] = fn
-            }
-        }
-
-        // 外观模式封装多个功能，简化底层操作方法
-        // 如 一个简单的代码库
+        // 一个 jquery 适配器
+        // 如 要兼容下面 A 代码库与jquery
         var A = {
             // 获取元素
             g: function (id) {
@@ -54,7 +24,35 @@
             attr: function (id, key, value) {
                 document.getElementById(id)[key] = value
 
+            },
+            on: function (id, type, fn) {
+                document.getElementById(id)['on' + type] = fn
             }
+        }
+        // 则
+        window.A = A = jQuery;
+
+        // 适配异类框架
+        // 如 下面的 B
+        var B = B || {};
+        B.g = function (id) {
+            return document.getElementById(id);
+        }
+
+        B.on = function (id, type, fn) {
+            var dom = typeof id === "string" ? this.id : id;
+            if (dom.addEventListner) {
+                dom.addEventListner(type, fn, false)
+            }
+            //....
+        }
+        // 现在，引入 jquery 替换B库
+        B.g = function (id) {
+            return $(id).get(0);
+        }
+        B.on = function (id, ytpe, fn) {
+            var dom = typeof id === "string" ? $("#" + id) : $(id);
+            dom.on(type, fn)
         }
     </script>
 </body>

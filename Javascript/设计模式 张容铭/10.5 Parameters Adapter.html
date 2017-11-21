@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>外观模式</title>
+</head>
+
+<body>
+    适配器还可以用来在需要传递多个参数的时候，对参数进行适配
+
+    传统设计模式中，适配器模式用来适配两个类接口不兼容的问题，在 js 中，范围更广，可以用来适配两个代码库、适配前后端等
+
+    js中，更多的用在对象之间，用来将对象拆分重新包装时候
+    <script>
+        //如，需要传入很多参数，一般以对象的形式传入，然而调用时候不知道传递的参数是否完整，这时候可以用适配器来适配传入的参数对象
+
+        function soDomething(obj) {
+            var _adapter = {
+                name: "name",
+                title: 'title',
+                age: 25
+            };
+
+            for (var i in _adapter) {
+                if (_adapter.hasOwnProperty(i)) {
+                    _adapter[i] = obj[i] || _adapter[i]
+                }
+            }
+            // 或者 extend(_adapter, obj)
+        }
+
+        // 如 对于数组型参数 转换成 对象型
+        var arr = ["fyg", 25]
+        var obj = {
+            name: '',
+            age: 0
+        }
+
+        function arrToObjAdapter(arr) {
+            return {
+                name: arr[0],
+                age: arr[1],
+                //......
+            }
+        }
+
+        var adapterData = arrToObjAdapter( arr )
+        console.log(adapterData)
+
+        // 又如，适配服务器端拉过来的数据
+        function ajaxAdapter(data) {
+            return [data['key1'],data['key2']]
+        }
+        $.ajax({
+            url:'xxx.php',
+            success:function (data, status) {
+                if (data) {
+                    doSomething(ajaxAdapter(data))
+                }
+            }
+        })
+
+        // 这样子以后后盾数据有任何变化，只需要更改 ajaxAdapter 转换格式即可
+    </script>
+</body>
+
+</html>

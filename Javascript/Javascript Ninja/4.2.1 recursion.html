@@ -18,6 +18,18 @@
 
 
         console.log(isPalindrome("calac"));
+
+        // 方法中的递归
+        var obj = {
+            chirp: function (n) {
+                return n > 1 ? obj.chirp(n - 1) + (n - 1) + "-chrip" : "chirp-1\n"
+            }
+        }
+        console.log(obj.chirp(3));
+
+
+        // 引用丢失
+        
     </script>
 </body>
 

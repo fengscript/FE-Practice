@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        function test () {
+            this.prop = "a";
+            var prop = "b";
+            return this
+        }
+        console.log(test());
+        // 很明显，this.prop 被添加到 window了 因为this定义的，只会被函数的调用方式决定！！！
+    </script>
+</body>
+</html>

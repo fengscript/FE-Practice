@@ -29,6 +29,16 @@ var object = Constructor()
 
 **函数调用之间的主要差异是：作为 `this` 参数传递给执行函数的上下文对象的区别**
 
+如
+```js
+function test () {
+    this.prop = "a";
+    var prop = "b";
+    return this
+}
+console.log(test());
+// 很明显，this.prop 被添加到 window了 因为this定义的，只会被函数的调用方式决定！！！
+```
 
 ## recursing
 

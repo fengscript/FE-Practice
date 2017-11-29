@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="element">1</div>
+    <div class="element">2</div>
+    <div class="element">3</div>
+    <script>
+        var getter1 = document.querySelectorAll('.element');
+
+        console.log(getter1) // __proto__ : NodeList
+
+        var getter2 = document.getElementsByClassName('element');
+        console.log(getter2); // __proto__ : HTMLCollection
+
+        // 很明显 querySelectorAll 取到的是 NodeList
+        // getElementsByClassName 取到的是 HTMLCollection
+        // 只有querySelectorAll 返回的是静态的 ，其他接口返回的都是 live 的
+        var getter2Arr = Array.from(document.getElementsByClassName('element'))
+        console.log(getter2Arr);
+    </script>
+</body>
+
+</html>

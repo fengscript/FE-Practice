@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>将函数视作对象</title>
+</head>
+
+<body>
+    js 中的函数可以和对象一样，拥有属性和方法，可以将函数赋值给对象的一个属性，从而创建一个方法调用。
+    <script>
+        // 1 给函数添加属性
+        var fn = function () {
+            console.log("I'm a function");
+            fn.prop = "a prop";
+            // console.log(fn.prop)
+            document.write('<br>')
+            document.write(fn.prop)
+        }
+        fn.otherProp = "other prop"
+        fn();
+        document.write('<br>')
+        document.write(fn.otherProp)
+    </script>
+</body>
+
+</html>

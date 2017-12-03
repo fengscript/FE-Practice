@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>将函数视作对象</title>
+</head>
+
+<body>
+    js 中的函数可以和对象一样，拥有属性和方法，可以将函数赋值给对象的一个属性，从而创建一个方法调用。
+    <script>
+        // 1 给函数添加属性
+        var fn = function () {
+            console.log("I'm a function");
+            fn.prop = "a prop";
+            // console.log(fn.prop)
+            document.write('<br>')
+            document.write(fn.prop)
+        }
+        fn.otherProp = "other prop"
+        fn();
+        document.write('<br>')
+        document.write(fn.otherProp)
+        document.write('<br>')
+
+        // 对上面的应用 —— 缓存 memoring
+
+        // 存储一组函数
+
+        var store = {
+            nextId: 1,
+            cache: {},
+            add: function (fn) {
+                if (!fn.id) {
+                    fn.id = this.nextId++;
+                    (store.cache[fn.id] = fn)
+                    return `function ${fn.name} is added`
+                }
+            }
+        };
+
+        function ninja() {
+            document.write('<br>')
+            document.write(ninja.name)
+        }
+        ninja()
+        document.write('<br>')
+
+        document.write(store.add(ninja))
+        document.write('<br>')
+        document.write(store.add(ninja))
+        // 只会添加一次 所以报了 undefined
+
+        // 对上面的应用 —— 自记忆函数 memorization
+        function isPrime(value) {
+            if (!isPrime.answer) isPrime.answer = {};
+            if (isPrime.answer[value] != null) {
+                return isPrime.answer[value];
+            }
+
+            var prime = value != 1;
+            for (var i = 2; i < value; i++) {
+                if (value % i == 0) {
+                    prime = false;
+                    break;
+                }
+            }
+            return isPrime.answer[value] = prime;
+        }
+
+        document.write("<br>")
+        document.write(isPrime(5))
+    </script>
+</body>
+
+</html>

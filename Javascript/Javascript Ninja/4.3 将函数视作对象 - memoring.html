@@ -9,6 +9,19 @@
 </head>
 
 <body>
+    <div class="a"></div>
+    <div class="a"></div>
+    <div class="a"></div>
+    <div class="a"></div>
+    <div class="a"></div>
+    <div class="a"></div>
+    <div class="a"></div>
+    <div class="a"></div>
+    <div class="a"></div>
+    <div class="a"></div>
+    <div class="a"></div>
+
+
     js 中的函数可以和对象一样，拥有属性和方法，可以将函数赋值给对象的一个属性，从而创建一个方法调用。
     <script>
         // 1 给函数添加属性
@@ -72,6 +85,35 @@
 
         document.write("<br>")
         document.write(isPrime(5))
+
+        function memory (name) {
+            if (!cache) {
+                var cache;
+            }
+            return cache || (cache = document.getElementsByClassName(name));
+
+        }
+        console.log(memory("a"))
+
+        var timeTest = function (fn, times) {
+            var start = new Date();
+            for (let index = 0; index < times; index++) {
+                // fn();
+                timeTest.call(fn,fn.arguments)
+            }
+            var end = new Date();
+            var time = (end - start)/1000;
+            // ${fn.name} 
+            console.log(`你的函数运行了 ${times} 次，耗时${time} 秒`)
+        }
+
+        // timeTest(function () {
+        //     if (!cache) {
+        //         var cache;
+        //     }
+        //     return cache || (cache = document.getElementsByClassName("a"));
+        // }, 10000)
+        timeTest(memory(), 100)
     </script>
 </body>
 

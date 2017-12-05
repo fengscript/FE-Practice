@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vuex test</title>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex/dist/vuex.js"></script>
+    <div id="app">
+        <p>{{count}}
+            <button @click="inc">+</button>
+            <button @click="dec">-</button>
+            <container></container>
+        </p>
+    </div>
+    <script>
+        const store = new Vuex.Store({
+            state: {
+                count: 0
+            },
+            mutations: {
+                inc(state) {
+                    state.count++
+                },
+                dec: state => state.count--
+            }
+        });
+
+
+        var Counter = {
+            template: `<div> {{count}} </div>`,
+            computed: {
+                count() {
+                    return store.state.count
+                }
+            }
+        };
+
+
+        const app = new Vue({
+            el: '#app',
+            computed: {
+                count() {
+                    return store.state.count
+                }
+            },
+            methods: {
+                inc() {
+                    store.commit('inc')
+                },
+                dec() {
+                    store.commit('dec')
+                }
+            },
+            components: {
+                container: Counter
+            }
+        })
+    </script>
+</body>
+
+</html>

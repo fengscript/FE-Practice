@@ -9,12 +9,19 @@
 </head>
 
 <body>
+    FROM https://vuex.vuejs.org/zh-cn/state.html 
+    <br>
+    在 Vue 组件中获得 Vuex 状态：
+    
+    由于 Vuex 的状态存储是响应式的，从 store 实例中读取状态最简单的方法就是在计算属性中返回某个状态
+
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vuex/dist/vuex.js"></script>
     <div id="app">
         <p>{{count}}
             <button @click="inc">+</button>
             <button @click="dec">-</button>
+            <container></container>
         </p>
     </div>
     <script>
@@ -23,13 +30,23 @@
                 count: 0
             },
             mutations: {
-                inc(state){
+                inc(state) {
                     state.count++
                 },
-                // : state => state.count++,
                 dec: state => state.count--
             }
-        })
+        });
+
+
+        var Counter = {
+            template: `<div> {{count}} </div>`,
+            computed: {
+                count() {
+                    return store.state.count
+                }
+            }
+        };
+
 
         const app = new Vue({
             el: '#app',
@@ -45,6 +62,9 @@
                 dec() {
                     store.commit('dec')
                 }
+            },
+            components: {
+                container: Counter
             }
         })
     </script>

@@ -1,9 +1,12 @@
 # 目录
-<a href = "#color">颜色</a>
+- [1. 颜色](#color)
+- [2. 选择器](#selector)
+- [3. 动画](#animation)
+- [其他](#other)
 
 ---
 
-# 1 颜色
+# 1 <FYG id = "color"/>颜色</FYG>
 
 ## 灰度
 ```css
@@ -12,7 +15,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
 ```
 
 
-# 2 选择器
+# 2 <FYG id = "selector"> 选择器 </FYG>
 # nth-child
 `selector : nth-child ( n )` 选择属于 `selector`  的父元素下第 `n` 个子元素
 
@@ -37,18 +40,12 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
 </style>
 ```
 
----
-`:nth-child( even )` 选择奇数
+- `:nth-child( even )` 选择奇数
 
-`:nth-child( odd )` 选择偶数
-
+- `:nth-child( odd )` 选择偶数
 
 
----
-
-
-
- ` .class :nth-child( n )` 会选择此 `class` 的父元素中，第 `n` 个子元素
+` .class :nth-child( n )` 会选择此 `class` 的父元素中，第 `n` 个子元素
 如
 ```html
 <style>
@@ -112,7 +109,7 @@ HTML结构为这样子
 ```
 
 
-# 3 动画
+# 3 <FYG id = "animation"> 动画 </FYG>
 ```css
 animation: name duration timing-function delay iteration-count direction fill-mode;
 ```
@@ -177,7 +174,7 @@ animation-fill-mode，定义动画播放时间之外的状态
 ```
 
 
-# 其他
+# <FYG id = "other">其他</FYG>
 
 ## 自定义滚动条
 

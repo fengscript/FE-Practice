@@ -39,3 +39,17 @@ function FYGJsonPTest (data) {
 ```
 
 **`jsonp`方式获取数据，不会在 浏览器的开发者工具 - network 里面找到、查看请求、相应，为什么？你懂得**
+
+
+## crossDomain
+
+使用 `Ajax` 以 `jsonp` 获取数据失败时，试试加上
+```js
+crossDomain: true
+```
+
+```
+crossDomain (默认: 同域请求为false， 跨域请求为true)
+类型: Boolean
+如果你想在同一域中强制跨域请求（如JSONP形式），例如，想服务器端重定向到另一个域，那么需要将crossDomain设置为 true 。 ( 1.5 新增)
+```

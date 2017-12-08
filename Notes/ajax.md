@@ -27,7 +27,7 @@ callback({message:"success"});
 
 为了自由，服务器允许指定回调函数的名称，如这个api：
 
-'http://suggest.taobao.com/sug?q'
+http://suggest.taobao.com/sug?q
 
 ```javascript
 <script>
@@ -37,3 +37,5 @@ function FYGJsonPTest (data) {
 </script>
 <script src="http://suggest.taobao.com/sug?q=aaa&callback=FYGJsonPTest"></script>
 ```
+
+**`jsonp`方式获取数据，不会在 浏览器的开发者工具 - network 里面找到、查看请求、相应，为什么？你懂得**

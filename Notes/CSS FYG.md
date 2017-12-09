@@ -1,12 +1,5 @@
-# 目录
-- [1. 颜色](#color)
-- [2. 选择器](#selector)
-- [3. 动画](#animation)
-- [其他](#other)
-
----
-
-# 1 <FYG id = "color"/>颜色</FYG>
+[TOC]
+# 1 颜色
 
 ## 灰度
 ```css
@@ -14,8 +7,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
         -webkit-filter: grayscale(100%);
 ```
 
-
-# 2 <FYG id = "selector"> 选择器 </FYG>
+# 2 选择器
 # nth-child
 `selector : nth-child ( n )` 选择属于 `selector`  的父元素下第 `n` 个子元素
 
@@ -109,7 +101,7 @@ HTML结构为这样子
 ```
 
 
-# 3 <FYG id = "animation"> 动画 </FYG>
+# 3 动画
 ```css
 animation: name duration timing-function delay iteration-count direction fill-mode;
 ```
@@ -174,7 +166,7 @@ animation-fill-mode，定义动画播放时间之外的状态
 ```
 
 
-# <FYG id = "other">其他</FYG>
+# 其他
 
 ## 自定义滚动条
 

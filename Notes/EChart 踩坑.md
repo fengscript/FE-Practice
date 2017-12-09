@@ -1,3 +1,4 @@
+[TOC]
 ## 一个典型的例子
 ```javascript
 var prograssRate = echarts.init(document.getElementById('prograss-rate'),theme);
@@ -110,3 +111,16 @@ legend: {
 - <Array> params : 数组内容同模板变量，[[a, b, c, d], [a1, b1, c1, d1], ...]
 - <String> ticket : 异步回调标识
 - <Function> callback : 异步回调，回调时需要两个参数，第一个为前面提到的ticket，第二个为填充内容html
+
+
+
+
+## 屏幕缩放
+
+```js
+window.addEventListener('resize', function (e) {
+    prograssContent.resize();
+    prograssRate.resize();
+    preRate.resize()
+});
+```

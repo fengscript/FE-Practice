@@ -42,7 +42,6 @@
         // 换成this
         var obj3 = {
             chirp: function (n) {
-                // 注意 这里用的是 obj.chirp 而不是 this.chirp 来自我引用
                 return n > 1 ? this.chirp(n - 1) + (n - 1) + "-chrip" : "chirp-1\n"
             }
         }

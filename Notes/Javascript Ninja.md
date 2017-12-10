@@ -42,3 +42,50 @@ console.log(test());
 
 ## recursing
 
+判断素数
+```js
+function isPalindrome(text) {
+    if (text.length <= 1) return true;
+    if (text.charAt(0) != text.charAt(text.length - 1)) return false;
+    return isPalindrome(text.substr(1, text.length - 2))
+}
+
+
+console.log(isPalindrome("calac"));
+```
+
+在对象里用方法名字做递归，会有引用丢失的风险：
+```js
+var obj = {
+    chirp: function (n) {
+        // 注意 这里用的是 obj.chirp 而不是 this.chirp 来自我引用
+        return n > 1 ? obj.chirp(n - 1) + (n - 1) + "-chrip" : "chirp-1\n"
+    }
+}
+console.log(obj.chirp(3));
+// 于是，做以下操作时，会有引用丢失
+var obj2 = {
+    chirp: obj.chirp
+}
+obj = {};
+try {
+    console.log(obj2.chirp(3))
+
+} catch (error) {
+    console.log(error);
+}
+// 重新给 obj 定义为一个空对象时候，匿名函数仍然存在，而且可以通过 obj2.chirp 引用，但是 obj.chirp 属性已经没有了，而这个函数是通过原来的 obj.chirp 进行递归自我调用的，所以会报错
+```
+当然，可以用 
+
+```js
+
+```
+
+```js
+
+```
+
+```js
+
+```

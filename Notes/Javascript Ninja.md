@@ -55,7 +55,7 @@ console.log(isPalindrome("calac"));
 ```
 
 在对象里用方法名字做递归，会有引用丢失的风险：
-```js
+```js {cmd="node"}
 var obj = {
     chirp: function (n) {
         // 注意 这里用的是 obj.chirp 而不是 this.chirp 来自我引用
@@ -76,16 +76,38 @@ try {
 }
 // 重新给 obj 定义为一个空对象时候，匿名函数仍然存在，而且可以通过 obj2.chirp 引用，但是 obj.chirp 属性已经没有了，而这个函数是通过原来的 obj.chirp 进行递归自我调用的，所以会报错
 ```
-当然，可以用 
+当然，可以用 `this`
 
 ```js
-
+var obj3 = {
+    chirp: function (n) {
+        return n > 1 ? this.chirp(n - 1) + (n - 1) + "-chrip" : "chirp-1\n"
+    }
+}
+var obj4 = {
+    chirp: obj3.chirp
+}
+obj3 = {};
+console.log(obj4.chirp(3))
 ```
 
-```js
+或者，用 **内联命名函数**
+```js {cmd="node"}
+var obj5 = {
+    chirp: function mark(n) {
+        return n > 1 ? mark(n - 1) + (n - 1) + "-chrip" : "chirp-1\n"
+    }
+}
+console.log(obj5.chirp(3));
+var obj6 = {
+    chirp: obj5.chirp
+}
+// 于是，做以下操作，清空 obj5对象的 chirp 属性，并不会影响给内联函数取的用于递归调用的名字
+obj5 = {};
+try {
+    console.log(obj6.chirp(3))
 
-```
-
-```js
-
+} catch (error) {
+    console.log(error);
+}
 ```

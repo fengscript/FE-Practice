@@ -91,7 +91,8 @@ obj3 = {};
 console.log(obj4.chirp(3))
 ```
 
-或者，用 **内联命名函数**
+或者，用 
+### 内联命名函数
 ```js {cmd="node"}
 var obj5 = {
     chirp: function mark(n) {

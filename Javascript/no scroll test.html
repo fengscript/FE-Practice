@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>No Scroll Bar Test</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="container">
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+            <span>text content</span>
+
+        </div>
+        <div id="scroll"></div>
+    </div>
+    <style>
+        #container {
+            width: 200px;
+            height: 400px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        span {
+            display: block;
+        }
+
+        #wrapper {
+            border: 1px solid #ccc;
+            width: 160px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #scroll {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: #d8d6d6;
+            width: 6px;
+            height: 100px;
+            border-radius: 4px;
+        }
+    </style>
+
+    <script>
+        var scroll = document.getElementById('scroll');
+        var aim = document.getElementById('container');
+        document.addEventListener('wheel', ev => {
+            // var scrollAllHeight = aim.scrollHeight - aim.offsetHeight;
+            scroll.style.top = (aim.scrollTop / 167)*100 + "%";
+
+            console.log("scrollTop-----------"+aim.scrollTop);
+            console.log("scrollHeight-----------"+aim.scrollHeight);
+            console.log("offsetTop-----------"+aim.offsetTop);
+            console.log("offsetHeight-----------"+aim.offsetHeight);
+        })
+
+    </script>
+</body>
+
+</html>

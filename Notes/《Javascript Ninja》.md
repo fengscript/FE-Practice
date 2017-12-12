@@ -39,8 +39,80 @@ function test () {
 console.log(test());
 // 很明显，this.prop 被添加到 window了 因为this定义的，只会被函数的调用方式决定！！！
 ```
+## 方法调用
+js 中的函数可以和对象一样，拥有属性和方法，可以将函数赋值给对象的一个属性，从而创建一个方法调用。
 
-## recursing
+```javascript {cmd="node"}
+// 1 给函数添加属性
+var fn = function () {
+    console.log("I'm a function");
+    fn.prop = "a prop";
+    // console.log(fn.prop)
+    document.write('<br>')
+    document.write(fn.prop)
+}
+fn.otherProp = "other prop"
+fn();
+document.write('<br>')
+document.write(fn.otherProp)
+document.write('<br>')
+```
+对上面的应用 —— 
+### 缓存 memoring
+
+```javascript
+// 存储一组函数
+
+var store = {
+    nextId: 1,
+    cache: {},
+    add: function (fn) {
+        if (!fn.id) {
+            fn.id = this.nextId++;
+            (store.cache[fn.id] = fn)
+            return `function ${fn.name} is added`
+        }
+    }
+};
+
+function ninja() {
+    document.write('<br>')
+    document.write(ninja.name)
+}
+ninja()
+document.write('<br>')
+
+document.write(store.add(ninja))
+document.write('<br>')
+document.write(store.add(ninja))
+// 只会添加一次 所以报了 undefined
+```
+
+### memoring
+```javascript
+// 对上面的应用 —— 自记忆函数 memorization
+function isPrime(value) {
+    if (!isPrime.answer) isPrime.answer = {};
+    if (isPrime.answer[value] != null) {
+        return isPrime.answer[value];
+    }
+
+    var prime = value != 1;
+    for (var i = 2; i < value; i++) {
+        if (value % i == 0) {
+            prime = false;
+            break;
+        }
+    }
+    return isPrime.answer[value] = prime;
+}
+
+document.write("<br>")
+document.write(isPrime(5))
+```
+
+
+### recursing
 
 判断素数
 ```js

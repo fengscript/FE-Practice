@@ -85,27 +85,48 @@
 
         document.write("<br>")
         document.write(isPrime(5))
+        console.log(isPrime(5))
+        // 换成函数内定义变量来缓存
 
-        function memory (name) {
-            if (!cache) {
-                var cache;
+        function isPrime2(value) {
+            if (!cache) var cache;
+            if (cache != null) {
+                return cache;
             }
-            return cache || (cache = document.getElementsByClassName(name));
 
-        }
-        console.log(memory("a"))
-
-        var timeTest = function (fn, times) {
-            var start = new Date();
-            for (let index = 0; index < times; index++) {
-                // fn();
-                timeTest.call(fn,fn.arguments)
+            var prime = value != 1;
+            for (var i = 2; i < value; i++) {
+                if (value % i == 0) {
+                    prime = false;
+                    break;
+                }
             }
-            var end = new Date();
-            var time = (end - start)/1000;
-            // ${fn.name} 
-            console.log(`你的函数运行了 ${times} 次，耗时${time} 秒`)
+            return cache = prime;
         }
+
+        console.log(isPrime2(5))
+
+
+        // function memory (name) {
+        //     if (!cache) {
+        //         var cache;
+        //     }
+        //     return cache || (cache = document.getElementsByClassName(name));
+
+        // }
+        // console.log(memory("a"))
+
+        // var timeTest = function (fn, times) {
+        //     var start = new Date();
+        //     for (let index = 0; index < times; index++) {
+        //         // fn();
+        //         timeTest.call(fn,fn.arguments)
+        //     }
+        //     var end = new Date();
+        //     var time = (end - start)/1000;
+        //     // ${fn.name} 
+        //     console.log(`你的函数运行了 ${times} 次，耗时${time} 秒`)
+        // }
 
         // timeTest(function () {
         //     if (!cache) {
@@ -113,7 +134,7 @@
         //     }
         //     return cache || (cache = document.getElementsByClassName("a"));
         // }, 10000)
-        timeTest(memory(), 100)
+        // timeTest(memory(), 100)
     </script>
 </body>
 

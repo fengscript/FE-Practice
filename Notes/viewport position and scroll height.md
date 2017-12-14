@@ -22,8 +22,9 @@ document.body.clientHeight
 ![clientHeight](https://www.w3cplus.com/sites/default/files/blogs/2017/1711/window-scroll-6.png)
 
 
-
-
+当前滚动距离为 scroll.scrollTop
+滚动内容块总滚动距离为 container.scrollHeight - container.offsetHeight;
+可以滚动的距离为 container.scrollHeight
 
 
 

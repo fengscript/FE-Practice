@@ -69,20 +69,48 @@
             width: 6px;
             height: 100px;
             border-radius: 4px;
+            transition: .3s ease;
         }
     </style>
 
     <script>
+        // 当前滚动距离为 scroll.scrollTop
+        // 滚动内容块总滚动距离为 container.scrollHeight - container.offsetHeight;
+        // 可以滚动的距离为 container.scrollHeight
+
         var scroll = document.getElementById('scroll');
+        var scrollHeight = (window.getComputedStyle(scroll, null).height).split("px")[0];
+
         var aim = document.getElementById('container');
         document.addEventListener('wheel', ev => {
-            // var scrollAllHeight = aim.scrollHeight - aim.offsetHeight;
-            scroll.style.top = (aim.scrollTop / 167)*100 + "%";
+            var step = Math.abs(ev.wheelDeltaY);
 
-            console.log("scrollTop-----------"+aim.scrollTop);
-            console.log("scrollHeight-----------"+aim.scrollHeight);
-            console.log("offsetTop-----------"+aim.offsetTop);
-            console.log("offsetHeight-----------"+aim.offsetHeight);
+            var sumScrollHeight = aim.scrollHeight - aim.offsetHeight; //(567 - 400)
+            var canScrollHeight = aim.offsetHeight - scrollHeight; //(400 - 100)
+            var nowScrollHeight = aim.scrollTop;
+            // 向下滚
+            var move = (nowScrollHeight / sumScrollHeight) * canScrollHeight;
+            if (ev.wheelDeltaY < 0) {
+                scroll.style.cssText =
+                    `
+                    transform: translateY(${move}px);
+                    `
+            } else {
+                // 向上滚
+                scroll.style.cssText =
+                    `
+                    transform: translateY(-${move}px);
+                    `
+            }
+            console.log(ev.offsetY);
+            // var scrollAllHeight = aim.scrollHeight - aim.offsetHeight;
+            scroll.style.transform = `translateY(300+"px")`;
+            // scroll.style.top = (aim.scrollTop / 167)*100 + "%";
+
+            // console.log("scrollTop-----------" + aim.scrollTop);
+            // console.log("scrollHeight-----------" + aim.scrollHeight);
+            // console.log("offsetTop-----------" + aim.offsetTop);
+            // console.log("offsetHeight-----------" + aim.offsetHeight);
         })
 
     </script>

@@ -74,7 +74,11 @@
                 return isPrime.answer[value];
             }
 
+
+            // 前面这两句的意义在于，例如已经运行了一次 isPrime(5),则会将一个 isPrime.answer(5) = true 保存在内存里（从下面的 return 得到），第二次 再次运行isPrime(5)，会直接从上面的 return 取出上次保存的值，而不需要再次计算
             var prime = value != 1;
+            console.log(prime)
+            console.log(value)
             for (var i = 2; i < value; i++) {
                 if (value % i == 0) {
                     prime = false;

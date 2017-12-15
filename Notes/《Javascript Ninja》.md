@@ -168,6 +168,7 @@ document.write(store.add(ninja))
 function isPrime(value) {
     if (!isPrime.answer) isPrime.answer = {};
     if (isPrime.answer[value] != null) {
+        console.log(isPrime.answer);
         return isPrime.answer[value];
     }
 

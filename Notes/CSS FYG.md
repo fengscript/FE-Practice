@@ -166,7 +166,7 @@ animation-fill-mode，定义动画播放时间之外的状态
 ```
 # 4 布局
 
-## BFC (Block Formatting Context)
+## 4.1 BFC (Block Formatting Context)
 > BFC定义：块级格式化上下文，它是指一个独立的块级渲染区域，只有Block-level Box参与，该区域拥有一套渲染规则来约束块级盒子的布局，且与区域外部无关。
 
 [参考： http://mp.weixin.qq.com/s/2T8emSpYh8PTQvudTFWGgg](#http://mp.weixin.qq.com/s/2T8emSpYh8PTQvudTFWGgg)
@@ -182,6 +182,137 @@ animation-fill-mode，定义动画播放时间之外的状态
 - display的值为inline-block、table-cell、table-caption；
 - flex boxes (元素的display: flex或inline-flex)；
 > 也有人认为display: table能生成BFC，我认为最主要原因是table会默认生成一个匿名的table-cell，正是这个匿名的table-cell生成了BFC。
+
+### 布局规则
+- 内部的元素会在垂直方向一个接一个地排列，可以理解为是BFC中的一个常规流
+- 元素垂直方向的距离由 `margin` 决定，即属于同一个BFC的两个相邻盒子的 `margin` 可能会发生重叠
+- 每个元素的左外边距与包含块的左边界相接触(从左往右，否则相反)，即使存在浮动也是如此，这说明BFC中的子元素不会超出它的包含块
+- BFC的区域不会与 `float` 元素区域重叠
+- 计算BFC的高度时，浮动子元素也参与计算
+- BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素，反之亦然
+
+### 解决问题
+#### 1. `margin` 叠合
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        margin重叠现象
+    </title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box p {
+            margin: 20px 0px;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <p>
+            Lorem ipsum dolor sit.
+        </p>
+        <p>
+            Lorem ipsum dolor sit.
+        </p>
+        <p>
+            Lorem ipsum dolor sit.
+        </p>
+    </div>
+</body>
+</html>
+```
+
+**在其中一个元素外面包裹一层容器，并触发该容器生成一个BFC ( 这里使用overflow:hidden )。那么两个元素便属于不同的BFC，就不会发生margin重叠了。**
+
+```html
+<div class="box">
+    <p>
+        Lorem ipsum dolor sit.
+    </p>
+    <div style="overflow:hidden;">
+        <p>
+            Lorem ipsum dolor sit.
+        </p>
+    </div>
+    <p>
+        Lorem ipsum dolor sit.
+    </p>
+</div>
+```
+
+#### 2. 清除浮动
+> 当在父元素中设置overflow:hidden时就会触发BFC，所以他内部的元素就不会影响外面的布局，BFC就把浮动的子元素高度当做了自己内部的高度去处理溢出，所以外面看起来是清除了浮动。
+
+### 3. 去掉浮动元素侵占未浮动元素
+如，浮动元素会脱离文档流，然后浮盖在文档流元素上
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        BFC侵占浮动元素的问题
+    </title>
+    <style>
+        .box1 {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+        .box2 {
+            width: 200px;
+            height: 200px;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1">
+        box1
+    </div>
+    <div class="box2">
+        box2
+    </div>
+</body>
+</html>
+```
+
+可以做如下修改，建立 BFC，
+```css
+.box2 {
+    width: 200px;
+    height: 200px;
+    background-color: skyblue;
+    overflow: hidden;
+}
+```
+或者
+```css
+.box2 {
+    width: 200px;
+    height: 200px;
+    background-color: skyblue;
+    float:left;
+}
+```
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>4.3.3 伪造数组方法</title>
+</head>
+
+<body>
+    当除了集合本身，还有别的数据需要保存时，就可以使用对象来伪造数组
+
+    <br>
+
+    <input id="first" type="text" name="" value="">
+    <input id="second" type="text" name="" value="">
+
+    <script>
+        var elems = {
+            len: 0,
+            add(elem) {
+                Array.prototype.push.call(this, "1")
+                // push 方法具有通用性。该方法和 call() 或 apply() 一起使用时，可应用在类似数组的对象上。push 方法根据 length 属性来决定从哪里开始插入给定的值。如果 length 不能被转成一个数值，则插入的元素索引为 0，包括 length 不存在时。当 length 不存在时，将会创建它。
+            },
+
+            // 请千万注意，这里如果这样写
+            // gathergather : id => {},
+            // 因为箭头函数 封闭了 作用域，所以是访问不到前面的 add 方法的！
+
+            gather(id) {
+                this.add(document.getElementById(id))
+            },
+        };
+
+        elems.gather("first");
+        console.log(elems.len)
+        console.log(elems.length)
+        // obviously， push 方法根据 length 属性来决定从哪里开始插入给定的值。如果 length 不能被转成一个数值，则插入的元素索引为 0，包括 length 不存在时。当 length 不存在时，将会创建它。
+
+        elems.gather("second");
+        console.log(elems.len)
+        console.log(elems.length)
+
+        console.log(elems)
+        // 可以看到，创建了索引 0 、 1 并将 push 的值赋给了 0 、1
+    </script>
+</body>
+
+</html>

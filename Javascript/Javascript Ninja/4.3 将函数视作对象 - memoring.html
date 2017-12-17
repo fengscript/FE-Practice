@@ -91,6 +91,7 @@
         document.write("<br>")
         document.write(isPrime(5))
         console.log(isPrime(5))
+
         // 换成函数内定义变量来缓存
 
         function isPrime2(value) {
@@ -111,6 +112,11 @@
 
         console.log(isPrime2(5))
 
+        // 缓存 dom
+        function getElements (name) {
+            if (!getElements.cache) getElements.cache = {};
+            return getElements.cache[name] = getElements.cache[name] || document.getElementsByClassName(name);
+        }
 
         // function memory (name) {
         //     if (!cache) {
@@ -121,18 +127,19 @@
         // }
         // console.log(memory("a"))
 
-        // var timeTest = function (fn, times) {
-        //     var start = new Date();
-        //     for (let index = 0; index < times; index++) {
-        //         // fn();
-        //         timeTest.call(fn,fn.arguments)
-        //     }
-        //     var end = new Date();
-        //     var time = (end - start)/1000;
-        //     // ${fn.name} 
-        //     console.log(`你的函数运行了 ${times} 次，耗时${time} 秒`)
-        // }
+        var timeTest = function (fn, times) {
+            var start = new Date();
+            for (let index = 0; index < times; index++) {
+                fn();
+                // timeTest.call(fn,fn.arguments)
+            }
+            var end = new Date();
+            var time = (end - start)/1000;
+            // ${fn.name} 
+            console.log(`你的函数运行了 ${times} 次，耗时${time} 秒`)
+        }
 
+        timeTest(getElements("a"),100)
         // timeTest(function () {
         //     if (!cache) {
         //         var cache;

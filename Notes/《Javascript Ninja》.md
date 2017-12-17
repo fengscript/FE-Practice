@@ -117,7 +117,7 @@ try {
 js 中的函数可以和对象一样，拥有属性和方法，可以将函数赋值给对象的一个属性，从而创建一个方法调用。
 
 ```javascript {cmd="node"}
-// 1 给函数添加属性
+//  给函数添加属性
 var fn = function () {
     console.log("I'm a function");
     fn.prop = "a prop";
@@ -162,7 +162,7 @@ document.write(store.add(ninja))
 // 只会添加一次 所以报了 undefined
 ```
 
-### memoring
+#### 自记忆函数
 ```javascript
 // 对上面的应用 —— 自记忆函数 memorization
 function isPrime(value) {
@@ -185,6 +185,73 @@ function isPrime(value) {
 document.write("<br>")
 document.write(isPrime(5))
 ```
+使用变量也可以缓存
 
+```javascript
+function isPrime2(value) {
+    if (!cache) var cache;
+        if (cache != null) {
+            return cache;
+        }
+
+    var prime = value != 1;
+    for (var i = 2; i < value; i++) {
+        if (value % i == 0) {
+            prime = false;
+            break;
+        }
+    }
+    return cache = prime;
+}
+
+console.log(isPrime2(5))
+```
+
+#### 缓存dom
+```javascript
+// 缓存 dom
+function getElements (name) {
+    if (!getElements.cache) getElements.cache = {};
+    return getElements.cache[name] = getElements.cache[name] || document.getElementsByClassName(name);
+}
+```
+
+### 伪造数组方法
+
+当除了集合本身，还有别的数据需要保存时，就可以使用对象来伪造数组
+```html
+<input id="first" type="text" name="" value="">
+<input id="second" type="text" name="" value="">
+
+<script>
+    var elems = {
+        len: 0,
+        add(elem) {
+            Array.prototype.push.call(this, "1")
+            // push 方法具有通用性。该方法和 call() 或 apply() 一起使用时，可应用在类似数组的对象上。push 方法根据 length 属性来决定从哪里开始插入给定的值。如果 length 不能被转成一个数值，则插入的元素索引为 0，包括 length 不存在时。当 length 不存在时，将会创建它。
+        },
+
+        // 请千万注意，这里如果这样写
+        // gathergather : id => {},
+        // 因为箭头函数 封闭了 作用域，所以是访问不到前面的 add 方法的！
+
+        gather(id) {
+            this.add(document.getElementById(id))
+        },
+    };
+
+    elems.gather("first");
+    console.log(elems.len)
+    console.log(elems.length)
+    // obviously， push 方法根据 length 属性来决定从哪里开始插入给定的值。如果 length 不能被转成一个数值，则插入的元素索引为 0，包括 length 不存在时。当 length 不存在时，将会创建它。
+
+    elems.gather("second");
+    console.log(elems.len)
+    console.log(elems.length)
+
+    console.log(elems)
+    // 可以看到，创建了索引 0 、 1 并将 push 的值赋给了 0 、1
+</script>
+```
 
 

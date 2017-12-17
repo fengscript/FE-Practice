@@ -164,6 +164,29 @@ animation-fill-mode，定义动画播放时间之外的状态
     }
 }
 ```
+# 4 布局
+
+## BFC (Block Formatting Context)
+> BFC定义：块级格式化上下文，它是指一个独立的块级渲染区域，只有Block-level Box参与，该区域拥有一套渲染规则来约束块级盒子的布局，且与区域外部无关。
+
+[参考： http://mp.weixin.qq.com/s/2T8emSpYh8PTQvudTFWGgg](#http://mp.weixin.qq.com/s/2T8emSpYh8PTQvudTFWGgg)
+
+
+### 生成
+满足下列CSS声明之一的元素便会生成BFC：
+
+- 根元素或其它包含它的元素
+- float的值不为none；
+- overflow的值不为visible；
+- position的值不为static；
+- display的值为inline-block、table-cell、table-caption；
+- flex boxes (元素的display: flex或inline-flex)；
+> 也有人认为display: table能生成BFC，我认为最主要原因是table会默认生成一个匿名的table-cell，正是这个匿名的table-cell生成了BFC。
+
+
+
+
+
 
 
 # 其他

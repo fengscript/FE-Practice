@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="test">TEST</div>
+
+
+    <script>
+        var aim = document.getElementById('test');
+
+
+        numberAni("87", "16", 16)
+        function numberAni(start, end, duration) {
+            var start = Number(start),
+                end = Number(end);
+            if (end - start > 0) {
+                var numberAniTimer = setInterval(function () {
+                    if (start < end) {
+                        aim.innerText = start;
+                        start++;
+                    } else {
+                        window.clearInterval(numberAniTimer)
+                    }
+                }, duration)
+            } else {
+                var numberAniTimer = setInterval(function () {
+                    if (start > end) {
+                        aim.innerText = start;
+                        start--;
+                    } else {
+                        window.clearInterval(numberAniTimer)
+                    }
+                }, duration)
+            }
+        }
+
+    </script>
+</body>
+
+</html>

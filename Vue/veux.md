@@ -1,4 +1,4 @@
-# 目标
+# 1 目标
 为了解决以下问题：
 
 > 当我们的应用遇到多个组件共享状态时，单向数据流的简洁性很容易被破坏：
@@ -17,7 +17,7 @@
 - actions，响应在 view 上的用户输入导致的状态变化。
 
  
-# 使用
+# 2 使用
 
 在一个模块化的打包系统中，必须显式地通过 `Vue.use()` 来调用 `Vuex`：
 
@@ -30,8 +30,8 @@ Vue.use(Vuex)
 
 当使用全局 `script` 标签引用 `Vuex` 时，不需要以上安装过程。
 
-# 基本概念
-## store
+# 3 基本概念
+## 3.1 store
 
 > `store` 基本上就是一个容器，它包含着应用中大部分的 state
 
@@ -42,14 +42,14 @@ Vue.use(Vuex)
  
 通过 `store.commit` 方法触发状态变更
 
-> 改变 `store` 中的状态的唯一途径就是显式地提交 (commit) `mutationS`
+> 改变 `store` 中的状态的唯一途径就是显式地提交 (commit) `mutations`
 
-## state
+## 3.2 state
 
-1 在组件中获得 `vuex` 状态
+### 组件中获取 `vuex` 状态
 
+#### 1 `computed`属性返回状态
 > 由于 `Vuex` 的状态存储是响应式的，从 `store` 实例中读取状态最简单的方法就是在计算属性中返回某个状态
-> 然而，这种模式导致组件依赖全局状态单例。在模块化的构建系统中，在每个需要使用 state 的组件中需要频繁地导入，并且在测试组件时需要模拟状态。
 
 如：
 ```html
@@ -86,11 +86,6 @@ Vue.use(Vuex)
 
     const app = new Vue({
         el: '#app',
-        computed: {
-            count() {
-                return store.state.count
-            }
-        },
         methods: {
             inc() {
                 store.commit('inc')
@@ -105,5 +100,16 @@ Vue.use(Vuex)
     })
 </script>
 ```
+
+> 然而，这种模式导致组件依赖全局状态单例。在模块化的构建系统中，在每个需要使用 state 的组件中需要频繁地导入，并且在测试组件时需要模拟状态。
+
+
+#### 2 将状态从根组件注入到每一个子组件
+
+```javascript
+Vue.use(Vuex)
+```
+
+
 > Vuex 通过 store 选项，提供了一种机制将状态从根组件“注入”到每一个子组件中（需调用 Vue.use(Vuex)）通过在根实例中注册 store 选项，该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store 访问到
 

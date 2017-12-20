@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>vuex test</title>
+    <title>vuex test 状态注入</title>
 </head>
 
 <body>
@@ -30,25 +30,27 @@
                 dec: state => state.count--
             }
         });
-
-
-        var Counter = {
-            template: `<div> {{count}} </div>`,
+        const Counter = {
+            template: `<div>{{ count }}</div>`,
             computed: {
                 count() {
-                    return store.state.count
+                    return this.$store.state.count
                 }
             }
-        };
-
-
+        }
         const app = new Vue({
             el: '#app',
-            computed: {
-                count() {
-                    return store.state.count
-                }
+            // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
+            store,
+            components: {
+                Counter
+                // container: Counter
             },
+            template: `
+                <div class="app">
+                <Counter></Counter>
+                </div>
+            `,
             methods: {
                 inc() {
                     store.commit('inc')
@@ -57,9 +59,6 @@
                     store.commit('dec')
                 }
             },
-            components: {
-                container: Counter
-            }
         })
     </script>
 </body>

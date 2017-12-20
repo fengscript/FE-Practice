@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // function outer() {
+        //     const outer = ` I See the outer variable`
+
+        //     return function inner() {
+        //         console.log(outer);
+        //     }
+        // }
+        // outer()()
+
+
+        for (var i = 0; i < 5; ++i) {
+            setTimeout(function () {
+                console.log(i)
+            }, 0);
+        }
+        // for循环执行时，那些函数都添加到事件队列中了，当for运行完，开始取事件队列中的函数运行，但是在那些个函数中没有找到i，就会沿着作用域链向上查找，找到了i，但此时的i值是5，所以输出的全是5
+
+        // 利用闭包解决
+
+        for (var i = 0; i < 10; i++) {
+            setTimeout((function (i) {
+                return function () {
+                    console.log(i);
+                }
+            })(i), 0);
+        }
+
+
+        // 或者更好理解的：
+
+        for (var i = 0; i < 10; ++i) {
+            (function (i) {
+                setTimeout(function () {
+                    console.log(i)
+                }, i * 100);
+            })(i)
+        }
+
+        // 延迟时间设置为i*100，可以依次执行，观察闭包效果更好。
+    </script>
+
+
+
+</body>
+
+</html>

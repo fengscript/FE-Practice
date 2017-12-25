@@ -107,7 +107,7 @@ Vue.use(Vuex)
 #### 2 将状态从根组件注入到每一个子组件
 
 ```javascript
-//  单独构件需要 Vue.use(Vuex)
+//  单独构建需要 Vue.use(Vuex)
 
 // 注入
 new Vue({
@@ -130,6 +130,76 @@ var Counter = {
 ```
 
 > Vuex 通过 store 选项，提供了一种机制将状态从根组件“注入”到每一个子组件中（需调用 Vue.use(Vuex)）通过在根实例中注册 store 选项，该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store 访问到
+
+
+##### 单独构建
+有 `vue.js`  `vuex.js`, `html`中引入，然后 `Vue.use(Vuex)`:
+```html
+<body>
+    <div id="app"></div>
+    <script>
+        Vue.use(Vuex);
+
+        // 状态管理
+        const store = new Vuex.Store({
+            state: {
+                count: 0
+            },
+            mutations: {
+                add(state) {
+                    state.count++
+                },
+                reduce(state) {
+                    state.count--
+                }
+            }
+        })
+
+        // 组件
+        const Counter = {
+            template: `
+             <div>{{count}}
+                <!-- <br>
+                <button @click="add">+</button>
+                <button @click="reduce">-</button>-->
+            </div>
+        `,
+            computed: {
+                count() {
+                    return this.$store.state.count
+                }
+            }
+        }
+
+        var app = new Vue({
+            el: '#app',
+            store,
+            components: {
+                Counter
+            },
+            // data:{
+            //     count:0
+            // },
+            template: `
+            <div> <counter></counter>
+                 <br>
+                <button @click="add">+</button>
+                <button @click="reduce">-</button>
+            </div>
+        `,
+            methods: {
+                add: function () {
+                    store.commit('add')
+                },
+                reduce: function () {
+                    store.commit('reduce')
+                }
+            }
+        })
+    </script>
+</body>
+```
+
 
 #### 3 `mapState`
 当一个组件需要获取多个状态时候，将这些状态都声明为计算属性会有些重复和冗余，`mapState` 帮助生成计算属性，防止多次声明计算属性

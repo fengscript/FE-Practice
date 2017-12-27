@@ -10,19 +10,44 @@
 
 <body>
   <section id="page">
-    <div id="loading"></div>
+    <div id="loading" ></div>
   </section>
 
 
   <style>
     #loading{
-      
+      width: 100%;
+      height: 100px;
+      position: absolute;
+      bottom: 300px;
+      background: red;
+      /* transition: all 1s ease; */
+    }
+    
+    #page .loading-spread{
+      animation: spread 1s ease ;
+    }
+    
+    @keyframes spread {
+      70%{
+        width: 0;
+        height: 100px;
+        /* height: 30px; */
+        /* border-radius: 50%; */
+      }
+      100%{
+        width: 100%;
+        height: 100%;
+      }
     }
 
   </style>
 
   <script>
-    
+    var aim = document.getElementById('loading')
+    setTimeout(() => {
+      aim.classList.add('loading-spread');
+    }, 1000);
   </script>
 </body>
 

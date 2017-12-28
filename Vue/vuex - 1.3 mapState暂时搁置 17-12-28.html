@@ -6,21 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>vuex test 状态注入</title>
+    <script src="./vue.js"></script>
+    <script src="./vuex.js"></script>
 </head>
 
 <body>
-    <script src="./vue.js"></script>
-    <script src="./vuex.js"></script>
-    <div id="app">
-        <span>I'M Origin Dom</span>
-        <p>{{count}}
-            <button @click="inc">+</button>
-            <button @click="dec">-</button>
-            <Counter></Counter>
-        </p>
-    </div>
+    //FIXME: 暂时搁置 17-12-28
+    <div id="app"></div>
     <script>
-        Vue.use(Vuex);
+        import mapState from 'vuex'
+        Vue.use(Vuex)
 
         const store = new Vuex.Store({
             state: {
@@ -35,13 +30,15 @@
         });
         const Counter = {
             template: `<div>I'M Counter Template - {{ count }}</div>`,
-            computed: {
-                count() {
-                    return this.$store.state.count
+            computed: mapState({
+                count: state => state.count,
+                countAlias: 'count',
+                countPlusLocalState(state) {
+                    return state.count + this.localCount
                 }
-            }
+            })
         };
-        
+
         const app = new Vue({
             el: '#app',
             // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件

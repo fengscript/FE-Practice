@@ -134,72 +134,19 @@ var Counter = {
 
 ##### 单独构建
 有 `vue.js`  `vuex.js`, `html`中引入，然后 `Vue.use(Vuex)`:
-```html
-<body>
-    <div id="app"></div>
-    <script>
-        Vue.use(Vuex);
-
-        // 状态管理
-        const store = new Vuex.Store({
-            state: {
-                count: 0
-            },
-            mutations: {
-                add(state) {
-                    state.count++
-                },
-                reduce(state) {
-                    state.count--
-                }
-            }
-        })
-
-        // 组件
-        const Counter = {
-            template: `
-             <div>{{count}}
-                <!-- <br>
-                <button @click="add">+</button>
-                <button @click="reduce">-</button>-->
-            </div>
-        `,
-            computed: {
-                count() {
-                    return this.$store.state.count
-                }
-            }
-        }
-
-        var app = new Vue({
-            el: '#app',
-            store,
-            components: {
-                Counter
-            },
-            // data:{
-            //     count:0
-            // },
-            template: `
-            <div> <counter></counter>
-                 <br>
-                <button @click="add">+</button>
-                <button @click="reduce">-</button>
-            </div>
-        `,
-            methods: {
-                add: function () {
-                    store.commit('add')
-                },
-                reduce: function () {
-                    store.commit('reduce')
-                }
-            }
-        })
-    </script>
-</body>
-```
 
 
 #### 3 `mapState`
 当一个组件需要获取多个状态时候，将这些状态都声明为计算属性会有些重复和冗余，`mapState` 帮助生成计算属性，防止多次声明计算属性
+
+> 如果有些状态严格属于单个组件，最好还是作为组件的局部状态
+
+## 3.3 getter
+
+## 3.4 mutation
+> 每个 mutation 都有一个字符串的 事件类型 (type) 和 一个 回调函数 (handler)。这个回调函数就是我们实际进行状态更改的地方，并且它会接受 state 作为第一个参数
+> 要唤醒一个 mutation handler，你需要以相应的 type 调用 store.commit 方法
+
+
+### Payload
+可以向 `store.commit` 传入额外的参数，即 mutation 的 载荷（payload）

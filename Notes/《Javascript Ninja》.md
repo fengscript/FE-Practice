@@ -1,11 +1,56 @@
 # 1 函数
+
+## 作用域
 变量声明的作用域开始于声明的地方，结束于所在函数的结尾，与代码嵌套无关
 
 命名函数的作用域是声明该函数的整个函数范围，与代码嵌套无关
 
-## 参数
+## 参数列表
 声明的形参数量大于实际传递进函数的数量，则没有对应参数的形参会被赋值为 `undefined`
 
+### 可变长度的参数列表
+
+```javascript
+function smallest (array) {
+    return Math.min.apply(Math, array)
+}
+
+document.write(smallest([1,3,2], [3,4,5]))
+
+// 即，用 apply 传入数组参数，就可以不需要在手动对数组做处理
+```
+
+注意，`Math.min.apply(Math, array)` 中，将上下文指定为 `Math` 不是必须的，但是可以使代码更清晰
+
+### 函数重载
+通过对传入的参数特性和个数进行检测，进行不同的操作实现函数重载
+
+如，一个合并属性的方法：
+```javascript
+function merge (root) {
+    // 将参数列表中从第二项开始的对象都合并到第一项中去
+    // 所以，索引从 1 开始
+    for (let index = 1; index < arguments.length; index++) {
+        for (const key in arguments[index]) {
+            if (arguments[index].hasOwnProperty(key)) {
+                root[key] = arguments[index][key];
+            }
+        }
+    }
+
+    return root
+}
+
+var merged = merge(
+    {name:"fyg"},
+    {age:"25"}
+)
+```
+检测参数有没有传入：
+`paramName === undefined`
+
+
+## 调用
 **函数有四种调用方式**
 - 函数调用
 - 方法调用
@@ -39,81 +84,7 @@ function test () {
 console.log(test());
 // 很明显，this.prop 被添加到 window了 因为this定义的，只会被函数的调用方式决定！！！
 ```
-
-### recursing
-
-判断素数
-```js
-function isPalindrome(text) {
-    if (text.length <= 1) return true;
-    if (text.charAt(0) != text.charAt(text.length - 1)) return false;
-    return isPalindrome(text.substr(1, text.length - 2))
-}
-
-
-console.log(isPalindrome("calac"));
-```
-#### 方法中的递归
-在对象里用方法名字做递归，会有引用丢失的风险：
-```js {cmd="node"}
-var obj = {
-    chirp: function (n) {
-        // 注意 这里用的是 obj.chirp 而不是 this.chirp 来自我引用
-        return n > 1 ? obj.chirp(n - 1) + (n - 1) + "-chrip" : "chirp-1\n"
-    }
-}
-console.log(obj.chirp(3));
-// 于是，做以下操作时，会有引用丢失
-var obj2 = {
-    chirp: obj.chirp
-}
-obj = {};
-try {
-    console.log(obj2.chirp(3))
-
-} catch (error) {
-    console.log(error);
-}
-// 重新给 obj 定义为一个空对象时候，匿名函数仍然存在，而且可以通过 obj2.chirp 引用，但是 obj.chirp 属性已经没有了，而这个函数是通过原来的 obj.chirp 进行递归自我调用的，所以会报错
-```
-当然，可以用 `this`
-
-```js
-var obj3 = {
-    chirp: function (n) {
-        return n > 1 ? this.chirp(n - 1) + (n - 1) + "-chrip" : "chirp-1\n"
-    }
-}
-var obj4 = {
-    chirp: obj3.chirp
-}
-obj3 = {};
-console.log(obj4.chirp(3))
-```
-
-或者，用 
-### 内联命名函数
-```js {cmd="node"}
-var obj5 = {
-    chirp: function mark(n) {
-        return n > 1 ? mark(n - 1) + (n - 1) + "-chrip" : "chirp-1\n"
-    }
-}
-console.log(obj5.chirp(3));
-var obj6 = {
-    chirp: obj5.chirp
-}
-// 于是，做以下操作，清空 obj5对象的 chirp 属性，并不会影响给内联函数取的用于递归调用的名字
-obj5 = {};
-try {
-    console.log(obj6.chirp(3))
-
-} catch (error) {
-    console.log(error);
-}
-```
-
-## 方法调用
+### 方法调用（将函数视为对象）
 js 中的函数可以和对象一样，拥有属性和方法，可以将函数赋值给对象的一个属性，从而创建一个方法调用。
 
 ```javascript {cmd="node"}
@@ -132,7 +103,7 @@ document.write(fn.otherProp)
 document.write('<br>')
 ```
 对上面的应用 —— 
-### 缓存 memoring
+#### 缓存 memoring
 
 ```javascript
 // 存储一组函数
@@ -261,3 +232,80 @@ function getElements (name) {
 
 > 尽管 obj 不是数组，但是 push 方法成功地使 obj 的 length 属性增长了，就像我们处理一个实际的数组一样
 > https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/push
+
+
+## recursing
+
+判断素数
+```js
+function isPalindrome(text) {
+    if (text.length <= 1) return true;
+    if (text.charAt(0) != text.charAt(text.length - 1)) return false;
+    return isPalindrome(text.substr(1, text.length - 2))
+}
+
+
+console.log(isPalindrome("calac"));
+```
+### 方法中的递归
+在对象里用方法名字做递归，会有引用丢失的风险：
+```js {cmd="node"}
+var obj = {
+    chirp: function (n) {
+        // 注意 这里用的是 obj.chirp 而不是 this.chirp 来自我引用
+        return n > 1 ? obj.chirp(n - 1) + (n - 1) + "-chrip" : "chirp-1\n"
+    }
+}
+console.log(obj.chirp(3));
+// 于是，做以下操作时，会有引用丢失
+var obj2 = {
+    chirp: obj.chirp
+}
+obj = {};
+try {
+    console.log(obj2.chirp(3))
+
+} catch (error) {
+    console.log(error);
+}
+// 重新给 obj 定义为一个空对象时候，匿名函数仍然存在，而且可以通过 obj2.chirp 引用，但是 obj.chirp 属性已经没有了，而这个函数是通过原来的 obj.chirp 进行递归自我调用的，所以会报错
+```
+当然，可以用 `this`
+
+```js
+var obj3 = {
+    chirp: function (n) {
+        return n > 1 ? this.chirp(n - 1) + (n - 1) + "-chrip" : "chirp-1\n"
+    }
+}
+var obj4 = {
+    chirp: obj3.chirp
+}
+obj3 = {};
+console.log(obj4.chirp(3))
+```
+
+或者，用 
+### 内联命名函数
+```js {cmd="node"}
+var obj5 = {
+    chirp: function mark(n) {
+        return n > 1 ? mark(n - 1) + (n - 1) + "-chrip" : "chirp-1\n"
+    }
+}
+console.log(obj5.chirp(3));
+var obj6 = {
+    chirp: obj5.chirp
+}
+// 于是，做以下操作，清空 obj5对象的 chirp 属性，并不会影响给内联函数取的用于递归调用的名字
+obj5 = {};
+try {
+    console.log(obj6.chirp(3))
+
+} catch (error) {
+    console.log(error);
+}
+```
+
+
+

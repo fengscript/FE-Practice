@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas event</title>
+</head>
+
+<body>
+    <div id="box"></div>
+    <canvas id="canvas"></canvas>
+
+    <style>
+        #canvas {
+            border: 1px solid red;
+            -webkit-transition: all 1s ease;
+            -moz-transition: all 1s ease;
+            transition: all 1s ease;
+        }
+    </style>
+    <script>
+        var canvas = document.getElementById('canvas')
+        var context = canvas.getContext("2d");
+
+        context.fillStyle = "rgb(255,0,0)"
+        context.fillRect(0,0,100,100)
+
+
+        context.fillStyle = "rgb(0,255,0)"
+        context.fillRect(150,0,100,100)
+
+        console.log(context);
+
+
+
+    </script>
+</body>
+
+</html>

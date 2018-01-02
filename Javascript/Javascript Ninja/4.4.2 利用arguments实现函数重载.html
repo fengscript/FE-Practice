@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数重载</title>
+</head>
+
+<body>
+
+
+    <script>
+        // 将参数列表中从第二项开始的对象都合并到第一项中去
+        // 所以，索引从 1 开始
+        function merge (root) {
+            for (let index = 1; index < arguments.length; index++) {
+                for (const key in arguments[index]) {
+                    if (arguments[index].hasOwnProperty(key)) {
+                        root[key] = arguments[index][key];
+                    }
+                }
+            }
+
+            return root
+        }
+
+        var merged = merge(
+            {name:"fyg"},
+            {age:"25"}
+        )
+
+        document.write(JSON.stringify(merged))
+
+
+        //  对 arguments 列表进行 slice 和 disc
+        function multiMax (multi) {
+            return muitl * Math.max.apply(Math, arguments.slice(1))
+        }
+    </script>
+</body>
+
+</html>

@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>vuex test 状态注入</title>
-    <script src="./vue.js"></script>
-    <script src="./vuex.js"></script>
+    <!-- <script src="./vue.js"></script>
+    <script src="./vuex.js"></script> -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex/dist/vuex.js"></script>
 </head>
 
 <body>
-    //FIXME: 暂时搁置 17-12-28
     <div id="app"></div>
     <script>
         import mapState from 'vuex'
-        Vue.use(Vuex)
 
         const store = new Vuex.Store({
             state: {

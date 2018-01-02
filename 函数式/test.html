@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        
+        var hi = function (name) {
+            return "hi " + name;
+        }
+
+        var greeting = function (name) {
+            return hi(name)
+        }
+
+        var greet = hi;
+        document.write(greeting("fyg"))
+        document.write("<br>")
+        document.write(greet("fyg"))
+
+
+    </script>
+</body>
+</html>

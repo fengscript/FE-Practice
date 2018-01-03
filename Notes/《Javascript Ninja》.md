@@ -25,6 +25,7 @@ document.write(smallest([1,3,2], [3,4,5]))
 ### 函数重载
 通过对传入的参数特性和个数进行检测，进行不同的操作实现函数重载
 
+#### `arguments` 和 `length`
 如，一个合并属性的方法：
 ```javascript
 function merge (root) {
@@ -48,8 +49,33 @@ var merged = merge(
     {age:"25"}
 )
 ```
+
+
 检测参数有没有传入：
 `paramName === undefined`
+
+
+**`length`** 
+obviously， `length` 就是定义时候 声明的命名参数个数
+
+`arguments.length` 就是调用时候传入的参数个数
+
+#### 利用参数个数函数重载
+如
+```javascript
+function addMethod(obj, name, fn) {
+    var old = obj[name];
+    obj[name] = () => {
+        if (fn.length == arguments.length) {
+            return fn.apply(this, arguments)
+        }else if (typeof old == "function") {
+            return old.apply(this, arguments)
+        }
+    }
+}
+
+```
+
 
 
 ## 调用

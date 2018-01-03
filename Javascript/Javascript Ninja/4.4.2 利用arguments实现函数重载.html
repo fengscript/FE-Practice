@@ -37,9 +37,13 @@
 
 
         //  对 arguments 列表进行 slice 和 disc
+        // 即 还是应用伪装数组方法
         function multiMax (multi) {
-            return muitl * Math.max.apply(Math, arguments.slice(1))
+            return muitl * Math.max.apply(Math, [].slice.call(arguments, 1))
         }
+
+
+        // 函数重载
     </script>
 </body>
 

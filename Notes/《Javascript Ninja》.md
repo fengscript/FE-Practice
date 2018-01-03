@@ -28,11 +28,13 @@ document.write(smallest([1,3,2], [3,4,5]))
 如，一个合并属性的方法：
 ```javascript
 function merge (root) {
+    console.log(root);
     // 将参数列表中从第二项开始的对象都合并到第一项中去
     // 所以，索引从 1 开始
     for (let index = 1; index < arguments.length; index++) {
         for (const key in arguments[index]) {
             if (arguments[index].hasOwnProperty(key)) {
+                // 而 root ，只是第一个参数（对象），所以，这里 root[key] 会给第一个参数添加新的 key ，并且 这个 key 的 value 为arguments[index][key]
                 root[key] = arguments[index][key];
             }
         }

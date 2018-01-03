@@ -17,6 +17,17 @@
        var aim = arr.slice(0,3);
 
        document.write(aim)
+
+    //    这样子可以将 类数组转换为数组
+    // 1
+    Array.prototype.slice.call(arr)
+    // 返回一个数组
+
+    // 2 
+    [].slice.call(arr)
+    
+    // 这样子会直接根据和参数切割
+    [].slice.call(arr, 1)
     </script>
 </body>
 

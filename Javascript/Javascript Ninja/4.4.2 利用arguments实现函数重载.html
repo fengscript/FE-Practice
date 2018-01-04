@@ -43,7 +43,51 @@
         }
 
 
-        // 函数重载
+
+        /*
+         *函数重载
+        */
+        function addMethod (obj, name, fn) {
+            var old = obj[name];
+            obj[name] = function () {
+                if (fn.length == arguments.length) {
+                    return fn.apply(this, arguments)
+                }else{
+                    return old.apply(this, arguments)
+                }
+            }
+        }
+        // 使用
+
+        var ninja = {
+            values:["html", "css", "javascript"]
+        }
+
+        addMethod(ninja, "find", function () {
+            return this.values
+        });
+        
+        addMethod(ninja, "find", function ( name ) {
+            var ret = [];
+            for (let i = 0; i < this.values.length; i++) {
+                if (this.values[i].indexOf(name) == 0) {
+                    ret.push(this.values[i]);
+                }
+            }
+            return ret;
+        });
+
+        addMethod(ninja, "find", function ( first, last ) {
+            var ret = [];
+            for (let i = 0; i < this.values.length; i++) {
+                if (this.values[i] == (first + " " + last)) {
+                    ret.push(this.values[i]);
+                }
+            }
+            return ret;
+        });
+        
+        console.log(ninja.find());
     </script>
 </body>
 

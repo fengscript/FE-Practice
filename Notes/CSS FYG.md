@@ -164,6 +164,22 @@ animation-fill-mode，定义动画播放时间之外的状态
     }
 }
 ```
+## `animation-play-state`
+`animation-play-state` 属性规定动画正在运行还是暂停
+
+animation-play-state: paused|running;
+
+```css
+div{
+animation-play-state:paused;
+-webkit-animation-play-state:paused;
+}
+```
+js里面控制需要驼峰
+```js
+object.style.animationPlayState="paused"
+```
+
 # 4 布局
 
 ## 4.1 BFC (Block Formatting Context)

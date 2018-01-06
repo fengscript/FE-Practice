@@ -324,10 +324,14 @@ object.style.animationPlayState="paused"
 }
 ```
 
+# 5 字体
+## text-stroke 变细字体
 
 
-
-
+```css
+-webkit-text-stroke: 1px gray;
+```
+`text-shadow` 只能往外扩散阴影，而 `text-stroke` 可是同时往字体内部和外部填充的,利用 text-stroke 这个特性，将描边的颜色设置成跟背景一样，就等于变相将字体变细了，
 
 
 

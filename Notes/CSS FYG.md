@@ -84,6 +84,7 @@ HTML结构为这样子
 ---
 
 伪元素 ` .class :nth-child( n )` 会选择此 `class` 的父元素中，第 `n` 个有此 `selector` 的（clsass）的元素，若第 `n` 个元素没有此 `class` ，则不会生效
+
 同类中的所有
 ```html
 <div class="menu-head">

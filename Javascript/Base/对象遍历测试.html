@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+    <script>
+        // function aniTimeLine() {
+        //         // 先清理
+        //         // clearTimeOutAll()
+        //         ANI_Phone.forEach(function (obj) {
+        //             for (var item in obj) {
+        //                 // if (obj.hasOwnProperty(item)) {
+        //                 window.setTimeout(function () {
+        //                     obj["event"]();
+        //                 }, obj["time"])
+        //                 // }
+        //             }
+        //         })
+        //     }
+        // var obj = {
+        //     1:{
+        //         "a":"a",
+        //         "b":"b",
+        //         "c":"c",
+        //         "d":"d",
+        //     },
+        //     2:{
+
+        //     }
+        // }    
+        var obj = [
+            {
+                "a":1,
+                "b":2,
+                "c":3,
+                "d":4,
+            },
+            {
+                "a":"a",
+                "b":"b",
+                "c":"c",
+                "d":"d",
+            }
+        ]
+        var fn = function  (arr) {
+            arr.forEach(obj => {
+                for (var prop in obj) {
+                    if (obj.hasOwnProperty(prop)) {
+                        // var first = obj[d];
+                        console.log(obj["d"]);
+                        // 各打印了四次
+
+                        if (prop == "b") {
+                            // 这样子只会打印一次
+                            console.log(obj["b"]);
+                        }
+                    }
+                }
+            });
+
+            
+        }
+        fn(obj)
+    </script>
+</body>
+</html>

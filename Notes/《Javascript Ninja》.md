@@ -76,6 +76,22 @@ function addMethod(obj, name, fn) {
 
 ```
 
+### 函数判定
+1 `typeof`
+`typeof`：在某些浏览器上表现不一致，如 safari会认为：
+`typeof document.body.childNodes == function`
+
+2 toString()
+
+```javascript
+function isFunction (fn) {
+    return Object.prototype.isString.call(fn) === "[Object Function]";
+}
+```
+`isString()` 会返回 **表示一个对象的内部描述的字符串**
+> 不仅仅可以判断是不是函数，还可以判断是不是 String/RegExp/Date 或其他对象
+
+
 
 
 ## 调用

@@ -60,6 +60,15 @@ obviously， `length` 就是定义时候 声明的命名参数个数
 
 `arguments.length` 就是调用时候传入的参数个数
 
+```javascript
+function argTest (argument1, argument2) {
+    console.log(`实参 arguments.length :${arguments.length} `);
+    console.log(`arguments: ${argument1}, ${argument2}`);
+    console.log(`形参 parameter  function.length - argTest.length:${argTest.length} `);
+}
+argTest("a")
+```
+
 #### 利用参数个数函数重载
 如
 ```javascript

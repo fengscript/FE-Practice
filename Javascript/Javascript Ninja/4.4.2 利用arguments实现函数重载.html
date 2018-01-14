@@ -87,9 +87,15 @@
             return ret;
         });
         
-        console.log(ninja.find());
+        console.log(ninja.find("a"));
 
 
+        function argTest (argument1, argument2) {
+            console.log(`实参 arguments.length :${arguments.length} `);
+            console.log(`arguments: ${argument1}, ${argument2}`);
+            console.log(`形参 parameter  function.length - argTest.length:${argTest.length} `);
+        }
+        argTest("a")
     </script>
 </body>
 

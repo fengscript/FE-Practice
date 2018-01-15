@@ -318,7 +318,7 @@ function getElements (name) {
 > https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/push
 
 
-## recursing
+### recursing
 
 判断素数
 ```js
@@ -331,7 +331,7 @@ function isPalindrome(text) {
 
 console.log(isPalindrome("calac"));
 ```
-### 方法中的递归
+#### 方法中的递归
 在对象里用方法名字做递归，会有引用丢失的风险：
 ```js {cmd="node"}
 var obj = {
@@ -370,7 +370,7 @@ console.log(obj4.chirp(3))
 ```
 
 或者，用 
-### 内联命名函数
+#### 内联命名函数
 ```js {cmd="node"}
 var obj5 = {
     chirp: function mark(n) {
@@ -389,6 +389,28 @@ try {
 } catch (error) {
     console.log(error);
 }
+```
+## closure
+1. 闭包是函数在创建时允许该自身函数访问并操作该自身函数之外的变量所创建的作用域，闭包可以让函数访问所有存在于该函数声明时所处的作用域中所有的变量和函数。
+2. 作用域之外的所有变量，即使是函数声明之后的那些声明，也会包含在闭包之内。
+3. 相同作用域内，尚未声明的变量不能提前引用
+
+```javascript
+var outerValue = "outerValue";
+var innerFn;
+function outer (  ) {
+    function inner (para) {
+        console.log(para);
+
+        console.log(laterVal);  // undefined 相同作用域内，尚未声明的变量不能提前引用
+
+        var laterVal = "laterVal";
+    };
+    innerFn = inner
+}
+var later = "later";
+outer();
+innerFn(later)
 ```
 
 

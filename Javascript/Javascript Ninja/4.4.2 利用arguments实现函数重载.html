@@ -49,24 +49,28 @@
         */
         function addMethod (obj, name, fn) {
             var old = obj[name];
+            console.log(obj[name]);
             obj[name] = function () {
+                // 每次存进去的都是这个匿名函数，而新写的函数只是被当成了一个参数！
                 if (fn.length == arguments.length) {
+                    // 这个 arguments.length 是 obj[name] 的，而不是外面那个 addMethod 的
                     return fn.apply(this, arguments)
                 }else{
                     return old.apply(this, arguments)
                 }
             }
+            // console.log(old);
         }
         // 使用
 
         var ninja = {
-            values:["html", "css", "javascript"]
+            values:["html", "css", "javascript", "feng yanggang"]
         }
 
         addMethod(ninja, "find", function () {
             return this.values
         });
-        
+        console.log(ninja.find);
         addMethod(ninja, "find", function ( name ) {
             var ret = [];
             for (let i = 0; i < this.values.length; i++) {
@@ -76,7 +80,8 @@
             }
             return ret;
         });
-
+        
+        console.log(ninja.find);
         addMethod(ninja, "find", function ( first, last ) {
             var ret = [];
             for (let i = 0; i < this.values.length; i++) {
@@ -86,8 +91,12 @@
             }
             return ret;
         });
-        
-        console.log(ninja.find("a"));
+        console.log(ninja.find);
+        // 第三次 addMethod 时候，第一次的没被洗掉？？？
+        // 统统被存在了闭包里，也没有显式的在上下文里面销毁闭包
+        console.log(ninja.find());
+        console.log(ninja.find("css"));
+        console.log(ninja.find("feng","yanggang"));
 
 
         function argTest (argument1, argument2) {

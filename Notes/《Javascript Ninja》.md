@@ -76,13 +76,44 @@ function addMethod(obj, name, fn) {
     var old = obj[name];
     obj[name] = () => {
         if (fn.length == arguments.length) {
+             // 这个 arguments.length 是 obj[name] 的，而不是外面那个 addMethod 的
             return fn.apply(this, arguments)
         }else if (typeof old == "function") {
             return old.apply(this, arguments)
         }
     }
 }
+// 使用
+var ninja = {
+    values:["html", "css", "javascript", "feng yanggang"]
+}
 
+addMethod(ninja, "find", function () {
+    return this.values
+});
+addMethod(ninja, "find", function ( name ) {
+    var ret = [];
+    for (let i = 0; i < this.values.length; i++) {
+        if (this.values[i].indexOf(name) == 0) {
+            ret.push(this.values[i]);
+        }
+    }
+    return ret;
+});
+addMethod(ninja, "find", function ( first, last ) {
+var ret = [];
+for (let i = 0; i < this.values.length; i++) {
+    if (this.values[i] == (first + " " + last)) {
+        ret.push(this.values[i]);
+    }
+}
+return ret;
+});
+// 第三次 addMethod 时候，第一次的没被洗掉？？？
+// 统统被存在了闭包里，也没有显式的在上下文里面销毁闭包
+console.log(ninja.find());
+console.log(ninja.find("css"));
+console.log(ninja.find("feng","yanggang"));
 ```
 
 ### 函数判定

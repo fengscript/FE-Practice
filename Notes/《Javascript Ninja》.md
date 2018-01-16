@@ -100,17 +100,22 @@ addMethod(ninja, "find", function ( name ) {
     }
     return ret;
 });
+// 到这里时候，ninja的find上存的是 上面obj[name]那个原来的函数, find 的闭包里面存了 fn 和 old， fn 里面存的是 f(name)，old里面是 obj[name],
+// old 的闭包里面存了 第一次传进去的函数
+console.log(ninja);
 addMethod(ninja, "find", function ( first, last ) {
-var ret = [];
-for (let i = 0; i < this.values.length; i++) {
-    if (this.values[i] == (first + " " + last)) {
-        ret.push(this.values[i]);
+    var ret = [];
+    for (let i = 0; i < this.values.length; i++) {
+        if (this.values[i] == (first + " " + last)) {
+            ret.push(this.values[i]);
+        }
     }
-}
-return ret;
+    return ret;
 });
-// 第三次 addMethod 时候，第一次的没被洗掉？？？
-// 统统被存在了闭包里，也没有显式的在上下文里面销毁闭包
+
+console.log(ninja);
+// 到这里时候，ninja的find上存的是 上面obj[name]那个原来的函数, find 的闭包里面存了 fn 和 old， fn 里面存的是 f(first, last)，old 里面继续是 obj[name],
+// old 的闭包里面存了 第二次传进去的函数即 fn(name) 和 old (obj[name]) ，这里套的这个old的闭包里面才是第一次的f() 和 old (undefined)
 console.log(ninja.find());
 console.log(ninja.find("css"));
 console.log(ninja.find("feng","yanggang"));

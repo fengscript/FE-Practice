@@ -349,3 +349,33 @@ object.style.animationPlayState="paused"
 ```css
 body::-webkit-scrollbar {display:none}
 ```
+
+
+## border 画三角形
+
+```css
+.triangle{
+    margin: 50px auto;
+    width: 0;
+    height: 0;
+    border-top: 40px solid red;
+    border-right: 40px solid blue;
+    border-bottom: 40px solid green;
+    border-left: 40px solid yellow;
+}
+```
+然后要做朝向哪面的三角形，将另外三面的 border 颜色 transparent 即可：
+```css
+.triangle{
+    margin: 50px auto;
+    width: 0;
+    height: 0;
+    border-top: 40px solid red;
+    border-right: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    border-left: 40px solid transparent;
+}
+```
+
+> 块级元素默认会在页面上水平平铺，让上边和下边也变成三角形就简单了，将元素的width属性设为 0 即可
+参考：[http://www.cnblogs.com/keepfool/p/5616326.html](http://www.cnblogs.com/keepfool/p/5616326.html)

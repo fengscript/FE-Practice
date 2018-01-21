@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
-    
+
 
 
     <script>
@@ -35,21 +37,20 @@
 
         //     }
         // }    
-        var obj = [
-            {
-                "a":1,
-                "b":2,
-                "c":3,
-                "d":4,
+        var obj = [{
+                "a": 1,
+                "b": 2,
+                "c": 3,
+                "d": 4,
             },
             {
-                "a":"a",
-                "b":"b",
-                "c":"c",
-                "d":"d",
+                "a": "a",
+                "b": "b",
+                "c": "c",
+                "d": "d",
             }
         ]
-        var fn = function  (arr) {
+        var fn = function (arr) {
             arr.forEach(obj => {
                 for (var prop in obj) {
                     if (obj.hasOwnProperty(prop)) {
@@ -64,10 +65,16 @@
                     }
                 }
             });
-
-            
         }
         fn(obj)
+
+        obj.map(function (item) {
+            console.log(item["a"]);
+        })
+        obj.forEach(function (item) {
+            console.log(item["a"]);
+        })
     </script>
 </body>
+
 </html>

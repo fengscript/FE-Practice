@@ -437,6 +437,7 @@ aim.addEventListener("click", btn.click, false);
 // this 打印出来 是 <button> 元素，而非 btn 对象
 ```
 
+### currying
 
 
 

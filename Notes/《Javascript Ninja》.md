@@ -395,11 +395,13 @@ try {
     console.log(error);
 }
 ```
+
 ## closure
+
 1. 闭包是函数在创建时允许该自身函数访问并操作该自身函数之外的变量所创建的作用域，闭包可以让函数访问所有存在于该函数声明时所处的作用域中所有的变量和函数。
 2. 作用域之外的所有变量，即使是函数声明之后的那些声明，也会包含在闭包之内。
 3. 相同作用域内，尚未声明的变量不能提前引用
-
+4. 函数在闭包里面执行的时候，不仅可以在闭包创建的时刻点上看到所有变量的值，还可以对其更新，只要闭包存在，就可以对其修改
 ```javascript
 var outerValue = "outerValue";
 var innerFn;
@@ -417,6 +419,24 @@ var later = "later";
 outer();
 innerFn(later)
 ```
+
+### 事件处理函数
+浏览器的事件处理系统会认为函数调用的上下文是事件的**目标元素**，如
+```javascript
+var btn = {
+_click : false,
+
+click : function(){ 
+    this._click = true
+    console.log(this);
+    }
+}
+
+var aim = document.getElementById('click');
+aim.addEventListener("click", btn.click, false);
+// this 打印出来 是 <button> 元素，而非 btn 对象
+```
+
 
 
 

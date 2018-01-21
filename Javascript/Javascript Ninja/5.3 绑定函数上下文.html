@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>闭包</title>
+</head>
+
+<body>
+
+    <button id="click">Click</button>
+
+    <script>
+        var btn = {
+            _click : false,
+            
+            click : function(){ 
+                this._click = true
+                console.log(this);
+                console.log(this._click);
+                function thisTest (arguments) {
+                    console.log(this._click);
+                }
+                // thisTest()//这里，二次引用的函数 还是会有 this 引用丢失的问题
+                thisTest.call(btn)//纠正一下就OK了
+            }
+        }
+
+        var bind = function(ctx, name){
+            return function () {
+                return ctx[name].apply(ctx, arguments);
+            }
+        }
+
+        var _click = "window prop";
+        var aim = document.getElementById('click');
+
+        aim.addEventListener("click", btn.click, false);    //此时 会打印出 button 元素，而不是 button 对象，因为浏览器的事件处理系统会认为函数调用的上下文是事件的目标元素
+        aim.addEventListener("click", bind(btn, "click"), false);
+
+
+// bind 的 prototype 版本
+Function.prototype.bind = function () {
+    var fn = this, arg = Array.prototype.slice.call(arguments), obj = args.shift();
+
+    return function () {
+        return fn.apply(obj, args.concat([].slice.call(arguments)))
+    } 
+}
+    </script>
+</body>
+
+</html>

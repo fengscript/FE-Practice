@@ -144,9 +144,74 @@ var Counter = {
 ## 3.3 getter
 
 ## 3.4 mutation
+**mutation 都是同步事务**
 > 每个 mutation 都有一个字符串的 事件类型 (type) 和 一个 回调函数 (handler)。这个回调函数就是我们实际进行状态更改的地方，并且它会接受 state 作为第一个参数
 > 要唤醒一个 mutation handler，你需要以相应的 type 调用 store.commit 方法
 
 
 ### Payload
 可以向 `store.commit` 传入额外的参数，即 mutation 的 载荷（payload）
+```javascript
+// mutation中
+inc(state, n) {
+    state.count += n
+}
+// 提交
+inc() {
+store.commit('inc',10)
+},
+```
+
+或者最好用对象放payload
+```javascript
+// mutation中
+inc(state, payload) {
+    state.count += payload.step;
+},
+// 提交
+inc() {
+store.commit('inc',{
+        step:10
+    })
+},
+```
+
+或者直接用 `type` 指定类型，用对象方式提交
+```javascript
+store.commit({
+    type:'inc', 
+    step:10
+})
+```
+
+**注意**：
+1. 最好提前在你的 store 中初始化好所有所需属性
+2. 在对象上添加新属性
+`Vue.set(obj, 'newProp', 123)`
+或者用新对象替换老对象
+`state.obj = { ...state.obj, newProp: 123 }`
+
+3. 可以使用常量替代 `Mutation` 事件类型
+4.  `mutation` 必须是同步函数,任何在回调函数中进行的状态的改变都是不可追踪的。
+
+### 组件提交 Mutation
+组件中使用 `this.$store.commit('xxx')` 提交 mutation
+
+
+## 3.5 action
+
+**`Action` 提交的是 `mutation，而不是直接变更状态。`**
+**`Action` 可以包含任意异步操作**
+
+
+
+
+
+
+
+
+
+
+
+
+

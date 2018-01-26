@@ -439,5 +439,8 @@ aim.addEventListener("click", btn.click, false);
 
 ### currying
 
+> 柯里化是这样的一个转换过程，把接受多个参数的函数变换成接受一个单一参数(译注：最初函数的第一个参数)的函数，如果其他的参数是必要的，返回接受余下的参数且返回结果的新函数
+> http://blog.jobbole.com/77956/
 
+先体验一下：
 

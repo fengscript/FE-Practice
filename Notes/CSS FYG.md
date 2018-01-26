@@ -379,3 +379,17 @@ body::-webkit-scrollbar {display:none}
 
 > 块级元素默认会在页面上水平平铺，让上边和下边也变成三角形就简单了，将元素的width属性设为 0 即可
 参考：[http://www.cnblogs.com/keepfool/p/5616326.html](http://www.cnblogs.com/keepfool/p/5616326.html)
+
+
+## 去掉谷歌添加的点击一片蓝
+```css
+* {
+  -webkit-tap-highlight-color: transparent;
+  -moz-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+}
+```
+## 好看的阴影
+```css
+box-shadow: 0 6px 8px rgba(102,119,136,0.03), 0 1px 2px rgba(102,119,136,0.3);
+```

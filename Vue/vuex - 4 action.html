@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+    <!-- 18-1-25 没有搞明白 -->
     <div id="app"></div>
     <script>
         Vue.use(Vuex)
@@ -21,20 +21,15 @@
                 count: 0
             },
             mutations: {
-                // inc(state) {
-                //     state.count ++
-                // },
-                // payload
-                // 或者同时传入参数——载荷
-                // inc(state, n) {
-                //     state.count += n
-                // },
-
-                // 最好用对象放载荷
                 inc(state, payload) {
                     state.count += payload.step;
                 },
                 dec: state => state.count--
+            },
+            actions:{
+                inc(ctx){
+                    ctx.commit('inc')
+                }
             }
         });
         const Counter = {

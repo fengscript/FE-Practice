@@ -121,7 +121,7 @@ console.log(ninja.find("css"));
 console.log(ninja.find("feng","yanggang"));
 ```
 
-### 函数判定
+## 函数判定
 1 `typeof`
 `typeof`：在某些浏览器上表现不一致，如 safari会认为：
 `typeof document.body.childNodes == function`
@@ -420,7 +420,7 @@ outer();
 innerFn(later)
 ```
 
-### 事件处理函数
+## 事件处理函数
 浏览器的事件处理系统会认为函数调用的上下文是事件的**目标元素**，如
 ```javascript
 var btn = {

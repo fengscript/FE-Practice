@@ -46,6 +46,14 @@
                 }
             }
         }
+
+        function say () {
+            console.log("click");
+        }
+
+
+        EventTarget.addHandler("click", say)
+        EventTarget.fire(say);
     </script>
 </body>
 

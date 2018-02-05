@@ -51,9 +51,15 @@
             console.log("click");
         }
 
+        var test = new EventTarget();
+        test.addHandler("click", function () {
+            console.log("???");
+        });
+        
 
-        EventTarget.addHandler("click", say)
-        EventTarget.fire(say);
+        document.addEventListener('click', function (e) {
+            test.fire();
+        });
     </script>
 </body>
 

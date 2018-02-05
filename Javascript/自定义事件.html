@@ -34,7 +34,7 @@
                 }
             },
 
-            removeHandler:function (type, handler) {
+            removeHandler: function (type, handler) {
                 if (this.handlers[event.type] instanceof Array) {
                     var handlers = this.handlers[event.type];
                     for (var i = 0, len = handlers.length; i < len; i++) {
@@ -47,16 +47,17 @@
             }
         }
 
-        function say () {
-            console.log("click");
+        function msg(evt) {
+            console.log("say something:" + evt.msg);
         }
 
         var test = new EventTarget();
-        test.addHandler("click", function () {
-            console.log("???");
-        });
-        
+        test.addHandler("say", msg);
 
+        test.fire({
+            type: "say",
+            msg: "hello word"
+        })
         document.addEventListener('click', function (e) {
             test.fire();
         });

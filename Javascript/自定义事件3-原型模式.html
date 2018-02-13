@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义事件2</title>
+</head>
+
+<body>
+    <script>
+        var Event = {
+            _listner: {}
+        }
+
+        Event.prototype = {
+            constructor: this,
+            addEvt: function (type, fn) {
+                if (typeof type === "string" && typeof fn === "function") {
+                    if (typeof this._listner[type] === "undefined") {
+                        this._listner[type] = [];
+                    }
+                    if (typeof fn === "function") {
+                        this._listner[type].push(fn)
+                    }
+                }
+                return this
+            },
+            addEvts: function (obj) {
+                obj = typeof obj === "object" ? obj : {};
+                var type;
+                for (type in obj) {
+                    if (type && typeof obj[type] === "function") {
+                        this.addEvt(type, obj[type])
+                    }
+                }
+                return this
+            },
+            fireEvt: function (type) {
+                if (type && this._listner[type]) {
+                    var events = {
+                        type: type,
+                        target: this
+                    };
+                    for (var len = this._listner[type].length, start = 0; start < len; start++) {
+                        this._listner[type][start].call(this.events)
+                    }
+                }
+                return this;
+            },
+            fireEvts: function (arr) {
+                if (Array.isArray(arr)) {
+                    for (var i = 0, len = arr.length; i < len; i++) {
+                        this.fireEvt(arr[i])
+                    }
+                }
+                return this
+            },
+            removeEvt: function (type, key) {
+                var evtArr = this._listner[type];
+                if (Array.isArray(evtArr)) {
+                    // typeof type === "string" && evtArr instanceof Array
+                    if (typeof key === "function") {
+                        for (var i = 0, len = evtArr.length; i < len; i++) {
+                            if (typeof evtArr[i] === key) {
+                                this._listner[type].splice(i, 1);
+                                break;
+                            }
+                        }
+                    } else if (key instanceof Array) {
+                        for (var lis = 0, keyLen = key.length; lis < keyLen; lis++) {
+                            this.removeEvt(type, key[keyLen])
+                        }
+                    } else {
+                        delete this._listner[type];
+                    }
+                }
+                return this
+            },
+            removeEvts: function (params) {
+                if (Array.isArray(paras)) {
+                    for (var i = 0, len = paras.length; i < len; i++) {
+                        this.removeEvt(params[i])
+                    }
+                } else if (typeof params === "object") {
+                    for (var type in params) {
+                        this.removeEvt(type, params[type])
+                    }
+                }
+                return this;
+            }
+
+        }
+
+
+        var newEvt = new Event();
+        
+
+        newEvt.add("click", function () {
+            console.log("click");
+        })
+        newEvt.fire("click")
+    </script>
+</body>
+
+</html>

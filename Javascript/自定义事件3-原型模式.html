@@ -10,8 +10,8 @@
 
 <body>
     <script>
-        var Event = {
-            _listner: {}
+        var Event = function () {
+            this._listner = {}
         }
 
         Event.prototype = {
@@ -19,7 +19,7 @@
             addEvt: function (type, fn) {
                 if (typeof type === "string" && typeof fn === "function") {
                     if (typeof this._listner[type] === "undefined") {
-                        this._listner[type] = [];
+                        this._listner[type] = [fn];
                     }
                     if (typeof fn === "function") {
                         this._listner[type].push(fn)
@@ -64,7 +64,7 @@
                     if (typeof key === "function") {
                         for (var i = 0, len = evtArr.length; i < len; i++) {
                             if (typeof evtArr[i] === key) {
-                                this._listner[type].splice(i, 1);
+                                evtArr.splice(i, 1);
                                 break;
                             }
                         }
@@ -93,14 +93,32 @@
 
         }
 
+        var myEvents = new Event();
+        myEvents.addEvts({
+            "once": function () {
+                alert("该弹框只会出现一次！");
+                this.removeEvt("once");
+            },
+            "infinity": function () {
+                alert("每次点击页面，该弹框都会出现！");
+            }
+        });
 
+        document.onclick = function (e) {
+            e = e || window.event;
+            var target = e.target || e.srcElement;
+            if (!target || !/input|pre/i.test(target.tagName)) {
+                myEvents.fireEvts(["once", "infinity"]);
+            }
+        };
         var newEvt = new Event();
-        
 
-        newEvt.add("click", function () {
+
+        newEvt.addEvt("a", function () {
             console.log("click");
         })
-        newEvt.fire("click")
+        // newEvt.removeEvt("a")
+        newEvt.fireEvt("a");
     </script>
 </body>
 

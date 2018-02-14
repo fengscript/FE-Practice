@@ -18,6 +18,7 @@
                 }
                 if (typeof fn === "function") {
                     this._listner[type].push(fn)
+                    console.log(this._listner)
                 }
                 return this
             },
@@ -45,7 +46,7 @@
                                 break;
                             }
                         }
-                    }else{
+                    } else {
                         delete this._listner[type];
                     }
 
@@ -55,10 +56,13 @@
         }
 
 
-        Event.add("click",function  () {
+        Event.add("a", function () {
             console.log("click");
         })
-        Event.fire("click")
+        Event.add("b", function () {
+            console.log("click");
+        })
+        Event.fire("a")
     </script>
 </body>
 

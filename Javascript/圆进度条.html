@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="divport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>圆进度条</title>
+</head>
+
+<body>
+    segmentfault.com/a/1190000013219501
+    <style>
+        #canvas_bg {
+            border: 1px solid red;
+            /* position: absolute;
+            left: 0;
+            top: 0; */
+        }
+
+        #canvas_prograss {
+            border: 1px solid green;
+            /* position: absolute;
+            left: 0;
+            top: 0; */
+        }
+
+        .box {
+            position: relative;
+        }
+    </style>
+
+    <div class="box">
+        <canvas id="canvas_bg" width="300px" height="300px"></canvas>
+        <canvas id="canvas_prograss" width="300px" height="300px"></canvas>
+    </div>
+
+    <script>
+        var drawPrograss = (() => {
+            var step = 0;
+            var count = 0;
+            var countTimer = null;
+            var bg = document.getElementById('canvas_bg');
+            var ctx_bg = bg.getContext("2d");
+            ctx_bg.lineWidth = 4;
+            ctx_bg.lineCap = "round";
+            // ctx_bg.lineCap = "square";
+            // ctx_bg.beginPath();
+            ctx_bg.arc(150, 150, 100, 0, Math.PI * 2, false);
+            // ctx_bg.closePath();
+            ctx_bg.strokeStyle = "#ccc";
+            ctx_bg.stroke();
+
+            function drawPrograss(step) {
+                var prograss = document.getElementById('canvas_prograss');
+                var ctx_prograss = prograss.getContext("2d");
+                ctx_prograss.lineWidth = 5;
+                ctx_prograss.lineCap = "round";
+                ctx_prograss.beginPath();
+                ctx_prograss.arc(110, 110, 100, -Math.PI / 2, step * Math.PI - Math.PI / 2, false);
+                // ctx_prograss.arc(150, 150, 100, 0, Math.PI * 2, false);
+                var gradient = ctx_prograss.createLinearGradient(
+                    200,
+                    100,
+                    100,
+                    200
+                );
+                gradient.addColorStop(
+                    "0",
+                    "#2661DD"
+                );
+                gradient.addColorStop(
+                    "0.5",
+                    "#40ED94"
+                );
+                gradient.addColorStop(
+                    "1.0",
+                    "#5956CC"
+                );
+                ctx_prograss.strokeStyle = gradient;
+                ctx_prograss.stroke();
+            }
+
+            // step
+            countTimer = setInterval(function () {
+                if (count <= 60) {
+                    count ++;
+                    drawPrograss(count/(60/2))
+                } else {
+                    clearInterval(countTimer)
+                }
+                // if (step < 2) {
+                //     step += .1;
+                //     drawPrograss(step)
+                // } else {
+                //     clearInterval(countTimer)
+                // }
+            }, 100);
+
+
+        })()
+    </script>
+</body>
+
+</html>

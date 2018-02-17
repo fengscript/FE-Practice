@@ -79,13 +79,18 @@
                 );
                 ctx_prograss.strokeStyle = gradient;
                 ctx_prograss.stroke();
+
+
+                // ctx_prograss.translate(0.5, 0.5);
             }
 
             // step
+
+            // requestAnimationFrame()
             countTimer = setInterval(function () {
                 if (count <= 60) {
-                    count ++;
-                    drawPrograss(count/(60/2))
+                    count++;
+                    drawPrograss(count / (60 / 2))
                 } else {
                     clearInterval(countTimer)
                 }

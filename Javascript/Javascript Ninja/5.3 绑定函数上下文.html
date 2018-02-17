@@ -16,14 +16,15 @@
         var btn = {
             _click : false,
             
-            click : function(){ 
+            click : function(){
+                this.style.color = "red"
                 this._click = true
                 console.log(this);
                 console.log(this._click);
                 function thisTest (arguments) {
                     console.log(this._click);
                 }
-                // thisTest()//这里，二次引用的函数 还是会有 this 引用丢失的问题
+                thisTest()//这里，二次引用的函数 还是会有 this 引用丢失的问题
                 thisTest.call(btn)//纠正一下就OK了
             }
         }
@@ -38,6 +39,8 @@
         var aim = document.getElementById('click');
 
         aim.addEventListener("click", btn.click, false);    //此时 会打印出 button 元素，而不是 button 对象，因为浏览器的事件处理系统会认为函数调用的上下文是事件的目标元素
+        // 18-2-17 add
+        // 这个时候，可以进行DOM操作 例如 style 操作
         aim.addEventListener("click", bind(btn, "click"), false);
 
 

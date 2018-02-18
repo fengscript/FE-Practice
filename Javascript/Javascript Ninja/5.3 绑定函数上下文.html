@@ -17,7 +17,7 @@
             _click : false,
             
             click : function(){
-                this.style.color = "red"
+                // this.style.color = "red"
                 this._click = true
                 console.log(this);
                 console.log(this._click);
@@ -38,7 +38,7 @@
         var _click = "window prop";
         var aim = document.getElementById('click');
 
-        aim.addEventListener("click", btn.click, false);    //此时 会打印出 button 元素，而不是 button 对象，因为浏览器的事件处理系统会认为函数调用的上下文是事件的目标元素
+        aim.addEventListener("click", btn.click, false);    //此时 会打印出 button 元素，而不是 btn 对象本身，因为浏览器的事件处理系统会认为函数调用的上下文是事件的目标元素
         // 18-2-17 add
         // 这个时候，可以进行DOM操作 例如 style 操作
         aim.addEventListener("click", bind(btn, "click"), false);

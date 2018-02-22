@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>自定义事件2</title>
+    <title>自定义事件3-原型模式</title>
 </head>
 
 <body>
@@ -20,9 +20,8 @@
                 if (typeof type === "string" && typeof fn === "function") {
                     if (typeof this._listner[type] === "undefined") {
                         this._listner[type] = [fn];
-                    }
-                    if (typeof fn === "function") {
-                        this._listner[type].push(fn)
+                    } else {
+                        this._listener[type].push(fn);
                     }
                 }
                 return this
@@ -62,6 +61,7 @@
                 if (Array.isArray(evtArr)) {
                     // typeof type === "string" && evtArr instanceof Array
                     if (typeof key === "function") {
+                        // 这里 用来检测 key 传进来一个函数名字？
                         for (var i = 0, len = evtArr.length; i < len; i++) {
                             if (typeof evtArr[i] === key) {
                                 evtArr.splice(i, 1);
@@ -96,21 +96,27 @@
         var myEvents = new Event();
         myEvents.addEvts({
             "once": function () {
-                alert("该弹框只会出现一次！");
-                this.removeEvt("once");
+                // alert("该弹框只会出现一次！");
+                console.log("该弹框只会出现一次！");
+                // this.removeEvt("once");
             },
-            "infinity": function () {
-                alert("每次点击页面，该弹框都会出现！");
-            }
+            // "infinity": function () {
+            //     alert("每次点击页面，该弹框都会出现！");
+            // }
         });
+        myEvents.removeEvt("once",function(){
+            console.log("remove evt");
+        })
+        myEvents.fireEvts(["once", "infinity"]);
+        // document.onclick = function (e) {
+        //     e = e || window.event;
+        //     var target = e.target || e.srcElement;
+        //     if (!target || !/input|pre/i.test(target.tagName)) {
+        //         myEvents.fireEvts(["once", "infinity"]);
+        //     }
+        // };
 
-        document.onclick = function (e) {
-            e = e || window.event;
-            var target = e.target || e.srcElement;
-            if (!target || !/input|pre/i.test(target.tagName)) {
-                myEvents.fireEvts(["once", "infinity"]);
-            }
-        };
+
         var newEvt = new Event();
 
 

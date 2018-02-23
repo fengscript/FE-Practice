@@ -21,7 +21,9 @@
                     if (typeof this._listner[type] === "undefined") {
                         this._listner[type] = [fn];
                     } else {
-                        this._listener[type].push(fn);
+                        this._listner[type].push(fn);
+                        // 多写了一个字母，检查了一晚上错误
+                        // this._listener[type].push(fn);
                     }
                 }
                 return this
@@ -120,11 +122,19 @@
         var newEvt = new Event();
 
 
-        newEvt.addEvt("a", function () {
-            console.log("click");
-        })
-        // newEvt.removeEvt("a")
-        newEvt.fireEvt("a");
+        // newEvt.addEvts("a", [say,cb])
+        newEvt.addEvt("a", say)
+        newEvt.addEvt("a", cb)
+        // newEvt.removeEvt("a", cb)
+        newEvt.fireEvt("a", say);
+        newEvt.fireEvt("a", cb);
+
+        function say(){
+            console.log("I SAY HELLO YOU SAY YO!");
+        }
+        function cb () {
+            console.log("delete");
+        }
     </script>
 </body>
 

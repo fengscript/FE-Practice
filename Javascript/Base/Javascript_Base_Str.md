@@ -11,6 +11,18 @@ var str = arr.join(",");
 
 # String
 ## String to Array
+### slice
+```javascript
+var arr = [].slice.call(arr)
+```
+
+`slice`: 
+
+`slice(begin, end)`
+返回从索引 `begin` 到 `end` 的元素，**不改变原数组（类数组）** ，即
+`slice[begin, end)`
+可理解为 去掉了 `begin` 个元素： `arr.slice(n)`
+或者，返回了从 `begin` 到后面所有的元素
 ### split
 
 

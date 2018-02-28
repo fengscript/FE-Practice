@@ -19,6 +19,8 @@
         // 先体验一下
         function sub_curry(fn) {
             var args = [].slice.call(arguments, 1);
+            // 再一次！ slice[m, n)
+            // 所以，这里将 args 变成数组，且取了除过第一个之外剩下所有的元素
             return function () {
                 return fn.apply(this, args.concat([].slice.call(arguments)));
             };

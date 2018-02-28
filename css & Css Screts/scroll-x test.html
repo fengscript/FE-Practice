@@ -12,26 +12,26 @@
 
 
 
-    <div id="test">
-        <div id="tt">
-            <div class="t"></div>
-            <div class="t"></div>
-            <div class="t"></div>
-            <div class="t"></div>
-            <div class="t"></div>
-            <div class="t"></div>
-            <div class="t"></div>
-            <div class="t"></div>
-            <div class="t"></div>
-            <div class="t"></div>
-            <div class="t"></div>
-            <div class="t"></div>
+    <div id="outer">
+        <div id="container">
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
         </div>
     </div>
 
 
     <style>
-        #test {
+        #outer {
             /* position: absolute;
             left: 0;
             margin: auto;
@@ -40,11 +40,13 @@
             width: 1000%; */
             height: 10rem;
         }
-        #tt{
+
+        #container {
             width: 1000%;
             height: 100%;
         }
-        .t {
+
+        .item {
             width: 7rem;
             height: 7rem;
             background: red;
@@ -52,6 +54,12 @@
             display: inline-block;
         }
     </style>
+
+
+    <script>
+        // 上面这个 只能在 mobile 滑动，要移动端也可以 还得靠js
+
+    </script>
 </body>
 
 </html>

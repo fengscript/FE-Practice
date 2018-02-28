@@ -5,6 +5,20 @@
 先体验一下：
 
 ```javascript
+var sendMsg = function (from, to, msg) {
+    alert(["Hello " + to + ",", msg, "Sincerely,", "- " + from].join("\n"));
+};
+
+var sendMsgCurried = curry(sendMsg); // returns function(a,b,c)
+ 
+var sendMsgFromJohnToBob = sendMsgCurried("FYG")("fyg"); // returns function(c)
+ 
+sendMsgFromJohnToBob("Come join the curry jsvascript!"); 
+```
+
+
+
+```javascript
 function sub_curry(fn) {
     var args = [].slice.call(arguments, 1);
     return function () {

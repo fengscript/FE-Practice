@@ -36,3 +36,7 @@ console.log(sub_curry(fn, "a")("b", "c"));
 console.log(sub_curry(fn, "a", "b")("c"));
 console.log(sub_curry(fn, "a", "b", "c")());
 ```
+
+
+> 每一个函数都是有且只有一个参数的函数。如果你想拥有多个参数，你必须定义一系列相互嵌套的函数。
+

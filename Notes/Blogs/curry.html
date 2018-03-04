@@ -12,23 +12,58 @@
 
 
     <script>
-        var sendMsg = function (from, to, msg) {
-            alert(["Hello " + to + ",", msg, "Sincerely,", "- " + from].join("\n"));
-        };
-        sendMsg("feng", "fyg", "some message")
-        var sendMsgCurried = curry(sendMsg); // returns function(a,b,c)
+        // var sendMsg = function (from, to, msg) {
+        //     alert(["Hello " + to + ",", msg, "Sincerely,", "- " + from].join("\n"));
+        // };
+        // sendMsg("feng", "fyg", "some message")
+        // var sendMsgCurried = curry(sendMsg); // returns function(a,b,c)
 
-        var sendMsgFromJohnToBob = sendMsgCurried("Jhon")("Bob"); // returns function(c)
+        // var sendMsgFromJohnToBob = sendMsgCurried("Jhon")("Bob"); // returns function(c)
 
-        sendMsgFromJohnToBob("Come join the curry jsvascript!");
+        // sendMsgFromJohnToBob("Come join the curry jsvascript!");
 
 
         function sub_curry(fn) {
             var args = [].slice.call(arguments, 1);
+            console.log(arguments)
             return function () {
                 return fn.apply(this, args.concat([].slice.call(arguments)));
             };
         }
+
+        var fn = function (a, b, c) {
+            return [a, b, c]
+        }
+
+        console.log(fn("a", "b", "c"));
+
+        console.log(sub_curry(fn, "a")("b", "c"));
+        console.log(sub_curry(fn, "a", "b")("c"));
+        console.log(sub_curry(fn, "a", "b", "c")());
+        var c = sub_curry(fn, "a", "b", "c")();
+        console.log(c);
+
+        function curry(fn, length) {
+            // capture fn's # of parameters
+            length = length || fn.length;
+            return function () {
+                if (arguments.length < length) {
+                    // not all arguments have been specified. Curry once more.
+                    var combined = [fn].concat(toArray(arguments));
+                    return length - arguments.length > 0 ?
+                        curry(sub_curry.apply(this, combined), length - arguments.length) :
+                        sub_curry.call(this, combined);
+                } else {
+                    // all arguments have been specified, actually call function
+                    return fn.apply(this, arguments);
+                }
+            };
+        }
+
+        var fn = curry(function (a, b, c) {
+            return [a, b, c];
+        })
+        console.log(fn("f", "y", "g"));
     </script>
 </body>
 

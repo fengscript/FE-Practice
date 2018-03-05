@@ -36,3 +36,20 @@ console.log(sub_curry(fn, "a")("b", "c"));
 console.log(sub_curry(fn, "a", "b")("c"));
 console.log(sub_curry(fn, "a", "b", "c")());
 ```
+
+然后，来一个正式的 curry 处理函数：
+```javascript
+function curry(fn, len) {
+    len = len || fn.length;
+    return function () {
+        if (arguments.length < len) {
+            var combined = [fn].concat(toArray(arguments));
+            return len - arguments.length > 0
+                    ? curry(sub_curry.apply(this, combined), len - arguments.length)
+                    : sub_curry.call(this, combined)
+        }else{
+            return fn.apply(this, arguments)
+        }
+    }
+}
+```

@@ -23,6 +23,7 @@ var arr = [].slice.call(arr)
 `slice[begin, end)`
 可理解为 去掉了 `begin` 个元素： `arr.slice(n)`
 或者，返回了从 `begin` 到后面所有的元素
+
 ### split
 
 

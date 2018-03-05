@@ -15,12 +15,12 @@
         var sendMsg = function (from, to, msg) {
             alert(["Hello " + to + ",", msg, "Sincerely,", "- " + from].join("\n"));
         };
-        sendMsg("feng", "fyg", "some message")
-        var sendMsgCurried = curry(sendMsg); // returns function(a,b,c)
+        // sendMsg("feng", "fyg", "some message")
+        // var sendMsgCurried = curry(sendMsg); // wish returns function(a,b,c)
 
-        var sendMsgFromJohnToBob = sendMsgCurried("Jhon")("Bob"); // returns function(c)
+        // var sendMsgFromJohnToBob = sendMsgCurried("Jhon")("Bob"); //wish returns function(c)
 
-        sendMsgFromJohnToBob("Come join the curry jsvascript!");
+        // sendMsgFromJohnToBob("Come join the curry jsvascript!");
 
 
         function sub_curry(fn) {
@@ -29,6 +29,44 @@
                 return fn.apply(this, args.concat([].slice.call(arguments)));
             };
         }
+
+        // var fn = function (a, b, c) {
+        //     return [a, b, c]
+        // }
+
+        // console.log(fn("a", "b", "c"));
+
+        // console.log(sub_curry(fn, "a")("b", "c"));
+        // console.log(sub_curry(fn, "a", "b")("c"));
+        // console.log(sub_curry(fn, "a", "b", "c")());
+
+
+
+        function curry(fn, len) {
+            len = len || fn.length;
+            return function () {
+                if (arguments.length < len) {
+                    var combined = [fn].concat([].slice.call(arguments));
+                    return len - arguments.length > 0 ?
+                        curry(sub_curry.apply(this, combined), len - arguments.length) :
+                        sub_curry.call(this, combined)
+                } else {
+                    return fn.apply(this, arguments)
+                }
+            }
+        }
+
+
+        var fn = curry(function (a, b, c) {
+            return [a, b, c];
+        });
+
+
+        fn("F", "Y", "G");
+        fn("F", "Y", "G");
+        fn("F", "Y")("G");
+        fn("F")("Y", "G");
+        fn("F")("Y")("G");
     </script>
 </body>
 

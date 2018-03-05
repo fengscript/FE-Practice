@@ -25,9 +25,13 @@
 
         function sub_curry(fn) {
             var args = [].slice.call(arguments, 1);
-            console.log(arguments)
+            // console.log(arguments)
             return function () {
+                var arg2 = arguments;
+                // console.log(arg2);
+                // 果然，如我所料，这里的arg2是 return 获得的函数传入的参数，不是上面那个了
                 return fn.apply(this, args.concat([].slice.call(arguments)));
+                // return fn.apply(this, args.concat([].slice.call(arg2)));
             };
         }
 
@@ -49,7 +53,10 @@
             return function () {
                 if (arguments.length < length) {
                     // not all arguments have been specified. Curry once more.
-                    var combined = [fn].concat(toArray(arguments));
+                    var combined = [fn].concat([].slice.call(arguments));
+                    // concat只能给数组，所以这里要[fn]
+                    console.log("combined");
+                    console.log(combined);
                     return length - arguments.length > 0 ?
                         curry(sub_curry.apply(this, combined), length - arguments.length) :
                         sub_curry.call(this, combined);
@@ -58,8 +65,12 @@
                     return fn.apply(this, arguments);
                 }
             };
-        }
+        };
 
+        console.log("invoke");
+        curry(function (a, b, c) {
+            return [a, b, c];
+        })
         var fn = curry(function (a, b, c) {
             return [a, b, c];
         })

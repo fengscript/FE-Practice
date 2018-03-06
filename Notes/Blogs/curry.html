@@ -75,6 +75,14 @@
             return [a, b, c];
         })
         console.log(fn("f", "y", "g"));
+
+
+        function test (a) {
+            return function () {
+                console.log(a)
+            }
+        }
+        test("bbb")()
     </script>
 </body>
 

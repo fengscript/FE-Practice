@@ -21,6 +21,7 @@ sendMsgFromJohnToBob("Come join the curry jsvascript!");
 ```javascript
 function sub_curry(fn) {
     var args = [].slice.call(arguments, 1);
+    // 获取第一个参数，即要柯里化的函数 
     return function () {
         return fn.apply(this, args.concat([].slice.call(arguments)));
     };

@@ -25,11 +25,13 @@
 
         function sub_curry(fn) {
             var args = [].slice.call(arguments, 1);
-            // console.log(arguments)
+            console.log(arguments)
+            console.log(args)
+            console.log(arguments)
             return function () {
                 var arg2 = arguments;
-                // console.log(arg2);
-                // 果然，如我所料，这里的arg2是 return 获得的函数传入的参数，不是上面那个了
+                console.log(arg2);
+                // 果然，这里的arg2是 return 获得的函数传入的参数，不是上面那个了
                 return fn.apply(this, args.concat([].slice.call(arguments)));
                 // return fn.apply(this, args.concat([].slice.call(arg2)));
             };
@@ -82,7 +84,8 @@
                 console.log(a)
             }
         }
-        test("bbb")()
+        test("b")
+        test("c")()
     </script>
 </body>
 

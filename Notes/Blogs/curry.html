@@ -27,7 +27,7 @@
             var args = [].slice.call(arguments, 1);
             console.log(arguments)
             console.log(args)
-            console.log(arguments)
+            // args 就是去掉 fn 之后第一次传进去的参数
             return function () {
                 var arg2 = arguments;
                 console.log(arg2);

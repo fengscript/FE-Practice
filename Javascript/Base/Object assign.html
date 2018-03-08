@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Object.asign</title>
+</head>
+
+<body>
+    <script>
+        var a = {
+            name: "fyg"
+        };
+        var b = Object.assign({
+            name: "FYG"
+        }, b)
+        console.log(b);
+
+        // 将第一个参数里面的内容复制到第二个参数，当两个参数都不为空对象时进行对象合并
+        var c = {
+            name: "fyg"
+        };
+        var d = Object.assign({}, d)
+        console.log(d);
+
+        // 创建副本的深复制
+
+        // Deep Clone
+        obj1 = {
+            a: 0,
+            b: {
+                c: 0
+            }
+        };
+        let obj3 = JSON.parse(JSON.stringify(obj1));
+        obj1.a = 4;
+        obj1.b.c = 4;
+        console.log(JSON.stringify(obj3)); // { a: 0, b: { c: 0}}
+        }
+    </script>
+</body>
+
+</html>

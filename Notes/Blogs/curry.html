@@ -68,9 +68,7 @@
         };
 
         console.log("invoke");
-        curry(function (a, b, c) {
-            return [a, b, c];
-        })
+
         var fn = curry(function (a, b, c) {
             return [a, b, c];
         })
@@ -82,7 +80,9 @@
                 console.log(a)
             }
         }
-        test("bbb")()
+
+        test("b")
+        test("c")()
     </script>
 </body>
 

@@ -1,5 +1,6 @@
 # 踩坑
 
+## 1
 `npm run dev` 抛错： 
 ```bash
 events.js:182
@@ -45,6 +46,18 @@ kill xxxx
 去 `package.json` 里面另设个端口即可
 
 
+## 2 
+`vscode` 自带命令行执行 `npm run dev` 报错
+```bash
+(webpack)/hot/emitter.js
+There are multiple modules with names that only differ in casing.
+This can lead to unexpected behavior when compiling on a filesystem with other case-semantic.
+```
+貌似是 `vscode` 更新后的问题，是 `import` 时候大小写有问题，但是我 `import` 的木有问题，所以先换了 `cmder`用
+
+
+
+# Base
 1 换源加速
 
     npm config set registry https://registry.npm.taobao.org 

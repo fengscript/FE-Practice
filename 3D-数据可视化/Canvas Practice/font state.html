@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>专门用来测试小程序的api</title>
+</head>
+
+<body>
+
+    <canvas id="canvas" width="400px" height="400px"></canvas>
+
+    <script>
+        var ctx = document.getElementById('canvas').getContext("2d");
+
+        var aniArr = ["盖浇饭", "牛肉拉面", "砂锅米线", "豆腐年糕"];
+        var colorArr = ["red","blue","yellow","purpse"]
+
+        ctx.rect(0, 0, 200, 200);
+        ctx.strokeStyle = "blue";
+        ctx.stroke();
+        
+        ctx.font = "20px null"
+
+        ctx.translate(0, 0)
+        ctx.save();
+        for (let index = 0; index < aniArr.length; index++) {
+            let item = aniArr[index];
+            ctx.fillText(item, 100 - ctx.measureText(item).width / 2, 100);
+            ctx.fillStyle = colorArr[index];
+            ctx.restore();
+            ctx.translate(20, 20)
+        }
+    </script>
+</body>
+
+</html>

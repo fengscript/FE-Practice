@@ -1,1 +1,2 @@
-This paragraph will write in a file by node
+This paragraph will write in a file by node。
+这是一段文字，即将使用 node 读取。

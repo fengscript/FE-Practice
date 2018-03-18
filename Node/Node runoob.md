@@ -167,6 +167,53 @@ Stream 是一个抽象接口
 - error
 - finish 所有数据已被写入到底层系统时触发。
 
+无论读写，都要先创建一个流
+```javascript
+var fs = require("fs``)
+var writeStream = fs.createWriteStream(location, 'utf-8');
+writeStream.write(Data, Encoding)
+// 要打上结束标记
+writeStream.end()
+//
+var readStream = fs.createReadStream(location, encoding)
+```
+
+## pipe stream
+
+利用 `pipe` ，可以从一个流中获取数据并将数据传递到另外一个流中
+```javascript
+var fs=require('fs')
+
+var rs = fs.createReadStream('./a.txt');
+var ws = fs.createWriteStream('copied from a.txt')
+
+rs.pipe(ws)
+```
+
+管道操作可以链式
+```javascript
+rs.pipe(fn1)
+  .pipe(fn2)
+```
+
+# Module
+>  Node.js 中存在原生模块和3种文件模块(文件模块缓存区，文件模块缓存，原生模块缓存区) 4 类模块
+
+> 一个 Node.js 文件就是一个模块，这个文件可能是JavaScript 代码、JSON 或者编译过的C/C++ 扩展。
+
+> node.js 默认后缀为 js
+
+只封装一个对象的话
+```javascript
+module.exports = function() {
+  // ...
+}
+```
+
+来个图片:![Node 模块系统](http://www.runoob.com/wp-content/uploads/2014/03/nodejs-require.jpg)
 
 
+# Route
+
+`http` 要为路由提供请求的 URL 和其他需要的 GET 及 POST 参数，随后路由需要根据这些数据来执行相应的代码。
 

@@ -1,3 +1,4 @@
 使用Stream写入文本数据 
+AtSun Mar 18 2018 23:49:37 GMT+0800 (中国标准时间)
 END
 LINE3

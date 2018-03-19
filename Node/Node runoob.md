@@ -217,3 +217,97 @@ module.exports = function() {
 
 `http` 要为路由提供请求的 URL 和其他需要的 GET 及 POST 参数，随后路由需要根据这些数据来执行相应的代码。
 
+我偷偷摸摸打印了一下：
+```javascript
+url.parse(req.url)
+//
+Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: null,
+  query: null,
+  pathname: '/',
+  path: '/',
+  href: '/'
+  }
+
+```
+
+？？？ 毛都没啊
+
+
+# 全局对象
+`Node.js` 中的全局对象是 `global` ( window ),是所有 `全局变量` 的宿主
+
+定义一个全局变量时，这个变量同时也会成为全局对象的属性
+
+
+## 内置全局变量？
+
+### `__filename`
+`__filename` 表示当前正在执行的脚本的文件名。
+它将输出文件所在位置的 `绝对路径`，且和命令行参数所指定的文件名不一定相同。 如果在模块中，返回的值是模块文件的路径。
+
+### `__dirname`
+`__dirname` 表示当前执行脚本所在的目录。
+
+### `console`
+    - .log()
+    - .info() 蓝色!
+    - .error() 红色×
+    - .warn() 黄色!
+    - .dir() 
+    - .trace() 向标准错误流输出当前的调用栈
+    - .assert() 
+
+### `process`
+描述当前Node.js 进程状态的对象，提供了一个与操作系统的简单接口
+- `stdout` 标准输出流
+- `stderr` 标准错误流
+- `stdin` 标准输入流
+- `argv` argv 属性返回一个数组，由命令行执行脚本时的各个参数组成。
+- `execPath` 返回执行当前脚本的 Node 二进制文件的绝对路径。
+- `execArgv` 返回一个数组，成员是命令行下执行脚本时，在Node可执行文件与脚本文件之间的命令行参数。
+- `env` 返回一个对象，成员为当前 shell 的环境变量
+- `exitCode` 进程退出时的代码，如果进程优通过 process.exit() 退出，不需要指定退出码。
+- `version`
+- `versions`  node 的版本和依赖
+- `config` 包含用来编译当前 node 执行文件的 javascript 配置选项的对象。它与运行 ./configure 脚本生成的 "config.gypi" 文件相同。
+- `pid` 进程号
+- `title` 进程名，默认值为"node"，可以自定义
+- `arch` 当前 CPU 的架构：'arm'、'ia32' 或者 'x64'
+- `platform` 运行程序所在的平台系统 'darwin', 'freebsd', 'linux', 'sunos' 或 'win32'
+- `mainModule` require.main 的备选方法
+
+方法：
+- `abort()` node 退出并生成一个核心文件
+- `chdir(directory)`
+- `cwd()` 返回当前进程的工作目录
+- `getgid()`
+- `setgid(id)`
+- `getuid()`
+- `setuid(id)`
+- `getgroups()`
+- `setgroups(groups)`
+- `initgroups(user, extra_group)`
+- `kill(pid[, signal])`
+- `memoryUsage()`
+- `nextTick(callback)`
+- `umask([mask])`
+- `uptime()`
+- `hrtime()`
+- `exit()`
+- `beforeExit()`
+- `Signal`
+
+
+# 常用工具
+
+## `util` 
+util 是一个Node.js 核心模块，提供常用函数的集合，用于弥补核心JavaScript 的功能 过于精简的不足。
+### `util.inherits`

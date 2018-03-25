@@ -310,4 +310,251 @@ Url {
 
 ## `util` 
 util 是一个Node.js 核心模块，提供常用函数的集合，用于弥补核心JavaScript 的功能 过于精简的不足。
+
 ### `util.inherits`
+实现对象间原型继承的函数
+
+`util.inherits(Sub, Base)`
+给 `Sub` 继承 `Base` 在 `原型中` 定义的函数, 构造函数内部创造的属性和函数都不被继承
+
+如：
+```javascript
+var ut = require('util');
+
+function Base() {
+    this.name = "fyg";
+    this.age = 26;
+    this.sayHi = function () {
+        console.log("Hi " + this.name);
+    }
+}
+Base.prototype.showAge = function  () {
+    console.log(this.age);
+}
+function Sub () {
+    this.name = "sub"
+}
+
+ut.inherits(Sub, Base)
+
+var objBase = new Base();
+objBase.showAge();
+objBase.sayHi();
+console.log(objBase);
+
+var objSub = new Sub();
+// objSub.sayHi()
+console.log(objSub);
+```
+
+
+### `util.inspect`
+
+`util.inspect(object,[showHidden],[depth],[colors])` 将任意对象转换 为字符串，通常用于调试和错误输出。它至少接受一个参数 object，即要转换的对象。
+- showHidden:Boolean
+- depth 最大递归的层数,默认为 2 ，null 不限递归层数完整遍历对象
+- color:Boolean
+
+```javascript
+console.log(ut.inspect(objSub,true,4,true));
+```
+### `util.isArray(object)`
+### `util.isRegExp(object)`
+### `util.isDate(object)`
+### `util.isError(object)`
+
+# File System
+提供一组类似 `UNIX（POSIX）` 标准的文件操作API
+```javascript
+var fs = require("fs")
+```
+`fs` 模块中的所有方法都有同步、异步模式
+
+异步的最后一个参数都是回调函数，回调一般有两个参数：`(err,data)`
+- `fs.readFile()`
+- `fs.readFileSync()`
+
+## `fs.open()` 打开文件
+`fs.open(path, flags[, mode], callback(err,fd))`
+
+- flags - 文件打开的行为
+- mode - 设置文件模式(权限)，文件创建默认权限为 0666(可读，可写)
+
+flags:
+- r     读
+- r+    读写
+- rs    同步读
+- rs+   同步读写
+- w     写入，不存在则创建
+- wx    若路径存在则创建失败
+- w+    读写，不存在则创建  
+- wx+   读写，不存在则创建，路径不存在则创建失败   
+- a     追加模式，不存在则创建
+- ax    同上，路径存在则追加失败
+- a+    读取追加，不存在就创建
+- ax+   同上，路径存在则追加失败
+
+## `fs.stat()` 获取文件信息
+`fs.stat(path, callback(err, stats))`
+
+`stats` 是 `fs.Stats` 对象，里面包含了文件属性，可以通过stats类中的提供方法判断文件的相关属性
+
+如判断是否为文件：
+```javascript
+fs.stat('a.txt', (err, stats) => {
+    console.log(stats.isFile());
+})
+```
+
+### `stats`类的方法
+
+- `stats.isFile()`
+- `stats.isDirectory()`
+- `stats.isBlockDevice()`
+- `stats.isCharacterDevice()`
+- `stats.isSymbolicLink()`
+- `stats.isFIFO()`
+- `stats.isSocket()`
+
+
+## `fs.writeFile()` 写入文件
+`fs.writeFile(file, data[, options], callback)`
+
+- options - 该参数是一个对象，包含 {encoding, mode, flag}。默认编码为 utf8, 模式为 0666 ， flag 为 'w'
+**默认以 `w` 模式打开文件，若文件存在，则会直接覆盖旧内容**
+
+取决于打开文件时带的 `flags` ，也可以通过 `open` 打开文件指定模式，然后通过 `writeFile` 来写文件
+如：
+```javascript
+fs.open(fileName, "a+", function(err, fd){
+    if (err) {
+        return console.error(err);
+    }
+    fs.writeFile(fd, "bb", function(err){
+        if (err){
+            return console.error(err);
+        }
+    });
+});
+```
+
+
+## `fs.read()` 异步读取
+`fs.read(fd, buffer, offset, length, position, callback)`
+
+- fd - 通过 fs.open() 方法返回的文件描述符。
+- buffer - 数据写入的缓冲区。
+- offset - 缓冲区写入的写入偏移量。
+- length - 要从文件中读取的字节数。
+- position - 文件读取的起始位置，如果 position 的值为 null，则会从当前文件指针的位置读取。
+- callback - 三个参数err, bytesRead, buffer，err 为错误信息， bytesRead 表示读取的字节数，buffer 为缓冲区对象。
+
+
+## `fs.close()` 异步关闭
+`fs.close(fd, callback)`
+
+
+```javascript
+var buf = new Buffer(256);
+console.log("先open");
+var open = fs.open("a.txt", 'r+', (err, fd) => {
+    if (err) {
+        return console.error(err)
+    }
+    console.log("open成功，开始 read");
+    fs.read(fd, buf, 0, buf.length, 0, (err, bytes) => {
+        if (err) {
+            return console.error(err)
+        }
+        console.log("读取了：" + bytes + " bytes")
+
+        // 输出
+        if (bytes > 0) {
+            console.log(buf.slice(0, bytes).toString())
+        }
+
+        // 关闭
+        fs.close(fd,err => {
+            if (err) {
+                return console.error(err)
+            }
+            console.log("关闭文件");
+        })
+    })
+})
+```
+
+### `fs.ftruncate()` 异步截取
+`fs.ftruncate(fd, len, callback)`
+
+### `fs.unlink()` 删除
+`fs.unlink(path, callback)`
+
+### `fs.mkdir()` 创建目录
+`fs.mkdir(path[, mode], callback)`
+- mode ：目录权限，默认 0777
+- 
+### `fs.readdir()` 读取目录
+`fs.readdir(path, callback(err, files))`
+- files 是目录下文件数组列表
+- 
+### `fs.rmdir()` 删除目录
+`fs.rmdir(path, callback)`
+- files 是目录下文件数组列表
+
+
+# GET/POST
+## 获取 `GET` 请求内容
+
+`GET` 请求直接被嵌入在路径中，URL 是完整的请求路径，包括了 ? 后面的部分，因此可以手动解析后面的内容作为 GET 请求的参数, `url` 模块中的 `parse` 函数提供了这个功能
+
+```javascript
+url.parse(req.url, true))
+```
+
+### 解析 URL 的参数
+```javascript
+var http = require('http');
+var url = require('url');
+var ut = require('util');
+http.createServer((req, res) => {
+    res.writeHead(200, {
+        "Content-Type": "text/plain;charset = utf-8"
+    });
+    // res.end(ut.inspect(url.parse(req.url, true)))
+    var params = url.parse(req.url, true).query;
+    res.write("name：" + params.name);
+    res.write("\n");
+    res.write("age :" + params.age);
+    console.log(params);
+
+    res.end();
+}).listen(8080)
+```
+
+
+## 获取 `POST` 请求内容
+> POST 请求的内容全部的都在请求体中，`http.ServerRequest` 并没有一个属性内容为请求体，原因是等待请求体传输可能是一件耗时的工作。
+>比如上传文件，而很多时候我们可能并不需要理会请求体的内容，恶意的POST请求会大大消耗服务器的资源，所以 node.js 默认是不会解析请求体的，当你需要的时候，需要手动来做。
+
+通过 `req` 的 `data` 事件监听，每次接收到请求体，就累加到 `post` 中
+```javascript
+var post = '';
+req.on('data', chunk => {
+    post += chunk;
+})
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

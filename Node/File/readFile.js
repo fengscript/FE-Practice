@@ -17,3 +17,4 @@ console.log("开始同步读取");
 var data = fs.readFileSync('a.txt')
 console.log(data.toString());
 console.log("同步读取结束");
+

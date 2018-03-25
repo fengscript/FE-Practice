@@ -23,7 +23,7 @@ var postHTML = `
 http.createServer((req, res) => {
     /**
      *  获取 GET
-     */
+     */~
     // res.writeHead(200, {
     //     "Content-Type": "text/plain;charset = utf-8"
     // });

@@ -783,9 +783,96 @@ req.on('data', chunk => {
 })
 ```
 
+# Web 模块
+**给我自己再普及一下，免得脑子不好忘记**
+> Web服务器一般指网站服务器，是指驻留于因特网上某种类型计算机的程序，Web服务器的基本功能就是提供Web信息浏览服务。它只需支持HTTP协议、HTML文档格式及URL，与客户端的网络浏览器配合。
+
+> 大多数 web 服务器都支持服务端的脚本语言（php、python、ruby）等，并通过脚本语言从数据库获取数据，将结果返回给客户端浏览器。
+
+> 目前最主流的三个Web服务器是Apache、Nginx、IIS。
+
+![常见架构](http://www.runoob.com/wp-content/uploads/2015/09/web_architecture.jpg)
 
 
+## node 创建 Web 服务器
 
+如你所料，就是利用 `http` 模块搞事
+
+先搞一个基本的 ` HTTP` 服务器架构
+`server.js`
+```javascript
+var http = require('http');
+var fs = require('fs');
+var url = require('url');
+ 
+ 
+// 创建服务器
+http.createServer( function (request, response) {  
+   // 解析请求，包括文件名
+   var pathname = url.parse(request.url).pathname;
+   
+   // 输出请求的文件名
+   console.log("Request for " + pathname + " received.");
+   
+   // 从文件系统中读取请求的文件内容
+   fs.readFile(pathname.substr(1), function (err, data) {
+      if (err) {
+         console.log(err);
+         // HTTP 状态码: 404 : NOT FOUND
+         // Content Type: text/plain
+         response.writeHead(404, {'Content-Type': 'text/html'});
+      }else{             
+         // HTTP 状态码: 200 : OK
+         // Content Type: text/plain
+         response.writeHead(200, {'Content-Type': 'text/html'});    
+         
+         // 响应文件内容
+         response.write(data.toString());        
+      }
+      //  发送响应数据
+      response.end();
+   });   
+}).listen(8080);
+ 
+// 控制台会输出以下信息
+console.log('Server running at http://127.0.0.1:8080/');
+```
+然后在同目录下搞一个 `index.html`，然后可以搞起来看看了
+
+## ？？创建 `Web` 客户端
+*和上面是怎么搭配干活的？ 2018-3-27*
+*先抄为敬↓*
+在上面的同级目录中整一个 `client.js`
+```javascript
+var http = require('http');
+ 
+// 用于请求的选项
+var options = {
+   host: 'localhost',
+   port: '8080',
+   path: '/index.html'  
+};
+ 
+// 处理响应的回调函数
+var callback = function(response){
+   // 不断更新数据
+   var body = '';
+   response.on('data', function(data) {
+      body += data;
+   });
+   
+   response.on('end', function() {
+      // 数据接收完成
+      console.log(body);
+   });
+}
+// 向服务端发送请求
+var req = http.request(options, callback);
+req.end();
+```
+完了可以跑起来看看
+
+*先push了，感觉眼睛快瞎了*
 
 
 

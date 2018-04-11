@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>callback hell</title>
+</head>
+
+<body>
+
+    <script>
+        // 第一个任务
+        function task1(callback) {
+            setTimeout(() => {
+                console.log('1', '我是第一个任务，必须第一个执行');
+                console.log(callback);
+                callback && callback(1);
+                // 如果有回调，则给回调传进去参数 1
+            }, 500);
+        }
+
+        // 第二个任务
+        function task2(callback) {
+            setTimeout(() => {
+                console.log('2', '我是第二个任务');
+                callback && callback(2);
+            }, 1000);
+        }
+
+        // 第三个任务
+        function task3(callback) {
+            setTimeout(() => {
+                console.log('3', '我是第三个任务');
+                callback && callback(3);
+            }, 1000);
+        }
+
+        // 所有任务
+        function allTasks() {
+            task1((cb1) => {
+                // task1 有回调 回调是这一下面一堆
+                console.log(cb1);
+                //因为上面 task1 调用回调时候，给回调传进来参数 1，于是，这里 cb1 就是 1 
+                if (cb1) {
+                    task2((cb2) => {
+                        if (cb2) {
+                            task3((cb3) => {
+                                if (cb3) {
+                                    // 顺序完成所有任务
+                                }
+                            })
+                        }
+                    });
+                }
+            });
+        }
+        allTasks()
+
+    </script>
+
+
+</body>
+
+</html>

@@ -85,3 +85,9 @@ var new = a.replace("px","");
 ```
 
 
+## element in Array
+```javascript
+if (array.indexOf(index) === -1 ) {
+    //则不存在
+}
+```

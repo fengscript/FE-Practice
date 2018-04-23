@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+    
+        let body = document.getElementsByTagName('body')[0];
+        
+        function text (str) {
+            body.innerText += str + "\n";
+        }
+
+        document.addEventListener('touchstart', ev => {
+            text("touchstart at" + new Date())
+        })
+        document.addEventListener('touchmove', ev => {
+            text("touchsmove at" + new Date())
+        })
+        document.addEventListener('click', ev => {
+            text("click at" + new Date())
+        })
+    </script>
+
+</body>
+
+</html>

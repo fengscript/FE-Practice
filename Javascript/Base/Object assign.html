@@ -16,14 +16,16 @@
         var b = Object.assign({
             name: "FYG"
         }, b)
-        console.log(b);
+        console.log("b",b);
 
         // 将第一个参数里面的内容复制到第二个参数，当两个参数都不为空对象时进行对象合并
         var c = {
             name: "fyg"
         };
         var d = Object.assign({}, d)
-        console.log(d);
+        var e = Object.assign(d)
+        console.log("d" ,d);
+        console.log("e" ,e);
 
         // 创建副本的深复制
 
@@ -38,7 +40,25 @@
         obj1.a = 4;
         obj1.b.c = 4;
         console.log(JSON.stringify(obj3)); // { a: 0, b: { c: 0}}
+
+
+        /*
+         *create
+         */
+
+        var proto = {
+            career: "coder",
+            age: 26
         }
+
+        var frontEndCoder = Object.create(proto);
+        frontEndCoder.skill = "js";
+
+        var backEndCoder = Object.create(proto);
+        backEndCoder.skill = 'php';
+
+        console.log(frontEndCoder.age);
+        console.log(backEndCoder.career);
     </script>
 </body>
 

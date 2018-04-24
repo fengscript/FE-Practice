@@ -103,6 +103,11 @@ HTML结构为这样子
 
 
 # 3 动画
+## transition
+### transition 多个属性而不想 all
+可以连写，逗号分隔属性值，但是切记，**必须为不同的属性分配时间间隔**
+
+## animation
 ```css
 animation: name duration timing-function delay iteration-count direction fill-mode;
 ```
@@ -392,4 +397,53 @@ body::-webkit-scrollbar {display:none}
 ## 好看的阴影
 ```css
 box-shadow: 0 6px 8px rgba(102,119,136,0.03), 0 1px 2px rgba(102,119,136,0.3);
+```
+
+
+## 把 display:none 的元素 block 的同时进行动画
+给 `unactive` 时候的 `class` 属性上控制 `display` ，把要进行的动画写到元素不变的样式上去就OK
+```css
+.imgBox {
+  box-shadow: 0px 3px 8px 5px rgba(97, 97, 97, 0.3);
+  border-radius: 4px;
+  z-index: 20;
+  width: 4.4rem;
+  height: 4.4rem;
+  position: absolute;
+  margin: auto;
+  animation: photoBoxPop .2s linear;
+}
+
+.imgBox-unActive {
+  display: none;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
+
+@keyframes photoBoxPop{
+  0%{
+    opacity: 0;
+    transform: scale(2);
+  }
+  60%{
+    opacity: 1;
+    transform: scale(0.8);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+```
+
+```js
+function photoBoxStatusDrag(aim, status) {
+    if (status == "show") {
+        imgBox.classList.remove("imgBox-unActive");
+    } else {
+        imgBox.classList.add("imgBox-unActive")
+    }
+}
 ```

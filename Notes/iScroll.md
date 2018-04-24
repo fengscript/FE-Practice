@@ -23,8 +23,17 @@ function loadScroll() {
     wrapper = new IScroll('#wrapper', {});
 }
 ```
-然后打印发现  `albumScroll` 有个 `enable` 属性， `false` 掉就禁用了滚动；
+然后打印发现实例上有个 `enable` 属性， `false` 掉就禁用了滚动；
 
+
+## 是否滚动
+发现实例上有个 `moved` 属性：
+```javascript
+e.addEventListner("touchmove",()=>{
+    console.log(myScroll.moved)
+},false)
+```
+可以实时获取是否滚动
 
 # 刷新！
 重新计算包裹元素高度

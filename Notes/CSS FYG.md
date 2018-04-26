@@ -103,9 +103,16 @@ HTML结构为这样子
 
 
 # 3 动画
+
 ## transition
 ### transition 多个属性而不想 all
 可以连写，逗号分隔属性值，但是切记，**必须为不同的属性分配时间间隔**
+
+```css
+e{
+    transition: width,height 1s,1s ease;
+}
+```
 
 ## animation
 ```css
@@ -330,6 +337,17 @@ object.style.animationPlayState="paused"
 }
 ```
 
+## 定位
+
+
+
+### sticky 
+计算后自动订在一个位置
+
+### fixed
+如果父级元素设置了transform属性，position:relative/absolute/fixed会基于此定位
+
+https://link.zhihu.com/?target=https%3A//developer.mozilla.org/zh-CN/docs/Web/CSS/position
 # 5 字体
 ## text-stroke 变细字体
 
@@ -352,7 +370,7 @@ object.style.animationPlayState="paused"
 
 ### 去掉滚动条，还能滚动
 ```css
-body::-webkit-scrollbar {display:none}
+::-webkit-scrollbar {display:none}
 ```
 
 
@@ -399,7 +417,6 @@ body::-webkit-scrollbar {display:none}
 box-shadow: 0 6px 8px rgba(102,119,136,0.03), 0 1px 2px rgba(102,119,136,0.3);
 ```
 
-
 ## 把 display:none 的元素 block 的同时进行动画
 给 `unactive` 时候的 `class` 属性上控制 `display` ，把要进行的动画写到元素不变的样式上去就OK
 ```css
@@ -437,6 +454,7 @@ box-shadow: 0 6px 8px rgba(102,119,136,0.03), 0 1px 2px rgba(102,119,136,0.3);
   }
 }
 ```
+
 
 ```js
 function photoBoxStatusDrag(aim, status) {

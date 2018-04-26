@@ -203,6 +203,12 @@ store.commit({
 **`Action` 提交的是 `mutation，而不是直接变更状态。`**
 **`Action` 可以包含任意异步操作**
 
+1 从组件中，通过 `dispatch` 派发一个 `mutation`
+
+```js
+this.$store.commit('increment');
+state.vuex.dispatch("increFromAction");
+```
 
 
 

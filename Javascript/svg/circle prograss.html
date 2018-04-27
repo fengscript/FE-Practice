@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>svg-circle</title>
+</head>
+
+<body>
+    <div id="box">
+
+        <svg class="prograss-ring" height="120" width="120">
+            <circle class="circle" stroke="#fff" stroke-width="4" fill="transparent" r="52" cx="60" cy="60"/>
+        </svg>
+    </div>
+
+    <style>
+        #box {
+            margin-bottom: 20px;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background-color: #2962FF;
+            border: 1px solid #ccc;
+        }
+
+        .prograss-ring {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            /* stroke-dasharray: 0;
+            stroke-dashoffset: 0; */
+        }
+    </style>
+
+    <script>
+        var circle = document.querySelector('circle');
+        var radius = circle.r.baseVal.value;
+        var circumference = radius * 2 * Math.PI;
+
+        // circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        // circle.style.strokeDashoffset = `${circumference}`;
+
+        function setProgress(percent) {
+            const offset = circumference - percent / 100 * circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        // setProgress(50);
+    </script>
+</body>
+
+</html>

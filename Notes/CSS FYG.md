@@ -465,3 +465,11 @@ function photoBoxStatusDrag(aim, status) {
     }
 }
 ```
+
+
+## transform 动画过程中图片变形
+给动画元素添加：
+```css
+backface-visibility: hidden;
+transform: translateZ(0)
+ ```

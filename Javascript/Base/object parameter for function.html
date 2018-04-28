@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>object parameter for function</title>
+</head>
+
+<body>
+
+
+    <script>
+        var Coding = (() => {
+            function Stack(opt) {
+                var option = {
+                    language: "js",
+                    stage: "start"
+                }
+
+                this.language = opt.language;
+                this.stage = opt.stage || option.stage;
+
+                function sayHi() {
+                    console.log("hi")
+                };
+                this.sayHello = () => {
+                    console.log("hello")
+                }
+                console.log(option)
+            }
+            // Stack({
+            //     language: "html"
+            // })
+
+            Stack.prototype = {
+                info: function() {
+                    console.log(this.language);
+                }
+            }
+
+            return {
+                Stack: Stack
+            }
+        })()
+
+
+
+        var fyg = new Coding.Stack({
+            language: "html"
+        })
+        fyg.info();
+        fyg.sayHello();
+        // fyg.sayHi();
+
+
+
+
+        var Book = function(age) {
+            var name = "fyg";
+            this.age = age;
+            this.sayAge = () => {
+                console.log(this.age)
+            }
+            this.setAge = n => {
+                this.age = n;
+            }
+
+            this.sayCode = () => {
+                console.log(this.code)
+            }
+        }
+
+        Book.prototype = {
+            constructor: Book,
+            code: "js",
+            sayName: function() {
+                console.log(this.name);
+            },
+            sayAge2: function() {
+                console.log(this.age);
+            }
+        }
+
+        var a = new Book(26)
+        var b = new Book(25)
+
+        a.sayCode() //'js'  1 prototype 中设置的值可以从 构造函数中通过 this 访问到
+        a.sayAge2(); // 26   2 构造函数中 通过 this 设置的值 可以在 prototype 中通过 this 访问到
+        a.sayName(); // undefined    3 构造函数中 通过 var 定义的值 在 prototype 中访问不到
+
+        b.sayAge();
+        // a.prototype.code = "html"
+        b.sayCode();
+
+        console.log(a);
+        console.log(b);
+
+
+        a.setAge(99);
+        a.sayAge();
+        a.sayAge2();
+        b.sayAge();
+        b.sayAge2(); // 实例对象之间不会互相影响
+
+
+
+
+        var Code = function({language = "js"}) {
+            // var language =  option.language || "js"
+
+
+            // var opt = {
+            //     language: "js",
+            //     stage: "start"
+            // }
+            // var language = opt.language || option.language
+            // var stage = opt.stage || option.language
+
+            console.log(language);
+            // console.log(stage);
+        }
+
+        Code({
+            language: "html"
+        })
+    </script>
+</body>
+
+</html>

@@ -1,2 +1,2 @@
 # Notes
-my practice
+FYG's Practice & Notes about develop & code.

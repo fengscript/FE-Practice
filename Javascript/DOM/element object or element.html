@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Doelement object or elementcument</title>
+</head>
+
+<body>
+
+    <div id="testBox" class="testBox">
+        <div id="box1" class="box">box 1</div>
+        <div id="box2" class="box">box 2</div>
+        <div id="box3" class="box">box 3</div>
+        <div id="box4" class="box">box 4</div>
+    </div>
+
+    <button id="btn">Add</button>
+
+    <style>
+        #testBox{
+            width: 300px;
+            border: 1px solid red;
+        }
+        .box{
+            width: 100px;
+            height: 20px;
+            margin: 20px;
+            display: inline-block;
+            border: 1px solid blue;
+        }
+    </style>
+    <script>
+        var box = document.getElementById('testBox');
+        var boxes = [].slice.call(document.getElementsByClassName('box'));
+        var box1 = document.getElementById("box1");
+
+        var box2 = document.querySelector('#box2');
+        console.log(box);
+        console.log(boxes);
+        console.log(box1);
+        console.log(box2);
+        
+
+        var add = document.createElement("span");
+        add.textContent = "add span";
+
+        // box2.append(add)
+        box2.appendChild(add)
+    </script>
+</body>
+
+</html>

@@ -51,8 +51,7 @@ HTMLCollection 提供了访问诸如表单、图像和链接等文档元素的�
 </script>
 ```
 
-有时要迭代一个 NodeList 或 HTMLCollection 对象的时候，我们通常会选择生成当前对象的一个快照或静态副本：
-转换为数组类型：
+有时要迭代一个 NodeList 或 HTMLCollection 对象的时候，生成当前对象的一个快照或静态副本转换为数组类型：
 ```javascript
 var staticLists = Array.prototype.slice.call(nodeListorHtmlCollection, 0)
 ```

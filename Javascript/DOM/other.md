@@ -61,3 +61,22 @@ function touchToDiv(aim) {
     }
 }
 ```
+
+
+
+## 检测变量是HTML元素对象还是Js对象
+
+```js
+试试检测 tagName 的值即可我觉得
+```
+
+## `parentNode`和`parentElement`,`childNodes`和`children`
+
+parentElement 获取对象层次中的父对象。  
+parentNode 获取文档层次中的父对象。
+
+childNodes 获取作为指定对象直接后代的 HTML 元素和 TextNode 对象的集合。 
+children 获取作为对象直接后代的 DHTML 对象的集合。 
+
+--------------------------------------------------------
+功能一样，但是 ==parentNode和childNodes是符合W3C标准的，可以说比较通用。而另外两个只是IE支持，不是标准，Firefox就不支持==

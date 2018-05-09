@@ -20,12 +20,22 @@
             height: 100%;
             touch-action: none;
         }
+
+        #bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: #fff;
+        }
     </style>
 </head>
 
 <body>
-    <canvas id="renderCanvas"></canvas>
-
+    <div id="bg">
+        <canvas id="renderCanvas"></canvas>
+    </div>
     <script>
         window.addEventListener('DOMContentLoaded', function() {
             var canvas = document.getElementById('renderCanvas');
@@ -35,7 +45,7 @@
             var createScene = function() {
                 // Create a basic BJS Scene object.
                 var scene = new BABYLON.Scene(engine);
-                // scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
+                scene.clearColor = new BABYLON.Color4(1, 1, 1, 1);
                 // Setup environment
                 var light0 = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 2, 8), scene);
                 var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 1, 0.8, 20, new BABYLON.Vector3(0, 0, 0), scene);

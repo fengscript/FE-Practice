@@ -2,125 +2,123 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <script src="./babylon.custom.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./babylon.custom.js"></script>
 
 
-  <style>
-    html,
-    body {
-      overflow: hidden;
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0
-    }
+    <style>
+        html,
+        body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0
+        }
 
-    #box {
-      width: 100%;
-      height: 100%;
-      touch-action: none;
-    }
-  </style>
+        #box {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+    </style>
 
 </head>
 
 <body>
-  <canvas id="box"></canvas>
-<a href="http://www.babylonjs-playground.com/#KNE0O#4">http://www.babylonjs-playground.com/#KNE0O#4</a>
-playground
-<a href="http://www.babylonjs-playground.com/?12">http://www.babylonjs-playground.com/?12</a>
-  <script>
-    var canvas = document.getElementById('box')
-    var engine = new BABYLON.Engine(canvas, true);
+    <canvas id="box"></canvas>
+    <a href="http://www.babylonjs-playground.com/#KNE0O#4">http://www.babylonjs-playground.com/#KNE0O#4</a> playground
+    <a href="http://www.babylonjs-playground.com/?12">http://www.babylonjs-playground.com/?12</a>
+    <script>
+        var canvas = document.getElementById('box')
+        var engine = new BABYLON.Engine(canvas, true);
 
-    var createScene = function () {
-      var scene = new BABYLON.Scene(engine);
-      // var light = new BABYLON.SpotLight('light',new BABYLON.Vector3(0, 30, -10),new BABYLON.Vector3(0,-20,0),0.8,2,scene);
+        var createScene = function() {
+            var scene = new BABYLON.Scene(engine);
+            // var light = new BABYLON.SpotLight('light',new BABYLON.Vector3(0, 30, -10),new BABYLON.Vector3(0,-20,0),0.8,2,scene);
 
-      // var light2 = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
-      var light0 = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
+            // var light2 = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
+            var light0 = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
 
-      var camera = new BABYLON.ArcRotateCamera('camera', 1, 0.8, 30, new BABYLON.Vector3(0, 0, 0), scene);
-      // var camera = new BABYLON.FreeCamera('camera',new BABYLON.Vector3(10,-10,10),scene)
-      var ground = BABYLON.Mesh.CreateGround("ground",20,20,1,scene);
-          ground.position.y = -1.5;
-          ground.material = new BABYLON.StandardMaterial("groundMat", scene);
-          ground.material.diffuseColor = new BABYLON.Color3(.4, .4, .4);
-          // ground.material.emissiveColor = new BABYLON.Color3(.4, .4, .4);
-      var sphere = BABYLON.Mesh.CreateSphere('sphere', 20, 3, scene);
-      sphere.material = new BABYLON.StandardMaterial("sphereMat", scene);
-
-     
-//  Particles
-//  1 定义一个粒子发射器  也可以是一个 vector3点  这里直接用上面的 sphere 
-//  2 创建一个粒子系统
- var particleSystem = new BABYLON.ParticleSystem("particles", 20, scene);
-//  3 设置粒子的材质
-particleSystem.particleTexture = new BABYLON.Texture("img/particle-fog.png", scene);
-// particleSystem.textureMask = new BABYLON.Color4(0.1, 0.8, 0.8, 1.0);
-//  4 设置发射器
-particleSystem.emitter = new BABYLON.Vector3(10,10,10);
-//  5 启动
-particleSystem.start();
-// particleSystem.stop();
+            var camera = new BABYLON.ArcRotateCamera('camera', 1, 0.8, 30, new BABYLON.Vector3(0, 0, 0), scene);
+            // var camera = new BABYLON.FreeCamera('camera',new BABYLON.Vector3(10,-10,10),scene)
+            var ground = BABYLON.Mesh.CreateGround("ground", 20, 20, 1, scene);
+            ground.position.y = -1.5;
+            ground.material = new BABYLON.StandardMaterial("groundMat", scene);
+            ground.material.diffuseColor = new BABYLON.Color3(.4, .4, .4);
+            // ground.material.emissiveColor = new BABYLON.Color3(.4, .4, .4);
+            var sphere = BABYLON.Mesh.CreateSphere('sphere', 20, 3, scene);
+            sphere.material = new BABYLON.StandardMaterial("sphereMat", scene);
 
 
-// 6 变漂亮一点
+            //  Particles
+            //  1 定义一个粒子发射器  也可以是一个 vector3点  这里直接用上面的 sphere 
+            //  2 创建一个粒子系统
+            var particleSystem = new BABYLON.ParticleSystem("particles", 20, scene);
+            //  3 设置粒子的材质
+            particleSystem.particleTexture = new BABYLON.Texture("img/particle-fog.png", scene);
+            // particleSystem.textureMask = new BABYLON.Color4(0.1, 0.8, 0.8, 1.0);
+            //  4 设置发射器
+            particleSystem.emitter = new BABYLON.Vector3(10, 10, 10);
+            //  5 启动
+            particleSystem.start();
+            // particleSystem.stop();
 
-// 发射点
-particleSystem.minEmitBox = new BABYLON.Vector3(-2, -10, 0); 
-particleSystem.maxEmitBox = new BABYLON.Vector3(2, 10, 0); 
 
-//给个颜色  Colors of all particles (splited in 2 + specific color before dispose)
-// particleSystem.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 1.0);
-// particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
-particleSystem.color1 = new BABYLON.Color4(1, 1, 1, .1);
-particleSystem.colorDead = new BABYLON.Color4(1, 1, 1, 0.0);
+            // 6 变漂亮一点
 
-// Size of each particle (random between...)
-particleSystem.minSize = 4;
-particleSystem.maxSize = 5;
+            // 发射点
+            particleSystem.minEmitBox = new BABYLON.Vector3(-2, -10, 0);
+            particleSystem.maxEmitBox = new BABYLON.Vector3(2, 10, 0);
 
-// Life time of each particle (random between...)
-// particleSystem.minLifeTime = 1;
-// particleSystem.maxLifeTime = 2;
+            //给个颜色  Colors of all particles (splited in 2 + specific color before dispose)
+            // particleSystem.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 1.0);
+            // particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
+            particleSystem.color1 = new BABYLON.Color4(1, 1, 1, .1);
+            particleSystem.colorDead = new BABYLON.Color4(1, 1, 1, 0.0);
 
-particleSystem.emitRate = 1300;
-// 一次性发射， 会覆盖 emitRate
-// particleSystem.manualEmitCount = 300;
+            // Size of each particle (random between...)
+            particleSystem.minSize = 4;
+            particleSystem.maxSize = 5;
 
-// BLENDMODE_ONEONE 初始颜色不适用 alpha 叠加到最终颜色上
-// BLENDMODE_STANDARD 适用粒子的 alpha 渲染颜色和粒子颜色
-particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
+            // Life time of each particle (random between...)
+            // particleSystem.minLifeTime = 1;
+            // particleSystem.maxLifeTime = 2;
 
-//Gravity
-// 火焰一般在 Y 轴
-// particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
-particleSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+            particleSystem.emitRate = 1300;
+            // 一次性发射， 会覆盖 emitRate
+            // particleSystem.manualEmitCount = 300;
 
-// 方向 粒子会在 方向1 和 2之间 随机发射
-particleSystem.direction1 = new BABYLON.Vector3(-1, 4, 1);
-particleSystem.direction2 = new BABYLON.Vector3(1, 4, -1);
+            // BLENDMODE_ONEONE 初始颜色不适用 alpha 叠加到最终颜色上
+            // BLENDMODE_STANDARD 适用粒子的 alpha 渲染颜色和粒子颜色
+            particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
 
-// 角速度 可以为每个粒子定义一个 Z 轴方向
-particleSystem.minAngularSpeed = -Math.PI;
-particleSystem.maxAngularSpeed = Math.PI;
+            //Gravity
+            // 火焰一般在 Y 轴
+            // particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
+            particleSystem.gravity = new BABYLON.Vector3(0, 0, 0);
 
-// 速度 定义发射粒子的强度，默认 0.01
-particleSystem.minEmitPower = 0.5;
-particleSystem.maxEmitPower = 2;
-particleSystem.updateSpeed = 0.005;
+            // 方向 粒子会在 方向1 和 2之间 随机发射
+            particleSystem.direction1 = new BABYLON.Vector3(-1, 4, 1);
+            particleSystem.direction2 = new BABYLON.Vector3(1, 4, -1);
 
-// 持续时间
-// particleSystem.targetStopDuration = 5;
+            // 角速度 可以为每个粒子定义一个 Z 轴方向
+            particleSystem.minAngularSpeed = -Math.PI;
+            particleSystem.maxAngularSpeed = Math.PI;
 
-// 工具
-particleSystem.disposeOnStop = true;//用于一次性粒子系统
+            // 速度 定义发射粒子的强度，默认 0.01
+            particleSystem.minEmitPower = 0.5;
+            particleSystem.maxEmitPower = 2;
+            particleSystem.updateSpeed = 0.005;
 
+            // 持续时间
+            // particleSystem.targetStopDuration = 5;
+
+            // 工具
+            particleSystem.disposeOnStop = true; //用于一次性粒子系统
 
 
 
@@ -143,30 +141,31 @@ particleSystem.disposeOnStop = true;//用于一次性粒子系统
 
 
 
-      scene.registerBeforeRender(function () {
-        
-      })
+
+            scene.registerBeforeRender(function() {
+
+            })
 
 
-      scene.activeCamera = camera;
-      // camera.setTarget(BABYLON.Vector3.Zero());
-      camera.attachControl(canvas, true);
-      return scene;
-    }
+            scene.activeCamera = camera;
+            // camera.setTarget(BABYLON.Vector3.Zero());
+            camera.attachControl(canvas, true);
+            return scene;
+        }
 
 
 
 
-    var scene = createScene();
-    engine.runRenderLoop(function () {
+        var scene = createScene();
+        engine.runRenderLoop(function() {
 
-      scene.render()
-    })
+            scene.render()
+        })
 
-    window.addEventListener('resize', function () {
-      engine.resize()
-    })
-  </script>
+        window.addEventListener('resize', function() {
+            engine.resize()
+        })
+    </script>
 
 
 </body>

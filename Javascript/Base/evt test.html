@@ -45,8 +45,13 @@
         });
 
         document.getElementById('box').addEventListener('click', function (e) {
+            console.log(e);
             console.log("click #box");
-        }, false);
+        }, {
+            once: true,
+            captrue: true,
+            passive: true
+        });
     </script>
 </body>
 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="box">
+        <div id="son-div">ICON</div>
+        <span id="son-span">SPAN</span>
+    </div>
+    <style>
+        #box {
+            width: 400px;
+            height: 120px;
+            border: 2px solid deepskyblue;
+            margin: 100px;
+            text-align: center;
+        }
+
+        #son-div {
+            display: inline-block;
+            width: 300px;
+            height: 80px;
+            line-height: 80px;
+            margin: auto;
+            background: rebeccapurple;
+        }
+
+        #son-span {
+            display: block;
+            font-size: 24px;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('click', function (e) {
+            var t = e.target;
+
+
+        });
+
+        document.getElementById('box').addEventListener('click', function (e) {
+            console.log("click #box");
+        }, false);
+    </script>
+</body>
+
+</html>

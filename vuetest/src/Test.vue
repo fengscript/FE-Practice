@@ -9,7 +9,7 @@
     </div>
 </template>
 <script>
-import store from './store.js'
+// import store from './store.js'
 
     export default{
         name:'test',
@@ -20,16 +20,20 @@ import store from './store.js'
         },
         computed: {
             count(){
-                return store.state.count
+                return this.$store.state.count
+                // return store.state.count
             }
             // count => store.state.count
         },
         methods:{
             inc(){
-                store.commit('inc')
+                console.log(this);
+                this.$store.commit('inc')
+                // store.commit('inc')
             },
             dec(){
-                store.commit('dec')
+                this.$store.commit('dec')
+                // store.commit('dec')
             }
         }
     }

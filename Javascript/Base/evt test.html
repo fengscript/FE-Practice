@@ -10,7 +10,7 @@
 
 <body>
     <div id="box">
-        <div id="son-div">ICON</div>
+        <img id="son-div">
         <span id="son-span">SPAN</span>
     </div>
     <style>
@@ -34,6 +34,7 @@
         #son-span {
             display: block;
             font-size: 24px;
+            border: 1px solid red;
         }
     </style>
 
@@ -45,11 +46,12 @@
         });
 
         document.getElementById('box').addEventListener('click', function (e) {
-            console.log(e);
-            console.log("click #box");
+            console.log("target :" + e.target);
+            console.log("tagName :" + e.target.tagName);
+            // console.log("click #box");
         }, {
             once: true,
-            captrue: true,
+            captrue: false,
             passive: true
         });
     </script>

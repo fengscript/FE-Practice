@@ -1,3 +1,29 @@
+# 踩坑
+## 注入失效
+在你的 `state.js`里面不管以什么名字导出，想在根组件里注入的时候， **必须在 `import` 和注入的时候，把名字写成 `store`！！！**
+气死我了！ 浪费了 2018年5月19号 一个晚上才发现
+
+如下 必须写 `store` 才可以！
+```javascript
+// main.js
+import store from "./state/state";
+new vue({
+  el: '#app',
+  router,
+  store,
+  render: h => h(app)
+})
+```
+然后在组件里，就随便 `this.$store` 来玩了！
+
+
+
+
+
+
+
+
+------
 # 1 目标
 为了解决以下问题：
 

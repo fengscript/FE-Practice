@@ -60,6 +60,19 @@ setTimeout(function () {
     wrapper.scrollTo(0, 0)
 }, 100);
 ```
+## scrollTo()
+滚动到指定位置
+```javascript
+// 参数和下面 By 同
+menuScroll.scrollTo(x, y, duration, easeFn)
+```
+
+## scrollBy()
+以目前位置做相对滚动
+// 如
+```javascript
+menuScroll.scrollBy(-100, 0, 500, IScroll.utils.ease.quadratic)
+```
 
 
 # 刷新容器！

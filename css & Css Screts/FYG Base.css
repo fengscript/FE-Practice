@@ -1,0 +1,17 @@
+@charset "UTF-8";
+::-webkit-scrollbar {
+  display: none;
+}
+
+*[no] {
+  display: none !important;
+}
+
+body {
+  font-family: Helvetica Neue, PingFang SC, Helvetica, Arial, Hiragino Sans GB, Microsoft Yahei, \\5fae\8f6f\96c5\9ed1, STHeiti, \\534e\6587\7ec6\9ed1, sans-serif;
+}
+* {
+    -webkit-tap-highlight-color: transparent;
+    -moz-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>陀螺仪测试</title>
+</head>
+
+<body>
+
+    <div id="box1"></div>
+    <div id="box2"></div>
+    <script>
+        window.addEventListener("deviceorientation", handleOrientation, true);
+        window.addEventListener("devicemotion", handleMotion, true);
+
+        function handleOrientation(orientData) {
+            var absolute = Number(orientData.absolute).toFixed(0);
+            var alpha = Number(orientData.alpha).toFixed(0);
+            var beta = Number(orientData.beta).toFixed(0);
+            var gamma = Number(orientData.gamma).toFixed(0);
+
+            out(`【deviceorientation】alpha: ${alpha}---beta: ${beta}---gamma: ${gamma}`, "box1")
+        }
+
+        function handleMotion(e) {
+            let acceleration = e.acceleration;
+            let accelerationIncludingGravity = e.accelerationIncludingGravity;
+            let rotationRate = e.rotationRate;
+            let interval = e.interval;
+
+            let x = acceleration.x;
+            let y = acceleration.y;
+            let z = acceleration.z;
+
+            let a = rotationRate.alpha;
+            let b = rotationRate.beta;
+            let g = rotationRate.gamma;
+            // out(`【devicemotion】alpha: ${a}---beta: ${b}---gamma: ${g}---刷新频率: ${interval}`, "box2")
+            // out(`【devicemotion acceleration】x: ${x}---y: ${y}---z: ${z}`, "box2")
+        }
+
+
+        function handleMotionEvent(event) {
+
+            var x = event.accelerationIncludingGravity.x;
+            var y = event.accelerationIncludingGravity.y;
+            var z = event.accelerationIncludingGravity.z;
+
+            //  out(`【devicemotion acceleration】x: ${x}---y: ${y}---z: ${z}`, "box2")
+        }
+
+        window.addEventListener("devicemotion", handleMotionEvent, true);
+
+        function out(str, el) {
+            document.getElementById(el).innerText = str
+        }
+    </script>
+
+
+</body>
+
+</html>

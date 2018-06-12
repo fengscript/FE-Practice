@@ -446,3 +446,15 @@ aim.addEventListener("click", btn.click, false);
 
 
 
+---
+
+从18-6-12开始
+
+---
+
+
+
+# 事件处理
+
+
+

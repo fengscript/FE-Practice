@@ -474,3 +474,16 @@ backface-visibility: hidden;
 transform: translateZ(0)
 ```
   **也可以让模糊的图片立刻变清晰！！！**
+
+## 超出长度隐藏变为点点点
+好像要块元素才可以
+```css
+span {
+    width: 100px;
+    border: 1px solid red;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+ ```

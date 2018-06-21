@@ -201,3 +201,19 @@ if (array.indexOf(index) === -1 ) {
     //则不存在
 }
 ```
+
+
+
+# Object
+## use property
+从小程序 `this.setData({})` 赋值时复习了一下，对象赋值时，可以用 `[]` 来指定非正常的属性名字，包括拼接字符串，要用引号引起来，如
+```javascript
+_this.setData({
+  ['defaultArr[' + i + '].isSelectAni']: true
+})
+  // 其实我更喜欢这个
+_this.setData({
+  isBtnAble: false,
+  [`defaultArr[${newSelected}].isSelected`]: true,
+});
+```

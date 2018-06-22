@@ -105,7 +105,8 @@ scene.beginAnimation(torus, 0, 120, true);
 
 
 # 统计进度
-如果是 `camera` 上，直接取 `scene.activeCamera.animations[0].currentFrame`，
+~~如果是 `camera` 上，直接取 `scene.activeCamera.animations[0].currentFrame`，~~  3.0以后已经取不到了好像
+
 如果是 `mesh`，从 `scene.beginAnimation` 返回的 `Animatable` 对象中取 `getAnimations()`，
 又会返回一个 `RuntimeAnimation` 对象，里面有 `currentFrame`
 `getAnimations()[0].currentFrame;`

@@ -85,3 +85,33 @@ hl1.addMesh(sphere, BABYLON.Color3.Green());
 ```javascript
 var hl1 = new BABYLON.HighlightLayer("hl1", scene, { camera: myCamera });
 ```
+
+
+
+# glow layer
+**只作用在 emassive parts**
+```javascript
+var gl = new BABYLON.GlowLayer("glow", scene);
+```
+
+```javascript
+new GlowLayer(name: string, scene: Scene, options?: Partial<IGlowLayerOptions>): GlowLayer
+options:{
+    blurKernelSize
+    camera
+    mainTextureFixedSize
+    mainTextureRatio
+    mainTextureSamples
+}
+Returns GlowLayer
+```
+
+## 属性
+- intensity
+- mainTextureFixedSize
+- blurKernelSize
+- 
+
+
+## 方法
+- addIncludedOnlyMesh(mesh)

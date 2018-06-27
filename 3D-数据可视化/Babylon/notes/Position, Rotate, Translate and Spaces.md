@@ -124,4 +124,10 @@ pilot.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.WORLD);
 
 ### BABYLON.Space.LOCAL
  http://www.babylonjs-playground.com/#UMR7M#36
+ 
+ 
+ # 旋转轴想变就变！
+ ```js
+ mesh.setPivotPoint(new BABYLON.Vector3(-50, -50, 0))
+ ```
 

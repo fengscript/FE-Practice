@@ -14,6 +14,9 @@ var optimizer = new BABYLON.SceneOptimizer(scene, options);
 > - 是否优生成 SceneOptimization property 而不是读取之前的值，默认 true
 > - 是否将 optimizer 运行在改进模式下 默认 false
 
+> engine.setHardwareScalingLevel(1)(越大精度越低)
+
+
 ## SceneOptimizer 对象
 - optimizations 最近运行的 optimizations 列表
 - targetFrameRate   需要达到的梦幻帧率（默认60）

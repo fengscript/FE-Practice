@@ -10,15 +10,42 @@
 
 <body>
 
-
+    <div id="test1" class="test">1</div>
+    <div id="test2" class="test">2</div>
+    <div id="test3" class="test">3</div>
     <script>
-    
-        (function() {
-            this.test = function() {
-                console.log("test");
-            }
+        //  保存 DOM 信息到一个对象上
+
+
+        (function () {
+            var cache = {},
+                guidCounter = 1,
+                expando = 'data'+ (new Date).getTime();
+
+            this.getData = function(elem) {
+                var guid = elem[expando];
+                if (!guid) {
+                    guid = elem[expando] = guidCounter++;
+                    cache[guid] = {};
+                }
+                return cache[guid];
+            };
+
+            this.removeData = function(elem) {
+                var guid = elem[expando];
+                if (!guid) return ;
+                delete cache[guid];
+                try {
+                    delete cache[expando];
+                    
+                } catch (error) {
+                    if (elem.removeAttribute) {
+                        elem.removeAttribute(expando);
+                    };
+                };
+            };
         })()
-        
+
 
         test();
     </script>

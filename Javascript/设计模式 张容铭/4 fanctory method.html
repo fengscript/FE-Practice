@@ -9,10 +9,7 @@
 </head>
 
 <body>
-    通过对产品类的抽象使其创建业务主要负责用于创建多类产品的实例
-
-    要创建多类多选， 3 中的简单工厂方法就不适用了，就可以用工厂方法模式
-    这样子创建对象的方式避免了使用者与对象类的耦合，用户不必关心创建该对象的具体类，只需要调用工厂方法即可
+    通过对产品类的抽象使其创建业务主要负责用于创建多类产品的实例 要创建多类多选， 3 中的简单工厂方法就不适用了，就可以用工厂方法模式 这样子创建对象的方式避免了使用者与对象类的耦合，用户不必关心创建该对象的具体类，只需要调用工厂方法即可
 
 
     <div id="container"></div>
@@ -46,7 +43,10 @@
         // safety factory class
         var Factory = function (type, content) {
             if (this instanceof Factory) {
+                console.log(this[type]);
+                console.log(this[type](content));
                 var s = new this[type](content);
+                console.log(s);
                 return s;
             } else {
                 return new Factory(type, content)
@@ -100,7 +100,7 @@
             },
         ];
 
-        for (var i = 0; i < data.length; i++ ){
+        for (var i = 0; i < data.length; i++) {
             Factory(data[i].type, data[i].content);
         }
     </script>

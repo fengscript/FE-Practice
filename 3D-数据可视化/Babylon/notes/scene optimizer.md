@@ -32,21 +32,56 @@ var optimizer = new BABYLON.SceneOptimizer(scene, options);
 - reset()   将优化等级恢复为 0
 - dispose() 释放资源
 
+## SceneOptimizerOptions 
+- optimizations
+- targetFrameRate
+- trackerDuration
+
+
+- addCustomOptimization
+- addOptimization
+
+
+- HighDegradationAllowed
+- LowDegradationAllowed
+- ModerateDegradationAllowed
 
 ## helper
 ```javascript
 BABYLON.SceneOptimizer.OptimizeAsync(scene),
 ```
 它等于
+
 ```javascript
-BABYLON.SceneOptimizer.OptimizeAsync(scene, BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed(),
+BABYLON.SceneOptimizer.OptimizeAsync(scene, ModerateDegrad,
 function() {
-   // On success
+   // 成功之后的回调
 }, function() {
-   // FPS target not reached
+   // 失败或者设定的帧率不能达到时候的回调
 });
 ```
+
+
+如：
+```javascript
+BABYLON.SceneOptimizer.OptimizeAsync(scene, BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed(),null,null);
+```
 这里，返回的 `SceneOptimizer ` 对象的 `autoGeneratePriorities` 会自动设为 `false`
+
+
+**上面一系列起手式，都可以用这个代替**
+即
+
+
+>var options = new BABYLON.SceneOptimizerOptions();</br>
+options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1));</br>
+var optimizer = new BABYLON.SceneOptimizer(scene, options);
+
+可以用
+```javascript
+BABYLON.SceneOptimizer.OptimizeAsync(scene)
+```
+代替上面一堆
 
 
 ## SceneOptimizerOptions

@@ -45,9 +45,21 @@
                 };
             };
         })()
+        
+        
+        var a = document.getElementById('test1');
+
+        var elems = document.getElementsByTagName('div');
+
+        for (var n = 0 ; n<elems.length ;n++ ) {
+            getData(elems[n]).test = "test by fyg"
+        }
+        for (var n = 0 ; n<elems.length ;n++ ) {
+            console.log("elems"+[n]+" - " + getData(elems[n]).test)
+        }
 
 
-        test();
+       
     </script>
 </body>
 

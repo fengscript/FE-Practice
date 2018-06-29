@@ -46,53 +46,6 @@ var optimizer = new BABYLON.SceneOptimizer(scene, options);
 - LowDegradationAllowed
 - ModerateDegradationAllowed
 
-## helper
-```javascript
-BABYLON.SceneOptimizer.OptimizeAsync(scene),
-```
-它等于
-
-```javascript
-BABYLON.SceneOptimizer.OptimizeAsync(scene, ModerateDegrad,
-function() {
-   // 成功之后的回调
-}, function() {
-   // 失败或者设定的帧率不能达到时候的回调
-});
-```
-
-
-如：
-```javascript
-BABYLON.SceneOptimizer.OptimizeAsync(scene, BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed(),null,null);
-```
-这里，返回的 `SceneOptimizer ` 对象的 `autoGeneratePriorities` 会自动设为 `false`
-
-
-**上面一系列起手式，都可以用这个代替**
-即
-
-
->var options = new BABYLON.SceneOptimizerOptions();</br>
-options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1));</br>
-var optimizer = new BABYLON.SceneOptimizer(scene, options);
-
-可以用
-```javascript
-BABYLON.SceneOptimizer.OptimizeAsync(scene)
-```
-代替上面一堆
-
-
-## SceneOptimizerOptions
-
-当目标 `FPS` 达到时，`SceneOptimizer` 就会停止，`SceneOptimizer`一共有三层，会按照以下顺序
-```javascript
-BABYLON.SceneOptimizerOptions.LowDegradationAllowed()
-BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed()
-BABYLON.SceneOptimizerOptions.HighDegradationAllowed()
-```
-依次执行，会在每一层暂停，保证达到稳定的帧数
 
 ### properties
 - targetFrameRate: a number defining the FPS you want to achieve (60 by default)
@@ -129,33 +82,99 @@ BABYLON.SceneOptimizerOptions.HighDegradationAllowed()
     - Level 3: RenderTargetsOptimization
     - Level 4: HardwareScalingOptimization(4, 4)
 
+
+
+## helper
+```javascript
+BABYLON.SceneOptimizer.OptimizeAsync(scene),
+```
+它等于
+
+```javascript
+BABYLON.SceneOptimizer.OptimizeAsync(scene, SceneOptimizerOptions,
+function() {
+   // 成功之后的回调
+}, function() {
+   // 失败或者设定的帧率不能达到时候的回调
+});
+```
+即
+>var options = new BABYLON.SceneOptimizerOptions();</br>
+options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1));</br>
+var optimizer = new BABYLON.SceneOptimizer(scene, options);
+
+可以用
+```javascript
+BABYLON.SceneOptimizer.OptimizeAsync(scene)
+```
+代替上面一堆
+
+
+`SceneOptimizerOptions 有三个静态常量：
+当目标 `FPS` 达到时，`SceneOptimizer` 就会停止，`SceneOptimizer`一共有三层，会按照以下顺序
+```javascript
+BABYLON.SceneOptimizerOptions.LowDegradationAllowed()
+BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed()
+BABYLON.SceneOptimizerOptions.HighDegradationAllowed()
+```
+依次执行，会在每一层暂停，保证达到稳定的帧数
+
+
+如：
+```javascript
+BABYLON.SceneOptimizer.OptimizeAsync(scene, BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed(),null,null);
+```
+这里，返回的 `SceneOptimizer ` 对象的 `autoGeneratePriorities` 会自动设为 `false`
+
+呵呵，截至2018年6月29，以上两种方式都报错，即
+```javascript
+BABYLON.SceneOptimizer.OptimizeAsync(scene),
+
+// 或者
+BABYLON.SceneOptimizer.OptimizeAsync(scene, SceneOptimizerOptions,
+function() {
+   // 成功之后的回调
+}, function() {
+   // 失败或者设定的帧率不能达到时候的回调
+});
+```
+
+均报错，我是 babylon 3.2，报错
+```bash
+Uncaught TypeError: this.indices.push is not a function
+```
+
+
+
 # 进阶设定
 `https://www.babylonjs-playground.com/frame.html#KEKCLV` false 时候，可以自定义一系列设置：
 ```javascript
-var result = new BABYLON.SceneOptimizerOptions(60, 2000);
+var myOption = function() {
+    var result = new BABYLON.SceneOptimizerOptions(60, 2000);
 
-var priority = 0;
-result.optimizations.push(new BABYLON.ShadowsOptimization(priority));
-result.optimizations.push(new BABYLON.LensFlaresOptimization(priority));
+    var priority = 0;
+    result.optimizations.push(new BABYLON.ShadowsOptimization(priority));
+    result.optimizations.push(new BABYLON.LensFlaresOptimization(priority));
 
-// Next priority
-priority++;
-result.optimizations.push(new BABYLON.PostProcessesOptimization(priority));
-result.optimizations.push(new BABYLON.ParticlesOptimization(priority));
+    // Next priority
+    priority++;
+    result.optimizations.push(new BABYLON.PostProcessesOptimization(priority));
+    result.optimizations.push(new BABYLON.ParticlesOptimization(priority));
 
-// Next priority
-priority++;
-result.optimizations.push(new BABYLON.TextureOptimization(priority, 256));
+    // Next priority
+    priority++;
+    result.optimizations.push(new BABYLON.TextureOptimization(priority, 256));
 
-// Next priority
-priority++;
-result.optimizations.push(new BABYLON.RenderTargetsOptimization(priority));
+    // Next priority
+    priority++;
+    result.optimizations.push(new BABYLON.RenderTargetsOptimization(priority));
 
-// Next priority
-priority++;
-result.optimizations.push(new BABYLON.HardwareScalingOptimization(priority, 4));
+    // Next priority
+    priority++;
+    result.optimizations.push(new BABYLON.HardwareScalingOptimization(priority, 4));
 
-return result;
+    return result;
+}
 ```
 
 ## 也可以自己包装一哈
@@ -178,3 +197,86 @@ function mySceneOptimization(priority) {
 ```
 
 > 处于 `improvement` 模式时，`optimizations` 会自动调整它的行为
+
+如
+```javascript
+// Optimizer
+var optimizer = new BABYLON.SceneOptimizer(scene, options);
+//Option
+var options = new BABYLON.SceneOptimizerOptions(60, 1000);
+//添加一些系统预留的优化项
+options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1));
+
+//自己添加一些自定义优化项
+// 比如 groundMaterial.reflectionTexture 这个场景里面有地面反射，这里可以关了试试
+options.addCustomOptimization(function () {
+    environment.groundMaterial.reflectionTexture = null;
+    return true;
+}, function () {
+    return "关闭地面反射";
+});
+options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
+options.addCustomOptimization(function () {
+    environment.ground.setEnabled(false);
+    return true;
+}, function () {
+    return "算了，连地面也去掉吧";
+});
+
+
+
+//一些事件勾子
+optimizer.onSuccessObservable.add(function () {
+    console.log("State: Success");
+});
+optimizer.onNewOptimizationAppliedObservable.add(function (optim) {
+    console.log("正在进行 - " + optim.getDescription(););
+});
+optimizer.onFailureObservable.add(function () {
+    console.log("State: Failed. Frame rate was " + optimizer.currentFrameRate;);
+})
+```
+来自于：https://www.babylonjs-playground.com/#3Q8PCL
+
+
+## other
+
+```javascript
+var btnModerate_Click = function () {
+console.log("optimizer is running");
+BABYLON.SceneOptimizer.OptimizeAsync(scene, BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed(60), function () {
+        console.log("scene optimized: moderate");
+    }, function() {
+        console.log("failure");
+    });
+}
+
+var btnHigh_Click = function () {
+console.log("optimizer is running");
+BABYLON.SceneOptimizer.OptimizeAsync(scene, BABYLON.SceneOptimizerOptions.HighDegradationAllowed(60), function () {
+        console.log("scene optimized: high");
+    }, function() {
+        console.log("failure");
+    });
+}
+
+var btn = document.createElement("button");
+btn.textContent = "Moderate";
+btn.style.top = "70px";
+btn.style.right = "80px";
+btn.style.position = "absolute";
+btn.addEventListener("click", btnModerate_Click);
+
+document.body.appendChild(btn);
+
+var btn2 = document.createElement("button");
+btn2.textContent = "High";
+btn2.style.top = "70px";
+btn2.style.right = "200px";
+btn2.style.position = "absolute";
+btn2.addEventListener("click", btnHigh_Click);
+
+document.body.appendChild(btn2);
+
+```
+包括 这样子，也会报错https://www.babylonjs-playground.com/#1CTPII#3

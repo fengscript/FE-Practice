@@ -455,6 +455,97 @@ aim.addEventListener("click", btn.click, false);
 
 
 # 事件处理
-## 
+## 集中管理自定义属性
+```javascript
+<div id="test1" class="test">1</div>
+<div id="test2" class="test">2</div>
+<div id="test3" class="test">3</div>
+
+(function () {
+var cache = {},
+    guidCounter = 1,
+    expando = 'data'+ (new Date).getTime();
+
+this.getData = function(elem) {
+    var guid = elem[expando];
+        // elem 上此时还没有 expando 属性，所以是 undefined
+    if (!guid) {
+        guid = elem[expando] = guidCounter++;
+        cache[guid] = {};
+    }
+    return cache[guid];
+};
+
+this.removeData = function(elem) {
+    var guid = elem[expando];
+    if (!guid) return ;
+    delete cache[guid];
+    try {
+        delete cache[expando];
+        
+    } catch (error) {
+        if (elem.removeAttribute) {
+            elem.removeAttribute(expando);
+        };
+    };
+};
+})()
+
+
+var a = document.getElementById('test1');
+
+var elems = document.getElementsByTagName('div');
+
+for (var n = 0 ; n<elems.length ;n++ ) {
+getData(elems[n]).test = "test by fyg"
+}
+for (var n = 0 ; n<elems.length ;n++ ) {
+console.log("elems"+[n]+" - " + getData(elems[n]).test) 
+}
+```
+
+## 一个自定义的事件绑定程序
+自定义的事件绑定程序可以在处理流程中进行一些拦截操作
+```javascript
+(function () {
+    var nextGuid = 1;
+    this.addEvt = function (elem, type, fn) {
+        var data = getData(elem);
+        if (!data.handlers) {
+            data.handlers = {};
+        }
+        if (!data.handlers[type]) {
+            data.handlers[type] = []
+        }
+        if (!fn.guid) {
+            fn.guid = nextGuid++;
+        }
+
+        data.handlers[type].push(fn);
+
+        if (!data.dispatcher) {
+            data.disabled = false;
+            data.dispatcher = function (event) {
+                if (data.disabled) return;
+                event = event || window.event;
+                var handlers = data.handlers[event.type];
+                if (handlers) {
+                    for (var n = 0; n < handlers.length; n++) {
+                        handlers[n].call(elem, event)
+                    }
+                }
+            }
+        }
+
+        if (data.handlers[type].length == 1) {
+            if (document.addEventListener) {
+                document.addEventListener(type, data.dispatcher, false);
+            } else if (document.attachEvent) {
+                document.attachEvent("on" + type, data.dispatcher)
+            }
+        }
+    }
+})()
+```
 
 

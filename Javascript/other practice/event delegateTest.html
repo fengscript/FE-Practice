@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>event propagationTest</title>
+</head>
+<body>
+    <div id="father">
+        <div id="btn-wrapper">
+            <div id="btn"> + </div>
+        </div>
+    </div>
+
+    <style>
+        #father{
+            width: 300px;
+            height: 100px;
+            background-color: lightblue;
+        }
+
+        #btn-wrapper{
+            position: relative;
+            cursor: pointer;
+            width: 60%;
+            height: 80%;
+            border: 1px solid red;
+        }
+        #btn{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%)  translateY(-50%);
+            font-size: 30px;
+            text-align: center;
+            border: 1px solid yellow;
+        }
+    </style>
+
+
+
+<script>
+    document.addEventListener('click', function (e) {
+        switch (e.target.id) {
+            case  "father":
+                console.log("click father")
+            case  "btn-wrapper":
+                console.log("click btn-wrapper")
+            case  "btn":
+                console.log("click btn")
+            default:
+                break;
+        }
+    }, false);
+    
+</script>
+</body>
+</html>

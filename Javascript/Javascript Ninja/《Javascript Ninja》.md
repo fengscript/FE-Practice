@@ -548,4 +548,14 @@ console.log("elems"+[n]+" - " + getData(elems[n]).test)
 })()
 ```
 
+## 手动触发冒泡事件
+```javascript
+function triggerEvt (parent, event) {
+    if(parent && !event.isStopPropagationStopped()){
+        triggerEvt(parent, event)
+    }
+}
+```
+原理就是除非显式停止冒泡，否则不断递归调用
+
 

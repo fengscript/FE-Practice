@@ -487,3 +487,15 @@ span {
     text-overflow: ellipsis;
 }
  ```
+
+ ## background 简写
+可以在一次声明中定义一个或多个属性：background-clip、background-color、background-image、background-origin、background-position、background-repeat、background-size，和 background-attachment。
+
+对于所有简写属性，任何没有被指定的值都会被设定为它们的 初始值。
+ ```bash
+ background：color img_url repeat attachment position / size
+ ```
+
+ `background-attachment` : scroll | fixed | local | inherit
+ 如果指定了 `background-image` ，那么 `background-attachment` 决定背景是在视口中固定的还是随包含它的区块滚动的。
+ 

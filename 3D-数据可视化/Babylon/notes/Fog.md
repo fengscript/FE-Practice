@@ -12,7 +12,7 @@ scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
 - BABYLON.Scene.FOGMODE_NONE - 默认设置，雾未被启用
 - BABYLON.Scene.FOGMODE_EXP - 雾的强度会根据指数函数变化
 - BABYLON.Scene.FOGMODE_EXP2 - 强度变化更快
-- BABYLON.Scene.FOGMODE_LINEAR - 雾的强度会线性变动
+- BABYLON.Scene.FOGMODE_LINEAR - 雾的强度会线性变动   4
 
 
 **选择了 `EXP`， `EXP2` 模式，才能设置强度 `fogDensity`，强度默认是 0.1**

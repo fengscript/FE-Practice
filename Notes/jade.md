@@ -1,3 +1,5 @@
+
+参考：https://segmentfault.com/a/1190000000357534
 # 标签
 ## 嵌套
 
@@ -55,8 +57,11 @@ p
 
 
 
-# 代码
-## 前缀`-`
+# 代码及数据绑定
+
+## 非缓存代码
+
+以前缀`-`开始
 不会被输出，只执行
 ```jade
 - for (var key in obj)
@@ -82,6 +87,15 @@ p
       li= item
     - })
 ```
+
+## 缓存代码
+标签紧跟 `=`
+  ```jade
+    h1= user.name
+    p= user.occupation
+  ```
+
+
 
 
 ## 循环 `each`
@@ -122,10 +136,10 @@ when 1: p you have a friend
 default: p you have #{friends} friends
 ```
 
+## 数据绑定
 
-# 数据绑定
+
 使用 `#{}`
-
 
 # script link
 
@@ -146,7 +160,7 @@ extends layout
 
 ## include
 
-引入一个 `jade` 模版
+静态包含一段 `Jade`,包括 `HTML` 、 `CSS`等资源文件
 
 ```jade
 include ./views/head.jade
@@ -155,10 +169,13 @@ style
     include style.css
 ```
 
-给定一个扩展名后，`Jade` 不会把这个文件当作一个 Jade 源代码，并且会把它当作一个普通文本包含进来
+给定一个扩展名后，`Jade` 不会把这个文件当作一个 `Jade` 源代码，并且会把它当作一个普通文本包含进来
 
-### yeild
-yield 语句允许你明确地标明include的代码块的放置位置。比如，假设你希望把代码块放在scripts之前，而不是附加在scripts之后：
+### yield
+//TODO: 到18-7-19 我没具体试这个东西有什么用
+
+
+在子模版里面使用， `yield` 语句允许你明确地标明include的代码块的放置位置。比如，假设你希望把代码块放在scripts之前，而不是附加在scripts之后：
 ```jade
 head
   yield

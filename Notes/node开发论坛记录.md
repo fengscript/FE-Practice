@@ -33,14 +33,24 @@ npm start
 然后` http://localhost:3000/ ` 或者 `127.0.0.1:3000` 即可
 
 
- ## ~~替换模版引擎~~
+## 替换模版引擎
 ```javascript
 app.set('view engine', 'pug');
 ```
 改了以后会报错说找不到 `error` 视图了，绝望，先这样 。。。
+> 建立一个 `error` 模版就OK了
 
 
 然后建一个 `modles` 文件夹放 和数据库链接、操作的文件 （MVC中的M）
 
+
+后来我还是换成了 `ejs`。。。。
+
+`ejs` 一样，一定要有一个 `error` 模版让他来吐槽你
+
+
 ## 连接数据库
-引入mysql模块，然后使用mysql.createPool()创建连接
+~~引入mysql模块，然后使用mysql.createPool()创建连接~~
+后来我还是换成了 `MongDB`。。。。
+
+### 安装 `MongDB`

@@ -71,10 +71,10 @@
             }
         }
         Obj.color = "red";
-        Obj.sayColor = function(){
+        Obj.sayColor = function () {
             console.log(this.color);
         }
-        Obj.changeState = function() {
+        Obj.changeState = function () {
             // console.log(state); 
             // 访问不到
             console.log(this.state); // undefined
@@ -93,10 +93,10 @@
                 console.log(this.age)
             }
         }
-        a.prototype.sayCode = function() {
+        a.prototype.sayCode = function () {
             console.log(this.code);
         }
-        a.prototype.sayHi = function() {
+        a.prototype.sayHi = function () {
             console.log("hi3");
         }
         console.log(a.prototype) //这里给 a的 prototype 改写、增加了方法以后，就可以看到了
@@ -119,7 +119,28 @@
         b.getNum(); // 1 不同实例上的对象公有属性不共享
 
         Obj.changeState();
-        Obj.sayColor()  // 'red'
+        Obj.sayColor() // 'red'
+
+
+
+        function User(user) {
+            this.name = user.name;
+            this.age = user.age;
+        }
+
+        User.prototype.save = function () {
+            var user = {
+                name: this.name,
+                age: this.age,
+            };
+            console.log(user.age);
+        }
+
+        var fyg = new User({
+            name: "FYG",
+            age: 26
+        });
+        fyg.save()
     </script>
 </body>
 

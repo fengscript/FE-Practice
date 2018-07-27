@@ -1,8 +1,67 @@
-# 路由常用API
 
-- 重定向 
+# Router
+## 占位符
+在路由中
+```javascript
+router.get("/index:xxx",function(){})
+```
+时，`:xxx` 就可作为占位符，从页面以 `localhost:3000/users/newParams`的路径访问，可以通过 `req.params.xxx` 取到实际的值。
+
+
+## redirect
+重定向 
    res.redirect('/reg')
 - 
+
+
+# middleware
+`middleware` 用来处理请求
+
+一个中间件处理完，可以通过调用 `next()` 传递给下一个中间件，如果没有调用 `next()`，则请求不会往下传递
+
+`express@4` 之前的版本基于 `connect` 这个模块实现的中间件的架构，`express@4` 及以上的版本则移除了对 `connect` 的依赖自己实现了
+
+> 中间件的加载顺序很重要
+
+
+# session
+ `HTTP` 无状态,在服务器记录记录用户状态
+
+- cookie 存储在浏览器（有大小限制），session 存储在服务端（没有大小限制）
+- 通常 session 的实现是基于 cookie 的，session id 存储于 cookie 中
+- session 更安全，cookie 可以直接在浏览器查看甚至编辑
+
+通过引入 `express-session` 中间件实现对会话的支持：
+`app.use(session(options))`
+
+> session 中间件会在 req 上添加 session 对象，即 req.session 初始值为 {}，当我们登录后设置 req.session.user = 用户信息，返回浏览器的头信息中会带上 set-cookie 将 session id 写到浏览器 cookie 中，那么该用户下次请求时，通过带上来的 cookie 中的 session id 我们就可以查找到该用户，并将用户信息保存到 req.session.user。
+
+
+# flash
+用来给用户显示一个操作状态的通知
+
+`connect-flash` 中间件
+
+
+> connect-flash 是基于 session 实现的，它的原理很简单：设置初始值 req.session.flash={}，通过 req.flash(name, value) 设置这个对象下的字段和值，通过 req.flash(name) 获取这个对象下的值，同时删除这个字段，实现了只显示一次刷新后消失的功能。
+
+
+
+
+
+
+
+
+
+# error
+`express` 内置了一个默认的错误处理器
+
+
+
+
+
+
+
 
 
 ## 3.X 环境配置

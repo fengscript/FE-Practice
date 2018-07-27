@@ -95,3 +95,57 @@ app.use(session({
 
 ----
 
+
+
+控制台报错
+```bash
+Tue, 24 Jul 2018 21:23:31 GMT express-session deprecated undefined resave option; provide resave option at app.js:40:9
+Tue, 24 Jul 2018 21:23:31 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:40:9
+```
+给 `app.js`  session 控制添加了
+
+
+```javascript
+
+  resave: true,
+  saveUninitialized: true,
+
+
+//即
+app.use(session({
+  secret: env.cookieSecret,
+  resave: true,
+  saveUninitialized: true,
+  key: env.db, //cookie name
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 30
+  }, //30 days
+  store: new MongoStore({
+    url: 'mongodb://localhost/' + env.db,
+    db: env.db,
+    host: env.host,
+    port: env.port
+  })
+}));
+```
+resave ——重新保存：强制会话保存即使是未修改的。
+saveUninitialized——强制“未初始化”的会话保存到存储。
+
+
+
+# Other
+
+## environment
+`windows` 设置环境变量
+```bash
+set DEBUG=*
+set NODE_ENV=test
+node app
+```
+或者使用 `corss-env`
+```bash
+npm i cross-env -g
+#使用方式：
+cross-env NODE_ENV=test node app
+```
+

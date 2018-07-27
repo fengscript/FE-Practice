@@ -71,3 +71,20 @@ export default {
 CommonJS规范 http://javascript.ruanyifeng.com/nodejs/module.html
 
 ES6 Module 的语法 http://es6.ruanyifeng.com/#docs/module
+
+
+
+# Other
+
+- module.exports 初始值为一个空对象 {}
+- exports 是指向的 module.exports 的引用
+- require() 返回的是 module.exports 而不是 exports
+
+```javascript
+exports = module.exports = {...}
+//上面的代码等价于:
+
+module.exports = {...}
+exports = module.exports
+
+```

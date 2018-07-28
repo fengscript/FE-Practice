@@ -1,3 +1,7 @@
+# app
+
+## use
+挂载一个中间件
 
 # Router
 ## 占位符
@@ -46,18 +50,48 @@ router.get("/index:xxx",function(){})
 > connect-flash 是基于 session 实现的，它的原理很简单：设置初始值 req.session.flash={}，通过 req.flash(name, value) 设置这个对象下的字段和值，通过 req.flash(name) 获取这个对象下的值，同时删除这个字段，实现了只显示一次刷新后消失的功能。
 
 
+- express-session: 会话（session）支持中间件
+- connect-mongo: 将 `session` 存储于 mongodb，需结合 `express-session` 使用，我们也可以将 `session` 存储于 `redis` , 如 `connect-redis`
+- connect-flash: 基于 `session` 实现的用于通知功能的中间件，需结合 `express-session` 使用
 
 
+# 权限控制
 
+把用户状态的检查封装成一个中间件，在每个需要权限控制的路由加载该中间件，即可实现页面的权限控制
+```javascript
+module.exports = {
+  checkLogin: function checkLogin (req, res, next) {
+    if (!req.session.user) {
+      req.flash('error', '未登录')
+      return res.redirect('/signin')
+    }
+    next()
+  },
 
+  checkNotLogin: function checkNotLogin (req, res, next) {
+    if (req.session.user) {
+      req.flash('error', '已登录')
+      return res.redirect('back')// 返回之前的页面
+    }
+    next()
+  }
+}
+```
 
 
 
 # error
-`express` 内置了一个默认的错误处理器
+`express` 内置了一个默认的错误处理器,**在其他 app.use() 和路由调用后，最后定义错误处理中间件**
 
+定义错误处理中间件和定义其他中间件一样，除了需要 4 个参数，而不是 3 个:
+```javascript
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+```
 
-
+如果向 next() 传入参数（除了 ‘route’ 字符串），Express 会认为当前请求有错误的输出，因此跳过后续其他非错误处理和路由/中间件函数。如果需做特殊处理，需要创建新的错误处理路由
 
 
 

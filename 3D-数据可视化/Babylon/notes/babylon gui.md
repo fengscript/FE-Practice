@@ -1,3 +1,15 @@
+# preview
+18-8-6
+GUI 文档里面说会自动缩放以适应屏幕，然后有时候可能需要手动指定缩放率让文字更清楚
+
+以前的 GUI 可能不能自动缩放
+
+现在还可以指定让GUI在前景 还是背景
+
+`var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI", foreground? : Boolean );`
+
+
+
 # 1 纵览全局
 [Document](http://doc.babylonjs.com/overviews/gui)
 ```JS

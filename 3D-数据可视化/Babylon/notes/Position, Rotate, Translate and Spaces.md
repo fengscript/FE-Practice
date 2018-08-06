@@ -41,6 +41,16 @@ pilot.rotation = new BABYLON.Vector3(Math.PI / 2, Math.PI / 2, 0);
 http://www.babylonjs-playground.com/#UMR7M#11
 
 
+### setPositionWithLocalVector
+http://doc.babylonjs.com/features/position,_rotation,_scaling#align-axes
+
+`mesh.setPositionWithLocalVector(new BABYLON.Vector3(x, y, z));`
+
+获取 `LOCAL` 坐标的位置：
+`var localPosition = mesh.getPositionExpressedInLocalSpace();`
+
+
+
 
 # translate 和 rorate
 ## translate
@@ -130,4 +140,54 @@ pilot.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.WORLD);
  ```js
  mesh.setPivotPoint(new BABYLON.Vector3(-50, -50, 0))
  ```
+
+`setPivotPoint` 默认是以 `LOCAL` 坐标旋转，也可以设为 `WORLD`
+
+### rotationQuaternion
+http://doc.babylonjs.com/features/position,_rotation,_scaling#align-axes
+`rotationQuaternion` 通过围绕给定轴的旋转设置一个网格的取向。它是（x，y，z，w）的四维向量
+
+```js
+var axis = new BABYLON.Vector3(1, 1, 1);
+var angle = Math.PI / 8;
+var quaternion = new BABYLON.Quaternion.RotationAxis(axis, angle);
+mesh.rotationQuaternion = quaternion;
+```
+
+#### Quaternion
+
+http://doc.babylonjs.com/resources/rotation_conventions#quaternions
+
+### RotationFromAxis
+http://doc.babylonjs.com/features/position,_rotation,_scaling#align-axes
+想要旋转摄像机或网格以使其与一组给定轴对齐时，使用 `RotationFromAxis` 方法查找要用于旋转的所需欧拉角度
+```js
+var orientation = BABYLON.Vector3.RotationFromAxis(axis1, axis2, axis3);
+mesh.rotation = orientation;
+```
+其中轴1，的axis2和axis3三种左手正交向量和网孔将对准
+
+- axis1作为本地系统中的x轴
+- axis2作为本地系统中的y轴
+- axis3作为本地系统中的z轴
+
+
+## TransformNode
+`TransformNode` 是一个未渲染的对象，但可以用作旋转中心（实际上是任何变换的中心）。可以减少内存使用并提高渲染速度。
+
+```js
+var pivot = new BABYLON.TransformNode("root");
+pivot.position = CoR_At;
+
+pilot.parent = pivot;
+pilot.position = pilotStart;
+
+pivot.rotate(axis, angle, BABYLON.Space.WORLD);
+```
+
+http://doc.babylonjs.com/how_to/pivot
+
+
+## addRotation
+http://doc.babylonjs.com/how_to/rotate
 

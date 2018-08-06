@@ -160,3 +160,10 @@ cross-env NODE_ENV=test node app
 > 如果程序以 `NODE_ENV=production node app` 启动，则 `config-lite` 会依次降级查找 `config/production.js`、`config/production.json`、`config/production.node`、`config/production.yml`、`config/production.yaml` 并合并 `default` 配置。 
 
 `config-lite` 还支持冒泡查找配置，即从传入的路径开始，从该目录不断往上一级目录查找 config 目录，直到找到或者到达根目录为止。
+
+
+# app.locals 和 res.locals
+
+express 合并了 3 处的结果后传入要渲染的模板，优先级： `res.render` > `res.locals` > `app.locals`，所以 `app.locals` 和 `res.locals` 几乎没有区别，都用来渲染模板
+
+区别在于： `app.locals `上通常挂载常量信息（如博客名、描述、作者这种不会变的信息），`res.locals` 上通常挂载变量信息，即每次请求可能的值都不一样（如请求者信息，res.locals.user = req.session.user）。

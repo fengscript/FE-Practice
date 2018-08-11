@@ -76,6 +76,14 @@ pilot.translate(new BABYLON.Vector3(3, 3, 3), distance, BABYLON.Space.WORLD);
 
 移动的距离是 distance * 矢量坐标长度
 
+即，原来位置 朝这个坐标的方向  移动  distance 个长度
+
+比如 原来在 0,0,0 原点，那么 `translate(new BABYLON.Vector3(0, 1, 0), 1, BABYLON.Space.WORLD);` 就是像向 上 （y=1） 移动 1 个单位， 
+`translate(new BABYLON.Vector3(0, 1, 0), 2, BABYLON.Space.WORLD);`
+就是向上移动2个单位 这样子
+
+
+
 或者给定一个`new BABYLON.Vector3(x, y, z)`向量组进行更精确的移动：
 
 可用的常量：BABYLON.Axis.X  BABYLON.Axis.Y and BABYLON.Axis.Z

@@ -12,7 +12,7 @@
 
 
     <script>
-        function merge (root) {
+        function merge(root) {
             console.log(root);
             // 将参数列表中从第二项开始的对象都合并到第一项中去
             // 所以，索引从 1 开始
@@ -28,33 +28,37 @@
             return root
         }
 
-        var merged = merge(
-            {name:"fyg"},
-            {age:"25",career:"jser"}
-        )
+        var merged = merge({
+            name: "fyg"
+        }, {
+            age: "25",
+            career: "jser"
+        })
 
         document.write(JSON.stringify(merged))
 
 
         //  对 arguments 列表进行 slice 和 disc
         // 即 还是应用伪装数组方法
-        function multiMax (multi) {
-            return muitl * Math.max.apply(Math, [].slice.call(arguments, 1))
+        function multiMax(multi) {
+            // 这里apply是 Math.max 里面必须是一个一个数字，but 这里 arguments 是一个类数组，用 apply 就可以直接塞数组进去
+            console.log(typeof arguments);
+            return multi * Math.max.apply(Math, [].slice.call(arguments, 1))
         }
 
-
+        console.log(multiMax(3, 1, 2, 3))
 
         /*
          *函数重载
-        */
-        function addMethod (obj, name, fn) {
+         */
+        function addMethod(obj, name, fn) {
             var old = obj[name];
             obj[name] = function () {
                 // 每次存进去的都是这个匿名函数，而新写的函数只是被当成了一个参数！
                 if (fn.length == arguments.length) {
                     // 这个 arguments.length 是 obj[name] 的，而不是外面那个 addMethod 的
                     return fn.apply(this, arguments)
-                }else{
+                } else {
                     return old.apply(this, arguments)
                 }
             }
@@ -63,15 +67,15 @@
         // 使用
 
         var ninja = {
-            values:["html", "css", "javascript", "feng yanggang"]
+            values: ["html", "css", "javascript", "feng yanggang"]
         }
 
         addMethod(ninja, "find", function () {
-        // 第一个传进去的函数
+            // 第一个传进去的函数
             return this.values
         });
         console.log(ninja);
-        addMethod(ninja, "find", function ( name ) {
+        addMethod(ninja, "find", function (name) {
             var ret = [];
             for (let i = 0; i < this.values.length; i++) {
                 if (this.values[i].indexOf(name) == 0) {
@@ -83,7 +87,7 @@
         // 到这里时候，ninja的find上存的是 上面obj[name]那个原来的函数, find 的闭包里面存了 fn 和 old， fn 里面存的是 f(name)，old里面是 obj[name],
         // old 的闭包里面存了 第一次传进去的函数
         console.log(ninja);
-        addMethod(ninja, "find", function ( first, last ) {
+        addMethod(ninja, "find", function (first, last) {
             var ret = [];
             for (let i = 0; i < this.values.length; i++) {
                 if (this.values[i] == (first + " " + last)) {
@@ -92,21 +96,56 @@
             }
             return ret;
         });
-        
+
         console.log(ninja);
         // 到这里时候，ninja的find上存的是 上面obj[name]那个原来的函数, find 的闭包里面存了 fn 和 old， fn 里面存的是 f(first, last)，old 里面继续是 obj[name],
         // old 的闭包里面存了 第二次传进去的函数即 fn(name) 和 old (obj[name]) ，这里套的这个old的闭包里面才是第一次的f() 和 old (undefined)
         console.log(ninja.find());
         console.log(ninja.find("css"));
-        console.log(ninja.find("feng","yanggang"));
+        console.log(ninja.find("feng", "yanggang"));
 
 
-        function argTest (argument1, argument2) {
+        function argTest(argument1, argument2) {
             console.log(`实参 arguments.length :${arguments.length} `);
             console.log(`arguments: ${argument1}, ${argument2}`);
             console.log(`形参 parameter  function.length - argTest.length:${argTest.length} `);
         }
         argTest("a")
+
+
+        // 试试传入 object
+        function objTest(opt) {
+            // 传进去 opt 对象当参数的一瞬间,option 里面都会被改成 opt 的值
+            var option = {
+                name: opt.name || "fyg",
+                age: opt.age || 26
+            }
+            // 如果反着写，因为优先级,就总会取全面的默认值，如
+            // var option = {
+            //     name: "fyg" || opt.name
+            // }
+            // 传进去做替换的参数就不起作用
+            console.log(opt)
+            console.log(option)
+            for (const key in option) {
+                if (option.hasOwnProperty(key)) {
+                    console.log(key + ":" + option[key])
+                }
+            }
+        }
+        objTest({
+            age: 30,
+            name: "fuck"
+        })
+
+        // 这样子更优雅
+        function objTest2 (opt) {
+            option = Object.assign({
+                // 默认配置
+            }, opt)
+
+
+        }
     </script>
 </body>
 

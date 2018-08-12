@@ -50,13 +50,24 @@
         // bind 的 prototype 版本
         Function.prototype.bind = function () {
             var fn = this,
-                arg = Array.prototype.slice.call(arguments),
+                args = Array.prototype.slice.call(arguments),
                 obj = args.shift();
 
             return function () {
                 return fn.apply(obj, args.concat([].slice.call(arguments)))
             }
         }
+
+
+        // 一堆 return 测试
+        function r (arg) {
+            return function() {
+                return arg+1
+            }
+        }
+
+
+        console.log(r(1));
     </script>
 </body>
 

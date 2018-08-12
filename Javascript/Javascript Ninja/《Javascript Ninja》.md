@@ -192,6 +192,7 @@ document.write(fn.otherProp)
 document.write('<br>')
 ```
 对上面的应用 —— 
+
 #### 缓存 memoring
 
 ```javascript
@@ -266,6 +267,57 @@ function isPrime2(value) {
 
 console.log(isPrime2(5))
 ```
+上面的记忆方式，都是修改了原函数
+
+或者，**通过不修改原函数来记住现有函数的返回值**
+
+```javascript
+ //  memorized
+Function.prototype.memorized = function (key) {
+    this._value = this._value || {};
+    return this._value[key] !== undefined ? this._value[key] : this._value[key] = this.apply(this,
+arguments)
+}
+
+// 使用
+function isPrime(num) {
+    var prime = num != 1;
+    for (let i = 2; i < num; i++) {
+if (num % i === 0) {
+    prime = false;
+    break
+}
+    }
+    return prime;
+}
+
+console.log(isPrime(5))
+console.log(isPrime.memorized(5))
+console.log(isPrime._value)
+
+
+// 使用闭包来自动记忆
+Function.prototype.momerize = function () {
+    var fn = this;
+    return function () {
+return fn.memorized.apply(fn, arguments)
+    }
+}
+
+// 使用
+var isPrime2 = (function (num) {
+    var prime = num != 1;
+    for (let i = 2; i < num; i++) {
+if (num % i === 0) {
+    prime = false;
+    break
+}
+    }
+    return prime;
+}).momerize();
+```
+
+
 
 #### 缓存dom
 ```javascript
@@ -437,7 +489,7 @@ aim.addEventListener("click", btn.click, false);
 // this 打印出来 是 <button> 元素，而非 btn 对象
 ```
 
-### currying
+## currying
 
 > 柯里化是这样的一个转换过程，把接受多个参数的函数变换成接受一个单一参数(译注：最初函数的第一个参数)的函数，如果其他的参数是必要的，返回接受余下的参数且返回结果的新函数
 > http://blog.jobbole.com/77956/
@@ -445,6 +497,8 @@ aim.addEventListener("click", btn.click, false);
 **相关的在 curry.md 里面**
 
 
+
+## 即时函数
 
 ---
 

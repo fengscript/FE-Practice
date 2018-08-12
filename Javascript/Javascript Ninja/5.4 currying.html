@@ -10,7 +10,7 @@
 
 <body>
 
-    即在一个函数中先填充几个参数，然后再返回另一个新函数
+    即在一个函数中先填充几个参数，然后再返回另一个新函数的技术称之为柯里化 （p99                                                                                                                                               ）
 
     柯里化是这样的一个转换过程，把接受多个参数的函数变换成接受一个单一参数(译注：最初函数的第一个参数)的函数，如果其他的参数是必要的，返回接受余下的参数且返回结果的新函数
     
@@ -80,7 +80,12 @@
         var results = ("feng,  yang, gang").csv();
 
         // console.log(results);
-    
+        var Curry = function (fn) {
+            var args = [].slice.call(arguments, 1);
+            return function () {
+                return fn.apply(this, args.concat([].slice.call(arguments)))
+            }
+        }
     </script>
 </body>
 

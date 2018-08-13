@@ -1,145 +1,11 @@
 # 1 函数
-
-## 作用域
+## 基本属性
+### 作用域
 变量声明的作用域开始于声明的地方，结束于所在函数的结尾，与代码嵌套无关
 
 命名函数的作用域是声明该函数的整个函数范围，与代码嵌套无关
 
-## 参数列表
-声明的形参数量大于实际传递进函数的数量，则没有对应参数的形参会被赋值为 `undefined`
-
-### 可变长度的参数列表
-
-```javascript
-function smallest (array) {
-    return Math.min.apply(Math, array)
-}
-
-document.write(smallest([1,3,2], [3,4,5]))
-
-// 即，用 apply 传入数组参数，就可以不需要在手动对数组做处理
-```
-
-注意，`Math.min.apply(Math, array)` 中，将上下文指定为 `Math` 不是必须的，但是可以使代码更清晰
-
-### 函数重载
-通过对传入的参数特性和个数进行检测，进行不同的操作实现函数重载
-
-#### `arguments` 和 `length`
-如，一个合并属性的方法：
-```javascript
-function merge (root) {
-    console.log(root);
-    // 将参数列表中从第二项开始的对象都合并到第一项中去
-    // 所以，索引从 1 开始
-    for (let index = 1; index < arguments.length; index++) {
-        for (const key in arguments[index]) {
-            if (arguments[index].hasOwnProperty(key)) {
-                // 而 root ，只是第一个参数（对象），所以，这里 root[key] 会给第一个参数添加新的 key ，并且 这个 key 的 value 为arguments[index][key]
-                root[key] = arguments[index][key];
-            }
-        }
-    }
-
-    return root
-}
-
-var merged = merge(
-    {name:"fyg"},
-    {age:"25"}
-)
-```
-
-
-检测参数有没有传入：
-`paramName === undefined`
-
-
-**`length`** 
-obviously， `length` 就是定义时候 声明的命名参数个数
-
-`arguments.length` 就是调用时候传入的参数个数
-
-```javascript
-function argTest (argument1, argument2) {
-    console.log(`实参 arguments.length :${arguments.length} `);
-    console.log(`arguments: ${argument1}, ${argument2}`);
-    console.log(`形参 parameter  function.length - argTest.length:${argTest.length} `);
-}
-argTest("a")
-```
-
-#### 利用参数个数函数重载
-如
-```javascript
-function addMethod(obj, name, fn) {
-    var old = obj[name];
-    obj[name] = () => {
-        if (fn.length == arguments.length) {
-             // 这个 arguments.length 是 obj[name] 的，而不是外面那个 addMethod 的
-            return fn.apply(this, arguments)
-        }else if (typeof old == "function") {
-            return old.apply(this, arguments)
-        }
-    }
-}
-// 使用
-var ninja = {
-    values:["html", "css", "javascript", "feng yanggang"]
-}
-
-addMethod(ninja, "find", function () {
-    return this.values
-});
-addMethod(ninja, "find", function ( name ) {
-    var ret = [];
-    for (let i = 0; i < this.values.length; i++) {
-        if (this.values[i].indexOf(name) == 0) {
-            ret.push(this.values[i]);
-        }
-    }
-    return ret;
-});
-// 到这里时候，ninja的find上存的是 上面obj[name]那个原来的函数, find 的闭包里面存了 fn 和 old， fn 里面存的是 f(name)，old里面是 obj[name],
-// old 的闭包里面存了 第一次传进去的函数
-console.log(ninja);
-addMethod(ninja, "find", function ( first, last ) {
-    var ret = [];
-    for (let i = 0; i < this.values.length; i++) {
-        if (this.values[i] == (first + " " + last)) {
-            ret.push(this.values[i]);
-        }
-    }
-    return ret;
-});
-
-console.log(ninja);
-// 到这里时候，ninja的find上存的是 上面obj[name]那个原来的函数, find 的闭包里面存了 fn 和 old， fn 里面存的是 f(first, last)，old 里面继续是 obj[name],
-// old 的闭包里面存了 第二次传进去的函数即 fn(name) 和 old (obj[name]) ，这里套的这个old的闭包里面才是第一次的f() 和 old (undefined)
-console.log(ninja.find());
-console.log(ninja.find("css"));
-console.log(ninja.find("feng","yanggang"));
-```
-
-## 函数判定
-1 `typeof`
-`typeof`：在某些浏览器上表现不一致，如 safari会认为：
-`typeof document.body.childNodes == function`
-
-2 toString()
-
-```javascript
-function isFunction (fn) {
-    return Object.prototype.isString.call(fn) === "[Object Function]";
-}
-```
-`isString()` 会返回 **表示一个对象的内部描述的字符串**
-> 不仅仅可以判断是不是函数，还可以判断是不是 String/RegExp/Date 或其他对象
-
-
-
-
-## 调用
+### 调用
 **函数有四种调用方式**
 - 函数调用
 - 方法调用
@@ -173,7 +39,7 @@ function test () {
 console.log(test());
 // 很明显，this.prop 被添加到 window了 因为this定义的，只会被函数的调用方式决定！！！
 ```
-### 方法调用（将函数视为对象）
+#### 方法调用（将函数视为对象）
 js 中的函数可以和对象一样，拥有属性和方法，可以将函数赋值给对象的一个属性，从而创建一个方法调用。
 
 ```javascript {cmd="node"}
@@ -191,10 +57,167 @@ document.write('<br>')
 document.write(fn.otherProp)
 document.write('<br>')
 ```
-对上面的应用 —— 
 
-#### 缓存 memoring
+### 参数列表
+声明的形参数量大于实际传递进函数的数量，则没有对应参数的形参会被赋值为 `undefined`
 
+#### 可变长度的参数列表
+
+```javascript
+function smallest (array) {
+    return Math.min.apply(Math, array)
+}
+
+document.write(smallest([1,3,2], [3,4,5]))
+
+// 即，用 apply 传入数组参数，就可以不需要在手动对数组做处理
+```
+
+注意，`Math.min.apply(Math, array)` 中，将上下文指定为 `Math` 不是必须的，但是可以使代码更清晰
+
+### closure
+
+1. 闭包是函数在创建时允许该自身函数访问并操作该自身函数之外的变量所创建的作用域，闭包可以让函数访问所有存在于该函数声明时所处的作用域中所有的变量和函数。
+2. 作用域之外的所有变量，即使是函数声明之后的那些声明，也会包含在闭包之内。
+3. 相同作用域内，尚未声明的变量不能提前引用
+4. 函数在闭包里面执行的时候，不仅可以在闭包创建的时刻点上看到所有变量的值，还可以对其更新，只要闭包存在，就可以对其修改
+```javascript
+var outerValue = "outerValue";
+var innerFn;
+function outer (  ) {
+    function inner (para) {
+        console.log(para);
+
+        console.log(laterVal);  // undefined 相同作用域内，尚未声明的变量不能提前引用
+
+        var laterVal = "laterVal";
+    };
+    innerFn = inner
+}
+var later = "later";
+outer();
+innerFn(later)
+```
+
+## 函数重载
+通过对传入的参数特性和个数进行检测，进行不同的操作实现函数重载
+### 利用参数个数函数重载
+
+首先 `arguments` 和 `length`
+
+### `arguments` 和 `length`
+如，一个合并属性的方法：
+```javascript
+function merge (root) {
+    console.log(root);
+    // 将参数列表中从第二项开始的对象都合并到第一项中去
+    // 所以，索引从 1 开始
+    for (let index = 1; index < arguments.length; index++) {
+        for (const key in arguments[index]) {
+if (arguments[index].hasOwnProperty(key)) {
+    // 而 root ，只是第一个参数（对象），所以，这里 root[key] 会给第一个参数添加新的 key ，并且 这个 key 的 value 为arguments[index][key]
+    root[key] = arguments[index][key];
+}
+        }
+    }
+
+    return root
+}
+
+var merged = merge(
+    {name:"fyg"},
+    {age:"25"}
+)
+```
+
+
+检测参数有没有传入：
+`paramName === undefined`
+
+
+**`length`** 
+obviously， `length` 就是定义时候 声明的命名参数个数
+
+`arguments.length` 就是调用时候传入的参数个数
+
+```javascript
+function argTest (argument1, argument2) {
+    console.log(`实参 arguments.length :${arguments.length} `);
+    console.log(`arguments: ${argument1}, ${argument2}`);
+    console.log(`形参 parameter  function.length - argTest.length:${argTest.length} `);
+}
+argTest("a")
+```
+
+如
+```javascript
+function addMethod(obj, name, fn) {
+    var old = obj[name];
+    obj[name] = () => {
+        if (fn.length == arguments.length) {
+ // 这个 arguments.length 是 obj[name] 的，而不是外面那个 addMethod 的
+return fn.apply(this, arguments)
+        }else if (typeof old == "function") {
+return old.apply(this, arguments)
+        }
+    }
+}
+// 使用
+var ninja = {
+    values:["html", "css", "javascript", "feng yanggang"]
+}
+
+addMethod(ninja, "find", function () {
+    return this.values
+});
+addMethod(ninja, "find", function ( name ) {
+    var ret = [];
+    for (let i = 0; i < this.values.length; i++) {
+        if (this.values[i].indexOf(name) == 0) {
+ret.push(this.values[i]);
+        }
+    }
+    return ret;
+});
+// 到这里时候，ninja的find上存的是 上面obj[name]那个原来的函数, find 的闭包里面存了 fn 和 old， fn 里面存的是 f(name)，old里面是 obj[name],
+// old 的闭包里面存了 第一次传进去的函数
+console.log(ninja);
+addMethod(ninja, "find", function ( first, last ) {
+    var ret = [];
+    for (let i = 0; i < this.values.length; i++) {
+        if (this.values[i] == (first + " " + last)) {
+ret.push(this.values[i]);
+        }
+    }
+    return ret;
+});
+
+console.log(ninja);
+// 到这里时候，ninja的find上存的是 上面obj[name]那个原来的函数, find 的闭包里面存了 fn 和 old， fn 里面存的是 f(first, last)，old 里面继续是 obj[name],
+// old 的闭包里面存了 第二次传进去的函数即 fn(name) 和 old (obj[name]) ，这里套的这个old的闭包里面才是第一次的f() 和 old (undefined)
+console.log(ninja.find());
+console.log(ninja.find("css"));
+console.log(ninja.find("feng","yanggang"));
+```
+
+### 函数判定
+1 `typeof`
+`typeof`：在某些浏览器上表现不一致，如 safari会认为：
+`typeof document.body.childNodes == function`
+
+2 toString()
+
+```javascript
+function isFunction (fn) {
+    return Object.prototype.isString.call(fn) === "[Object Function]";
+}
+```
+`isString()` 会返回 **表示一个对象的内部描述的字符串**
+> 不仅仅可以判断是不是函数，还可以判断是不是 String/RegExp/Date 或其他对象
+
+
+## 缓存 memoring
+### 将函数视为对象
 ```javascript
 // 存储一组函数
 
@@ -203,9 +226,9 @@ var store = {
     cache: {},
     add: function (fn) {
         if (!fn.id) {
-            fn.id = this.nextId++;
-            (store.cache[fn.id] = fn)
-            return `function ${fn.name} is added`
+fn.id = this.nextId++;
+(store.cache[fn.id] = fn)
+return `function ${fn.name} is added`
         }
     }
 };
@@ -223,7 +246,7 @@ document.write(store.add(ninja))
 // 只会添加一次 所以报了 undefined
 ```
 
-#### 自记忆函数
+### 自记忆函数
 ```javascript
 // 对上面的应用 —— 自记忆函数 memorization
 function isPrime(value) {
@@ -236,8 +259,8 @@ function isPrime(value) {
     var prime = value != 1;
     for (var i = 2; i < value; i++) {
         if (value % i == 0) {
-            prime = false;
-            break;
+prime = false;
+break;
         }
     }
     return isPrime.answer[value] = prime;
@@ -252,14 +275,14 @@ document.write(isPrime(5))
 function isPrime2(value) {
     if (!cache) var cache;
         if (cache != null) {
-            return cache;
+return cache;
         }
 
     var prime = value != 1;
     for (var i = 2; i < value; i++) {
         if (value % i == 0) {
-            prime = false;
-            break;
+prime = false;
+break;
         }
     }
     return cache = prime;
@@ -339,8 +362,8 @@ function getElements (name) {
     var elems = {
         len: 0,
         add(elem) {
-            Array.prototype.push.call(this, "1")
-            // push 方法根据 length 属性来决定从哪里开始插入给定的值。如果 length 不能被转成一个数值，则插入的元素索引为 0，包括 length 不存在时。当 length 不存在时，将会创建它。
+Array.prototype.push.call(this, "1")
+// push 方法根据 length 属性来决定从哪里开始插入给定的值。如果 length 不能被转成一个数值，则插入的元素索引为 0，包括 length 不存在时。当 length 不存在时，将会创建它。
         },
 
         // 请千万注意，这里如果这样写
@@ -348,7 +371,7 @@ function getElements (name) {
         // 因为箭头函数 封闭了 作用域，所以是访问不到前面的 add 方法的！
 
         gather(id) {
-            this.add(document.getElementById(id))
+this.add(document.getElementById(id))
         },
     };
 
@@ -375,7 +398,7 @@ function getElements (name) {
 > https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/push
 
 
-### recursing
+## recursing
 
 判断素数
 ```js
@@ -388,7 +411,8 @@ function isPalindrome(text) {
 
 console.log(isPalindrome("calac"));
 ```
-#### 方法中的递归
+
+### 方法中的递归
 在对象里用方法名字做递归，会有引用丢失的风险：
 ```js {cmd="node"}
 var obj = {
@@ -448,30 +472,80 @@ try {
 }
 ```
 
-## closure
 
-1. 闭包是函数在创建时允许该自身函数访问并操作该自身函数之外的变量所创建的作用域，闭包可以让函数访问所有存在于该函数声明时所处的作用域中所有的变量和函数。
-2. 作用域之外的所有变量，即使是函数声明之后的那些声明，也会包含在闭包之内。
-3. 相同作用域内，尚未声明的变量不能提前引用
-4. 函数在闭包里面执行的时候，不仅可以在闭包创建的时刻点上看到所有变量的值，还可以对其更新，只要闭包存在，就可以对其修改
+
+
+## currying
+
+> 柯里化是这样的一个转换过程，把接受多个参数的函数变换成接受一个单一参数(译注：最初函数的第一个参数)的函数，如果其他的参数是必要的，返回接受余下的参数且返回结果的新函数
+> http://blog.jobbole.com/77956/
+
 ```javascript
-var outerValue = "outerValue";
-var innerFn;
-function outer (  ) {
-    function inner (para) {
-        console.log(para);
+Function.prototype.curry = function () {
+var fn = this,
+    args = Array.prototype.slice.call(arguments);
 
-        console.log(laterVal);  // undefined 相同作用域内，尚未声明的变量不能提前引用
-
-        var laterVal = "laterVal";
-    };
-    innerFn = inner
+return function () {
+    return fn.apply(this, args.concat(
+        Array.prototype.slice.call(arguments)
+    ))
 }
-var later = "later";
-outer();
-innerFn(later)
+        }
+
+
+        // 一个更复杂的 分部函数
+
+Function.prototype.partical = function () {
+var fn = this,
+    args = Array.prototype.slice.call(arguments);
+    return function () {
+        var arg = 0;
+        for (let i = 0; i < args.length && arg < arguments.length; i++) {
+            if (args[i] === undefined) {
+                args[i] = arguments[arg++];
+            }
+        }
+
+        return fn.apply(this, args)
+    }
+}
+
+
+var delay = setTimeout.partical(undefined, 1000);
+  delay(() => {
+  console.log("delay for 1s");
+})
 ```
 
+
+**更多相关的在 curry.md 里面**
+
+
+
+## IIFE
+
+来一个奇形怪状的 `IIFE` 展览一下：
+```javascript
+document.addEventListener('click', (function (e) {
+    var numClicks = 0;
+    return function () {
+        console.log(++numClicks)
+    }
+})(), false);
+```
+
+
+
+
+---
+
+从18-6-12开始
+
+---
+
+
+
+# 事件处理
 ## 事件处理函数
 浏览器的事件处理系统会认为函数调用的上下文是事件的**目标元素**，如
 ```javascript
@@ -489,26 +563,6 @@ aim.addEventListener("click", btn.click, false);
 // this 打印出来 是 <button> 元素，而非 btn 对象
 ```
 
-## currying
-
-> 柯里化是这样的一个转换过程，把接受多个参数的函数变换成接受一个单一参数(译注：最初函数的第一个参数)的函数，如果其他的参数是必要的，返回接受余下的参数且返回结果的新函数
-> http://blog.jobbole.com/77956/
-
-**相关的在 curry.md 里面**
-
-
-
-## 即时函数
-
----
-
-从18-6-12开始
-
----
-
-
-
-# 事件处理
 ## 集中管理自定义属性
 ```javascript
 <div id="test1" class="test">1</div>
@@ -539,7 +593,7 @@ this.removeData = function(elem) {
         
     } catch (error) {
         if (elem.removeAttribute) {
-            elem.removeAttribute(expando);
+elem.removeAttribute(expando);
         };
     };
 };
@@ -566,37 +620,37 @@ console.log("elems"+[n]+" - " + getData(elems[n]).test)
     this.addEvt = function (elem, type, fn) {
         var data = getData(elem);
         if (!data.handlers) {
-            data.handlers = {};
+data.handlers = {};
         }
         if (!data.handlers[type]) {
-            data.handlers[type] = []
+data.handlers[type] = []
         }
         if (!fn.guid) {
-            fn.guid = nextGuid++;
+fn.guid = nextGuid++;
         }
 
         data.handlers[type].push(fn);
 
         if (!data.dispatcher) {
-            data.disabled = false;
-            data.dispatcher = function (event) {
-                if (data.disabled) return;
-                event = event || window.event;
-                var handlers = data.handlers[event.type];
-                if (handlers) {
-                    for (var n = 0; n < handlers.length; n++) {
-                        handlers[n].call(elem, event)
-                    }
-                }
-            }
+data.disabled = false;
+data.dispatcher = function (event) {
+    if (data.disabled) return;
+    event = event || window.event;
+    var handlers = data.handlers[event.type];
+    if (handlers) {
+        for (var n = 0; n < handlers.length; n++) {
+handlers[n].call(elem, event)
+        }
+    }
+}
         }
 
         if (data.handlers[type].length == 1) {
-            if (document.addEventListener) {
-                document.addEventListener(type, data.dispatcher, false);
-            } else if (document.attachEvent) {
-                document.attachEvent("on" + type, data.dispatcher)
-            }
+if (document.addEventListener) {
+    document.addEventListener(type, data.dispatcher, false);
+} else if (document.attachEvent) {
+    document.attachEvent("on" + type, data.dispatcher)
+}
         }
     }
 })()

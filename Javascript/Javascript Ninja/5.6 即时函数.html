@@ -11,7 +11,14 @@
 <body>
 
     <script>
-        
+        // 来一个奇形怪状的 `IIFE` 展览一下：
+
+        document.addEventListener('click', (function (e) {
+            var numClicks = 0;
+            return function () {
+                console.log(numClicks++)
+            }
+        })(), false);
     </script>
 </body>
 

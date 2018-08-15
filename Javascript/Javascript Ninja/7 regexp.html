@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>7 regexp</title>
+</head>
+
+<body>
+    <div class="nav header"></div>
+    <span class="nav header"></span>
+    <div class="content box"></div>
+    <footer class="footer"></footer>
+    <script>
+        function findClassname(className, type) {
+            var elems = document.getElementsByTagName(type || '*');
+            var reg = new RegExp("(^|\\s)" + className + "(\\s|$)");
+            var result = [];
+            for (var index = 0; index < elems.length; index++) {
+                if (reg.test(elems[index].className)) {
+                    result.push(elems[index])
+                }
+            }
+            return result;
+        }
+
+
+        console.log(findClassname("nav", "div"));
+    </script>
+</body>
+
+</html>

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta                                                                                                                                            charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>6 OOP</title>
@@ -16,6 +16,9 @@
             this.sayName = function() {
                 console.log(this.name)
             }
+            console.log(this)
+            console.log(arguments.callee)
+            console.log(this instanceof arguments.callee)
         }
         
 
@@ -25,10 +28,14 @@
         }
         var worker1 = new Person();
 
-        console.log(Person.prototype)
-        console.log(worker1.__proto__)
-        console.log(worker1.constructor)
-        console.log(Person.constructor)
+        // console.log(Person.prototype)
+        // console.log(worker1.__proto__)
+        // console.log(worker1.constructor)
+        // console.log(Person.constructor)
+        
+        const a = [1,2,3];
+        a.push(4);
+        console.log(a);
     </script>
 </body>
 

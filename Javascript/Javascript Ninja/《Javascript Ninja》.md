@@ -620,37 +620,37 @@ console.log("elems"+[n]+" - " + getData(elems[n]).test)
     this.addEvt = function (elem, type, fn) {
         var data = getData(elem);
         if (!data.handlers) {
-data.handlers = {};
+            data.handlers = {};
         }
         if (!data.handlers[type]) {
-data.handlers[type] = []
+            data.handlers[type] = []
         }
         if (!fn.guid) {
-fn.guid = nextGuid++;
+            fn.guid = nextGuid++;
         }
 
         data.handlers[type].push(fn);
 
         if (!data.dispatcher) {
-data.disabled = false;
-data.dispatcher = function (event) {
-    if (data.disabled) return;
-    event = event || window.event;
-    var handlers = data.handlers[event.type];
-    if (handlers) {
-        for (var n = 0; n < handlers.length; n++) {
-handlers[n].call(elem, event)
-        }
-    }
-}
+            data.disabled = false;
+            data.dispatcher = function (event) {
+                if (data.disabled) return;
+                event = event || window.event;
+                var handlers = data.handlers[event.type];
+                if (handlers) {
+                    for (var n = 0; n < handlers.length; n++) {
+                        handlers[n].call(elem, event)
+                    }
+                }
+            }
         }
 
         if (data.handlers[type].length == 1) {
-if (document.addEventListener) {
-    document.addEventListener(type, data.dispatcher, false);
-} else if (document.attachEvent) {
-    document.attachEvent("on" + type, data.dispatcher)
-}
+            if (document.addEventListener) {
+                document.addEventListener(type, data.dispatcher, false);
+            } else if (document.attachEvent) {
+                document.attachEvent("on" + type, data.dispatcher)
+            }
         }
     }
 })()
@@ -667,3 +667,5 @@ function triggerEvt (parent, event) {
 原理就是除非显式停止冒泡，否则不断递归调用
 
 
+# ExpReg
+`match` 会返回一个包含了所有成功匹配的字符串的数组

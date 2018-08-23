@@ -10,13 +10,14 @@
 
 <body>
     <div class="nav header"></div>
+    <div class=" nav header"></div>
     <span class="nav header"></span>
     <div class="content box"></div>
     <footer class="footer"></footer>
     <script>
         function findClassname(className, type) {
             var elems = document.getElementsByTagName(type || '*');
-            var reg = new RegExp("(^|\\s)" + className + "(\\s|$)");
+            var reg = new RegExp("(^\\s)" + className + "(\\s|$)");
             var result = [];
             for (var index = 0; index < elems.length; index++) {
                 if (reg.test(elems[index].className)) {
@@ -28,6 +29,14 @@
 
 
         console.log(findClassname("nav", "div"));
+
+        // 简单的捕获
+
+
+        var strA = "alpha(opacity=50)"
+        var strB = "alpha( opacity= 50)"
+
+        var capture = new RegExp("opacity=([^)]+)[1]")
     </script>
 </body>
 

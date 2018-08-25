@@ -1,7 +1,24 @@
-# 1 variable
-$ 定义一个变量
+# 1 variable & scope
+## base grammer
+<span style="font-size:30px">😡</span> 真爽，每句必须以 `;` 结尾，不然就报错给你看
+
+`$` 定义一个变量
 
 没有声明命令，创建时候就要赋值
+
+## echo & print / print_r
+`echo` 和 `print` 都不是函数，而是语言结构，所以圆括号都不是必需的
+
+`echo` 可以逗号分隔打印多个字符串， `print` 只能一个
+```php
+echo "I'm a","I'm b";   //OK
+
+print "I'm a","I'm b";  // error
+```
+
+- print只能打印出简单类型变量的值(如int,string)  
+
+- print_r可以打印出复杂类型变量的值(如数组,对象)  
 
 ## 作用域
 - local
@@ -9,16 +26,18 @@ $ 定义一个变量
 - static
 - parameter
 
+**关键字 `static` `global` **
+
 在所有函数外部定义的变量，拥有全局作用域。
 
 除了函数外，全局变量可以被脚本中的任何部分访问，要在一个函数中访问一个全局变量，需要使用 `global`关键字。
 
 在 PHP 函数内部声明的变量是局部变量，仅能在函数内部访问
 
-可以在不同函数中使用相同的变量名称，因为这些函数内定义的变量名是局部变量，只作用于该函数内
+可以在不同函数中使用相同的变量名称，`因为这些函数内定义的变量名是局部变量`，只作用于该函数内
 
 ### global
-函数内部使用 global 关键字调用函数外定义的全局变量
+函数内部使用 `global` 关键字调用函数外定义的全局变量
 
 
 
@@ -48,7 +67,7 @@ echo $y;
 ?>
 ```
 ### Static
-当一个函数完成时，它的所有变量通常都会被删除
+**当一个函数完成时，它的所有变量通常都会被删除**
 
 `static` 声明的变量会保留函数前一次被调用时的值
 
@@ -81,7 +100,7 @@ define ( string $name , mixed $value [, bool $case_insensitive = false ] )
 - value：必选参数，常量的值。
 - case_insensitive ：可选参数，如果设置为 TRUE，该常量则大小写不敏感。默认是大小写敏感的。
   如：
-```
+```php
 <?php
 define("GREETING", "欢迎访问 Runoob.com");
  
@@ -122,6 +141,14 @@ PHP 向它运行的任何脚本提供了大量的预定义常量。
 3 `__DIR__`	文件所在目录  等价于 `dirname(__FILE__)`
 
 
+## 注释
+```php
+//
+
+/**/
+```
+
+## echo/print
 
 # 2 数据类型
 String（字符串）, Integer（整型）, Float（浮点型）, Boolean（布尔型）, Array（数组）, Object（对象）, NULL（空值）
@@ -132,6 +159,13 @@ String（字符串）, Integer（整型）, Float（浮点型）, Boolean（布�
 - 数值数组
 - 关联数组
 - 多维数组
+
+数值数组:
+```php
+$age = [1,2,3];
+
+```
+
 
 关联数组：
 指定 键值对。
@@ -202,6 +236,20 @@ Array
 
  )
 ```
+## 遍历
+没什么好说的， `foreach`
+习惯了 `js` 的驼峰， <span style="font-size:30px">😤</span>现在看到没有大写的 `foreach` 感觉浑身难受
+
+```php
+<?php 
+$age=array("Peter"=>"35","Ben"=>"37","Joe"=>"43"); 
+foreach($age as $x=>$x_value) { 
+    echo "Key=" . $x . ", Value=" . $x_value; 
+    echo "<br>"; 
+} 
+?>
+```
+
 
 # 4 String
 - **strlen()**

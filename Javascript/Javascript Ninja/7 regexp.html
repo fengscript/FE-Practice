@@ -14,6 +14,11 @@
     <span class="nav header"></span>
     <div class="content box"></div>
     <footer class="footer"></footer>
+
+
+
+
+
     <script>
         function findClassname(className, type) {
             var elems = document.getElementsByTagName(type || '*');
@@ -37,6 +42,40 @@
         var strB = "alpha( opacity= 50)"
 
         var capture = new RegExp("opacity=([^)]+)[1]")
+
+        new RegExp("opacity=([^)]+)")
+
+        // match 匹配全局与非全局的区别
+
+        var html = '<div class="test"><b>Hello</b><i>World!</i></div>';
+        var results = html.match(/<(\/?)(\w+)([^>]*?)>/)
+        var resultsAll = html.match(/<(\/?)(\w+)([^>]*?)>/g)
+
+        var tag = /<(\/?)(\w+)([^>]*?)>/g;
+
+
+
+
+
+
+        console.log("match without global - " + results);
+        console.log("match global - " + resultsAll);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </script>
 </body>
 

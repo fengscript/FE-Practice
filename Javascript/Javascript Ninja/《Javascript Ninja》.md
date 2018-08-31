@@ -534,14 +534,11 @@ document.addEventListener('click', (function (e) {
 })(), false);
 ```
 
+# 定时器
+## 一个集中式管理的定时器
+```javascript
 
-
-
----
-
-从18-6-12开始
-
----
+```
 
 
 

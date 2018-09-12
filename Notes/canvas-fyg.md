@@ -1,5 +1,5 @@
 # 1 get rendering context
-> <canvas> 元素创造了一个固定大小的画布，它公开了一个或多个渲染上下文，其可以用来绘制和处理要展示的内容
+> `<canvas>` 元素创造了一个固定大小的画布，它公开了一个或多个渲染上下文，其可以用来绘制和处理要展示的内容
 
 ## getContext(param)
 
@@ -24,7 +24,7 @@
 ## path
 - beginPath()
 新建一条路径，生成之后，图形绘制命令被指向到路径上生成路径。
-- moveTo(x, y)
+- moveTo(x, y) 
 移动笔触
 - closePath()
 闭合路径之后图形绘制命令又重新指向到上下文中。
@@ -234,3 +234,84 @@ function draw() {
   ctx.fill("evenodd");
 }
 ```
+
+
+# Practice
+
+## 抄的一个 Sin
+```javascript
+ctx.lineWidth = 1;
+ctx.strokeStyle = 'blue';
+ctx.fillStyle = 'red';
+const points = [];
+const canvasWidth = ctx.canvas.width;
+const canvasHeight = ctx.canvas.height;
+const waveWidth = 0.05; // 波浪宽度,数越小越宽
+const waveHeight = 20; // 波浪高度,数越大越高
+const xOffset = 0; // 水平位移
+const startX = 0;
+for (let x = startX; x < startX + canvasWidth; x += 1000 / canvasWidth) {
+    const y = waveHeight * Math.sin((startX + x) * waveWidth + xOffset);
+    points.push([x, (canvasHeight / 2) + y]);
+    ctx.lineTo(x, (canvasHeight / 2) + y);
+}
+ctx.stroke()
+```
+
+
+### 继续玩 Sin
+```javascript
+const drawWave3 = {
+  xMove: 0,
+  xSpeed: -0.04,
+  ctx() {
+    // 留一个空的，后面把 ctx 挂到 this.ctx 来，先在这里流体一个，免得后面懵逼
+  },
+  element() {},
+  init(canvasBox) {
+    this.element = document.getElementById(canvasBox);
+    this.ctx = this.element.getContext("2d");
+    // resize
+    this.element.width = this.element.offsetWidth;
+    this.element.height = this.element.offsetHeight;
+
+
+    this.ctx.lineWidth = 1;
+    this.ctx.strokeStyle = 'white';
+
+    const grad = this.ctx.createLinearGradient(0, 0, this.ctx.canvas.width, 0);
+    grad.addColorStop(0, "#6e45e2");
+    grad.addColorStop(1, "#88d3ce");
+    this.ctx.strokeStyle = grad;
+  },
+  run() {
+    let ctx = this.ctx;
+    let width = ctx.canvas.width;
+    let height = ctx.canvas.height;
+    console.log(width, height);
+    let xMove = this.xMove;
+    let xSpeed = this.xSpeed;
+
+    function runAni() {
+      xMove += xSpeed;
+      ctx.clearRect(0, 0, width, height)
+      ctx.beginPath()
+      ctx.moveTo(0, height * 0.5)
+      for (let x = 0; x < width; x++) {
+        const scale = (Math.sin(x / width * Math.PI * 2 - Math.PI * 0.5) + 1) * 0.5
+        const y = Math.sin(x * 0.02 + xMove) * 50 * scale + height / 2
+        ctx.lineTo(x, y)
+      }
+      ctx.stroke()
+      ctx.closePath()
+      requestAnimationFrame(runAni)
+    }
+    runAni()
+  },
+
+}
+
+drawWave3.init("c3");
+drawWave3.run();
+```
+

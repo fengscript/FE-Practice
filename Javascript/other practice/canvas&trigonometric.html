@@ -10,25 +10,350 @@
 
 <body>
 
-    <canvas id="c1"></canvas>
+    <canvas id="c1" width="300" height="200"></canvas>
     <canvas id="c2"></canvas>
     <canvas id="c3"></canvas>
     <canvas id="c4"></canvas>
 
-
+    <style>
+        #c3,
+        #c4 {
+            width: 100%;
+            height: 400px;
+            background: #232323;
+        }
+    </style>
     <script>
-        // 先来一个 wave
+        // 先来一个 sin
         function get(name, id) {
-            return  window[name] = document.getElementById(id)
+            return window[name] = document.getElementById(id)
         }
         get("canvas1", "c1")
 
-        // var c1Ctx = canvas1.getContext('2d');
-        // for (let index = 0; index < width; index++) {
-        //     const y = Math.sin(index * a)
 
+        // y = Asin(Bx+C)+D;
+        function drawSin(canvas, fragment, A, B, C, D) {
+            let ctx = canvas.getContext('2d');
+            ctx.beginPath();
+            const canvasWidth = ctx.canvas.width;
+            const canvasHeight = ctx.canvas.height;
+
+            for (let x = 0; x < fragment; x++) {
+                const y = A * Math.sin((B * x) + C) + D;
+                ctx.lineTo(x, (canvasHeight / 2) + y);
+            }
+            ctx.stroke()
+
+        }
+        drawSin(canvas1, 100, 60, 0.065, 3.14, 0)
+
+
+
+        get("canvas2", "c2")
+
+        // 再来一个 wave
+        function drawWave(ctx, xOffset) {
+            // let ctx = document.getElementById('c2').getContext('2d');
+
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'blue';
+            ctx.fillStyle = 'red';
+
+            let canvasWidth = ctx.canvas.width;
+            let canvasHeight = ctx.canvas.height;
+            let waveWidth = 0.05;
+            let waveHeight = 20;
+            let startX = 0;
+
+            ctx.beginPath();
+            // x += 1000 / canvasWidth
+            for (let x = startX; x < startX + canvasWidth; x++) {
+                const radians = x / 2000 * Math.PI * 2;
+                const scale = (Math.sin(radians - Math.PI * 0.5) + 1) * 0.5;
+                // const y = waveHeight * Math.sin((startX + x) * waveWidth * scale + xOffset);
+                const y = waveHeight * Math.sin((startX + x) * waveWidth + xOffset);
+                ctx.lineTo(x, (canvasHeight / 2) + y);
+            }
+
+            ctx.stroke();
+        }
+
+
+        function wave(canvas, speed) {
+            let xOffset = 0;
+            let ctx = canvas.getContext('2d');
+
+            function aniStart() {
+                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                xOffset += speed;
+                drawWave(ctx, xOffset)
+                requestAnimationFrame(aniStart)
+            }
+
+            aniStart()
+        }
+        wave(canvas2, 0.03);
+
+        // 
+        get("canvas3", "c3");
+
+
+
+
+
+        const drawWave3 = {
+            xMove: 0,
+            xSpeed: -0.04,
+            ctx() {
+                // 留一个空的，后面把 ctx 挂到 this.ctx 来，先在这里流体一个，免得后面懵逼
+            },
+            element() {},
+            init(canvasBox) {
+                this.element = document.getElementById(canvasBox);
+                this.ctx = this.element.getContext("2d");
+                // resize
+                this.element.width = this.element.offsetWidth;
+                this.element.height = this.element.offsetHeight;
+
+
+                this.ctx.lineWidth = 1;
+
+                const grad = this.ctx.createLinearGradient(0, 0, this.ctx.canvas.width, 0);
+                grad.addColorStop(0, "#6e45e2");
+                grad.addColorStop(1, "#88d3ce");
+                this.ctx.strokeStyle = grad;
+            },
+            run() {
+                let ctx = this.ctx;
+                let width = ctx.canvas.width;
+                let height = ctx.canvas.height;
+                console.log(width, height);
+                let xMove = this.xMove;
+                let xSpeed = this.xSpeed;
+
+                function runAni() {
+                    xMove += xSpeed;
+                    ctx.clearRect(0, 0, width, height)
+                    ctx.beginPath()
+                    ctx.moveTo(0, height * 0.5)
+                    for (let x = 0; x < width; x++) {
+                        // const y = Math.sin(x * 0.02 + xMove) * 50 + height / 2;
+                        // 下面一句 绕了半天圈子 它就是想弄出来一个 0 - 1 
+                        const scale = (Math.sin(x / width * Math.PI * 2 - Math.PI * 0.5) + 1) * 0.5
+                        // 比如
+                        // const scale = (-Math.cos(6 * (x / width)) + 1) * 1.2
+                        const y = Math.sin(x * 0.02 + xMove) * 50 * scale + height / 2
+                        ctx.lineTo(x, y)
+                    }
+                    ctx.stroke()
+                    ctx.closePath()
+                    requestAnimationFrame(runAni)
+                }
+                runAni()
+            },
+
+        }
+
+        drawWave3.init("c3");
+        drawWave3.run();
+
+
+        const drawWave4 = {
+            data: {
+                xMove: 0,
+                xSpeed: -0.04,
+                gradients: [
+                    ['#6e45e2', '#88d3ce'],
+                    ['#de6262', '#ffb88c'],
+                    ['#64b3f4', '#c2e59c'],
+                    ['#0fd850', '#f9f047'],
+                    ['#007adf', '#00ecbc'],
+                    ['#B6CEE8', '#F578DC'],
+                    ['#9be15d', '#00e3ae']
+                ],
+                lines: [],
+            },
+            getGradColor(status) {
+                // return this.data.gradients[Math.ceil(Math.random() * 7)]
+                switch (status) {
+                    case "start":
+                        return this.data.gradients[Math.floor(Math.random() * this.data.gradients.length)][0]
+                        break;
+                    case "stop":
+                        return this.data.gradients[Math.floor(Math.random() * this.data.gradients.length)][1]
+                        break;
+                    default:
+                        break;
+                }
+            },
+
+            ctx() {
+                // 留一个空的，后面把 ctx 挂到 this.ctx 来，先在这里流体一个，免得后面懵逼
+            },
+            element() {},
+            init(canvasBox) {
+                this.element = document.getElementById(canvasBox);
+                this.ctx = this.element.getContext("2d");
+                this.ctx.lineWidth = this.data.lineWidth;
+                console.log(this.element.width, this.element.height);
+                this.resize()
+                window.addEventListener('resize', () => {
+                    console.log("resize");
+                    this.resize()
+                }, false);
+                return this.ctx;
+            },
+            draw(options) {
+                options = Object.assign({
+
+                }, options)
+                let width = this.element.width;
+                let height = this.element.height;
+
+                this.ctx.clearRect(0, 0, width, height)
+
+                this.data.xMove += this.data.xSpeed;
+
+                var grad = this.ctx.createLinearGradient(0, 0, width, 0);
+                grad.addColorStop(0, this.getGradColor("start"));
+                grad.addColorStop(1, this.getGradColor("stop"));
+                this.ctx.strokeStyle = grad;
+
+                
+                
+                this.ctx.beginPath()
+
+                for (let x = 0; x < width; x++) {
+                    // const y = Math.sin(x * 0.02 + xMove) * 50 + height / 2
+                    const scale = (Math.sin(x / width * Math.PI * 2 - Math.PI * 0.5) + 1) * 0.5
+                    // const scale = (-Math.cos(6 * (x / width)) + 1) * 1.2
+                    const y = Math.sin(x * 0.02 + this.data.xMove) * 50 * scale + height / 2
+                    this.ctx.lineTo(x, y)
+                }
+                this.ctx.stroke()
+                this.ctx.closePath()
+
+                // 下面一句 绕了半天圈子 它就是想弄出来一个 0 - 1 
+                //    const radians = x / this.width * Math.PI * 2
+                // const scale = (Math.sin(radians - Math.PI * 0.5) + 1) * 0.5
+                // 比如
+                // const scale = (-Math.cos(6 * (x / width)) + 1) * 1.2
+            },
+            run(callback) {
+                let ctx = this.init("c4");
+                this.draw(ctx);
+                // requestAnimationFrame(() => {
+                //     this.run(callback)
+                // });
+                // let ctx = this.ctx;
+                // let width = ctx.canvas.width;
+                // let height = ctx.canvas.height;
+                // console.log(width, height);
+                // let xMove = this.xMove;
+                // let xSpeed = this.xSpeed;
+
+                // function runAni() {
+                //     xMove += xSpeed;
+                //     ctx.clearRect(0, 0, width, height)
+                //     ctx.beginPath()
+                //     ctx.moveTo(0, height * 0.5)
+                //     for (let x = 0; x < width; x++) {
+                //         // const y = Math.sin(x * 0.02 + xMove) * 50 + height / 2
+
+                //         const scale = (Math.sin(x / width * Math.PI * 2 - Math.PI * 0.5) + 1) * 0.5
+                //         const y = Math.sin(x * 0.02 + xMove) * 50 * scale + height / 2
+                //         ctx.lineTo(x, y)
+                //     }
+                //     ctx.stroke()
+                //     ctx.closePath()
+
+                // }
+                // runAni()
+            },
+            onResize(callback) {
+                this.resizeCallback = callback;
+            },
+            resize() {
+                this.element.width = this.element.offsetWidth;
+                this.element.height = this.element.offsetHeight;
+                this.resizeCallback && this.resizeCallback()
+                this.draw(this.ctx)
+            },
+            waves() {
+                for (let index = 0; index < this.data.lines.length; index++) {
+
+                }
+
+            },
+        }
+
+        // drawWave4.init("c4");
+        drawWave4.run();
+
+        // const wave3 = () => {
+
+        //     ctx.beginPath();
+        //     ctx.moveTo(0, canvasHeight * 0.5)
+        //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //     for (let x = 0; x < canvasWidth; x++) {
+        //         const radians = x / 500 * Math.PI * 2;
+        //         const scale = (Math.sin(radians - Math.PI * 0.5) + 1) * 0.5;
+        //         const y = Math.sin((x) + canvasHeight / 2);
+        //         // const y = waveHeight * Math.sin((startX + x) * waveWidth  + xOffset);
+        //         ctx.lineTo(x, (canvasHeight / 2) + y);
+        //     }
+
+        //     ctx.stroke();
+        //     ctx.closePath();
+        // }
+
+        // function wave3(canvas, speed) {
+        //     let xOffset = 0;
+        //     let resize = function (canvas) {
+        //         // canvas.width = 
+        //     }
+        //     function aniStart() {
+
+        //         drawWave3(canvas, xOffset)
+        //         requestAnimationFrame(aniStart)
+        //     }
+        //     aniStart()
+        // }
+        // wave3(canvas3, 0.15);
+
+
+        // const scaleWave = {
+        //     radom(x, inMin, inMax, outMin, outMax) {
+        //         return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+        //     },
+        //     resize(){
+        //         this.width = canvas3.width = canvas3.offsetWidth;
+        //         this.height = canvas3.height = canvas3.offsetHeight;
+        //     },
+        //     resizeCallback(){
+
+        //     },
+        //     onResize(cb){
+        //         this.resizeCallback = cb;
+        //     },
+        //     init(){
+        //         this.ctx = canvas3.getContext("2d");
+        //         this.resize();
+        //         window.addEventListener('resize', ()=>{
+        //             this.resize();
+        //         },false);
+
+        //         return this.ctx;
+        //     },
+        //     run(cb){
+        //         requestAnimationFrame(()=>{
+        //             this.run(cb)
+        //         })
+        //         cb(this.ctx)
+        //     },
         // }
     </script>
+
 </body>
 
 </html>

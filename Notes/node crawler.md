@@ -22,6 +22,18 @@ const $ = cheerio.load(body);
 const list = $(".list");
 ```
 
+导入方式：
+```javascript
+const cheerio = require('cheerio');
+const $ = cheerio.load('<ul id="fruits">...</ul>');
+
+
+const $ = require('cheerio');
+$('ul', '<ul id="fruits">...</ul>');
+
+const $ = require('cheerio');
+$('li', 'ul', '<ul id="fruits">...</ul>');
+```
 
 
 # 踩坑

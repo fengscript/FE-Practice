@@ -537,7 +537,32 @@ document.addEventListener('click', (function (e) {
 # 定时器
 ## 一个集中式管理的定时器
 ```javascript
-
+// 中央定时器控制
+var times = {
+    timerID: 0,
+    timer: [],
+    add: function (fn) {
+        this.timer.push(fn);
+    },
+    start: function () {
+        if (this.timerID) return;
+        (function runNext() {
+            if (timers.timer.length > 0) {
+                for (var index = 0; index < timers.timer.length; index++) {
+                    if (timers.timer[i]() === false) {
+                        timer.time.splice(i, 1);
+                        i--;
+                    }
+                }
+                timer.timeID = setTimeout(runNext, 0);
+            }
+        })();
+    },
+    stop:function() {
+        clearTimeout(this.timerID);
+        this.timerID = 0;
+    }
+}
 ```
 
 

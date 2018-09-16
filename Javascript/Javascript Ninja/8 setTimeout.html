@@ -1,15 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
     <script>
-    
-        
+        // 中央定时器控制
+        var times = {
+            timerID: 0,
+            timer: [],
+            add: function (fn) {
+                this.timer.push(fn);
+            },
+            start: function () {
+                if (this.timerID) return;
+                (function runNext() {
+                    if (timers.timer.length > 0) {
+                        for (var index = 0; index < timers.timer.length; index++) {
+                            if (timers.timer[i]() === false) {
+                                timer.time.splice(i, 1);
+                                i--;
+                            }
+                        }
+                        timer.timeID = setTimeout(runNext, 0);
+                    }
+                })();
+            },
+            stop:function() {
+                clearTimeout(this.timerID);
+                this.timerID = 0;
+            }
+        }
     </script>
 </body>
+
 </html>

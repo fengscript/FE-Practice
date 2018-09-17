@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <textarea name="" id="text" cols="30" rows="10"></textarea>
+    <button id="btn1">GO</button>
+    <button id="btn2">clear</button>
+    <script>
+        let str = document.getElementById('text');
+
+        document.getElementById('btn1').addEventListener('click', function (e) {
+            console.log(str.value);
+            // eval(str.value);
+            // 此时 输入 function a (){console.log(999)} 不行，直接 console.log(999) 则可，eval 就是直接执行了，不需要输进去一个函数
+            // 试试 Function
+            var newF = new Function(str.value)
+            // 同上，也只需想要执行的语句即可
+            // 比如 就可以这样子 function a (){console.log(999)}; a()
+
+        });
+        document.getElementById('btn2').addEventListener('click', function (e) {
+            str.value = '';
+        });
+    </script>
+</body>
+
+</html>

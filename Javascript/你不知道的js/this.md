@@ -23,3 +23,15 @@ Outline.prototype = {
     }
 }
 ```
+
+
+经典的，事件绑定内部 `this` 是指向触发事件的 `element` 的
+```javascript
+let str = document.getElementById('text');
+console.log(this);
+
+document.getElementById('btn1').addEventListener('click', function (e) {
+    console.log(this);
+    console.log(str.value);
+});
+```

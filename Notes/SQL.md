@@ -15,7 +15,36 @@ INSERT INTO Products(name, id, time, price) VALUES('name','id',NULL,'2018-08')
 
 
 ## Read
+### query
 ```sql
-SELECT prod_name FROM Products; -- single row 
-SELECT prod_name , prod_id FROM Products; -- multi row
+SELECT prod_name FROM Products; -- 单行
+SELECT prod_name , prod_id FROM Products; -- 多行
+SELECT DISTINCT title FROM allnews; -- 多个相同结果只保留一项
 ```
+
+### 筛选
+`LIMIT`， `OFFSET`
+```sql
+-- 筛选
+    -- 返回 n 行数据
+SELECT title FROM allnews LIMIT n;
+
+    -- 返回从 x 行开始的 y 行数据 
+SELECT title FROM allnews LIMIT y OFFSET x;
+```
+
+### 排序
+`ORDER BY`，`DESC`
+```sql
+-- 排序 ORDER BY
+-- ORDER BY 必须是SELECT语句中的最后一条自居
+SELECT title FROM allnews ORDER BY storeTime;
+    -- 按多个列排序
+SELECT title FROM allnews ORDER BY storeTime, id;
+
+    -- 降序
+SELECT title FROM allnews ORDER BY storeTime DESC;
+```
+
+### 过滤
+`WHERE`

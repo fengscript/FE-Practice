@@ -728,6 +728,7 @@ var open = fs.open("a.txt", 'r+', (err, fd) => {
 
 ### `fs.mkdir()` 创建目录
 `fs.mkdir(path[, mode], callback)`
+在本文件所在目录下创建目录
 - mode ：目录权限，默认 0777
 
 

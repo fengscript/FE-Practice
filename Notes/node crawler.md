@@ -35,6 +35,26 @@ const $ = require('cheerio');
 $('li', 'ul', '<ul id="fruits">...</ul>');
 ```
 
+### 遍历
+`each((index,element)=>{}`以后，在闭包内要用jquery DOM 只需要 `$(element)`：
+```javascript
+$(".list li").each((index, ele) => {
+    let item = {
+        title: $(ele).find(".picture img").attr("alt"),
+        time: $(ele).find(".binfo .fl .time").text(),
+        // intro: element.intro,
+        titleImg: $(ele).children(".picture").attr("href"),
+        // keyWords: element.keywords,
+        tags: $(ele).find(".tags a").text(),
+        auther: $(ele).find(".binfo .fl source").text(),
+        url: $(ele).find(".detail h3 a").attr("href")
+    };
+    tnews.push(item)
+})
+```
+
+
+
 
 # 踩坑
 ## `request` 和 `superagent`
@@ -88,6 +108,25 @@ TypeError: Cannot read property 'length' of undefined
 ```
 `body`打印了明显能看到那些属性，但是这里确取不到，灵机一动，经过上面看到的 `JSON.pase` 一下后就OK了
 
+#### 所以呢
+`request` 去取页面，就解码：
+```javascript
+request.get({
+    url: url,
+    encoding: null
+}, function (err, res, body) {
+    console.log("statusCode " + res.statusCode);
+    if (err) console.log(err);
+    body = iconv.decode(body, 'gbk');
+    const $ = cheerio.load(body);
+}
+```
+
+去取的 `API`，就直接：
+```javascript
+body = JSON.parse(body);
+let data = body["data"];
+```
 
 
 

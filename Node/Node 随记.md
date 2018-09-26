@@ -132,3 +132,108 @@ require 过的文件会加载到缓存，所以多次 require 同一个文件（
 2. 不在最外层 require，在用到的地方 require，通常在函数的内部 
 
  > 要时刻注意你项目的依赖关系不要过于复杂，哪天你发现一个你明明已经 exports 了的方法报 undefined is not a function，我们就该提醒一下自己：哦，也许是它来了。 -.-
+
+
+# fs
+## 下面所有操作都要注意 `path`
+读/写都要注意 `path`，必须是全的路径，比如：
+```javascript
+const _checkFileExist = (dirName) => {
+    return fs.existsSync(path.join(__dirname, dirName));
+}
+```
+
+
+## 文件 / 目录是否存在检测
+
+两种，一种是检测 `fs.exists()` ，`fs.existsSync()` 返回的 `Boolean`
+，一种是检测 `fs.state().isDirectory()`
+
+这样子的：
+```javascript
+//检查某个目录是否存在
+var stat = fs.statSync(path.join(__dirname,'content'));
+console.log(stat.isDirectory());//为true的话那么存在，如果为false不存在
+//检查某个文件是否存在
+try{
+    fs.statSync(path.join(__dirname, 'content/a1.txt'));
+    //如果可以执行到这里那么就表示存在了
+    console.log('haode');
+}catch(e){
+    //捕获异常
+}
+```
+或者讲究一点：
+```javascript
+const path = require('path');  
+const fs = require('fs');  
+const util={};  
+/** 
+ * 检查路径是否存在 如果不存在则创建路径 
+ * @param {string} folderpath 文件路径 
+ */  
+util.checkDirExist=(folderpath)=>{  
+  const pathArr=folderpath.split('/');  
+  let _path='';  
+  for(let i=0;i<pathArr.length;i++){  
+    if(pathArr[i]){  
+      _path +=`/${pathArr[i]}`;  
+      if (!fs.existsSync(_path)) {  
+        fs.mkdirSync(_path);  
+      }  
+    }  
+  }  
+}  
+module.exports = util;  
+```
+还有 `promise` 异版本的：
+https://blog.csdn.net/samfung09/article/details/80906577
+
+
+## 文件随时更新
+
+我要随时更新一个文件,用， `fs.openSync()` 没有写入，用 `fs.open()`就对了，待会再细究 
+
+
+```javascript
+let writeLogToFile = function (content) {
+    if (!_checkFileExist(config.LOG_DICTIONARY_NAME)) {
+        console.log("目录不存在 创建")
+        fs.mkdirSync(`${__dirname}/${config.LOG_DICTIONARY_NAME}`, function (err) {
+            if (err) console.error("创建目录失败");
+            fs.open(`${__dirname}/${config.LOG_DICTIONARY_NAME}/${getCurrentDate.day()}.txt`, "a+", function (err, fd) {
+                if (err) return console.error("err: " + err);
+                fs.writeFileSync(fd, content + "\n", function (err) {
+                    if (err) return console.error("err: " + err);
+                })
+            })
+
+        });
+    } else {
+        console.log("开始写入")
+        fs.open(`${__dirname}/${config.LOG_DICTIONARY_NAME}/${getCurrentDate.day()}.txt`, "a+", function (err, fd) {
+            if (err) return console.error("err: " + err);
+            fs.writeFileSync(fd, content + "\n", function (err) {
+                if (err) return console.error("err: " + err);
+            })
+        })
+    }
+
+}
+```
+
+# Modules
+自己制作时候：
+`myTool.js`:
+```javascript
+let tool = {};
+tool.functional = .....
+
+module.exports = tool;
+```
+
+引入时候，一定要相对路径：
+```javascript
+const tool = require('./myTool');
+```
+

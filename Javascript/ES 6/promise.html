@@ -1,44 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Document</title>
 </head>
+
 <body>
 
 
-<script type="text/javascript">
-	// function timeout(ms){
-	// 	return new Promise((resolve, reject)=>{
-	// 		setTimeout(resolve, ms, 'done')
-	// 	});
-	// }
-	//
-	// timeout(1000).then((value) => {
-	// 	document.write(value)
-	// })
+	<script type="text/javascript">
+		// function timeout(ms){
+		// 	return new Promise((resolve, reject)=>{
+		// 		setTimeout(resolve, ms, 'done')
+		// 	});
+		// }
+		//
+		// timeout(1000).then((value) => {
+		// 	document.write(value)
+		// })
 
 
-	let promise = new Promise(function(resolve, reject) {
-		document.write('Set'+"<br>")
-		resolve()
-	});
-	promise.then(function(){
-		document.write('Resolved'+"<br>")
-	})
-	//或者也可
+		let promise = new Promise(function (resolve, reject) {
+			document.write('Set' + "<br>")
+			resolve("something")
+		});
+		promise.then(function (data) {
+			document.write('Resolved' + "<br>")
+			document.write(data + "<br>")
+		})
+		//或者也可
 
-	// let promise = new Promise(function(resolve, reject) {
-	// 	document.write('Set'+"<br>")
-	// 	resolve()
-	// }).then(function(){
-	// 	document.write('Resolved'+"<br>")
-	// });
+		// let promise = new Promise(function(resolve, reject) {
+		// 	document.write('Set'+"<br>")
+		// 	resolve()
+		// }).then(function(){
+		// 	document.write('Resolved'+"<br>")
+		// });
 
 
-	document.write('hi'+"<br>")
-</script>
+		document.write('hi' + "<br>")
+	</script>
 </body>
+
 </html>

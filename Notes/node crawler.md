@@ -79,6 +79,41 @@ $(".list li").each((index, ele) => {
 })
 ```
 
+### `request`简单用法
+`get`：
+```javascript
+// form方式传参，在后台需要用 req.body 来获取请求参数
+const request = require('request');
+request.get('http://localhost:3000/users/sign-up',{
+    form : {
+        uname : 'asd',
+        password : 1234
+    }
+},function (err,data) {
+    console.log('status:%s--res.body:%j',data.statusCode,JSON.parse(data.body));
+});
+
+// url方式传参,在后台用 req.query 来获取请求参数
+request.get('http://localhost:3000/users/sign-up?uname=zhangsan&password=123456',function(err,data){...})
+
+
+```
+
+`POST`:
+```javascript
+request.post('http://localhost:3000/users/sign-up',{
+    form : {
+        uname : 'ads',
+        password : 1234
+    }
+},function (err,data) {...});
+```
+
+
+
+
+
+
 ### `superagent`
 如上，就需要 `superagent-charset` 这个库，具体用法谷歌去吧烦死了
 

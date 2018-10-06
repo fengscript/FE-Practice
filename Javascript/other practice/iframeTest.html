@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>This is a iframe test text.</h1>
+    <div id="message">
+        Hello World!
+    </div>
+    <div id="reciveText"></div>
+    <script>
+        var recive = document.getElementById('reciveText');
+
+
+        window.onload = function () {
+            var messageEle = document.getElementById('message');
+            window.addEventListener('message', function (e) {
+                alert(e.origin);
+                
+                messageEle.innerHTML = "从" + e.origin + "收到消息： " + e.data;
+            });
+        }
+    </script>
+</body>
+
+</html>

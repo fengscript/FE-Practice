@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>POSTMESSAGE TEST</title>
+</head>
+
+<body>
+
+
+
+    <iframe id="myframe" src="http://192.168.0.101:8082/iframeTest.html"></iframe>
+
+    <p>Click the button to change the background color of the document contained in the iframe.</p>
+
+    <p id="demo"></p>
+
+    <button onclick="myFunction()">Try it</button>
+    <div id="messageBox">
+        MSG BOX
+    </div>
+    <input id="sendMessage" type="text">
+    <button id="send">发送</button>
+    <script>
+        // 架在 http 服务器才可以，本地直接打开不OK
+        function myFunction() {
+            var x = document.getElementById("myframe");
+            console.log(x.contentWindow);
+            var y = (x.contentWindow || x.contentDocument);
+            if (y.document) y = y.document;
+            y.body.style.backgroundColor = "red";
+        }
+
+        
+        let btn = document.getElementById('send');
+        let domain = window.location.host;
+        let url = '/iframeTest.html';
+        let popWindow = window.open(url, 'myWindow');
+
+        let reciver = document.getElementById('myframe').contentWindow;
+
+        let message = `a test msg from : ${window.location.href} - ${new Date()}`;
+        console.log(`msg : ${window.location.href} - ${new Date()}`);
+
+        console.log(popWindow);
+        console.log(popWindow.opener);
+        // popWindow.postMessage(message, "http://" + domain + url);
+
+        function receiveMessage(event) {
+            console.log(event);
+            // if (event.origin !== url){
+            //     return;
+            // }else{
+            document.getElementById('messageBox').innerHTML = `从  ${event.source.location.href}  收到消息： ${event.data}`;
+            // }
+        }
+        // window.addEventListener("message", receiveMessage, false);
+
+        btn.addEventListener('click', function (e) {
+            var sendMessage = document.getElementById('sendMessage').value;
+            console.log(sendMessage);
+            // reciver.postMessage("Hello " + sendMessage + "！", "http://" + domain + url);
+
+
+            popWindow.postMessage(`从 ${domain} 发送消息： ${sendMessage}`, "http://" + domain + url);
+        });
+    </script>
+</body>
+
+</html>

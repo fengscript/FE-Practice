@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class FYG {
+
+            constructor(opt) {
+                this.opt = Object.assign({
+                    name: "fyg",
+                    age: 18
+                }, opt)
+
+                this.name = this.opt.name;
+                this.age = this.opt.age;
+            }
+
+            sayName() {
+                console.log(this.name)
+            }
+            sayAge() {
+                console.log(this.age)
+            }
+        }
+
+
+        let test = new FYG({
+            name: "FYG"
+        })
+
+        test.sayName();
+
+
+        class newFYG extends FYG{
+            constructor (opt, address) {
+                super(opt);
+                console.log(opt)
+                this.address = opt.address
+            }
+
+            sayAddress(){
+                console.log(this.address)
+            }
+            
+        }
+
+        let test2 = new newFYG({
+            address:"xian"
+        })
+        test2.sayAddress()
+        test2.sayAge()
+    </script>
+</body>
+
+</html>

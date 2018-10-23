@@ -13,11 +13,13 @@
         class FYG {
 
             constructor(opt) {
-                this.opt = Object.assign({
+                opt = Object.assign({
                     name: "fyg",
                     age: 18
                 }, opt)
-
+                
+                this.opt = opt;
+                console.log(this.opt);
                 this.name = this.opt.name;
                 this.age = this.opt.age;
             }
@@ -38,24 +40,43 @@
         test.sayName();
 
 
-        class newFYG extends FYG{
-            constructor (opt, address) {
+        class newFYG extends FYG {
+            constructor(opt, address) {
                 super(opt);
                 console.log(opt)
                 this.address = opt.address
             }
 
-            sayAddress(){
+            sayAddress() {
                 console.log(this.address)
             }
-            
+
         }
 
         let test2 = new newFYG({
-            address:"xian"
+            address: "xian"
         })
         test2.sayAddress()
         test2.sayAge()
+
+
+
+        class A {
+            constructor() {
+                console.log(new.target.name); // new.target 指向当前正在执行的函数
+            }
+        }
+
+        class B extends A {
+            constructor (){
+                super();
+            }
+        }
+
+        new A(); // A
+        new B(); // B
+        //super 虽然代表了父类 A 的构造函数，但是返回的是子类 B 的实例，即 super 内部的 this 指的是 B，因此 super() 在这里相当于 A.prototype.constructor.call(this, props)
+
     </script>
 </body>
 

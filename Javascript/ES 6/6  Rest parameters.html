@@ -19,6 +19,18 @@
         }
 
         console.log(test(1,2,3));
+
+
+
+        // 默认参数
+
+        function desc ({name = 'fyg',age = 26, career="FrontEnd"} = {}) {
+            console.log(name,age,career);
+        }
+        desc({
+            career:"后台"
+        })
+
     </script>
 </body>
 

@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-	</head>
-	<body>
-		
-		<script type="text/javascript">
-			var add = (x,y)=>{
-				var temp = (a,b)=>a+b;
-				return temp(x,y)
-			}
-			
-			
-			document.write(add(1,2))
-		</script>
-	</body>
+
+<head>
+	<meta charset="UTF-8">
+	<title>arrow function test</title>
+</head>
+
+<body>
+
+	<script type="text/javascript">
+		var add = (x, y) => {
+			var temp = (a, b) => a + b;
+			return temp(x, y)
+		}
+
+
+		document.write(add(1, 2))
+
+		// 就是柯里化了
+		//  于是 n个连续箭头函数 就相当于 柯里化了 n-1 次
+		var add2 = x => y => {
+			console.log(x + y);
+		};
+
+		add2(2)(3)
+	</script>
+</body>
+
 </html>

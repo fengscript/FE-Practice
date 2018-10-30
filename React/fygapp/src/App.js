@@ -2,7 +2,7 @@
  * @Author: fyg 
  * @Date: 2018-10-24 12:35:19 
  * @Last Modified by: fyg
- * @Last Modified time: 2018-10-29 23:24:00
+ * @Last Modified time: 2018-10-30 20:54:07
  */
 import React, { Component } from 'react';
 
@@ -113,6 +113,8 @@ class App extends Component {
 
           {/* <TolggleButton /> */}
           <LoginControl />
+          <List />
+          <NumberList numbers={numbers} />
         </header>
       </div>
     );
@@ -268,8 +270,8 @@ function GuestGreeting(props) {
 function Greeting(props) {
   const isLogin = props.isLoggedIn;
   if (isLogin) {
-    // console.log(true)
-    return <UserGreeting />
+    return null
+    // return <UserGreeting />
   }
   // console.log(false)
   return <GuestGreeting />
@@ -282,7 +284,7 @@ function LogInBtn(props) {
   )
 }
 function LogOutBtn(props) {
-  let say = _=>{
+  let say = _ => {
     console.log('invoke')
   }
   return (
@@ -307,36 +309,67 @@ class LoginControl extends Component {
     this.setState({
       isLogin: true
     })
-    console.log('invoke')
-    console.log(this.state.isLogin)
   };
   handleLogOutClick() {
     this.setState({
       isLogin: false
     })
   };
+  // render() {
+  //   const isLogin = this.state.isLogin;
+  //   let button;
+
+  //   if (isLogin) {
+  //     button = <LogOutBtn onClick={this.handleLogOutClick} />
+  //   } else {
+  //     button = <LogInBtn onClick={this.handleLogInClick} />
+  //   }
+  //   return (
+  //     <div>
+  //       <Greeting isLoggedIn={isLogin} />
+  //       {button}
+  //     </div>
+  //   )
+  // }
+
+
+  // 更好的，用内联if
   render() {
     const isLogin = this.state.isLogin;
-    let button;
-
-    if (isLogin) {
-      button = <LogOutBtn onClick={this.handleLogOutClick} />
-    } else {
-      button = <LogInBtn onClick={this.handleLogInClick} />
-    }
     return (
       <div>
         <Greeting isLoggedIn={isLogin} />
-        {button}
+        {
+          this.state.isLogin ? (<LogOutBtn onClick={this.handleLogOutClick} />) : (<LogInBtn onClick={this.handleLogInClick} />)
+        }
       </div>
     )
   }
-
 }
 
+/**
+ * 列表
+ */
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =>
+  <li>{number}</li>
+)
 
+function List(props) {
+  return (
+    <ul>{listItems}</ul>
+  )
+}
 
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    <li key={number.toString()}>{number}</li>
+  );
 
-
+  return (
+    <ul>{listItems}</ul>
+  );
+}
 
 export default App;

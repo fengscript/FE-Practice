@@ -1,3 +1,27 @@
+/*
+ * @Author: fyg 
+ * @Date: 2018-10-25
+ * @Last Modified by: fyg
+ * @Last Modified time: 2018-10-30 20:58:12
+ */
+
+
+# JSX
+嵌入表达式：用 `{ }`
+```javascript
+render() {
+  const isLoggedIn = this.state.isLoggedIn;
+  return (
+    <div>
+      The user is <b>{isLoggedIn ? 'currently' : 'not'}</b> logged in.
+    </div>
+  );
+}
+```
+> 在 `js` 中， `true && expression` 总是会评估为 `expression` ，`false && expression` 总是执行为 false 
+
+
+
 # 组件
 ## 元素
 元素是React DOM之中描述UI界面的最小单位
@@ -158,6 +182,113 @@ this.setState((state, props) => ({
 ```
 
 
+## 条件渲染 / 列表
+要么：
+```javascript
+render() {
+    const isLogin = this.state.isLogin;
+    let button;
+
+    if (isLogin) {
+      button = <LogOutBtn onClick={this.handleLogOutClick} />
+    } else {
+      button = <LogInBtn onClick={this.handleLogInClick} />
+    }
+    return (
+      <div>
+        <Greeting isLoggedIn={isLogin} />
+        {button}
+      </div>
+    )
+  }
+```
+
+要么用内联的 `if`：
+```javascript
+render(){
+  const isLogin = this.state.isLogin;
+  return (
+    <div>
+      <Greeting isLoggedIn={isLogin} />
+      {
+        this.state.isLogin ? (<LogOutBtn onClick={this.handleLogOutClick} />) : (<LogInBtn onClick={this.handleLogInClick} />)
+      }
+    </div>
+  )
+}
+```
+**组件里面返回 `null` 将不渲染（隐藏）该组件**
+```javascript
+function Greeting(props) {
+  const isLogin = props.isLoggedIn;
+  if (isLogin) {
+    return null
+  }
+  return <GuestGreeting />
+}
+```
+
+> 从组件的 render 方法返回 null 不会影响组件生命周期方法的触发。 例如， componentDidUpdate 仍将被调用。
+
+
+## List & Key
+遍历一个 `list`，然后**对于每一项都返回一个元素即可**
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    <li key={number.toString()>{number}</li>
+  );
+
+  return (
+    <ul>{listItems}</ul>
+  );
+}
+
+<NumberList numbers={numbers} />
+```
+
+`key` 套路同 `vue`，用来提高对数组处理的性能
+
+> `Key` 被用来帮助 `React` 标识哪个项被修改、添加或者移除了。
+>
+> 如果列表项的顺序可能改变，我们不建议使用索引作为 keys。这可能会对性能产生负面影响，并可能导致组件状态问题。 
+
+默认使用索引作为键(key)。
+
+`key`应该放在数组遍历处理过程中的元素中，而不是展示组件中
+
+
+
+## Form
+表单元素自然地保留了一些内部状态
+
+
+
+
+
+
+
+
+## 生命周期方法
+  - componentDidMount 组件输出到 `DOM` 后会执行钩子
+  - componentWillUnmount
+
+
+# 事件
+```javascript
+<button onClick={activateLasers}>
+  Activate Lasers
+</button>
+```
+
+> 一般情况下，如果你引用一个后面没跟 () 的方法，例如 onClick={this.handleClick} ，那你就应该 绑定(bind) 该方法。
+
+> 引用一个方法是后面没有()，如onClick = {this.handleClick}，就会绑定该方法
+
+
+# Advancee
 
 ## Presentational & Container
 
@@ -180,20 +311,3 @@ this.setState((state, props) => ({
 > 受控组件的值由 props 或 state 传入，用户在元素上交互或输入内容会引起应用 state 的改变。 在state 改变之后重新渲染组件，我们才能在页面中看到元素中值的变化，假如组件没有绑定事件处理函数改变 state ，用户的输入是不会起到任何效果的
 
 > 类似于传统的 DOM 表单控件，用户输入不会直接引起应用 state 的变化，我们也不会直接为非受控组件传入值。想要获取非受控组件，我们需要使用一个特殊的 ref 属性，同样也可以使用 defaultValue 属性来为其指定一次性的默认值
-
-
-## 生命周期方法
-  - componentDidMount 组件输出到 `DOM` 后会执行钩子
-  - componentWillUnmount
-
-
-# 事件
-```javascript
-<button onClick={activateLasers}>
-  Activate Lasers
-</button>
-```
-
-> 一般情况下，如果你引用一个后面没跟 () 的方法，例如 onClick={this.handleClick} ，那你就应该 绑定(bind) 该方法。
-
-> 引用一个方法是后面没有()，如onClick = {this.handleClick}，就会绑定该方法

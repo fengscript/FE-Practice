@@ -2,17 +2,15 @@
  * @Author: fyg 
  * @Date: 2018-10-24 12:35:19 
  * @Last Modified by: fyg
- * @Last Modified time: 2018-10-30 20:54:07
+ * @Last Modified time: 2018-10-30 23:28:51
  */
-import React, { Component } from 'react';
-
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
 // function TimeShow (props) {
 //   return <h3>{props.data}</h3>
 // }
-
 
 class TimeShow2 extends Component {
   render() {
@@ -20,17 +18,17 @@ class TimeShow2 extends Component {
       <div>
         <h3>{this.props.date}</h3>
       </div>
-    )
+    );
   }
 }
 
 class TimeShow3 extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       date: new Date()
-    }
+    };
   }
 
   render() {
@@ -38,7 +36,7 @@ class TimeShow3 extends Component {
       <div>
         <h3>{this.state.date.toLocaleDateString()}</h3>
       </div>
-    )
+    );
   }
 }
 
@@ -48,30 +46,27 @@ function CountNumber(props) {
       <h3>{props.data}</h3>
       <h3>{props.data2}</h3>
     </div>
-  )
+  );
 }
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.counterAdd = this.counterAdd.bind(this);
     this.state = {
-      color: 'red',
+      color: "red",
       countInit: 0,
-      countInit2: 1,
+      countInit2: 1
     };
   }
 
   componentDidMount() {
     this.counterAdd();
-
   }
-
 
   componentWillUnmount() {
-    clearInterval(this.addTimer)
+    clearInterval(this.addTimer);
   }
-
 
   counterAdd() {
     // let countInit = this.state.countInit;
@@ -80,15 +75,13 @@ class App extends Component {
       this.setState({
         // 我擦 这里用  this.state.countInit++ 就崩了。。。。妈蛋
         countInit: this.state.countInit + 1
-      })
+      });
 
-      this.setState((state) => ({
+      this.setState(state => ({
         countInit2: state.countInit2 + 1
-      }))
-    }, 1000)
-
+      }));
+    }, 1000);
   }
-
 
   render() {
     return (
@@ -107,7 +100,10 @@ class App extends Component {
             Learn React
           </a>
           {/* <h3>{this.state.countInit}</h3> */}
-          <CountNumber data={this.state.countInit} data2={this.state.countInit2} />
+          <CountNumber
+            data={this.state.countInit}
+            data2={this.state.countInit2}
+          />
           {/* <TimeShow2 date = {new Date().toLocaleDateString()}/> */}
           {/* <TimeShow3 /> */}
 
@@ -115,12 +111,12 @@ class App extends Component {
           <LoginControl />
           <List />
           <NumberList numbers={numbers} />
+          <FormTest />
         </header>
       </div>
     );
   }
-};
-
+}
 
 // class ControlledInput extends React.Component {
 //   constructor() {
@@ -221,7 +217,6 @@ class App extends Component {
 //   document.getElementById("root")
 // );
 
-
 /**
  * EVT TEST
  */
@@ -239,21 +234,19 @@ class TolggleButton extends Component {
   handleClick() {
     this.setState(state => ({
       isToggle: !state.isToggle
-    }))
+    }));
   }
 
   render() {
     return (
       <div>
-        <button onClick={this.handleClick}>{
-          this.state.isToggle ? 'ON' : 'OFF'
-        }</button>
+        <button onClick={this.handleClick}>
+          {this.state.isToggle ? "ON" : "OFF"}
+        </button>
       </div>
-    )
+    );
   }
-};
-
-
+}
 
 /**
  * 条件渲染
@@ -270,36 +263,30 @@ function GuestGreeting(props) {
 function Greeting(props) {
   const isLogin = props.isLoggedIn;
   if (isLogin) {
-    return null
+    return null;
     // return <UserGreeting />
   }
   // console.log(false)
-  return <GuestGreeting />
+  return <GuestGreeting />;
 }
 function LogInBtn(props) {
-  return (
-    <button onClick={props.onClick}>
-      LogIn
-    </button>
-  )
+  return <button onClick={props.onClick}>LogIn</button>;
 }
 function LogOutBtn(props) {
   let say = _ => {
-    console.log('invoke')
-  }
+    console.log("invoke");
+  };
   return (
     // <button onClick={say}>
-    <button onClick={props.onClick}>
-      LogOut
-    </button>
-  )
+    <button onClick={props.onClick}>LogOut</button>
+  );
 }
 
 class LoginControl extends Component {
   constructor(props) {
     super(props);
-    this.handleLogInClick = this.handleLogInClick.bind(this);
-    this.handleLogOutClick = this.handleLogOutClick.bind(this);
+    // this.handleLogInClick = this.handleLogInClick.bind(this);
+    // this.handleLogOutClick = this.handleLogOutClick.bind(this);
     this.state = {
       isLogin: false
     };
@@ -308,13 +295,13 @@ class LoginControl extends Component {
   handleLogInClick() {
     this.setState({
       isLogin: true
-    })
-  };
+    });
+  }
   handleLogOutClick() {
     this.setState({
       isLogin: false
-    })
-  };
+    });
+  }
   // render() {
   //   const isLogin = this.state.isLogin;
   //   let button;
@@ -332,18 +319,19 @@ class LoginControl extends Component {
   //   )
   // }
 
-
   // 更好的，用内联if
   render() {
     const isLogin = this.state.isLogin;
     return (
       <div>
         <Greeting isLoggedIn={isLogin} />
-        {
-          this.state.isLogin ? (<LogOutBtn onClick={this.handleLogOutClick} />) : (<LogInBtn onClick={this.handleLogInClick} />)
-        }
+        {this.state.isLogin ? (
+          <LogOutBtn onClick={this.handleLogOutClick.bind(this)} />
+        ) : (
+          <LogInBtn onClick={this.handleLogInClick.bind(this)} />
+        )}
       </div>
-    )
+    );
   }
 }
 
@@ -351,31 +339,59 @@ class LoginControl extends Component {
  * 列表
  */
 const numbers = [1, 2, 3, 4, 5];
-const listItems = numbers.map((number) =>
-  <li>{number}</li>
-)
+const listItems = numbers.map(number => <li>{number}</li>);
 
 function List(props) {
-  return (
-    <ul>{listItems}</ul>
-  )
+  return <ul>{listItems}</ul>;
 }
 
 function NumberList(props) {
   const numbers = props.numbers;
-  const listItems = numbers.map((number) =>
+  const listItems = numbers.map(number => (
     <li key={number.toString()}>{number}</li>
-  );
+  ));
 
-  return (
-    <ul>{listItems}</ul>
-  );
+  return <ul>{listItems}</ul>;
+}
+
 /**
  * Form
  */
 
+class FormTest extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: "" };
+    this.handChange = this.handChange.bind(this);
+    this.handSubmit = this.handSubmit.bind(this);
+  }
 
- 
+  handChange(event) {
+    this.setState({
+      value: event.target.value
+    });
+    console.log(event.target.value);
+  }
+  handSubmit(event) {
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handSubmit}>
+        <label htmlFor="input">
+          Name:
+          <input
+            type="text"
+            name="input"
+            value={this.state.value}
+            onChange={this.handChange}
+          />
+        </label>
+        <input type="submit" value="submit" />
+      </form>
+    );
+  }
 }
 
 export default App;

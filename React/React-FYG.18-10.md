@@ -2,7 +2,7 @@
  * @Author: fyg 
  * @Date: 2018-10-25
  * @Last Modified by: fyg
- * @Last Modified time: 2018-10-30 20:58:12
+ * @Last Modified time: 2018-10-30 22:59:35
  */
 
 
@@ -262,9 +262,13 @@ function NumberList(props) {
 
 
 ## Form
-表单元素自然地保留了一些内部状态
+HTML 的表单元素自然地保留了一些内部状态
 
+### Controlled Components
 
+> 在 HTML 中，表单元素表单元素通常保持自己的状态，并根据用户输入进行更新。
+> 
+> 我们可以通过使 React 的 state 成为 “单一数据源原则” 来结合这两个形式。然后渲染表单的 React 组件也可以控制在用户输入之后的行为。这种形式，其值由 React 控制的输入表单元素称为“受控组件”。
 
 
 
@@ -286,6 +290,57 @@ function NumberList(props) {
 > 一般情况下，如果你引用一个后面没跟 () 的方法，例如 onClick={this.handleClick} ，那你就应该 绑定(bind) 该方法。
 
 > 引用一个方法是后面没有()，如onClick = {this.handleClick}，就会绑定该方法
+
+就是说，为了在子组件中访问父组件属性和方法，要绑定 `this` 到父组件的 `context`，要么
+```javascript
+class XXX extends Component {
+  constructor(props) {
+    super(props);
+    this.xxx = this.xxx.bind(this);
+  ...
+```
+
+要么，在回调中使用一个 `arrow function`：
+```javascript
+render() {
+    // This syntax ensures `this` is bound within handleClick
+    return (
+      <button onClick={(e) => this.handleClick(e)}>
+        Click me
+      </button>
+    );
+  }
+}
+```
+
+或者在回调中绑定：
+```javascript
+return (
+    <button onClick={(e) => this.handleClick(e).bind(this)}>
+      Click me
+    </button>
+  );
+```
+
+## 传参
+```javascript
+//要么
+<button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
+
+//要么
+<button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
+```
+
+
+
+## 阻止默认行为
+不能通过 `return false`，需要显式的：
+```javascript
+function handleClick(e) {
+  e.preventDefault();
+  console.log('The link was clicked.');
+}
+```
 
 
 # Advancee

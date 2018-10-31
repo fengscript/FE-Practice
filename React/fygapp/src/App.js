@@ -2,7 +2,7 @@
  * @Author: fyg 
  * @Date: 2018-10-24 12:35:19 
  * @Last Modified by: fyg
- * @Last Modified time: 2018-10-30 23:28:51
+ * @Last Modified time: 2018-10-31 23:51:01
  */
 import React, { Component } from "react";
 import logo from "./logo.svg";
@@ -95,8 +95,7 @@ class App extends Component {
             className="App-link"
             href="https://reactjs.org"
             target="_blank"
-            rel="noopener noreferrer"
-          >
+            rel="noopener noreferrer">
             Learn React
           </a>
           {/* <h3>{this.state.countInit}</h3> */}
@@ -112,6 +111,7 @@ class App extends Component {
           <List />
           <NumberList numbers={numbers} />
           <FormTest />
+          <SelectTest />
         </header>
       </div>
     );
@@ -393,5 +393,36 @@ class FormTest extends Component {
     );
   }
 }
+
+
+// select
+
+class SelectTest extends Component {
+  constructor (props) {
+    super(props)
+    this.state={value:"C"}
+  }
+  handChange(event) {
+    this.setState({
+      value: event.target.value
+    });
+  }
+
+  render () {
+    return (
+      <form>
+        <label htmlFor="seltcttest">
+          <select onChange={this.handChange} value={this.state.value} name="seltcttest" id="">
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+          </select>
+        </label>
+      </form>
+    )
+  }
+}
+
+
 
 export default App;

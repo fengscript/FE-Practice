@@ -2,7 +2,7 @@
  * @Author: fyg 
  * @Date: 2018-10-25
  * @Last Modified by: fyg
- * @Last Modified time: 2018-10-30 22:59:35
+ * @Last Modified time: 2018-10-31 23:54:10
  */
 
 
@@ -38,7 +38,7 @@ const element = React.createElement('h1', null, 'Hello, world');
 
 
 
-# 组件
+## 组件
 组件是构建在元素的基础之上的
 
 是可以被独立划分的、可复用的、独立的模块。
@@ -46,7 +46,9 @@ const element = React.createElement('h1', null, 'Hello, world');
 类似于JS当中对function函数的定义，一般接收一个名为 `props` 的输入，然后返回相应的 `React` 元素，再交给 `ReactDOM` ，最后渲染到屏幕上
 
 
-原生 `HTML` 元素名以`小写字母`开头，而自定义的 `React` 类名以`大写字母`开头，比如 `HelloMessage` 不能写成 `helloMessage`。除此之外还需要注意 **组件类只能包含一个顶层标签**
+原生 `HTML` 元素名以`小写字母`开头，而自定义的 `React` 类名以`大写字母`开头，
+
+**组件类只能包含一个顶层标签**
 
 
 分 函数式组件 或者类组件
@@ -85,7 +87,7 @@ class Clock extends React.Component {
 ```
 
 
-## props state
+### props state
 `React` 遇到一个代表用户定义组件的元素时，它将 `JSX` 属性以一个单独对象的形式( `props对象` )传递给相应的组件
 > 哎哟我感觉我脑子不太好，这里找了相关的4 、5个地方的文档，然后弄清楚了 函数式定义一个组件 => 实例化时候从 JSX 的属性向组件中传数据的流动
 > 
@@ -113,7 +115,7 @@ ReactDOM.render(
 
 **所有 `React` 组件都必须是纯函数，并禁止修改其自身 `props`**
 
-### state
+#### state
 `state` 和 `props` 类似，但是它是类组件私有的，是类定义的组件额外的特性
 
  有些容器组件需要定义 `state` 来更新和修改数据。 而子组件只能通过 `props` 来传递数据。
@@ -167,7 +169,7 @@ render(){
 
 
 
-### setState()
+#### setState()
 第 2 种 `setState() 的格式`:它接收一个函数，而不是一个对象。该函数接收前一个状态值作为第 1 个参数， 并将更新后的值作为第 2 个参数，避免这种情况：
 ```javascript
 this.setState({
@@ -271,8 +273,84 @@ HTML 的表单元素自然地保留了一些内部状态
 > 我们可以通过使 React 的 state 成为 “单一数据源原则” 来结合这两个形式。然后渲染表单的 React 组件也可以控制在用户输入之后的行为。这种形式，其值由 React 控制的输入表单元素称为“受控组件”。
 
 
+### textarea
+> html中，<textarea> 元素通过它的子节点定义了它的文本值 `<texarea>xxx</texarea>`
+
+而 `react` 中用 `value` 来控制对 `texarea` 元素的赋值，所以更像单行文本输入框：
+```javascript
+<textarea value={this.state.value} onChange={this.handleChange} />
+```
+
+### select
+默认选中 `seleted` 的处理: `this.state` 里面的一个 `value`来控制，把这个 `value` 赋搭配 `select`根标签即可：
+```javascript
+constructor (props) {
+  super(props)
+  this.state={value:"C"}
+}
+
+...
+render () {
+    return (
+      <form>
+        <label htmlFor="seltcttest">
+          <select onChange={this.handChange} value={this.state.value} name="seltcttest" id="">
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+          </select>
+        </label>
+      </form>
+    )
+  }
+```
+当然也可以多选：
+```javascript
+<select multiple={true} value={['B', 'C']}>
+```
+
+#### 多个input
+可以用一个事件来控制，给每个 `input` 赋给不同的 `name`，根据 `event.target.name`的值来选择要做什么：
+
+```javascript
+handleInputChange(event) {
+  const target = event.target;
+  const value = target.type === 'checkbox' ? target.checked : target.value;
+  const name = target.name;
+
+  this.setState({
+    [name]: value
+  });
+}
+
+render() {
+  return (
+    <form>
+      <label>
+        Is going:
+        <input
+          name="isGoing"
+          type="checkbox"
+          checked={this.state.isGoing}
+          onChange={this.handleInputChange} />
+      </label>
+      <br />
+      <label>
+        Number of guests:
+        <input
+          name="numberOfGuests"
+          type="number"
+          value={this.state.numberOfGuests}
+          onChange={this.handleInputChange} />
+      </label>
+    </form>
+  );
+}
+```
 
 
+### input
+`input` 是不受控组件
 
 
 ## 生命周期方法

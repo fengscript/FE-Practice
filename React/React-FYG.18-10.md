@@ -2,7 +2,7 @@
  * @Author: fyg 
  * @Date: 2018-10-25
  * @Last Modified by: fyg
- * @Last Modified time: 2018-10-31 23:54:10
+ * @Last Modified time: 2018-11-01 11:36:26
  */
 
 
@@ -348,14 +348,33 @@ render() {
 }
 ```
 
+## Controlled & Uncontrolled
 
-### input
-`input` 是不受控组件
+> 受控组件的值由 props 或 state 传入，用户在元素上交互或输入内容会引起应用 state 的改变。 在state 改变之后重新渲染组件，我们才能在页面中看到元素中值的变化，假如组件没有绑定事件处理函数改变 state ，用户的输入是不会起到任何效果的
+
+> 类似于传统的 DOM 表单控件，用户输入不会直接引起应用 state 的变化，我们也不会直接为非受控组件传入值。想要获取非受控组件，我们需要使用一个特殊的 ref 属性，同样也可以使用 defaultValue 属性来为其指定一次性的默认值
+
 
 
 ## 生命周期方法
   - componentDidMount 组件输出到 `DOM` 后会执行钩子
   - componentWillUnmount
+
+
+
+
+
+# Listing State Up
+
+
+
+
+
+
+
+
+
+
 
 
 # 事件
@@ -421,6 +440,8 @@ function handleClick(e) {
 ```
 
 
+
+
 # Advancee
 
 ## Presentational & Container
@@ -440,7 +461,4 @@ function handleClick(e) {
 > 
 > 需要通过类定义组件声明，并包含生命周期函数和其他附加方法
 
-## Controlled & Uncontrolled
-> 受控组件的值由 props 或 state 传入，用户在元素上交互或输入内容会引起应用 state 的改变。 在state 改变之后重新渲染组件，我们才能在页面中看到元素中值的变化，假如组件没有绑定事件处理函数改变 state ，用户的输入是不会起到任何效果的
 
-> 类似于传统的 DOM 表单控件，用户输入不会直接引起应用 state 的变化，我们也不会直接为非受控组件传入值。想要获取非受控组件，我们需要使用一个特殊的 ref 属性，同样也可以使用 defaultValue 属性来为其指定一次性的默认值

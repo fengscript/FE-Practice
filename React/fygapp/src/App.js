@@ -2,7 +2,7 @@
  * @Author: fyg 
  * @Date: 2018-10-24 12:35:19 
  * @Last Modified by: fyg
- * @Last Modified time: 2018-11-02 15:13:19
+ * @Last Modified time: 2018-11-18 22:26:46
  */
 import React, { Component } from "react";
 import logo from "./logo.svg";
@@ -447,9 +447,9 @@ class TemperatureInput extends Component {
   constructor(props) {
     super(props);
     this.state = { temperature: "123" };
-    this.handChange = this.handChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
-  handChange(event) {
+  handleChange(event) {
     // this.setState({
     //   value: event.target.value
     // });
@@ -462,8 +462,7 @@ class TemperatureInput extends Component {
     return (
       <fieldset>
         <legend>输入温度 {scaleNames[scale]}： </legend>
-        <input type="text" value={temperature} onChange={this.handChange} />
-        {/* <BoilingVerdict celsius={parseFloat(temperature)} /> */}
+        <input type="text" value={temperature} onChange={this.handleChange} />
       </fieldset>
     );
   }
@@ -527,5 +526,23 @@ function tryConvert(temperature, convert) {
   const rounded = Math.round(output * 1000) / 1000;
   return rounded.toString();
 }
+
+
+
+class tempauture2 extends Component {
+  render () {
+    return (
+      <div>
+        
+      </div>
+    )
+  }
+}
+
+
+
+
+
+
 
 export default App;

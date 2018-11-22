@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>vue 类型检测 2018</title>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <foo-component :foo-message="fooMessage"></foo-component>
+    </div>
+
+
+    <script type="text/javascript">
+      var fooComponent = {
+        props: {
+          fooMessage: String
+        },
+        template: "<div> {{ fooMessage }} </div>"
+      };
+
+      var vm = new Vue({
+        components: {
+          "foo-component": fooComponent
+        },
+        el: "#app",
+        data: {
+          fooMessage: 123
+        }
+      });
+    </script>
+  </body>
+</html>

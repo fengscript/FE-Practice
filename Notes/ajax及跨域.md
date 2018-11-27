@@ -138,7 +138,8 @@ var getJSON = function (url) {
     function handler() {
       if(this.readyState !== 4){return}
       if(this.status == 200){
-        resolve(this.response);
+        resolve(this.respo
+        nse);
       }else{
         reject(new Error(this.statusText))
       }

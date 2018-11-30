@@ -1,5 +1,5 @@
-# Blob
-一个 `Blob` 对象表示一个不可变的, 原始数据的类似文件对象。 `Blob` 表示的数据不一定是一个JavaScript原生格式 `blob` 对象本质上是 js 中的一个对象，里面可以储存大量的二进制编码格式的数据。
+# Blob 二进制对象
+一个 `Blob` 对象表示一个不可变的, 原始数据的类似文件对象。 `Blob` 表示的数据不一定是一个JavaScript原生格式， `blob` 对象本质上是 js 中的一个对象，里面可以储存大量的二进制编码格式的数据。
 
 ## prop / method
 - Blob.size  对象中所包含数据的大小（字节）
@@ -52,3 +52,41 @@ WindowOrWorkerGlobalScope.atob() 对用 `base-64` 编码过的字符串进行解
 let encodedData = window.btoa("Hello, world"); // 编码
 let decodedData = window.atob(encodedData); // 解码
 ```
+
+
+
+# Webworker
+检测
+```javascript
+if(typeof(Worker)!=="undefined")
+  {
+  // Yes! Web worker support!
+  // Some code.....
+  }
+else
+  { 
+  // Sorry! No Web Worker support..
+  }
+```
+
+
+创建
+
+```javascript
+const worker = new Worker('https://~.js');
+// 或者
+
+const data = `
+    // worker线程 do something
+    `;
+// 转成二进制对象
+const blob = new Blob([data]);
+// 生成url
+const url = window.URL.createObjectURL(blob);
+// 加载url
+const worker = new Worker(url);·
+```
+
+> 在项目中：我们可以把worker线程的逻辑写在js文件里面，然后字符串化，然后再export、import，配合webpack进行模块化管理,这样就很容易使用了。
+
+

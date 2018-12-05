@@ -65,7 +65,7 @@ let, const, class, extends, super, arrow functions, template string, destructuri
 
 ## 1.2 块级作用域
 
- ES6规定，函数本身的作用域，在其所在的块级作用域之内
+ES6规定，函数本身的作用域，在其所在的块级作用域之内
 
 如
 
@@ -81,7 +81,7 @@ function f() { console.log('I am outside!'); }
 }());
 ```
 
-ES5 因为函数提升，无论是否进入if，因为函数提升，函数声明都会被提升到当前作用域的顶部，是的 f()得到执行
+ES5 因为函数提升，无论是否进入if，因为函数提升，函数声明都会被提升到当前作用域的顶部，使的 f()得到执行
 
 
 

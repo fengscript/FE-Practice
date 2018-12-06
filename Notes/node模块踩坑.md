@@ -162,3 +162,49 @@ for (let index = 0; index < 2; index++) {
     }, index * 1000);
 }
 ```
+
+
+# packages.json
+## run
+```bash
+npm run xxx
+```
+运行写在 `"scripts:{}"`中的指令，如：
+```javascript
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "fyg": "mocha"
+  },
+```
+则：`npm run fyg`
+
+## 勾子
+`prexxx` 和 `postxxx`：
+```javascript
+"scripts": {
+    "prefyg": "echo \"xxx \" "
+    "fyg": "mocha"
+    "postfyg": "xxx"
+  },
+```
+
+
+
+
+# Yarn
+```bash
+yarn                #npm install
+yarn add xxx        #npm i xxx --save
+yarn global add xxx #npm i -g xxx
+yarn remove xxx     #npm uninstall xxx --save
+yarn add xxx -dev   #npm i xxx --save-dev
+yarn upgrade        #npm update --save
+yarn init           #npm init
+yarn run            #npm run
+yarn cache clean    #npm cache clean
+yarn --production  #npm install --production
+```
+
+
+

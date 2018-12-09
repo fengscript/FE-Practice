@@ -1,8 +1,8 @@
 /*
- * @Author: fyg 
- * @Date: 2018-10-24 12:35:19 
+ * @Author: fyg
+ * @Date: 2018-10-24 12:35:19
  * @Last Modified by: fyg
- * @Last Modified time: 2018-11-26 20:17:12
+ * @Last Modified time: 2018-12-09 21:54:42
  */
 import React, { Component } from "react";
 import logo from "./logo.svg";
@@ -113,6 +113,7 @@ class App extends Component {
           <FormTest />
           <SelectTest />
           <Calcultor />
+          <LowerUpper />
         </header>
       </div>
     );
@@ -527,22 +528,87 @@ function tryConvert(temperature, convert) {
   return rounded.toString();
 }
 
+//  my start
+function strConvert (str,status) {
+  if (status === 0) {
+    return str.toUpperCase();
+  }else{
+    return str.toLowerCase();
+  }
+}
+function Status(props) {
+  // return <div>现在的props值是{props.scale}</div>;
+  if (props.scale === 0) {
+    return <div>你输入了小写字符</div>;
+  } else {
+    return <div>你输入了大写字符</div>;
+  }
+}
 
+class StringInput extends Component {
+  constructor(props) {
+    super(props);
+    this.handInput = this.handInput.bind(this);
+  }
 
-class tempauture2 extends Component {
-  render () {
+  handInput(event) {
+    // this.setState({str:event.target.value})
+    this.props.onStrChange(event.target.value);
+  }
+  render() {
+    const str = this.props.str;
+    // const scale = this.props.scale;
     return (
       <div>
-        
+        <input type="text" value={str} onChange={this.handInput} />
       </div>
     )
   }
 }
 
+class LowerUpper extends Component {
+  constructor(props) {
+    super(props);
+    this.handUpperToLower = this.handUpperToLower.bind(this);
+    this.handLowerToUpper = this.handLowerToUpper.bind(this);
+    this.state = {
+      scale: 0,
+      str: " "
+    };
+  }
+  handLowerToUpper(str) {
+    this.setState({
+      scale: 1,
+      str
+    });
+  }
+  handUpperToLower(str) {
+    this.setState({
+      scale: 0,
+      str
+    });
+  }
+  render() {
+    const scale = this.state.scale;
+    const upper = strConvert(this.state.str, 0);
+    const lower = strConvert(this.state.str, 1);
 
-
-
-
-
+    return (
+      <div>
+        <StringInput
+          scale={0}
+          str={upper}
+          onStrChange={this.handLowerToUpper}
+        />
+        <StringInput
+          scale={1}
+          str={lower}
+          onStrChange={this.handUpperToLower}
+        />
+        <Status scale={scale}/>
+      </div>
+    );
+  }
+}
 
 export default App;

@@ -2,7 +2,7 @@
  * @Author: fyg 
  * @Date: 2018-10-25
  * @Last Modified by: fyg
- * @Last Modified time: 2018-11-28 19:55:44
+ * @Last Modified time: 2018-12-09 21:44:40
  */
 
 
@@ -36,7 +36,13 @@ const element = <h1>Hello, world</h1>;
 const element = React.createElement('h1', null, 'Hello, world');
 ```
 
-
+给元素属性上传值时
+```javascript
+<Element scale = "0" />
+//或者
+<Element scale = {0} />
+```
+都可以
 
 ## 组件
 组件是构建在元素的基础之上的

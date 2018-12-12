@@ -2,7 +2,7 @@
  * @Author: fyg 
  * @Date: 2018-10-25
  * @Last Modified by: fyg
- * @Last Modified time: 2018-12-11 23:18:53
+ * @Last Modified time: 2018-12-12 22:17:38
  */
 
 
@@ -568,6 +568,140 @@ function handleClick(e) {
     - render()
     - componentDidUpdate()
   - componentWillUnmount()
+
+
+# Refs & Doms
+什么时候用：
+- 处理焦点、文本选择或媒体控制。
+- 触发强制动画。
+- 集成第三方 DOM 库
+
+> 用 ref 中的 `current` 属性对节点的引用进行访问
+
+- `ref` 用于普通HTML元素时，接收底层DOM的 `current` 属性
+- 用于自定义组件时，`ref`对象会接收
+**不能在函数式组件上使用 ref 属性，因为它们没有实例**
+
+但是可以在函数式组件 函数内部使用 `ref`
+
+> ref 的更新会发生在 componentDidMount 或 componentDidUpdate 生命周期钩子之前
+
+```javascript
+class RefsTest extends Component {
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+    this.inputText = React.createRef();
+    this.onFocus = this.onFocus.bind(this);
+  }
+  onFocus() {
+    this.inputText.current.focus();
+  }
+  render() {
+    return (
+      <div>
+        <div id="fyg" ref={this.myRef} />
+        <input type="text" ref={this.inputText} />
+        <input type="button" value="获取焦点" onClick={this.onFocus} />
+      </div>
+    );
+  }
+}
+```
+
+
+
+## Ref 转发
+要控制子组件中的 `DOM`
+要么 `Forwarding Refs` 要么 `findDOMNode(component)`
+https://react.docschina.org/docs/forwarding-refs.html#forwarding-refs-to-dom-components
+（看完高阶组件再回来看这个）
+
+## 回调 Ref
+使用 `ref` 回调函数，在实例的属性中存储对 DOM 节点的引用。
+
+```javascript
+class AnotherInput extends Component {
+  constructor(props) {
+    super(props);
+    this.textInput = null;
+
+    this.setTextInput = element => {
+      this.textInput = element;
+    };
+    this.focusTexInput = () => {
+      // 直接可以用原生API了
+      if (this.textInput) this.textInput.focus();
+    };
+  }
+  componentDidMount() {
+    this.focusTexInput();
+  }
+  render() {
+    return (
+      <div>
+        <input type="text" ref={this.setTextInput} />
+        <input
+          type="button"
+          value="继续获得焦点"
+          onClick={this.focusTexInput}
+        />
+      </div>
+    );
+  }
+}
+```
+
+当然可以在组件间这样子传递：
+```javascript
+function CustomTextInput(props) {
+  return (
+    <div>
+      <input ref={props.inputRef} />
+    </div>
+  );
+}
+
+class Parent extends React.Component {
+  render() {
+    return (
+      <CustomTextInput
+        inputRef={el => this.inputElement = el}
+      />
+    );
+  }
+}
+```
+
+# 受控组件 & 非受控组件
+- 受控组件中：表单数据由 `React` 组件处理
+- 非受控组件：表单数据由 DOM 处理
+可以用非受控组件用 `ref` 获取 `DOM表单` 上的值，而不用给表单每个事件都来一个事件处理程序
+
+
+## 默认值
+非受控组件的默认值通过上一个 `defaultValue`来解决：
+```javascript
+render() {
+  return (
+    <form onSubmit={this.handleSubmit}>
+      <label>
+        Name:
+        <input
+          defaultValue="Bob"
+          type="text"
+          ref={(input) => this.input = input} />
+      </label>
+      <input type="submit" value="Submit" />
+    </form>
+  );
+}
+```
+
+- checkbox、radio ：`defaultChecked`
+- select 、 textarea ： `defaultValue`
+
+`<input type="file" />` 永远是非受控组件，因为值只能从用户选择文件之后获得
 
 
 # Advancee

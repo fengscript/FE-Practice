@@ -2,7 +2,7 @@
  * @Author: fyg
  * @Date: 2018-10-24 12:35:19
  * @Last Modified by: fyg
- * @Last Modified time: 2018-12-11 21:18:29
+ * @Last Modified time: 2018-12-12 22:13:52
  */
 import React, { Component } from "react";
 import logo from "./logo.svg";
@@ -126,6 +126,10 @@ class App extends Component {
           <Calcultor />
           <LowerUpper />
           <Search products={productsInfo} />
+          <RefsTest />
+          {/* <AutoFocusTextInput /> */}
+          <AnotherInput />
+          <UnControl />
         </header>
       </div>
     );
@@ -689,16 +693,16 @@ class ProductTable extends Component {
 }
 
 class SearchBar extends Component {
-  constructor (props) {
-    super(props)
-    this.handFilterInputChange=this.handFilterInputChange.bind(this);
-    this.handisStockInputChange=this.handisStockInputChange.bind(this);
+  constructor(props) {
+    super(props);
+    this.handFilterInputChange = this.handFilterInputChange.bind(this);
+    this.handisStockInputChange = this.handisStockInputChange.bind(this);
   }
-  handFilterInputChange(e){
-    this.props.onFilterInputChange(e.target.value)
+  handFilterInputChange(e) {
+    this.props.onFilterInputChange(e.target.value);
   }
-  handisStockInputChange(e){
-    this.props.onisStockInputChange(e.target.checked)
+  handisStockInputChange(e) {
+    this.props.onisStockInputChange(e.target.checked);
   }
   render() {
     return (
@@ -708,6 +712,7 @@ class SearchBar extends Component {
           type="text"
           value={this.props.filterText}
           onChange={this.handFilterInputChange}
+          autoFocus={true}
         />
         <p>
           <input
@@ -715,8 +720,7 @@ class SearchBar extends Component {
             name="onlyStock"
             checked={this.props.inStockOnly}
             onChange={this.handisStockInputChange}
-          />
-          {" "}
+          />{" "}
           只显示上架的
         </p>
       </form>
@@ -734,15 +738,15 @@ class Search extends Component {
     this.handFilterInput = this.handFilterInput.bind(this);
     this.handisStockInput = this.handisStockInput.bind(this);
   }
-  handFilterInput(filterText){
+  handFilterInput(filterText) {
     this.setState({
-      filterText:filterText
-    })
+      filterText: filterText
+    });
   }
-  handisStockInput(inStockOnly){
+  handisStockInput(inStockOnly) {
     this.setState({
-      inStockOnly:inStockOnly
-    })
+      inStockOnly: inStockOnly
+    });
   }
   render() {
     return (
@@ -750,8 +754,8 @@ class Search extends Component {
         <SearchBar
           filterText={this.state.filterText}
           inStockOnly={this.state.inStockOnly}
-          onFilterInputChange = {this.handFilterInput}
-          onisStockInputChange = {this.handisStockInput}
+          onFilterInputChange={this.handFilterInput}
+          onisStockInputChange={this.handisStockInput}
         />
         <ProductTable
           products={this.props.products}
@@ -796,5 +800,95 @@ const productsInfo = [
   },
   { category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7" }
 ];
+
+class RefsTest extends Component {
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+    this.inputText = React.createRef();
+    this.onFocus = this.onFocus.bind(this);
+  }
+  onFocus() {
+    this.inputText.current.focus();
+  }
+  render() {
+    return (
+      <div>
+        <div id="fyg" ref={this.myRef} />
+        <input type="text" ref={this.inputText} />
+        <input type="button" value="获取焦点" onClick={this.onFocus} />
+      </div>
+    );
+  }
+}
+// 可以继续包装一个组件，传进去ref
+// 我觉得是不是 autoFocus={true} 更好用- -！
+class AutoFocusTextInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.textInput = React.createRef();
+  }
+
+  componentDidMount() {
+    this.textInput.current.onFocus();
+  }
+
+  render() {
+    return <RefsTest ref={this.textInput} />;
+  }
+}
+// 回调 Refs
+class AnotherInput extends Component {
+  constructor(props) {
+    super(props);
+    this.textInput = null;
+
+    this.setTextInput = element => {
+      this.textInput = element;
+    };
+    this.focusTexInput = () => {
+      // 直接可以用原生API了
+      if (this.textInput) this.textInput.focus();
+    };
+  }
+  componentDidMount() {
+    this.focusTexInput();
+  }
+  render() {
+    return (
+      <div>
+        <input type="text" ref={this.setTextInput} />
+        <input
+          type="button"
+          value="继续获得焦点"
+          onClick={this.focusTexInput}
+        />
+      </div>
+    );
+  }
+}
+
+
+// 非受控组件
+class UnControl extends Component {
+  constructor (props) {
+    super(props)
+    this.handSubmit = this.handSubmit.bind(this);
+  }
+  handSubmit(event){
+    alert("从非受控组件来的值是："+this.input.value)
+    event.preventDefault();
+  }
+  render () {
+    return (
+      <form onSubmit={this.handSubmit}>
+        <input type="text" ref={
+          element=>{this.input=element}
+        }/>
+        <input type="submit" value="Submit"/>
+      </form>
+    )
+  }
+}
 
 export default App;

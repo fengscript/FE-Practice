@@ -2,7 +2,7 @@
  * @Author: fyg 
  * @Date: 2018-10-25
  * @Last Modified by: fyg
- * @Last Modified time: 2018-12-12 22:17:38
+ * @Last Modified time: 2018-12-13 22:31:28
  */
 
 
@@ -262,6 +262,7 @@ this.setState((state, props) => ({
 }));
 ```
 
+**这里 `(state, props) => ({counter: state.counter + props.increment})` 后面的括号是防止对象的 `{}`被识别为函数块，所以要加一个括号**
 
 ## 条件渲染 / 列表
 要么：
@@ -704,7 +705,14 @@ render() {
 `<input type="file" />` 永远是非受控组件，因为值只能从用户选择文件之后获得
 
 
+
 # Advancee
+
+# `shouldComponentUpdate()`
+在重新渲染过程开始前触发，在内部返回 `true` 则更新，返回 `false` 则跳过渲染过程
+
+或者用 `React.PureComponent()`，它会做一个浅比较
+
 
 ## Presentational & Container
 
@@ -723,6 +731,60 @@ render() {
 > 
 > 需要通过类定义组件声明，并包含生命周期函数和其他附加方法
 
+# diff
+将一棵树转换为另一棵树，树中元素个数为n，最先进的算法 的时间复杂度为O(n3)
+
+> React基于两点假设，实现了一个启发的O(n)算法：
+- 两个不同类型的元素将产生不同的树。
+- 通过渲染器附带key属性，开发者可以示意哪些子元素可能是稳定的。
+
+https://react.docschina.org/docs/reconciliation.html
+
+具体diff算法
+1. 对比两棵树时，React首先比较两个根节点。根节点的type不同，其行为也不同
+    每当根元素有不同类型，React将卸载旧树并重新构建新树
+2. 当比较两个相同类型的React DOM元素时，React则会观察二者的属性，保持相同的底层DOM节点，并仅更新变化的属性
+
+# Fragment
+比如一个子组件返回一堆 `td`时候，外面如果还是 `<div></div>` 就会产生无效的 `HTML`，所以可以用 `<></>` 一堆空标签包起来 
+
+```javascript
+function Glossary(props) {
+  return (
+    <dl>
+      {props.items.map(item => (
+        <React.Fragment key={item.id}>
+          <dt>{item.term}</dt>
+          <dd>{item.description}</dd>
+        </React.Fragment>
+      ))}
+    </dl>
+  );
+}
+```
+
+# Portals
+`ReactDOM.createPortal(child, container)` 将子节点渲染到父元素之外去
+一般用在 父组件有 `overflow: hidden` 或 `z-index` 样式，但需要子组件能够在视觉上“跳出（break out）”容器。例如，对话框、hovercards以及提示框
+
+且事件会冒泡到 React 树的祖先节点上
+
+https://react.docschina.org/docs/portals.html
+
+
+# HOC
+高阶组件就是一个函数，且该函数接受一个组件作为参数，并返回一个新的组件
+
+> 组件将 `props` 属性转变成UI，高阶组件则是将一个组件转换成另一个新组件
+
+
+
+
+
+
+
+
+# Context
 
 # React 思想
 - 单一功能原则

@@ -2,7 +2,7 @@
  * @Author: fyg
  * @Date: 2018-10-24 12:35:19
  * @Last Modified by: fyg
- * @Last Modified time: 2018-12-12 22:13:52
+ * @Last Modified time: 2018-12-13 18:41:41
  */
 import React, { Component } from "react";
 import logo from "./logo.svg";
@@ -130,6 +130,8 @@ class App extends Component {
           {/* <AutoFocusTextInput /> */}
           <AnotherInput />
           <UnControl />
+          <CounterButton color="white"/>
+          <WordAdder />
         </header>
       </div>
     );
@@ -869,6 +871,7 @@ class AnotherInput extends Component {
 }
 
 
+
 // 非受控组件
 class UnControl extends Component {
   constructor (props) {
@@ -891,4 +894,68 @@ class UnControl extends Component {
   }
 }
 
+
+// shouldComponentUpdate
+class CounterButton extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {count: 1};
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.color !== nextProps.color) {
+      return true;
+    }
+    if (this.state.count !== nextState.count) {
+      return true;
+    }
+    return false;
+  }
+
+  render() {
+    return (
+      <button
+        color={this.props.color}
+        onClick={() => this.setState(state => ({count: state.count + 1}))}>
+        Count: {this.state.count}
+      </button>
+    );
+  }
+}
+
+
+
+class ListOfWords extends React.PureComponent  {
+  render() {
+    return <div>{this.props.words.join(',')}</div>;
+  }
+}
+
+class WordAdder extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      words: ['marklar']
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    const words = this.state.words;
+    words.push('marklar');
+    // this.setState({words: words});
+    this.setState(prevState=>({
+      words: prevState.words.concat(['marklar'])
+    }));
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.handleClick} >Push Words</button>
+        <ListOfWords words={this.state.words} />
+      </div>
+    );
+  }
+}
 export default App;

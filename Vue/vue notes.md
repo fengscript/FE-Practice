@@ -46,5 +46,19 @@ export default = {
 }
 ```
 
+# 生命周期钩子
+
+- create
+- mounted
+- updated
+- destroyed
 
 
+> 生命周期钩子上不要使用箭头函数，比如 `created: () => console.log(this.a)` 或 `vm.$watch('a', newValue => this.myMethod())` 因为箭头函数是和父级上下文绑定在一起的，this 不会是如你所预期的 Vue 实例
+
+
+# Other
+
+> 所有的 DOM 操作都由 Vue 来处理，你编写的代码只需要关注逻辑层面即可
+
+> 当一个 `Vue` 实例被创建时，`data`中的属性被注入到 `Vue`的响应式系统，但是只有当实例被创建时 `data` 中存在的属性才是响应式的

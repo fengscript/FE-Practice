@@ -2,7 +2,7 @@
  * @Author: fyg 
  * @Date: 2018-10-25
  * @Last Modified by: fyg
- * @Last Modified time: 2018-12-13 22:31:28
+ * @Last Modified time: 2018-12-14 16:40:06
  */
 
 
@@ -778,7 +778,7 @@ https://react.docschina.org/docs/portals.html
 > 组件将 `props` 属性转变成UI，高阶组件则是将一个组件转换成另一个新组件
 
 
-
+高阶组件既不会修改 input 原组件，也不会使用继承复制 input 原组件的行为。相反，高阶组件是通过将原组件 包裹（wrapping） 在容器组件（container component）里面的方式来 组合（composes） 使用原组件。高阶组件就是一个没有副作用的纯函数
 
 
 

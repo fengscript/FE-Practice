@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var Event = (function() {
+        var clientList = {},
+          listen,
+          trigger,
+          remove;
+
+        listen = function(key, fn) {
+          if (!clientList[key]) {
+            clientList[key] = [];
+          }
+          clientList[key].push(fn);
+        };
+
+        trigger = function() {
+          var key = [].shift.call(arguments),
+            fns = clientList[key];
+          if (!fns || fns.length === 0) {
+            return false;
+          }
+          for (let i = 0, fn; (fn = fns[i++]); ) {
+            fn.apply(this, arguments);
+          }
+        };
+
+        remove = function(key, fn) {
+          var fns = clientList[key];
+          if (!fns) {
+            return false;
+          }
+          if (!fn) {
+            console.log(fns[1]);
+            fns && (fns.length = 0);
+          } else {
+            for (var l = fns.length - 1; l > 0; l--) {
+              var _fn = fns[l];
+              console.log(_fn);
+              console.log(fn);
+              console.log(_fn === fn);
+              if (_fn === fn) {
+                fns.splice(l, 1);
+              }
+            }
+          }
+        };
+
+        return {
+          listen,
+          trigger,
+          remove
+        };
+      })();
+      function a() {
+        console.log("a");
+      }
+      function b() {
+        console.log("a");
+      }
+      Event.listen("test", function() {
+        console.log("it's a test pagement");
+      });
+
+      Event.listen("test2", function() {
+        console.log("it's a test pagement");
+      });
+      Event.listen("test2", function() {
+        console.log("it's another test pagement");
+      });
+      Event.listen("test2", a);
+      Event.listen("test2", b);
+      // Event.trigger("test");
+      Event.remove("test2", a);
+      // Event.remove("test2", function() {
+      //   console.log("it's a test pagement");
+      // });
+      // Event.trigger("test2");
+    </script>
+  </body>
+</html>

@@ -196,14 +196,28 @@ Vue.component('custom-input', {
 - `v-leave-active`
 - `v-leave-to`
 
-> 对于这些在过渡中切换的类名来说，如果你使用一个没有名字的` <transition>`，则 `v-` 是这些类名的默认前缀。如果你使用了 `<transition name="my-transition">`，那么 `v-enter` 会替换为 `my-transition-enter`
+> 对于这些在过渡中切换的类名来说，如果你使用一个没有名字的` <transition>`，则 `v-` 是这些类名的默认前缀。如果你使用了 `<transition name="box">`，那么 `v-enter` 会替换为 `box-enter`
 
 即，CSS 样式类名要写成：
 ```css
-.my-transition-enter{
+.box-enter{
  transition: all .3s ease;
 }
 ```
+
+比如常见的一个过渡：
+```css
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+.modal-enter,
+.modal-leave {
+  opacity: 0;
+}
+```
+
+
 要用第三方CSS动画库时，类名可以用这些特性来改：
 - enter-class
 - enter-active-class
@@ -276,7 +290,7 @@ new Vue({
 ```
 
 ### 其他特性
-- `appear`
+- `appear`:通过 `appear` 特性设置节点在初始渲染的过渡
 - `type` 
 
 
@@ -355,8 +369,8 @@ new Vue({
 
 - `v-html`
 - `v-model`
-- `v-show` : 切换元素的 `display`
-- `v-if` : 真正的条件渲染
+- `v-show` : 切换元素的 `display`,带有 `v-show` 的元素**始终会被渲染并保留在 `DOM` 中**
+- `v-if` : 真正的条件渲染,会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。
 - `v-else-if`
 - `v-else`
 - `v-once`
@@ -418,3 +432,41 @@ methods: {
 
 
 ## nextTick
+
+
+# 踩坑
+## `<transition>`不出来
+尝试调整 `<transition>` 的位置，比如之前这样子就不行：
+```javascript
+<template>
+  <transition>
+   <div class='modal-root'>
+   </div>
+  </transition>
+</template>
+```
+
+调整成了这样子就OK了：
+```javascript
+<template>
+  <div class="root">
+    <transition name="modal">
+      <div
+        v-show="modalShow"
+        id="modalbg"
+      >
+        <div
+          v-show="tipShow"
+          class="tips"
+        >
+......
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+</template>
+```
+
+## `v-show/if` 的 `opacity`动画
+退出动画不出现元素直接消失，css里面要用 `-leave-to` 而不是 `-leave`

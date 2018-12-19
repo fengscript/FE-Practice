@@ -181,25 +181,79 @@ let tom = buildName('Tom');
 **`TypeScript` 会将添加了默认值的参数识别为可选参数**
 
 
+## `rest`参数
+`rest`参数也是一个数组，所以用数组类型来定义：
+```typescript
+function fn(x:number, ...other:any[])
+```
+
+## Union & 重载
+比如一个 `reverse` 函数对 `number` 、 `string` 参数返回对应类型，而要是直接写成：
+```typescript
+function reverse(param:string | number): string | number{}
+```
+这时候，类型并不精确，比如传进去 `string`，返回了 `number` 也是符合类型的，所以要表达的更精确的话，需要进行 **重载**
+
+```typescript
+function reverse(x: number): number;
+function reverse(x: string): string;
+function reverse(x: number | string): number | string {}
+```
+
+> `TypeScript` 会优先从最前面的函数定义开始匹配，所以多个函数定义如果有包含关系，需要优先把精确的定义写在前面。
 
 
+# Type Assertion
+手动指定一个值的类型：
+```typescript
+<Type> value
+// 或者
+value as Type
+```
+比如：
+```typescript
+function getLength(aim: string | number):number{
+    if ((<string>aim).length) {
+        return (<string>aim).length;
+    }else{
+        return aim.toString().length;
+    }
+} 
+```
+
+**不能断言成一个 `union type` 中不存在的类型**
 
 
+# declear
+引用第三方库时， `ts`不能识别，需要用 `declear`关键字来指明类型：
+```typescript
+declear var $:(selector:string ) => any;
+let dom = $('#dom');
+```
 
+类型声明放到一个文件里 `.d.ts`，以 三斜线指令 `///` 来引用：
+```typescript
+/// <reference path='./jQuery.d.ts' />
+jQuery('#dom')
+```
 
+# Build-in Objects
+内置对象可以在 `TypeScript` 中当做定义好了的类型直接用：
 
+`ECMAScript`提供的内置对象有：`Boolean`、`Error`、`Date`、`RegExp`等
+`DOM` 提供的内置对象：`Document`、`HTMLElement`、`Event`、`NodeList`等
 
+用法：
+```typescript
+let b: Boolean = new Boolean(1);
+let e: Error = new Error('occured error')
 
+let body:HTMLElement = document.body;
+let addDiv : NodeList = document.getElementsByTagName('div');
+```
 
-
-
-
-
-
-
-
-
-
+# Advanced
+## Generics
 
 # Brief & Cheatsheet
 ## Type
@@ -229,3 +283,8 @@ interface Person {
 ```
 
 ## Array
+
+
+## Function
+- **可选参数后面不允许再出现必须参数了**
+- **`TypeScript` 会将添加了默认值的参数识别为可选参数**

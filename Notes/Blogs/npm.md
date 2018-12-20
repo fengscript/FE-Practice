@@ -87,7 +87,7 @@ atom包管理工具——apm
 
 安装不上 node-sass 导致的错误解决（包括 electron  install报错）
 
-    直接 bash 输入后回车：
+    直接 `bash` 输入后回车：
     
     electron_mirror="https://npm.taobao.org/mirrors/electron/"
     

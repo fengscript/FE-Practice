@@ -39,10 +39,10 @@ function FYGJsonPTest (data) {
 <script src="http://suggest.taobao.com/sug?q=aaa&callback=FYGJsonPTest"></script>
 ```
 
-**`jsonp`方式获取数据，不会在 浏览器的开发者工具 - network 里面找到、查看请求、相应，为什么？你懂得**
+
 [部分摘自](https://segmentfault.com/a/1190000016756432)
 
-当然实际可操作的地方更多，根据服务器配合，可以自定义回调函数的名字或者临时组装一个 script 标签用完再删除掉等等（jQuery的 ajax的 JSONP 模式就是包装了这些活儿）
+当然实际可操作的地方更多，根据服务器配合，可以自定义回调函数的名字或者临时组装一个 `script` 标签用完再删除掉等等（jQuery的 ajax的 JSONP 模式就是包装了这些活儿）
 ## CORS
 在检测到跨域访问时，浏览器会检查响应头 `Access-Control-Allow-Origin` 是否包含本域，如果是，则此次跨域请求成功，如果不是，则请求失败，`JavaScript` 将无法获取到响应的任何数据。
 
@@ -54,7 +54,7 @@ header("Access-Control-Allow-Origin:*");
 header("Access-Control-Allow-Methods:POST,GET");
 ```
 浏览器检测到响应头带上了CORS，并且允许的源包括了本网站，那么就不会拦截请求响应。
-(这里部分参考 廖雪峰 js 博客)
+
 
 
 ## WebSocket

@@ -61,7 +61,7 @@ This can lead to unexpected behavior when compiling on a filesystem with other c
 1 换源加速
 
     npm config set registry https://registry.npm.taobao.org 
-    npm info underscore （如果上面配置正确这个命令会有字符串response）
+    npm info underscore （如果上面配置正确这个命令会有字符串 `response` ）
 
 
 

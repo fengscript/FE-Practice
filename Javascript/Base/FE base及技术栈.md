@@ -84,6 +84,25 @@ Class之间可以通过`extends`关键字实现继承，这比ES5的通过修改
 
 ES6的继承机制，实质是先创造父类的实例对象this（所以必须先调用super方法），然后再用子类的构造函数修改this。
 
+### 剩余参数
+哈哈，一个很有意思的问题，剩余参数跟 `arguments` 有什么区别？
+
+- 剩余参数只包含那些没有对应形参的实参，而 arguments 对象包含了传给函数的所有实参。
+- arguments对象不是一个真正的数组，而剩余参数是真正的 Array实例，也就是说你能够在它上面直接使用所有的数组方法，比如 sort，map，forEach或pop。
+- arguments对象还有一些附加的属性 （如callee属性）。
+
+也可以被解构，于是就可以：
+```javascript
+function f(...[a, b, c]) {
+  return a + b + c;
+}
+ 
+f(1)          // NaN (b and c are undefined)
+f(1, 2, 3)    // 6
+f(1, 2, 3, 4) // 6 (the fourth parameter is not destructured)
+```
+
+
 # HTTP协议
 ## GET和POST
 `GET` 和 `POST` 本质上都是 `TCP` 链接
@@ -118,3 +137,12 @@ ES6的继承机制，实质是先创造父类的实例对象this（所以必须�
 
 
 # Css
+1. `position` 的所有值
+- initial
+- inherit
+- unset
+- static
+- relative
+- absolute 
+- fixed 
+- sticky

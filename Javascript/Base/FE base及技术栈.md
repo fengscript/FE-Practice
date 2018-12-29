@@ -51,6 +51,74 @@
 ## this
 this 对象是运行时基于函数的执行环境绑定的
 
+箭头函数弃用了所有普通 this 绑定规则，取而代之的是用当前的词法作用域覆盖了 this 本来的值。
+
+## 绑定丢失
+1
+
+```js
+function foo(){
+    console.log(this.a);
+}
+
+var obj = {
+    a : 2，
+    foo : foo　　　　
+}
+
+var bar = obj.foo;
+var a = "happy new year";
+bar ();//happy new yaer
+```
+
+
+2
+```js
+function foo(){
+    console.log(this.a);
+}
+
+function doFoo(fn){
+    fn();
+}
+
+var obj = {
+    a : 2,
+    foo:foo
+}
+
+var a = "hello world";
+
+doFoo(obj.foo)//hello world
+```
+
+
+3
+```js
+function foo (){
+    console.log(this.a);
+}
+
+var obj = {
+    a :　2,
+    foo : foo
+}
+var a = "gril !";
+setTimeout(obj.foo,1000);//gril !
+```
+
+# Higher Function
+## Throttle
+```js
+function throttle( method, context){
+	clearTimeout(method.tId);
+	method.tId=setTimeout(function(
+		method.call(context)	
+	), 100)
+}
+```
+
+
 ## new
 经过4个步骤
 1. 创建一个全新对象
@@ -62,6 +130,16 @@ this 对象是运行时基于函数的执行环境绑定的
 ## 继承
 
 ## ES6
+- 模版字符串
+- 箭头函数
+- `let ` `const`
+- 函数默认参数
+- 数组扩展 
+	- `Array.isArray()`
+- 对象扩展
+	-  `Object.assign()`
+	-  `Object.is()`
+
 ### 块作用域
 1. ES6有块级作用域，内部声明的函数不会影响到作用域的外部：ES5 因为函数提升，无论是否进入if，因为函数提升，函数声明都会被提升到当前作用域的顶部而可能覆盖外部同名函数（除非声明严格模式则会报错）
 
@@ -136,6 +214,66 @@ f(1, 2, 3, 4) // 6 (the fourth parameter is not destructured)
 只有与创建了 `Cookie` 同级目录或者子目录的页面才可以访问 `Cookie`，如果要让其父级，或者父级的兄弟来访问，就需要设置 `path`，比如设置为 `path='/'` 来让其他目录可以访问
 
 
+# Vue
+## 双向绑定原理
+通过`Object.defineProperty()`来实现数据劫持结合发布者-订阅者模式的方式来实现
+`defineProperty`  来控制一个对象属性的一些特有操作，比如读写权、是否可以枚举，`set` 、 `get` 也是它的两个属性，通过重写  `set` 和`get`
+比如
+```js
+var Book = {}
+var name = '';
+Object.defineProperty(Book, 'name', {
+  set: function (value) {
+    name = value;
+    console.log('你取了一个书名叫做' + value);
+  },
+  get: function () {
+    return '《' + name + '》'
+  }
+})
+ 
+Book.name = 'vue权威指南'; 
+//则在读取 name 属性时候会触发重写后的 set  get
+console.log(Book.name);
+```
+
+一个双向绑定例如：
+```js
+var obj={};
+var bind=[];
+//触发obj对象set和get方法的时候，趁机来输出或修改bind数组的内容
+Object.defineProperty(obj,'observe',{
+  set:function(val){
+        bind['observe']=val;
+  },
+  get:function(){
+        return bind['observe'];
+  }
+})
+var demo=document.querySelector('#demo');
+var display=document.querySelector('#display');
+    //#demo的value值与bind['observe']绑定，#display的innerHTML也与bind['observe']绑定。
+demo.onkeyup=function(){
+     obj['observe']=demo.value;//触发了obj的set方法，等于#demo的value值赋值给bind['observe']。
+     display.innerHTML=bind['observe'];
+}
+```
+
+
+
+## Router
+hash实现路由的时候，最本质的原理就是hash值的变化，会引发一个hashchange事件，可以根据这个hash值的变化，加载不同的DOM
+
+- hash模式:
+
+- history API
+
+> 这里，我想到了 html 的锚点，即，从一个 `<a href='#name/id'>` 跳到页面一个 dom 上
+有两种跳法，第一种是任意元素的 id 上，第二种是跳到另外一个 a 标签的 name 属性上去
+
+
+
+
 # Css
 1. `position` 的所有值
 - initial
@@ -146,3 +284,16 @@ f(1, 2, 3, 4) // 6 (the fourth parameter is not destructured)
 - absolute 
 - fixed 
 - sticky
+
+
+2. Flex
+- `flex-grow`: 只有在 `flex` 容器中有剩余空间时才会生效
+- `flex-shrink`: 只有在 `flex` 容器空间不足时才会生效
+- `flex` : `flex-grow`, `flex-shrink`, `flex-based` 的缩写
+
+3. box-sizing
+4. 垂直居中
+5. `unset` : `inherit` + `initial`
+    比如，一个不可继承属性：`border`
+
+    

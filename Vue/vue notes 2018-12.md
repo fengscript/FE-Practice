@@ -30,39 +30,6 @@ computed: {
 有一些数据需要随着其它数据变动而变动时，可以用 `watch`，最好用在 **需要在数据变化时执行异步或开销较大的操作**
 
 
-# 父子组件传值
-==烦得很==
-父
-```js
-<component v-bind:sonValueName = "fatherName" @reciveEvt = "doSth"></component>
-export default ={
-    data(){
-        fatherName:{
-            prop1:xxx,
-            prop2:xxx,
-        },
-    }
-    methods:{
-        doSth(){},
-    }
-}
-```
-
-子
-```js
-export default = {
-    data(){
-        return{
-            props:xxx,
-        }
-    },
-    props: ["sonValueName"],
-    methods:xxx(){
-        this.$emit("evtName", this.props);
-    }
-}
-```
-
 # 生命周期钩子
 
 
@@ -98,6 +65,40 @@ export default = {
 - `.sync`
 
 
+## 自定义事件
+### 自定义组件的 `v-model`
+> `v-model` 默认会利用名为 `value` 的 `prop` 和名为 `input` 的事件
+
+可以用 `model` 选项自定义 `value` 特性的值：
+```jsx
+Vue.component('base-checkbox', {
+  model: {
+    prop: 'checked',
+    event: 'change'
+  },
+  props: {
+    checked: Boolean
+  },
+  template: `
+    <input
+      type="checkbox"
+      v-bind:checked="checked"
+      v-on:change="$emit('change', $event.target.checked)"
+    >
+  `
+})
+// 使用
+<base-checkbox v-model="lovingVue"></base-checkbox>
+```
+
+### 原生事件绑定到组件
+`$listeners`
+
+## 全局方法
+
+- `$emit(name, param)`
+
+
 # Component
 **组件直接在 `DOM`中使用时，组件名最好遵循 `W3C规格`，即是用 `短横线连接` **
 
@@ -122,6 +123,34 @@ new Vue({
   }
 })
 ```
+
+
+## Template
+模版先声明，再注册，再到组件中使用：
+```vue
+<div id="app">
+  <test-component></test-component>
+</div>
+
+<template id="testTemplate"></template>
+
+Vue.component('test-component',{
+    template: '#testTemplate'
+})
+
+```
+
+还有这个，没想到吧。。
+```
+<script type="text/x-template" id="myComponent">
+    <div>This is a component</div>
+</script>
+
+Vue.component('my-component',{
+    template: '#myComponent'
+})
+```
+
 
 
 ## 通信
@@ -165,6 +194,38 @@ Vue.component('custom-input', {
 ```
 
 
+### 父子组件传值
+
+父
+```js
+<component v-bind:sonValueName = "fatherName" @reciveEvt = "doSth"></component>
+export default ={
+    data(){
+        fatherName:{
+            prop1:xxx,
+            prop2:xxx,
+        },
+    }
+    methods:{
+        doSth(){},
+    }
+}
+```
+
+子
+```js
+export default = {
+    data(){
+        return{
+            props:xxx,
+        }
+    },
+    props: ["sonValueName"],
+    methods:xxx(){
+        this.$emit("evtName", this.props);
+    }
+}
+```
 
 ## Slot
 
@@ -479,3 +540,7 @@ methods: {
 
 ## `v-show/if` 的 `opacity`动画
 退出动画不出现元素直接消失，css里面要用 `-leave-to` 而不是 `-leave`
+
+
+# VueRouter
+

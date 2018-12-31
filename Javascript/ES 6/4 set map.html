@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>set map</title>
+  </head>
+  <body>
+    <div id="test">testDiv</div>
+    <script type="text/javascript">
+      var s = new Set();
+
+      s.add(1);
+      s.add(2);
+      s.add(2);
+      s.add("heheda");
+      for (let i of s) {
+        document.write(i);
+      }
+
+      let data = {};
+      let element = document.getElementById("test");
+
+      data.element = "testDiv";
+      data[1] = 2;
+
+      for (const iterator in data) {
+        console.log(iterator);
+      }
+	  //			document.write('<br>'+'s.length:'+s.length)
+	  
+
+	  let arr = [1,2,3,4];
+	  let iter = arr[Symbol.iterator]()
+	  console.log(iter.next())
+    </script>
+  </body>
+</html>

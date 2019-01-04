@@ -469,9 +469,29 @@ state.obj = { ...state.obj, newProp: 123 }
   v-on:input="searchText = $event.target.value"
 >
 ```
+**需要注意的：**
+> `v-model` 会忽略所有表单元素的 `value`、`checked`、`selected` 特性的初始值而总是将 `Vue` 实例的数据作为数据来源。你应该通过 JavaScript 在组件的 `data` 选项中声明初始值。
 
+### 怎么用
+- `radio` 绑到一个变量（字符串类型）
+  - 多选一
+  每一项设置 `value`，然后绑定到同一个变量（字符串类型）
+- `checkbox` 同上，但也可以设一个 `boolean`
+  - 多选一
+  ```javascript
+  <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+    <label for="jack">Jack</label>
+    <input type="checkbox" id="john" value="John" v-model="checkedNames">
+    <label for="john">John</label>
+    <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+    <label for="mike">Mike</label>
+  ```
+- `selected`
+  还是绑到一个字符变量，然后要设置默认值，就给对应的option `v-bind:value=''`
+- `selected` 多选
+  多选的话还是绑定的数组
 
-
+### 自定义输入组件
 
 ## `v-for`
 1. 对于数组的以下不能直接检测到

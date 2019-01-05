@@ -492,6 +492,42 @@ state.obj = { ...state.obj, newProp: 123 }
   多选的话还是绑定的数组
 
 ### 自定义输入组件
+`v-model`原本算是个银弹：
+```javascript
+<input v-model="searchText">
+// 就是
+<input
+  v-bind:value="searchText"
+  v-on:input="searchText = $event.target.value"
+>
+```
+
+因此，在自定义组件时，`v-model`就是这样子：
+```javascript
+<custom-input
+  v-bind:value="searchText"
+  v-on:input="searchText = $event"
+></custom-input>
+```
+想一下，想让它正常工作，就要处理 `value` 这个prop 还有把原生的 `input` 事件搞出来，于是需要：
+- 将其 value 特性绑定到一个名叫 value 的 prop 上
+- 在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出
+
+处理一下：
+```javascript
+<custom-input v-model="searchText"></custom-input>
+
+Vue.component('custom-input', {
+  props: ['value'],
+  template: `
+    <input
+      v-bind:value="value"
+      v-on:input="$emit('input', $event.target.value)"
+    >
+  `
+})
+```
+
 
 ## `v-for`
 1. 对于数组的以下不能直接检测到
@@ -564,3 +600,26 @@ methods: {
 
 # VueRouter
 
+router hooks
+全局的, 单个路由独享的, 或者组件级的。
+
+参数或查询的改变并不会触发进入/离开的导航守卫
+全局的
+- beforeResolve
+- beforeEach
+- beforeEnter
+单个路由的
+- afterEach
+组件内
+- beforeRouteEnter
+- beforeRouteUpdate
+- beforeRouteLeave
+
+# MVC MVVM
+> MVC，MVP和MVVM都是常见的软件架构设计模式（Architectural Pattern），它通过分离关注点来改进代码的组织方式。不同于设计模式（Design Pattern），只是为了解决一类问题而总结出的抽象方法，一种架构模式往往使用了多种设计模式。
+
+`Model` 层用于封装和应用程序的业务逻辑相关的数据以及对数据的处理方法
+
+控制器 `Controller` ：需要响应用户的操作、同步更新 `View` 和 `Model` ，定义用户界面对用户输入的响应方式，连接模型和视图，控制应用程序的流程，处理用户的行为和数据上的改变
+
+`MVC` 模式的业务逻辑主要集中在 `Controller`

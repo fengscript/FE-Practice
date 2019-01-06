@@ -20,18 +20,20 @@
 
       asyncPrint("hello async", 1000);
 
+      async function f() {
+        return "hello";
+      }
 
+      f().then(v => {
+        console.log(v);
+      });
 
-
-
-
-
-
-
-
-
-
-      
+      async function af() {
+        await Promise.reject("抛错");
+      }
+      af().then((res, rej) => {
+        console.log(res, rej);
+      })
     </script>
   </body>
 </html>

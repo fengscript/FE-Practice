@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>async await</title>
+  </head>
+  <body>
+    <script>
+      async function timeout(ms) {
+        await new Promise(res => {
+          setTimeout(res, ms);
+        });
+      }
+      async function asyncPrint(value, ms) {
+        await timeout(ms);
+        console.log(value);
+      }
+
+      asyncPrint("hello async", 1000);
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </script>
+  </body>
+</html>

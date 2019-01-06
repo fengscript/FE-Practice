@@ -17,7 +17,16 @@
   }
   var a = foo(1)
 
-  document.write(a.next())
+  // document.write(a.next())
+
+  // 取出来数组
+  function* gen() {
+    yield* [1,2,3,4]
+  }
+
+  console.log(gen().next())
+
+
   </script>
 </body>
 </html>

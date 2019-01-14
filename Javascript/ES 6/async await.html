@@ -18,7 +18,11 @@
         console.log(value);
       }
 
-      asyncPrint("hello async", 1000);
+      asyncPrint("hello async", 1000).then(() => {
+        setTimeout(() => {
+          console.log('5s')
+        }, 5000)
+      });
 
       async function f() {
         return "hello";
@@ -33,6 +37,56 @@
       }
       af().then((res, rej) => {
         console.log(res, rej);
+      });
+      // test
+
+      function spawn(genF) {
+        return new Promise(function(resolve, rekect) {
+          var gen = genF();
+          function step(nextF) {
+            try {
+              var next = nextF();
+            } catch (e) {
+              return reject(e);
+            }
+
+            if (next.done) {
+              return resolve(next.value);
+            }
+            Promise.resolve(next.value).then(
+              function(v) {
+                step(function() {
+                  return gen.next(v);
+                });
+              },
+              function(e) {
+                step(function() {
+                  return gen.throw(e);
+                });
+              }
+            );
+          }
+          step(function() {
+            return gen.next(undefined);
+          });
+        });
+      }
+      function asyncFn(arguments) {
+        return spawn(function*() {
+          yield function() {
+            setTimeout(() => {
+              console.log(1);
+            }, 2000);
+          };
+          yield function() {
+            setTimeout(() => {
+              console.log(2);
+            }, 1000);
+          };
+        });
+      }
+      asyncFn().then(() => {
+        console.log(3)
       })
     </script>
   </body>

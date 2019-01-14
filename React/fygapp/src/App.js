@@ -2,9 +2,9 @@
  * @Author: fyg
  * @Date: 2018-10-24 12:35:19
  * @Last Modified by: fyg
- * @Last Modified time: 2018-12-13 18:41:41
+ * @Last Modified time: 2019-01-11 11:16:50
  */
-import React, { Component } from "react";
+import { React, Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -877,9 +877,11 @@ class UnControl extends Component {
   constructor (props) {
     super(props)
     this.handSubmit = this.handSubmit.bind(this);
+    // this.input = React.createRef();
   }
   handSubmit(event){
-    alert("从非受控组件来的值是："+this.input.value)
+    // console.log(this.input);
+    alert("从非受控组件来的值是："+this.input.value);
     event.preventDefault();
   }
   render () {

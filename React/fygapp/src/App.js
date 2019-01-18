@@ -2,7 +2,7 @@
  * @Author: fyg
  * @Date: 2018-10-24 12:35:19
  * @Last Modified by: fyg
- * @Last Modified time: 2019-01-11 11:16:50
+ * @Last Modified time: 2019-01-17 15:54:12
  */
 import { React, Component } from "react";
 import logo from "./logo.svg";
@@ -130,7 +130,7 @@ class App extends Component {
           {/* <AutoFocusTextInput /> */}
           <AnotherInput />
           <UnControl />
-          <CounterButton color="white"/>
+          <CounterButton color="white" />
           <WordAdder />
         </header>
       </div>
@@ -360,7 +360,6 @@ class LoginControl extends Component {
  */
 const numbers = [1, 2, 3, 4, 5];
 const listItems = numbers.map(number => <li>{number}</li>);
-
 function List(props) {
   return <ul>{listItems}</ul>;
 }
@@ -870,38 +869,38 @@ class AnotherInput extends Component {
   }
 }
 
-
-
 // 非受控组件
 class UnControl extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.handSubmit = this.handSubmit.bind(this);
     // this.input = React.createRef();
   }
-  handSubmit(event){
+  handSubmit(event) {
     // console.log(this.input);
-    alert("从非受控组件来的值是："+this.input.value);
+    alert("从非受控组件来的值是：" + this.input.value);
     event.preventDefault();
   }
-  render () {
+  render() {
     return (
       <form onSubmit={this.handSubmit}>
-        <input type="text" ref={
-          element=>{this.input=element}
-        }/>
-        <input type="submit" value="Submit"/>
+        <input
+          type="text"
+          ref={element => {
+            this.input = element;
+          }}
+        />
+        <input type="submit" value="Submit" />
       </form>
-    )
+    );
   }
 }
-
 
 // shouldComponentUpdate
 class CounterButton extends Component {
   constructor(props) {
     super(props);
-    this.state = {count: 1};
+    this.state = { count: 1 };
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -918,18 +917,16 @@ class CounterButton extends Component {
     return (
       <button
         color={this.props.color}
-        onClick={() => this.setState(state => ({count: state.count + 1}))}>
+        onClick={() => this.setState(state => ({ count: state.count + 1 }))}>
         Count: {this.state.count}
       </button>
     );
   }
 }
 
-
-
-class ListOfWords extends React.PureComponent  {
+class ListOfWords extends React.PureComponent {
   render() {
-    return <div>{this.props.words.join(',')}</div>;
+    return <div>{this.props.words.join(",")}</div>;
   }
 }
 
@@ -937,24 +934,24 @@ class WordAdder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      words: ['marklar']
+      words: ["marklar"]
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
     const words = this.state.words;
-    words.push('marklar');
+    words.push("marklar");
     // this.setState({words: words});
-    this.setState(prevState=>({
-      words: prevState.words.concat(['marklar'])
+    this.setState(prevState => ({
+      words: prevState.words.concat(["marklar"])
     }));
   }
 
   render() {
     return (
       <div>
-        <button onClick={this.handleClick} >Push Words</button>
+        <button onClick={this.handleClick}>Push Words</button>
         <ListOfWords words={this.state.words} />
       </div>
     );

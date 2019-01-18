@@ -139,6 +139,8 @@ const element = React.createElement("h1", null, "Hello, world");
 
 函数式组件：定义一个接收 `props` 传值，返回 React 元素的方法
 
+**只有类组件才有局部状态 `state` 这个特性**
+
 ```javascript
 function HelloMessage(props) {
   return <h1>Hello World!</h1>;

@@ -1,25 +1,25 @@
-
 # Prepare
 
 ## 与其他 SVN 区别
+
 OTHER
+
 - 集中式
 - 关心文件内容的具体差异
-- branch是一个完整的目录。且这个目录拥有完整的实际文件
-
+- branch 是一个完整的目录。且这个目录拥有完整的实际文件
 
 Git
+
 - 分布式（比如不担心文件损坏，本地查看所有 log）
 - 只关心文件数据的整体是否发生变化
-- 内容存储使用的是SHA-1哈希算法,保证代码、文件内容的完整性
+- 内容存储使用的是 SHA-1 哈希算法,保证代码、文件内容的完整性
 - 速度更快
 - 分支
 
-
-
-Git则在每一个commit时，保存一个整个文件的 `content copy`，将文件在那个时刻的状态做一个快照，并且保存对那个快照的引用。为了更加高效，如果文件本身没有做变更，git并不会重新保存一份，而仅仅重新引用这个已经保存过的文件快照
+Git 则在每一个 commit 时，保存一个整个文件的 `content copy`，将文件在那个时刻的状态做一个快照，并且保存对那个快照的引用。为了更加高效，如果文件本身没有做变更，git 并不会重新保存一份，而仅仅重新引用这个已经保存过的文件快照
 
 其他 VCS 管理分支大多采取备份所有项目文件到特定目录的方式，所以根据项目文件数量和大小不同，可能花费的时间也会有相当大的差别，快则几秒，慢则数分钟。而 Git 的实现与项目复杂度无关，它永远可以在几毫秒的时间内完成分支的创建和切换
+
 > 有些版本管理工具是保存每个版本之间的变化，这样虽然总文件体积小，但是每检出一个文件都要从最开始的版本一个个修改叠加上去，很慢
 
 - VCS, Version Control System
@@ -29,49 +29,49 @@ Subversion
 
 `git svn` : Subversion 双向桥接工具。把 Git 变成了 Subversion 服务的客户端，从而让你在本地享受到 Git 所有的功能，而后直接向 Subversion 服务器推送内容，仿佛在本地使用了 Subversion 客户端
 
-## 文件
+# 文件
+
 在 Git 内都只有三种状态：
+
 - 已修改（modified - not staged ）- `git add / git commit`
 - 已暂存（staged）
 - 已提交（committed）- `git commit`
 
 那么这个怎么说？
-- untracked
 
+- untracked
 
 即 `git add` -> `git commit`
 
 也可以跳过使用暂存区： `git commit -a`
 
-
 三个工作区：
+
 - working directory
 - staging area
 - git directory
-
 
 查看未暂存的文件： `git diff`
 查看已暂存，未提交的文件： `git diff --staged`
 
 `git commit -v`:将修改差异的每一行都包含到注释中来
 
-
 文件改名：`git move xxx newxxx`
 
-### `commit`
+## `commit`
 
 **每一次运行提交操作，都是对你项目作一次快照，以后可以回到这个状态，或者进行比较**
 
 > Snapshot:In computer systems, a snapshot is the state of a system at a particular point in time.
 
-> Git 是记录和组装一系列快照流的微型系统，关心文件数据的整体是否发生变化。每次commit的时候保存一次快照，而每个快照都包含了完整的数据；后者则关心文件内容的具体差异。第一次保存了完整的数据，往后每次保存的都不是完整的数据，只会记录基于之前的版本和现在两者的变化信息，对于此外没有变化的都不会去记录。
+> Git 是记录和组装一系列快照流的微型系统，关心文件数据的整体是否发生变化。每次 commit 的时候保存一次快照，而每个快照都包含了完整的数据；后者则关心文件内容的具体差异。第一次保存了完整的数据，往后每次保存的都不是完整的数据，只会记录基于之前的版本和现在两者的变化信息，对于此外没有变化的都不会去记录。
 
 在 Git 中提交时，会保存一个提交（commit）对象，该对象包含一个指向暂存内容快照的指针，包含本次提交的作者等相关附属信息，包含零个或多个指向该提交对象的父对象指针：首次提交是没有直接祖先的，普通提交有一个祖先，由两个或多个分支合并产生的提交则有多个祖先。
 
 当使用 `git commit` 新建一个提交对象前，Git 会先计算每一个子目录的校验和，然后在 Git 仓库中将这些目录保存为树（tree）对象。之后 Git 创建的提交对象，除了包含相关提交信息以外，还包含着指向这个树对象（项目根目录）的指针，如此它就可以在将来需要的时候，重现此次快照的内容了。
 
+## 移除文件
 
-### 移除文件
 `git rm fileName`：从已跟踪文件清单中移除（即暂存区域）并连带从工作目录中删除指定的文件
 
 如果手动删除的，那还会在 `暂存区`， `git status`会看到 `Changes not staged for commit:`
@@ -79,8 +79,6 @@ Subversion
 删除之前修改过并且已经放到暂存区：`git rm -f xxx`
 
 只移出跟踪区，不删除文件：`git rm --cached xxx`
-
-
 
 ## Revert
 
@@ -95,6 +93,7 @@ $ git commit --amend
 三条命令最终只是产生一个提交，第二个提交命令修正了第一个的提交内容
 
 ### `reset` 取消已经暂存的文件
+
 ```bash
 git reset HEAD <file>...
 
@@ -103,22 +102,26 @@ git reset HEAD <file>...
 
 ### `checkout --` 取消对文件的修改
 
+```bash
+checkout -- <file>
+```
 
 ## OTHER
+
 `fast-forward`: `master` 分支是当前提交分支的直接上游，所以从 `master` 合并一个下游分支时，就会直接将指针向前移动
 
-
-
 # CONFIG
+
 ## `git config`
+
 主要控制三个环境变量文件：
+
 - `/etc/gitconfig` ：系统中对所有用户都普遍适用的配置。 `git config --system`
-- `~/.gitconfig` ：只适用于该用户。`git config --global` 
+- `~/.gitconfig` ：只适用于该用户。`git config --global`
 - `.git/config`(工作目录中)：仅针对当前项目有效。
-**每一个级别的配置都会覆盖上层的相同配置**
+  **每一个级别的配置都会覆盖上层的相同配置**
 
 `Windows` 系统上，Git 会找寻用户主目录下的 `.gitconfig` 文件
-
 
 ## `ssh`
 
@@ -129,30 +132,90 @@ ssh-keygen -t rsa -C "youremail@example.com"
 ## name set
 
 ```bash
-
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
 ```
 
-
 # remote
+
 `git remote` : 每个远程库的简短名字
 `git remote -v` : 显示对应的克隆地址（--verbose）
 
 在克隆完某个项目后，至少可以看到一个名为 `origin` 的远程库，默认使用这个名字来标识你所克隆的原始仓库
 
+`git fetch origin` :查找 “origin” 是哪一个服务器，从中抓取本地没有的数据，并且更新本地数据库，移动 `origin/master` 指针指向新的、更新后的位置。
+
 ## add
+
 `git remote add [shortname] [url]`
 
 `git remote show [remote-name]`
 
 ## update
+
 `git fetch [remote-name]`
 
 `git push [remote-name] [branch-name]`
 
+`git push origin branchName:newBranchName`
 
 `git remote rename`
 
-`git remote rm`
+`git remote rm` rm一个远程地址
+
+## track
+从一个远程跟踪分支检出一个本地分支会自动创建一个叫做 “跟踪分支”（有时候也叫做 “上游分支”）
+
+跟踪分支是与远程分支有直接关系的本地分支。 如果在一个跟踪分支上输入 `git pull`，`Git` 能自动地识别去哪个服务器上抓取、合并到哪个分支。
+
+### 本地没有，track一个remote分支
+克隆一个仓库时，它通常会自动地创建一个跟踪 `origin/master` 的 `master` 分支。 也可以设置其他的跟踪分支 - 其他远程仓库上的跟踪分支，或者不跟踪 `master` 分支：
+`git checkout -b [branch] [remotename]/[branch]`
+
+`Git`提供了 `--track` 快捷方式：
+` git checkout --track origin/branch`
+
+或者设置别名：
+` git checkout --track newBranchName origin/branch`
+
+### 本地已有分支track一个remote
+设置已有的本地分支跟踪一个刚刚拉取下来的远程分支，或者想要修改正在跟踪的上游分支，使用 `-u` 或 `--set-upstream-to` 选项运行 git branch 来显式地设置
+```bash
+$ git branch -u origin/branch
+```
+
+查看本地所有跟踪分支：
+```bash
+git branch -vv
+```
+### 远程跟踪分支有更新
+抓取到新的远程跟踪分支时，本地不会自动生成一份可编辑的副本（拷贝），即不会有一个新的分支 - 只有一个不可以修改的 `origin/branch` 指针。可以运行
+```bash
+git merge origin/branch
+```
+将这些工作合并到当前所在的分支，或者也可以在远程跟踪分支上建立自己的本地分支：
+```bash
+git checkout -b myBranch origin/branch
+```
+
+### 本地分支有更新
+推送本地分支 `local_branch` 到远程分支 `remote_branch` 并建立关联关系
+
+    a.远程已有 `remote_branch` 分支并且已经关联本地分支 `local_branch` 且本地已经切换到 `local_branch`
+    - `git push`
+
+    b.远程已有 `remote_branch` 分支但未关联本地分支 `local_branch` 且本地已经切换到 `local_branch`
+    - `git push -u origin/remote_branch`
+
+    c.远程没有 `remote_branch` 分支，本地已经切换到 `local_branch`
+    - `git push origin local_branch:remote_branch`
+
+### 删除remote分支
+```bash
+git push origin --delete branch
+```
+
+`git remote prune` 移除remote删除，本地还在的分支。（刷新本地仓库与远程仓库的保持这些改动的同步）
 
 # branch
 
@@ -224,3 +287,9 @@ git tag -a name -m 'message'
 git push origin TagName
 git push origin --tag   // all tags
 ```
+
+# `HEAD` `head`
+`HEAD` 是 `current branch` ，默认指向当前分支的最新提交，checkout 会指向新的分支
+
+`head` 是 `commit` 对象的引用，每个 `head` 都有一个名字（分支名字或者标签名字等等），默认情况下，`每个叫master` 的 `repository` 都会有一个 `head`, 一个 `repository` 可以包含任意数量的 `head` 。在任何时候，只要这个 `head` 被选择成为 `current head` ，那么这个 `head` 就成了 `HEAD`
+# interactive

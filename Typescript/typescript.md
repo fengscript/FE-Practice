@@ -288,3 +288,11 @@ interface Person {
 ## Function
 - **可选参数后面不允许再出现必须参数了**
 - **`TypeScript` 会将添加了默认值的参数识别为可选参数**
+
+
+# Ts + React
+引入模块时候需要用别名：
+```javascript
+import * as React from react
+```
+否则类型推断不出来

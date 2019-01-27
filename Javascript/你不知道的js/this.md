@@ -1,3 +1,11 @@
+# Where
+
+- 默认绑定
+  - 独立函数调用，指向 `window`（严格模式指向 `undefined` ）， `Node`中貌似是指向 `undefined`的
+- 隐式绑定
+- 显式绑定
+- new 绑定
+
 
 ## 隐式绑定丢失
 方法内部用forEach遍历时候，匿名函数中的引用值环境变成了Window

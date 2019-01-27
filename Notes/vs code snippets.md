@@ -10,6 +10,21 @@
 		],
 		"description": "召唤document.write()"
 	},
+	// "make a temp console.log()": {
+	// 	"prefix": "clt",
+	// 	"body": [
+	// 		"console.log('invoke');$1"
+	// 	],
+	// 	"description": "召唤console.log('invoke');"
+	// },
+	// return
+	// "return": {
+	// 	"prefix": "r",
+	// 	"body": [
+	// 		"return $1"
+	// 	],
+	// 	"description": "召唤一个 return"
+	// },
 	// jQuery
 	"召唤$": {
 		"prefix": "dl",
@@ -19,160 +34,174 @@
 		"description": "召唤一个 $"
 	},
 	// BABYLON
-		"BABYLON": {
+	"BABYLON": {
 		"prefix": "b",
 		"body": [
 			"BABYLON.$1"
 		],
 		"description": "BABYLON"
-		},
+	},
 
-// BABYLON.Vector3.Zero()
-		"BABYLON.Vector3.Zero()": {
+	// BABYLON.Vector3.Zero()
+	"BABYLON.Vector3.Zero()": {
 		"prefix": "b0",
 		"body": [
 			"BABYLON.Vector3.Zero()",
 			"$0"
 		],
 		"description": "BABYLON.Vector3.Zero()"
-		},
+	},
 
-// new BABYLON.Color3();
-		"new BABYLON.Color3": {
+	// new BABYLON.Color3();
+	"new BABYLON.Color3": {
 		"prefix": "c3",
 		"body": [
 			"new BABYLON.Color3($1/255, $2/255, $3/255);"
 		],
 		"description": "new BABYLON.Color3;"
-		},
-// new BABYLON.Color4();
-		"new BABYLON.Color4": {
+	},
+	// new BABYLON.Color4();
+	"new BABYLON.Color4": {
 		"prefix": "c4",
 		"body": [
 			"new BABYLON.Color4($1/255, $2/255, $3/255, $4);"
 		],
 		"description": "new BABYLON.Color4;"
-		},
-// scene;
-		"BABYLON scene": {
+	},
+	// scene;
+	"BABYLON scene": {
 		"prefix": "s",
 		"body": [
 			"scene"
 		],
 		"description": "BABYLON scene"
-		},
-// StandardMaterial;
-		"BABYLON StandardMaterial": {
+	},
+	// StandardMaterial;
+	"BABYLON StandardMaterial": {
 		"prefix": "mt",
 		"body": [
 			"new BABYLON.StandardMaterial('$1',scene)"
 		],
 		"description": "BABYLON scene"
-		},
-// diffuseColor;
-		"BABYLON diffuseColor": {
+	},
+	// diffuseColor;
+	"BABYLON diffuseColor": {
 		"prefix": "dc",
 		"body": [
 			"diffuseColor = new BABYLON.Color3($1/255, $2/255, $3/255);"
 		],
 		"description": "BABYLON diffuseColor"
-		},
-// diffuseColor White;
-		"BABYLON diffuseColor White": {
+	},
+	// diffuseColor White;
+	"BABYLON diffuseColor White": {
 		"prefix": "dc1",
 		"body": [
 			"diffuseColor =  BABYLON.Color3.White();",
 			"$1"
 		],
 		"description": "BABYLON diffuseColor White"
-		},
-// diffuseColor Black;
-		"BABYLON diffuseColor Black": {
+	},
+	// diffuseColor Black;
+	"BABYLON diffuseColor Black": {
 		"prefix": "dc0",
 		"body": [
 			"diffuseColor = BABYLON.Color3.Black();",
 			"$1"
 		],
 		"description": "BABYLON diffuseColor Black"
-		},
-// specularColor;
-		"BABYLON specularColor": {
+	},
+	// specularColor;
+	"BABYLON specularColor": {
 		"prefix": "sc",
 		"body": [
 			"specularColor = new BABYLON.Color3($1/255, $2/255, $3/255);"
 		],
 		"description": "BABYLON specularColor"
-		},
-// specularColor White;
-		"BABYLON specularColor White": {
+	},
+	// specularColor White;
+	"BABYLON specularColor White": {
 		"prefix": "sc1",
 		"body": [
 			"specularColor = BABYLON.Color3.White();",
 			"$1"
 		],
 		"description": "BABYLON specularColor White"
-		},
-// specularColor Black;
-		"BABYLON specularColor Black": {
+	},
+	// specularColor Black;
+	"BABYLON specularColor Black": {
 		"prefix": "sc0",
 		"body": [
 			"specularColor = BABYLON.Color3.Black();",
 			"$1"
 		],
 		"description": "BABYLON specularColor Black"
-		},
-// specularPower;
-		"BABYLON specularPower": {
+	},
+	// specularPower;
+	"BABYLON specularPower": {
 		"prefix": "sp",
 		"body": [
 			"specularPower = $1;"
 		],
 		"description": "BABYLON specularPower"
-		},
-// scene.getElementByName;
-"Scene getElementByName": {
+	},
+	// scene.getMeshByName;
+	"Scene getMeshByName": {
 		"prefix": "sgn",
 		"body": [
-			"scene.getElementByName('$1');",
+			"scene.getMeshByName('$1');",
 			"$0"
 		],
-		"description": "Scene getElementByName"
-		},
-// BABYLON.CreateAndStartAnamation;
-"BABYLON CreateAndStartAnamation": {
+		"description": "Scene getMeshByName"
+	},
+	// BABYLON.CreateAndStartAnamation;
+	"BABYLON CreateAndStartAnamation": {
 		"prefix": "cas",
 		"body": [
 			"BABYLON.Animation.CreateAndStartAnimation(name$1, node$2, 'property$3', framePerSecond$4, totalFrame$4, startValue$5, endValue$6, loop$7);",
 			"$0"
 		],
 		"description": "BABYLON CreateAndStartAnamation"
-		},
+	},
 
-// new BABYLON Texture;
-"new BABYLON Texture": {
+	// new BABYLON.Texture;
+	"new BABYLON.Texture": {
 		"prefix": "tt",
 		"body": [
-			"new BABYLON Texture('name$1', scene);$2",
+			"new BABYLON.Texture('path$1', scene);$2",
 			"$0"
 		],
-		"description": "new BABYLON Texture"
-		},
-
-/*
-	// Place your snippets for Javascript (Babel) here. Each snippet is defined under a snippet name and has a prefix, body and 
-	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
-	// same ids are connected.
-	// Example:
-	"Print to console": {
-		"prefix": "log",
-		"body": [
-			"console.log('$1');",
-			"$2"
-		],
-		"description": "Log output to console"
-	}
-*/
+		"description": "new BABYLON.Texture"
+	},
+	/*
+	* 这里开始放 vue 的
+	*/
+	// vuex commit
+	"vuex 提交一个 mutation": {
+		"prefix": "vcm",
+		"body": ["this.$$store.commit('$1');", "$2"],
+		"description": "this.$store.commit('mutation-name');"
+	  },
+	  // vuex get state
+	  "vuex 获取一个 state": {
+		"prefix": "vg",
+		"body": ["this.$$store.state.$1;", "$2"],
+		"description": "this.$store.state.key;"
+	  },
+	/*
+		// Place your snippets for Javascript (Babel) here. Each snippet is defined under a snippet name and has a prefix, body and 
+		// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+		// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+		// same ids are connected.
+		// Example:
+		"Print to console": {
+			"prefix": "log",
+			"body": [
+				"console.log('$1');",
+				"$2"
+			],
+			"description": "Log output to console"
+		}
+	*/
 }
 
 ```

@@ -73,6 +73,54 @@ CommonJS规范 http://javascript.ruanyifeng.com/nodejs/module.html
 ES6 Module 的语法 http://es6.ruanyifeng.com/#docs/module
 
 
+## export
+
+**`export default`**
+>使用import命令的时候，用户需要知道所要加载的变量名或函数名，否则无法加载。但是，用户肯定希望快速上手，未必愿意阅读文档，去了解模块有哪些属性和方法。
+
+>为了给用户提供方便，让他们不用阅读文档就能加载模块，就要用到 `export default` 命令，为模块指定默认输出。
+
+> **其他模块加载该模块时，import命令可以为该匿名函数指定任意名字。**
+
+> export default命令用在非匿名函数前，也是可以的
+
+```javascript
+export default function () {
+    console.log('foo');
+}
+
+import customName from './export-default';
+customName(); // 'foo'
+```
+
+使用 `export default` 时，对应的 `import` 语句不需要使用大括号；不使用 `export default` 时，对应的 `import` 语句需要使用大括号
+
+> 显然，一个模块只能有一个默认输出，因此 `export default` 命令只能使用一次
+
+> 本质上，`export default` 就是输出一个叫做 `default` 的变量或方法，然后系统允许你为它取任意名字
+
+## import
+
+- 加载指定模块：
+`import {variableName} from '...`
+
+**import命令具有提升效果，会提升到整个模块的头部，首先执行**
+
+- 整体加载：
+`import * as Name from '...`
+
+- 同时输入默认方法和其他接口
+```javascript
+import _, { each, forEach } from 'lodash';
+```
+
+## 复合写法
+先输入后输出同一个模块，import语句可以与export语句写在一起：
+```javascript
+export { foo, bar } from 'my_module';
+```
+
+
 
 # Other
 

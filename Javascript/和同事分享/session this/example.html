@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Default Bind</title>
+  </head>
+  <body>
+    默认绑定
+    <!-- <script>
+    // 'use strict';
+    function foo() {
+      console.log(this.a);
+    }
+    var a = 1;
+    foo();
+  </script> -->
+
+    隐式绑定
+    <!-- <script>
+      function foo() {
+        console.log(this.a);
+      }
+
+      var obj1 = {
+        a: 0,
+        myFn: foo
+      };
+
+      var obj2 = {
+        a: 1,
+        obj: obj
+      };
+
+      obj1.myFn();
+      obj1.obj.foo();
+    </script> -->
+
+    显式绑定
+    <!-- <script>
+      function foo() {
+        console.log(this.a);
+      }
+
+      var obj = {
+        a: 0,
+        foo: foo
+      };
+
+      var a = "global";
+      var baz = obj.foo;
+      baz.bind(obj)();
+      baz.call(obj);
+    </script> -->
+
+    绑定丢失 引用函数时丢失
+    <!-- <script>
+      function foo() {
+        console.log(this.a);
+      }
+
+      var obj = {
+        a: 0,
+        method: foo
+      };
+      var a = "global";
+      var handSomething = obj.method;
+      handSomething(); // 'global' on browser   undefined on node
+    </script> -->
+
+    传入回调函数时丢失
+    <!-- <script>
+      function foo() {
+        console.log(this.a);
+      }
+
+      function bar(fn) {
+        fn();
+      }
+
+      var obj = {
+        a: 0,
+        method: foo
+      };
+      var a = "global";
+      bar(obj.method); // 'global' on browser   undefined on node
+    </script> -->
+
+    map forEach setTimeout
+    <!-- <script>
+      var arrObj = {
+        a: 0,
+        arr: [1, 2, 3, 4]
+      };
+      arrObj.arr.forEach(function(value, index) {
+        console.log(this.a);
+      });
+      arrObj.arr.map(function(value, index) {
+        console.log(this.a);
+      });
+      // arrObj.arr.forEach(function(value, index) {
+      //   console.log(this.a);
+      // }, arrObj);
+
+      var obj2 = {
+        timer() {
+          setTimeout(function() {
+            console.log(this); //window
+          }, 1000);
+        }
+      };
+      obj2.timer();
+    </script> -->
+
+    Element
+    <div
+      id="div"
+      style="border: 1px solid red;height: 30px;width: 100px;text-align: center;cursor: pointer;"
+    >
+      I'm Div
+    </div>
+    <script>
+      document.getElementById("div").addEventListener(
+        "click",
+        function() {
+          var textContent = "some string";
+          console.log(this.textContent);
+        },
+        false
+      );
+    </script>
+  </body>
+</html>

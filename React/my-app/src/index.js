@@ -8,21 +8,21 @@ import counter from "./Store/reducers/index";
 import Counter from "./Counter";
 
 ReactDOM.render(<App />, document.getElementById('root'));
-// const store = createStore(counter)
+const store = createStore(counter)
 
 
 
-// const render = () => ReactDOM.render(
-//     <Counter
-//       value={store.getState()}
-//       onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
-//       onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
-//     />,
-//     document.getElementById('root')
-//   )
+const render = () => ReactDOM.render(
+    <Counter
+      value={store.getState()}
+      onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
+      onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
+    />,
+    document.getElementById('root')
+  )
   
-//   render()
-//   store.subscribe(render)
+  render()
+  store.subscribe(render)
 
 
 // If you want your app to work offline and load faster, you can change

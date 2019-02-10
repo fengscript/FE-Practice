@@ -42,6 +42,8 @@ console.log("after: " + a);
 ## 2.2 where
 
 - 1. 无论是否在严格模式下，在全局执行环境中（在任何函数体外部）this 都指向全局对象
+
+**eg**
 - 2. 在函数内部，this 的值取决于函数被调用的方式
   - 默认绑定
   - 隐式绑定
@@ -113,7 +115,7 @@ console.log(bar.a); // 2
 ```
 
 # 3 Missing & Fixed
-
+ERRORS / SOLUTION
 ## 3.1 Missing
 
 ### 3.1.1 引用函数时丢失
@@ -205,8 +207,16 @@ self.selfFn();
 
 ### 3.2.2 bind / call / apply
 
+- bind
+  - `function.bind(thisArg[, arg1[, arg2[, ...]]])`
+
+
 - call
+  - `fun.call(thisArg, arg1, arg2, ...)`
+
+
 - apply
+  - `func.apply(thisArg, [argsArray])`
 
 ### 3.2.3 arrow function
 

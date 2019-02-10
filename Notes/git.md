@@ -323,6 +323,8 @@ git add --interactive
 ```
 
 # stash
+储藏会处理工作目录的脏的状态 - 即，修改的跟踪文件与暂存改动 - 然后将未完成的修改保存到一个栈上
+
 
 ```bash
 git stash = git stash save

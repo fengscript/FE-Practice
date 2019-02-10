@@ -56,20 +56,27 @@
 
         class A {
             constructor() {
+                let a = 1;
+                this.b = 0;
                 console.log(new.target.name); // new.target 指向当前正在执行的函数
+                console.log(this)
             }
         }
 
         class B extends A {
+            z = 'z';
             constructor (){
                 super();
+                // console.log(a);
+                console.log(this.b);
+                console.log(this.z);
             }
         }
 
         new A(); // A
-        new B(); // B
+        let c = new B(); // B
         //super 虽然代表了父类 A 的构造函数，但是返回的是子类 B 的实例，即 super 内部的 this 指的是 B，因此 super() 在这里相当于 A.prototype.constructor.call(this, props)
-
+        console.log(c.b)
     </script>
 </body>
 

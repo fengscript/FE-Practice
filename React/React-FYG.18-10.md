@@ -623,6 +623,16 @@ class RefsTest extends Component {
 }
 ```
 
+**看到这么用的时候也不要惊讶**
+```javascript
+<input
+  ref={node => {
+    input = node;
+  }}
+/>
+```
+
+
 ## Ref 转发
 
 要控制子组件中的 `DOM`
@@ -827,3 +837,8 @@ https://react.docschina.org/docs/portals.html
 ==State 只在交互的时候使用==
 
 > 你可以自顶向下或者自底向上构建应用，在较为简单的例子中，通常自顶向下更容易，而在较大的项目中，自底向上会更容易并且在你构建的时候有利于编写测试。
+
+
+# Perfect Practice
+
+> Declare only one React component per fileeslint(react/no-multi-comp)

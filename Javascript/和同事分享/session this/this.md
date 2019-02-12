@@ -233,7 +233,7 @@ var obj3 = {
 obj3.timer();
 ```
 
-# 4 React & Other
+# 4 Class & Other
 
 ## Element
 
@@ -256,8 +256,33 @@ obj3.timer();
 </script>
 ```
 
-## React
+## Class
+类的内部如果含有 `this`， 它将默认指向 **类的实例**，一旦单独使用，很可能出错
+```javascript
+class Logger{
+  printName(name="someone"){
+    this.print(`Hello ${name}`)
+  }
 
+  print(text){
+    console.log(text);
+  }
+}
+
+const logger = new Logger();
+const { printName } = logger;
+printName()
+```
+
+
+
+
+
+
+
+
+
+### React
 ```javascript
 class MyComponent extends Component {
     constructor(props) {

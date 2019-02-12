@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
-import counter from "./Store/reducers/index";
+import counter from "./Test/reducers";
 import Counter from "./Counter";
 
 ReactDOM.render(<App />, document.getElementById('root'));

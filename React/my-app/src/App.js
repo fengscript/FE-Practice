@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import * as TEST from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { createStore } from "redux";
-import counter from "./Store/reducers/index";
+import counter from "./Test/reducers";
 import Counter from "./Counter";
-console.log(TEST);
 
 const store = createStore(counter);
 
@@ -13,7 +10,7 @@ const CounterWrapper = () => {
   return (
     <Counter
       value={store.getState()}
-      onIncrement={() => store.dispatch({ type: "INCREMENT" })}
+      onIncrement={() => (store.dispatch({ type: "INCREMENT" },console.log("click")))}
       onDecrement={() => store.dispatch({ type: "DECREMENT" })}
     />
   );

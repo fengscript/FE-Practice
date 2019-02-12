@@ -388,6 +388,16 @@ $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
 ```
 
+### 查看配置
+```bash
+git config --system --list
+//查看当前用户（global）配置
+git config --global  --list
+//查看当前仓库配置信息
+git config --local  --list
+```
+
+
 ## 其他疑难杂症
 
 ### 分支名和文件名重复
@@ -403,4 +413,16 @@ git checkout -- name
 ```bash
 git pull = git fetch + git merge
 git pull --rebase = git fetch + git rebase
+```
+
+# cheatsheet
+```bash
+#==========远程分支已经清理，但是本地的对应远程分支还存在，对其清理
+git remote show origin
+git remote prune origin
+#或者
+git fetch -p
+#==========
+git push origin --delete <branchName> 删除一个远程分支
+git push origin --delete tag <tagname> obviously，删除一个tag
 ```

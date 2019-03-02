@@ -8,10 +8,10 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
 ```
 
 # 2 选择器
-# nth-child
+## nth-child
 `selector : nth-child ( n )` 选择属于 `selector`  的父元素下第 `n` 个子元素
 
-# nth-of-type
+## nth-of-type
 `selector : nth-of-type ( n )` 选择属于 `selector`  的父元素下第 `n` 个元素的每个 `selector` 元素
 
 如下：
@@ -100,6 +100,10 @@ HTML结构为这样子
     margin-left: 30px;
 }
 ```
+
+
+## .a.b
+这种选择器如 `.box.button` 会选择同时有这两个 `class` 的元素
 
 
 # 3 动画

@@ -7,6 +7,8 @@ import { createStore } from "redux";
 import counterReducer from "./Test/reducers";
 import Counter from "./Test/Counter";
 
+// import * as ConunterNumber from "./CountNumber/Container/Counter";
+
 ReactDOM.render(<App />, document.getElementById("root"));
 // const store = createStore(counterReducer);
 

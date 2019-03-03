@@ -17,5 +17,5 @@ const Counter = () => {
 };
 
 export default Counter;
-render()
-store.subscribe(render)
+render();
+store.subscribe(render);

@@ -136,3 +136,32 @@ module.exports = {...}
 exports = module.exports
 
 ```
+
+
+
+
+## Notes
+### import *
+`import * as xxx from 'xxxx' ` 时候，因为 `import *` 了，所以 `import` 进来的是个对象，除非解构： `import {} `，所以有这种情况：
+```javascript
+import * as ConunterNumber from "./CountNumber/Container/Counter";
+ReactDOM.render(<ConunterNumber value={1}/>, document.getElementById("root"));
+```
+报错： 
+> Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: object.
+
+改成：
+```javascript
+import ConunterNumber from "./CountNumber/Container/Counter";
+```
+即可
+
+
+另一边 引入：
+```javascript
+const Mcp = require('./Mcp/Mcp.js');
+```
+导出就需要：
+```javascript
+export const Instance = Mcp;
+```

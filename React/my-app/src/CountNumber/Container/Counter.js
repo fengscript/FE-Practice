@@ -6,21 +6,29 @@ import reducer from "../Store/reducer";
 
 // const store = createStore(reducer);
 
-class Counter extends Component {
+class ConunterNumber extends Component {
+  constructor(props) {
+    super(props);
+    this.state={
+      value:0
+    }
+  }
+  onIncrement(){console.log(1);}
+  onDecrement(){console.log(2);}
   render() {
-    const { value, onIncrement, onDecrement } = this.props;
+    // const { value, onIncrement, onDecrement } = this.props;
     return (
       <p>
-        Clicked: 【 {value} 】 times
+        Clicked: 【 {this.state.value} 】 times
         {' '}
-        <button onClick={onIncrement}> + </button>
+        <button onClick={this.onIncrement}> + </button>
         {' '}
-        <button onClick={onDecrement}> - </button>
+        <button onClick={this.onDecrement}> - </button>
       </p>
     );
   }
 }
 
-export default Counter;
+export default ConunterNumber;
 // render();
 // store.subscribe(render);

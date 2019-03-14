@@ -1,9 +1,10 @@
-import React from "react";
+import React,{Component} from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
-import * as ConunterNumber from "./CountNumber/Container/Counter";
+import ConunterNumber from "./CountNumber/Container/Counter";
+
 
 ReactDOM.render(<ConunterNumber value={1}/>, document.getElementById("root"));
 

@@ -31,4 +31,4 @@ const reducer = (state = inintState, action) => {
 }
 const store = createStore(reducer);
 
-export { action_add, reducer, store }
+export { reducer, store }

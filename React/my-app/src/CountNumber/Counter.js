@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-import { action_add, reducer, store } from "./store";
+import { reducer, store } from "./store";
 import ReactDOM from 'react-dom';
 
 class ConunterNumberContainer extends Component {

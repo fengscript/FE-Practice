@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { reducer, store } from "./store";
+import { store, action } from "./store";
 import ReactDOM from 'react-dom';
 
 class ConunterNumberContainer extends Component {
@@ -27,24 +27,18 @@ class ConunterNumberContainer extends Component {
 
 const rootElement = document.getElementById("root");
 const onIncrement = () => {
-  store.dispatch({
-    type: 'ADD',
-    payload: 1,
-  })
+  store.dispatch(action.add(1))
 }
 const onDecrement = () => {
-  store.dispatch({
-    type: 'DREASE',
-    payload: 1,
-  })
+  store.dispatch(action.decrease(1))
 }
-const ConunterNumber = () => 
+const ConunterNumber = () =>
   ReactDOM.render(<ConunterNumberContainer
-  value = {store.getState().value}
-  onIncrement = {onIncrement}
-  onDecrement = {onDecrement}
+    value={store.getState().value}
+    onIncrement={onIncrement}
+    onDecrement={onDecrement}
   />, rootElement);
-  
+
 store.subscribe(ConunterNumber);
 export default ConunterNumber;
 

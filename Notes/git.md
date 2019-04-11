@@ -331,15 +331,25 @@ git stash = git stash save
 git stash list
 git stash --keep-index  //不要储藏任何你通过 git add 命令已暂存的东西
 
+git stash save "messeag"ß
+
+//查看
+git stash show
+git stash show stash@{id}
 
 // 掏出来
 git stash apply
 git stash apply stash@{2}
 git stash branch
+
+//删除stash
+git stash drop <stash@{id}> 如果不加stash编号，默认的就是删除最新的
+git stash clear 清除所有stash
 ```
 
 - `--patch` 标记：Git 不会储藏所有修改过的任何东西，但是会交互式地提示哪些改动想要储藏、哪些改动需要保存在工作目录中
 - `--include-untracked` 或 `-u` 储藏任何创建的未跟踪文件(默认情况下，`git stash` 只会储藏已经在索引中的文件)
+
 
 # ignore
 

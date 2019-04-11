@@ -1,27 +1,44 @@
-import { createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
+import LoggerCreator from "redux-logger";
 
-const inintState = {
-    value: 0
+const Logger = LoggerCreator();
+const initState = {
+    value: 0,
+    test: {
+        name: 'f'
+    },
 };
 
 
-const actionCreater = ({type, payload}) => {
-    return { type , payload }
-}
+// const actionCreater = (list) => {
+//     const actions = {};
+//     list.forEach(item => {
 
-actionCreater({
-    type:'ADD'
-});
-actionCreater({
-    type:'DREASE'
-});
+//         const actionFn = (...args) => (
+//             { type, payload:...agrs }
+//         )
+//         actions[actionName] = actionFn;
+//     });
+//     return actions;
+// }
+
+// actionCreater({
+//     type:'ADD'
+// });
+// actionCreater({
+//     type:'DECREASE'
+// });
+
+const action = {};
+action.add = (payload) => ({ type: "ADD", payload })
+action.decrease = (payload) => ({ type: "DECREASE", payload })
 
 
-const reducer = (state = inintState, action) => {
+const reducer = (state = initState, action) => {
     switch (action.type) {
         case 'ADD':
             return { ...state, value: state.value + action.payload };
-        case 'DREASE':
+        case 'DECREASE':
             return { ...state, value: state.value - action.payload };
 
         default:
@@ -29,6 +46,13 @@ const reducer = (state = inintState, action) => {
     }
 
 }
-const store = createStore(reducer);
+const store = createStore(
+    reducer,
+    initState,
+    // applyMiddleware(Logger)
+);
+// OR
+const BindDispatch = {};
+BindDispatch.add = (value) => (store.dispatch(action.add(1)))
 
-export { reducer, store }
+export { action, reducer, store }

@@ -864,3 +864,7 @@ https://react.docschina.org/docs/portals.html
 展开属性
 > 如果你已经有了个 props 对象，并且想在 JSX 中传递它，你可以使用 ... 作为“展开(spread)”操作符来传递整个属性对象
 > https://react.docschina.org/docs/jsx-in-depth.html
+
+
+## `purecomponent`
+PureComponent改变了生命周期方法shouldComponentUpdate，并且它会自动检查组件是否需要重新渲染。这时，只有PureComponent检测到state或者props发生变化时，PureComponent才会调用render方法，因此，你不用手动写额外的检查，就可以在很多组件中改变state， 例如：

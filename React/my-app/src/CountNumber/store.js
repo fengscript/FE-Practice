@@ -9,7 +9,7 @@ const initState = {
     },
 };
 
-
+const createStoreEnhancer = applyMiddleware(Logger)(createStore);
 // const actionCreater = (list) => {
 //     const actions = {};
 //     list.forEach(item => {
@@ -46,10 +46,8 @@ const reducer = (state = initState, action) => {
     }
 
 }
-const store = createStore(
-    reducer,
-    initState,
-    // applyMiddleware(Logger)
+const store = createStoreEnhancer(
+    reducer
 );
 // OR
 const BindDispatch = {};

@@ -1,28 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux'
-import counter from "./Test/reducers";
-import Counter from "./Counter";
+import React,{Component} from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(<App />, document.getElementById('root'));
-const store = createStore(counter)
+import ConunterNumber from "./CountNumber/Counter";
 
-
-
-const render = () => ReactDOM.render(
-    <Counter
-      value={store.getState()}
-      onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
-      onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
-    />,
-    document.getElementById('root')
-  )
-  
-  render()
-  store.subscribe(render)
+ConunterNumber();
 
 
 // If you want your app to work offline and load faster, you can change

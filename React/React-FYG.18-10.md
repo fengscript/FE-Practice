@@ -137,7 +137,9 @@ const element = React.createElement("h1", null, "Hello, world");
 
 分 函数式组件 或者类组件
 
-函数式组件：定义一个接收 `props` 传值，返回 React 元素的方法
+*也可以直接返回一个 DOM*
+
+- 函数式组件：定义一个接收 `props` 传值，返回 React 元素的方法
 
 **只有类组件才有局部状态 `state` 这个特性**
 
@@ -157,7 +159,7 @@ ReactDOM.render(
 );
 ```
 
-类组件：自带一个 `render` 方法，但是传值时候就要用 `this.porps`
+- 类组件：自带一个 `render` 方法，但是传值时候就要用 `this.porps`
 
 ```javascript
 class Clock extends React.Component {
@@ -171,6 +173,20 @@ class Clock extends React.Component {
   }
 }
 ```
+
+- 直接返回DOM：
+使用的时候直接调用函数，传进去参数
+```javascript
+const CardTextContent = (imageWidth, imageStyle) => (
+    <div
+        className={`medium-${imageWidth} jcl-product-card__column jcl-product-card__column-img`}
+        style={imageStyle}
+    />
+);
+// use
+{props.imageUrl && !props.imageOnRight && CardTextContent(props.imageWidth, imageStyle)}
+```
+
 
 ### props state
 
@@ -842,3 +858,13 @@ https://react.docschina.org/docs/portals.html
 # Perfect Practice
 
 > Declare only one React component per fileeslint(react/no-multi-comp)
+
+# Other
+## `...`
+展开属性
+> 如果你已经有了个 props 对象，并且想在 JSX 中传递它，你可以使用 ... 作为“展开(spread)”操作符来传递整个属性对象
+> https://react.docschina.org/docs/jsx-in-depth.html
+
+
+## `purecomponent`
+PureComponent改变了生命周期方法shouldComponentUpdate，并且它会自动检查组件是否需要重新渲染。这时，只有PureComponent检测到state或者props发生变化时，PureComponent才会调用render方法，因此，你不用手动写额外的检查，就可以在很多组件中改变state， 例如：

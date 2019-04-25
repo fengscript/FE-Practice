@@ -25,6 +25,9 @@ function methodName () : void {}
 
 > 但是 `void` 类型的变量不能赋值给 `number` 类型的变量
 
+## Type Inference
+
+时机：推断发生在初始化变量和成员，设置默认参数值和决定函数返回值时
 
 
 ## Union Types

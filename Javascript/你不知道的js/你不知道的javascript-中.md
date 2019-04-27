@@ -159,7 +159,7 @@ console.log(b);   //2 而不是 3
 
 # 2 native function
 
-一些 native function / build-in function
+some native functions / build-in functions
 - String()
 - Number()
 - Boolean()
@@ -170,6 +170,107 @@ console.log(b);   //2 而不是 3
 - Date()
 - Error()
 - Symbol()
+
+原生函数可以被当做构造函数来使用，创建出来的是封装了基本类型值的**封装对象**（对你没看错，是个对象），比如 `new String('abc')` 创建出来的是字符串 `abc` 的封装对象，而不是基本类型值 `abc`：
+```javascript
+typeof 'abc'; // String
+typeof new String('abc'); // Object
+```
+
+对于 `object` 的子类，可以通过 `Object.prototype.toString()` 来查看具体的类型：
+```javascript
+Object.prototype.toString.call(/a/)             //"[object RegExp]"
+Object.prototype.toString.call([1,2,3])             //"[object Array]"
+```
+
+## object wrapper
+基本类型值没有 `.length`, `.toString()` 这种属性和方法，需要通过封装对象才能访问，所以js会 *自动为基本类型值包装一个对象*
+
+- `Array` 构造函数只呆一个数字的时候该参数会被当做数组的预设长度而非数组中的一个元素
+- `new Object` 构造函数创建对象的话需要一个一个添加属性
+- `Date()`直接调用可以得到当前日期的字符串值
+- `Error()`可以得到当前运行栈的上下文
+- `Array.ptototype`可以得到一个空数组，可以用作未赋值变量的默认值
+
+想要得到封装对象中的基本类型值，可以使用 `valueOf()` 函数：
+```javascript
+var a = new Number(2);
+a.valueOf();    //2
+```
+
+** 在需要用到封装对象中的基本类型值的地方会发生 *隐式拆封* **
+
+# 3 coercion type casting
+js中强制类型转换总是返回标量基本类型值，不会返回对象和函数
+
+```javascript
+let a = 2;
+let b = a + "";
+let c = String(a)
+```
+
+- implicit coercion 隐式强制类型转换    
+- explicit coercion 显式强制类型转换
+
+> ES5第9节定义了一些仅供内部使用的抽象操作
+> - ToString
+> - ToNumber
+> - ToBoolean
+> - ToPrimitive
+
+## ToString
+|      原始值       |     转换后      | 备注                                                      |
+| :---------------: | :-------------: | :-------------------------------------------------------- |
+|       null        |    `"null"`     |                                                           |
+|     undefined     |  `"undefined"`  |                                                           |
+|    极小/极大数    |    指数形式     |                                                           |
+|     普通对象      |   `[[Class]]`   |                                                           |
+|       数组        | `"a1,a2,a3..."` | 将所有单元字符串化以后再用 `,` 连接                       |
+| `JSON.stringfy()` |                 | 对象中遇到`undefined`， `function`， `symbol`时会自动忽略 |
+|                   |                 |                                                           |
+
+
+- **普通对象，除非自己定义，否则 `toString()`后返回内部属性 `[[Class]]` 的值**
+    > 对象转换为 string 是通过 ToPrimitive 抽象操作完成的
+- **数组的 `toString()` 方法会将所有单元字符串化以后再用 `,` 连接起来**
+- `JSON.stringfy()`也用到了 `ToString`
+    > `JSON.stringfy()` 在对象中遇到 `undefined`， `function`， `symbol`时会自动忽略，在数组中则会返回 `null`保证单元位置不变
+    > 对包含循环引用的对象执行 `JSON.stringfy()` 会出错 
+
+
+## ToNumber
+
+|   原始值    | 转换后 | 备注 |
+| :---------: | :----: | :--- |
+|    true     |   1    |      |
+|    false    |   0    |      |
+| `undefined` | `NaN`  |      |
+|    null     |   0    |      |
+
+
+- `ToNumber` 对字符串的处理转换失败时返回 `NaN`
+- 对以 `0` 开头的十六进制数会按十进制转换
+- 对象 / 数组 ：先转换为相应的基本类型值，若返回的是非数字的基本类型值，再按以上规则强制转换为数字
+- **将值转换为相应的基本类型值时候，抽象操作 `ToPrimitive` 会先检查该值是否有 `valueOf()` 方法，若有且返回了基本类型值，则使用该值进行强制类型转换，若没有则使用 `toString()` 的返回值进行强制类型转换**
+- **若  `valueOf()` 和 `toString()` 都不返回基本类型值，则产生 `TypeError` 错误**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

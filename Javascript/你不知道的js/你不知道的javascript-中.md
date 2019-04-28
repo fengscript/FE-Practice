@@ -107,8 +107,8 @@ function closeEqual(x, y){
 
 `JSON.parse(-0)  // -0 `
 
-`Object.is(a, b)` 可以 handle `NaN` , `-0` 跟自己相比时候的这些恶心情况
-
+`Object.is(a, b)` 可以 handle `NaN / NaN` , `-0 / +0` 相比时候的这些恶心情况
+> https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Equality_comparisons_and_sameness
 
 ### 值和引用
 简单值总是通过 **复制** 的方式来赋值/传递
@@ -201,6 +201,7 @@ a.valueOf();    //2
 ** 在需要用到封装对象中的基本类型值的地方会发生 *隐式拆封* **
 
 # 3 coercion type casting
+
 js中强制类型转换总是返回标量基本类型值，不会返回对象和函数
 
 ```javascript
@@ -252,7 +253,11 @@ let c = String(a)
 - 对以 `0` 开头的十六进制数会按十进制转换
 - 对象 / 数组 ：先转换为相应的基本类型值，若返回的是非数字的基本类型值，再按以上规则强制转换为数字
 - **将值转换为相应的基本类型值时候，抽象操作 `ToPrimitive` 会先检查该值是否有 `valueOf()` 方法，若有且返回了基本类型值，则使用该值进行强制类型转换，若没有则使用 `toString()` 的返回值进行强制类型转换**
-- **若  `valueOf()` 和 `toString()` 都不返回基本类型值，则产生 `TypeError` 错误**
+- **若 `valueOf()` 和 `toString()` 都不返回基本类型值，则产生 `TypeError` 错误**
+- `Object.create(null)` 创建的对象 `[[prototype]]` 属性为 `null` ，且没有 `valueOf()` 和 `toString()` 方法，所以无法进行强制类型转换
+
+## ToBoolean
+
 
 
 

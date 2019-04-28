@@ -217,3 +217,13 @@ _this.setData({
   [`defaultArr[${newSelected}].isSelected`]: true,
 });
 ```
+
+## create
+创建一个新对象，使用 *现有的对象来提供新创建的对象的 `__proto__` *
+
+`Object.create({...})` 创建的对象的 `prototype` 会被链接到被提供的对象的 `__proto__` 上，即
+```javascript
+let a = {name:'obj'};
+let b = Object.create(a);
+b.obj;  //null
+```

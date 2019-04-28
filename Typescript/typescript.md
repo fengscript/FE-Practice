@@ -6,7 +6,7 @@ let varName : varType = varValue;
 
 ## basic type
 ```
-number,string,boolean,null,undefined,symbol(ES6)
+number, string, boolean, null, undefined, symbol(ES6)
 ```
 
 - `any` ：变量声明但未赋值时未指定类型，默认为 `any` 类型
@@ -24,6 +24,10 @@ function methodName () : void {}
 `undefined` 和 `null` 是所有类型的子类型, 比如`undefined` 类型的变量，可以赋值给 `number` 类型的变
 
 > 但是 `void` 类型的变量不能赋值给 `number` 类型的变量
+
+### Array
+
+
 
 ## Type Inference
 
@@ -56,6 +60,30 @@ function getLength(something: string | number): number {
 
 赋值的时候，变量的形状必须和接口的形状保持一致
 
+假如不用接口，就得这么写：
+```javascript
+function printLabel(labeledObj: { label: string }) {
+  console.log(labeledObj.label);
+}
+
+let myObj = { size: 10, label: "Size 10 Object" };
+printLabel(myObj);
+```
+呕。。。要是用了接口，那就可以这样子：
+```javascript
+interface LabeledValue {
+  label: string;
+}
+
+function printLabel(labeledObj: LabeledValue) {
+  console.log(labeledObj.label);
+}
+
+let myObj = {size: 10, label: "Size 10 Object"};
+printLabel(myObj);
+```
+
+
 ## 可选属性
 不完全匹配时：
 ```typescript
@@ -82,6 +110,8 @@ interface Person {
 
 ## 只读属性
 用 `readonly` 特性
+
+只能在对象刚刚创建的时候修改/设置一次其值，后面就再不行了
 
 ```typescript
 interface Person {

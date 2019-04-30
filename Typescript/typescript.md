@@ -27,7 +27,50 @@ function methodName () : void {}
 
 ### Array
 
+```javascript
+let list: number[] = [1, 2, 3];
 
+// 泛型
+let list: Array<number> = [1, 2, 3];
+```
+### Tuple
+元组类型允许表示一个已知元素数量和类型的数组，各元素的类型不必相同
+
+```javascript
+// Declare a tuple type
+let x: [string, number];
+// Initialize it
+x = ['hello', 10]; // OK
+// Initialize it incorrectly
+x = [10, 'hello']; // Error
+```
+> 访问元组中一个越界的元素，会使用联合类型替代
+
+
+### Enum
+枚举类型可以为一组数值赋予友好的名字
+
+枚举类型提供的一个便利是你可以由枚举的值得到它的名字
+
+
+### Never
+`never` 类型表示的是那些永不存在的值的类型。 例如，总是会抛出异常，或根本就不会有返回值的函数表达式或箭头函数表达式的返回值类型
+
+变量也可能是 `never` 类型
+
+> `never` 类型是任何类型的子类型，也可以赋值给任何类型；然而，没有类型是 `never` 的子类型或可以赋值给 `never` 类型（除了never本身之外）。 即使 `any` 也不可以赋值给 `never`
+
+
+### 类型断言
+- `<>`
+- `as`
+```javascript
+let someValue: any = "this is a string";
+
+let strLength: number = (<string>someValue).length;
+
+let strLength: number = (someValue as string).length;
+```
 
 ## Type Inference
 
@@ -49,8 +92,6 @@ function getLength(something: string | number): number {
 // 类型“number”上不存在属性“length”。ts(2339)
 
 ```
-
-
 
 
 # interface
@@ -122,6 +163,58 @@ interface Person {
 }
 ```
 
+## 描述数组
+
+
+## 描述函数
+
+```typescript
+interface Search {
+  (sources: string, searchStr: string): boolean;
+}
+
+
+let searchOuter: Search;
+searchOuter = function(sources: string ,searchStr: string ){
+    return sources.search(searchStr) !== -1;
+}
+```
+
+
+## 描述类
+
+```javascript
+interface ClockInterface {
+    currentTime: Date;
+    setTime(d: Date): void;
+}
+
+class Clock implements ClockInterface {
+    currentTime: Date = new Date();
+    setTime(d: Date) {
+        this.currentTime = d;
+    }
+    constructor(h: number, m: number) { }
+}
+```
+
+**接口不会帮你检查类是否具有某些私有成员**
+
+
+用构造器签名去定义一个接口并试图定义一个类去实现这个接口时会得到一个错误，因为 **当一个类实现了一个接口时，只对其实例部分进行类型检查。 constructor存在于类的静态部分，所以不在检查的范围内**。
+```javascript
+interface ClockConstructor {
+    new (hour: number, minute: number);
+}
+
+class Clock implements ClockConstructor {
+    currentTime: Date;
+    constructor(h: number, m: number) { }
+}
+```
+
+
+
 # Array
 ```typescript
 let fibonacci: number[] = [1, 1, 2, 3, 5];
@@ -133,9 +226,6 @@ let fibonacci: number[] = [1, 1, 2, 3, 5];
 
 `let fibonacci: Array<number> = [1, 1, 2, 3, 5];`
 
-
-## interface
-接口也可以用来描述数组
 
 ## Array-Like
 常见的 `Array-like` 都有自己的接口定义：
@@ -168,20 +258,9 @@ let myFun:(x:number ,y:number ) => number = function(x:number ,y:number ):number
 
 `=>`表示函数的定义，而不是 `ES6`的箭头函数
 
-## interface
 
-当然，也可以上接口
-```typescript
-interface Search {
-  (sources: string, searchStr: string): boolean;
-}
+对于函数类型的类型检查来说，函数的参数名不需要与接口里定义的名字相匹配
 
-
-let searchOuter: Search;
-searchOuter = function(sources: string ,searchStr: string ){
-    return sources.search(searchStr) !== -1;
-}
-```
 
 ## 可选参数
 还是继续用 `?` 来表示可选参数：

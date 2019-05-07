@@ -163,6 +163,8 @@ interface Person {
 }
 ```
 
+类似的，数组有 `ReadonlyArray<T>`
+
 ## 描述数组
 
 
@@ -211,7 +213,87 @@ class Clock implements ClockConstructor {
     currentTime: Date;
     constructor(h: number, m: number) { }
 }
+//类“Clock”错误实现接口“ClockConstructor”。
+//类型“Clock”提供的内容与签名“new (hour: number, minute: number): any”不匹配。ts(2420)
 ```
+
+可以通过直接操作类的静态部分实现：
+```typescript
+interface ClockConstructor {
+    new (hour: number, minute: number): ClockInterface;
+}
+interface ClockInterface {
+    tick(): void;
+}
+
+function createClock(ctor: ClockConstructor, hour: number, minute: number): ClockInterface {
+    return new ctor(hour, minute);
+}
+
+class DigitalClock implements ClockInterface {
+    constructor(h: number, m: number) { }
+    tick() {
+        console.log("beep beep");
+    }
+}
+class AnalogClock implements ClockInterface {
+    constructor(h: number, m: number) { }
+    tick() {
+        console.log("tick tock");
+    }
+}
+
+let digital = createClock(DigitalClock, 12, 17);
+let analog = createClock(AnalogClock, 7, 32);
+```
+
+
+或者用类表达式：
+```typescript
+interface ClockConstructor {
+  new (hour: number, minute: number);
+}
+
+interface ClockInterface {
+  tick();
+}
+
+const Clock: ClockConstructor = class Clock implements ClockInterface {
+  constructor(h: number, m: number) {}
+  tick() {
+      console.log("beep beep");
+  }
+}
+```
+
+## 接口继承
+通过 `extends`
+
+```typescript
+interface Shape {
+    color: string;
+}
+
+interface Square extends Shape {
+    sideLength: number;
+}
+
+let square = <Square>{};
+square.color = "blue";
+square.sideLength = 10;
+
+```
+
+你可以随随便便继承：
+```typescript
+interface Square extends Shape, PenStroke {
+    sideLength: number;
+}
+
+let square = <Square>{};
+
+```
+
 
 
 
@@ -225,6 +307,15 @@ let fibonacci: number[] = [1, 1, 2, 3, 5];
 数组泛型 `Array<Type>`
 
 `let fibonacci: Array<number> = [1, 1, 2, 3, 5];`
+
+## ReadonlyArray
+
+`ReadonlyArray<T>` 与 `Array<T>` 相似，只是把所有可变方法去掉了，因此可以确保数组创建后再也不能被修改
+```typescript
+let a: number[] = [1, 2, 3, 4];
+let ro: ReadonlyArray<number> = a;
+ro[0] = 12; // error!
+```
 
 
 ## Array-Like
@@ -256,10 +347,15 @@ let myFun:(x:number ,y:number ) => number = function(x:number ,y:number ):number
 ```
 。。。怎么说呢，写的累得不行
 
-`=>`表示函数的定义，而不是 `ES6`的箭头函数
+`=>`表示函数的定义，而不是 `ES6` 的箭头函数
 
 
 对于函数类型的类型检查来说，函数的参数名不需要与接口里定义的名字相匹配
+
+箭头函数应该这样子？
+```typescript
+const add = (a: number , b: number ): number => a + b 
+```
 
 
 ## 可选参数
@@ -364,10 +460,14 @@ let body:HTMLElement = document.body;
 let addDiv : NodeList = document.getElementsByTagName('div');
 ```
 
-# Advanced
-## Generics
+# Generics
+使用泛型来创建可重用的组件，一个组件可以支持多种类型的数据
 
-# Brief & Cheatsheet
+
+
+
+---
+# Cheatsheet
 ## Type
 6种基本类型：
 - `number`
@@ -395,7 +495,7 @@ interface Person {
 ```
 
 ## Array
-
+- `ReadonlyArray<T>`
 
 ## Function
 - **可选参数后面不允许再出现必须参数了**

@@ -138,8 +138,26 @@ let tom: Person = {
 };
 ```
 
+## 索引类型
 
-## 任意属性
+比如 `a[10]` 或 `ageMap["daniel"]` 。 可索引类型具有一个索引签名，它描述了对象索引的类型，还有相应的索引返回值类型
+
+```typescript
+interface StringArray {
+  [index: number]: string;
+}
+
+let myArray: StringArray;
+myArray = ["Bob", "Fred"];
+
+let myStr: string = myArray[0];
+```
+
+数字索引的返回值必须是字符串索引返回值类型的子类型
+
+
+
+## 额外属性检查
 ```typescript
 interface Person {
     name: string;
@@ -148,6 +166,8 @@ interface Person {
 }
 ```
 要注意的是：**定义的任意属性，确定属性和可选属性都必须是它的子属性**
+
+比如此处要表示的是：`Person` 可以有任意数量的属性，并且只要它们不是 `name` 和 `age` ，那么就无所谓它们的类型是什么
 
 ## 只读属性
 用 `readonly` 特性
@@ -165,6 +185,9 @@ interface Person {
 
 类似的，数组有 `ReadonlyArray<T>`
 
+
+>  做为变量使用的话用const，若做为属性则使用readonly
+> 
 ## 描述数组
 
 
@@ -181,6 +204,16 @@ searchOuter = function(sources: string ,searchStr: string ){
     return sources.search(searchStr) !== -1;
 }
 ```
+
+甚至可以直接写，类型系统会推断出参数类型，返回值类型会通过其返回值推断出来：
+```javascript
+et searchOuter: Search;
+searchOuter = function(){
+    let result = src.search(sub);
+    return result > -1;
+}
+```
+
 
 
 ## 描述类

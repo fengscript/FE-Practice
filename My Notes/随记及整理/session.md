@@ -55,7 +55,13 @@ jwt可以放在response中返回，也可以放在cookie中返回
 问题：
 session：
 - session方式由于会在服务器端维护session信息，单机还好说，如果是多机的话，服务器之间需要同步session信息，服务横向扩展不方便。
+
 - session数量随着登录用户的增多而增多，存储会增加很多。
+
 - session+cookie里面存sessionId的方式可能会有csrf攻击的问题，常见的方式是使用csrf_token来解决
-jwt
+
+  
+
+  jwt
+
 - jwt的过期时间需要结合业务做设置，而且jwt一旦派发出去，后端无法强行使其作废

@@ -10,12 +10,34 @@ function test(value: number | string): number {
 interface Person {
   name: string;
   age: number;
-  [name: string]: string;
+  color?: string;
+  // 索引类型
+  [propName: string ]: any;
+  // [career: string]: string;
 }
+
+function t(config: Person): { id: number } {
+  if (config.age) {
+  }
+  return { id: 1 };
+}
+
+let createT = t({
+  name: "fyg",
+  age: 27,
+  kkk: 1,
+});
+
+let createT2 = t({
+  name:"fyg",
+  age:27,
+  colour:"red",
+} as Person)
 
 let tom: Person = {
   name: "TOM",
-  age: 26
+  age: 26,
+  career: "FED"
 };
 
 let tuple: [string, number, object];
@@ -37,10 +59,10 @@ interface ClassTest {
   sayName(s: string): void;
 }
 
-class newClassTest implements ClassTest{
-  constructor(){};
-  name:"fyg";
-  sayName(s:string ){
-    console.log(s)
+class newClassTest implements ClassTest {
+  constructor() {}
+  name: "fyg";
+  sayName(s: string) {
+    console.log(s);
   }
 }

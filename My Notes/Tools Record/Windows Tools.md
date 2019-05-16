@@ -1,4 +1,40 @@
-## cmder 配置
+# Tools Records
+
+## Windows
+
+**Code**
+
+- cmder
+- snipaste
+- zeal 文档管理
+- 小程序开发工具
+- postman
+
+**Tools**
+
+- ditto
+- color schemer studio
+- listary
+- fdm
+- 坚果云
+- 火绒
+- Q-dir
+- 向日葵
+
+
+
+**Study**
+
+- typora
+- mendeley 文献阅读管理 https://www.mendeley.com/
+
+## **Media**
+
+- xnview
+- potplayer
+# Some Config
+
+## cmder
 
 ### 添加环境变量
 
@@ -7,7 +43,7 @@
 变量名：`CMDER_HOME`
 变量值： 安装绝对路径
 
-最后在Path添加一条
+最后在 Path 添加一条
 `%CMDER_HOME%`
 
 ### 添加到鼠标右键
@@ -15,8 +51,6 @@
 ```bash
 cmder.exe /REGISTER ALL
 ```
-
-
 
 ### 命令提示符
 
@@ -40,20 +74,10 @@ cd config
 vi user-aliases.cmd
 ```
 
-
-
-
-
 # Chrome Extendtions
 
-- workona 管理session和tabs
-- session buddy 暂存tabs
-- one tab 和 better one tab 管理tab
+- workona 管理 session 和 tabs
+- session buddy 暂存 tabs
+- one tab 和 better one tab 管理 tab
 
 ---
-
-# Tools Records
-
-- cmder
-- snipaste
-- 

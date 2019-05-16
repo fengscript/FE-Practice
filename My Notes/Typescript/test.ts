@@ -66,3 +66,12 @@ class newClassTest implements ClassTest {
     console.log(s);
   }
 }
+
+
+class Animal {
+  name: string;
+}
+class Dog extends Animal {
+  breed: string;
+}
+

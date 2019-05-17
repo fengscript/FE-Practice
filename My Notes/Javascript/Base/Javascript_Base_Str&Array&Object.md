@@ -174,6 +174,10 @@ var arr = [].slice.call(arr)
 或者，返回了从 `begin` 到后面所有的元素
 
 ### split
+快速获取数组：
+```javascript
+var strArr = 'array string'.split('') //  ["A", "R", "R", "A", "Y", " ", "S", "T", "R", "I", "N", "G"]
+```
 
 
 ## 去掉字符串中某字符

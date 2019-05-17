@@ -233,6 +233,8 @@ self.selfFn();
 - call
 - apply
 
+`call`,`apply` 第一个参数传入 `null` 时，函数指向全局
+
 ### 3.2.3 arrow function
 
 Es6 的 arrow function 会根据外层作用域来决定 this 的指向，从而避免 this 指向丢失：

@@ -1,5 +1,9 @@
 ```javascript
 class Animal {
+    //es7 实例属性 this.xxx 直接用 xxx 代替
+    name = `animanal`;
+    //es7 静态属性
+    static age = 27;
   constructor(name) {
     this.name = name;
   }
@@ -12,6 +16,7 @@ class Animal {
   set name(value){
       console.log(`setter: ${value}`);
   }
+  //静态方法不需要实例化，而是直接通过类来调用：
   static isAnimal(a) {
     return a instanceof Animal;
   }

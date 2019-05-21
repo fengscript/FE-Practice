@@ -75,3 +75,6 @@ class Dog extends Animal {
   breed: string;
 }
 
+
+enum Colors {Red, Green, Yellow};
+Colors.Green;

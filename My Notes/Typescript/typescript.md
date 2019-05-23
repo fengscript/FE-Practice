@@ -21,7 +21,8 @@ tsc hello.ts
 let varName: varType = varValue;
 ```
 
-有6种基本类型
+有 6 种基本类型
+
 ```
 number, string, boolean, null, undefined, symbol(ES6)
 ```
@@ -76,7 +77,6 @@ function getLength(something: string | number): number {
 // 类型“number”上不存在属性“length”。ts(2339)
 ```
 
-
 # 2 Array
 
 ```typescript
@@ -123,7 +123,9 @@ function sum() {
   let args: IArguments = arguments;
 }
 ```
+
 ### Tuple
+
 数组合并了相同类型的对象，而元组（Tuple）合并了不同类型的对象
 
 元组类型允许表示一个已知元素数量和类型的数组，各元素的类型不必相同
@@ -138,8 +140,6 @@ x = [10, "hello"]; // Error
 ```
 
 > 访问元组中一个越界的元素，会使用联合类型替代
-
-
 
 # 3 Function
 
@@ -362,7 +362,39 @@ interface Person {
 
 > 做为变量使用的话用 const，若做为属性则使用 readonly
 
-## 描述类
+## 描述类 implements
+
+> 一般来讲，一个类只能继承自另一个类，有时候不同类之间可以有一些共有的特性，这时候就可以把特性提取成接口（interfaces），用 `implements` 关键字来实现。这个特性大大提高了面向对象的灵活性
+
+```typescript
+interface Alarm {
+  alert();
+}
+
+interface Light {
+  lightOn();
+  lightOff();
+}
+
+class Car implements Alarm, Light {
+  alert() {
+    console.log("Car alert");
+  }
+  lightOn() {
+    console.log("Car light on");
+  }
+  lightOff() {
+    console.log("Car light off");
+  }
+}
+// 接口之间继承
+interface LightableAlarm extends Alarm {
+  lightOn();
+  lightOff();
+}
+```
+
+接口也可以继承一个类
 
 ```javascript
 interface ClockInterface {
@@ -489,56 +521,60 @@ let square = <Square>{};
 **枚举成员会被赋值为从 0 开始递增的数字，同时也会对枚举值到枚举名进行反向映射**
 
 比如 `enum Days {Sun, Mon, Tue, Wed, Thu, Fri, Sat}` ，会被编译为类似：
+
 ```typescript
 var Days;
-(function (Days) {
-    Days[Days["Sun"] = 0] = "Sun";
-    Days[Days["Mon"] = 1] = "Mon";
-    Days[Days["Tue"] = 2] = "Tue";
-    Days[Days["Wed"] = 3] = "Wed";
-    Days[Days["Thu"] = 4] = "Thu";
-    Days[Days["Fri"] = 5] = "Fri";
-    Days[Days["Sat"] = 6] = "Sat";
+(function(Days) {
+  Days[(Days["Sun"] = 0)] = "Sun";
+  Days[(Days["Mon"] = 1)] = "Mon";
+  Days[(Days["Tue"] = 2)] = "Tue";
+  Days[(Days["Wed"] = 3)] = "Wed";
+  Days[(Days["Thu"] = 4)] = "Thu";
+  Days[(Days["Fri"] = 5)] = "Fri";
+  Days[(Days["Sat"] = 6)] = "Sat";
 })(Days || (Days = {}));
 ```
 
 有两种类型：
+
 - constant member 常数项
 - computed member 计算所得项
 
 所谓计算所得项即：`enum Color {Red, Green, Blue = "blue".length};`
 
 ## 常数枚举
+
 使用 `const enum`定义：
+
 ```typescript
 const enum Directions {
-    Up,
-    Down,
-    Left,
-    Right
+  Up,
+  Down,
+  Left,
+  Right
 }
-
 ```
+
 **常数枚举与普通枚举的区别是，它会在编译阶段被删除，并且不能包含计算成员**
 
 更多参考：https://zhongsp.gitbooks.io/typescript-handbook/content/doc/handbook/Enums.html
 
 ## 外部枚举 Ambient Enums
+
 使用 `declare enum` 定义的枚举类型：`declare enum Directions { Up,Down,Left,Right}`
 
 ** `declare` 定义的类型只会用于编译时的检查，编译结果中会被删除**
-
 
 # class
 
 - Class: 定义了一件事物的抽象特点，包含它的属性和方法
 - Object: 类的实例，通过 new 生成
-  
+
 面向对象（OOP）的三大特性：封装、继承、多态
+
 - Encapsulation ：将对数据的操作细节隐藏起来，只暴露对外的接口。外界调用端不需要（也不可能）知道细节，就能通过对外提供的接口来访问该对象，同时也**保证了外界无法任意更改对象内部的数据**
 - Inheritance ：子类继承父类，子类除了拥有父类的所有特性外，还有一些更具体的特性
 - Polymorphism ：由继承而产生了相关的不同的类，对同一个方法可以有不同的响应。比如 Cat 和 Dog 都继承自 Animal，但是分别实现了自己的 eat 方法。此时针对某一个实例，我们无需了解它是 Cat 还是 Dog，就可以直接调用 eat 方法，程序会自动判断出来应该如何执行 eat
-
 
 存取器（getter & setter）：用以改变属性的读取和赋值行为
 修饰符（Modifiers）：修饰符是一些关键字，用于限定成员或类型的性质。比如 public 表示公有属性或方法
@@ -552,51 +588,49 @@ const enum Directions {
 - protected 修饰的属性或方法是受保护的，它和 private 类似，区别是它在子类中也是允许被访问的
 
 比如：
+
 ```typescript
 class Animal {
-    public name;
-    public constructor(name) {
-        this.name = name;
-    }
+  public name;
+  public constructor(name) {
+    this.name = name;
+  }
 }
 
-let a = new Animal('Jack');
+let a = new Animal("Jack");
 console.log(a.name); // Jack
-a.name = 'Tom';
+a.name = "Tom";
 console.log(a.name); // Tom
 ```
 
 ## Abstract class
+
 抽象类：不允许被实例化，抽象类中的抽象方法必须被子类实现
 
 `abstract` 关键字定义一个 抽象类 或者 抽象方法
 
 ```typescript
-abstract class XXX{
-
-}
+abstract class XXX {}
 ```
 
 ## 添加类型声明
 
 类似接口
+
 ```typescript
 class Animal {
-    name: string;
-    constructor(name: string) {
-        this.name = name;
-    }
-    sayHi(): string {
-      return `My name is ${this.name}`;
-    }
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+  sayHi(): string {
+    return `My name is ${this.name}`;
+  }
 }
 
-let a: Animal = new Animal('Jack');
+let a: Animal = new Animal("Jack");
 console.log(a.sayHi()); // My name is Jack
 ```
-
-
-
 
 # Type Assertion 类型断言
 
@@ -663,7 +697,215 @@ let addDiv: NodeList = document.getElementsByTagName("div");
 
 # Generics
 
+泛型（Generics）是指在定义函数、接口或类的时候，不预先指定具体的类型，而在使用的时候再指定类型的一种特性
+
 使用泛型来创建可重用的组件，一个组件可以支持多种类型的数据
+
+比如要实现一个函数 `createArray`，它可以创建一个指定长度的数组，同时将每一项都填充一个默认值：
+
+```typescript
+function createArray<T>(length: number, member: T):Array<T>{
+  let array:T[] = [];
+  for (let index = 0; index < length; index++) {
+    array[index] = member;
+  }
+  return array;
+}
+createArray(3, 'x'); // ['x', 'x', 'x']
+```
+第二行数组泛型可以 `let array:T[] = [];`，自然也可以 `let array: Array<T> = [];`
+
+
+可以同时定义多个 **类型参数**
+```typescript
+function swap<T, U>(tuple: [T, U]): [U, T] {
+    return [tuple[1], tuple[0]];
+}
+
+swap([7, 'seven']); // ['seven', 7]
+```
+
+## 泛型约束
+在函数内部使用泛型变量的时候，由于事先不知道它是哪种类型，所以不能随意的操作它的属性或方法
+
+```typescript
+function loggingIdentity<T>(arg: T): T {
+    console.log(arg.length);
+    return arg;
+}
+
+// index.ts(2,19): error TS2339: Property 'length' does not exist on type 'T'.
+```
+所以就对泛型进行约束 (使用 `extends` ) ，只允许这个函数传入那些包含 length 属性的变量
+```typescript
+interface Lengthwise {
+    length: number;
+}
+
+function loggingIdentity<T extends Lengthwise>(arg: T): T {
+    console.log(arg.length);
+    return arg;
+}
+
+loggingIdentity(7);
+
+// index.ts(10,17): error TS2345: Argument of type '7' is not assignable to parameter of type 'Lengthwise'
+```
+
+## 泛型接口
+
+当然也可以整到接口上：
+```typescript
+interface CreateArrayFunc {
+    <T>(length: number, value: T): Array<T>;
+}
+
+let createArray: CreateArrayFunc;
+createArray = function<T>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+
+```
+
+可以把泛型提前到接口名字跟前：
+
+但是使用时候就要定义泛型的类型
+```typescript
+interface CreateArrayFunc<T> {
+    (length: number, value: T): Array<T>;
+}
+
+let createArray: CreateArrayFunc<any>;
+createArray = function<T>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+```
+
+## 泛型类
+
+整到 `class` 上面：
+```typescript
+class GenericNumber<T> {
+    zeroValue: T;
+    add: (x: T, y: T) => T;
+}
+
+let myGenericNumber = new GenericNumber<number>();
+myGenericNumber.zeroValue = 0;
+myGenericNumber.add = function(x, y) { return x + y; };
+```
+
+## 泛型参数的默认类型
+```typescript
+function createArray<T = string>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+```
+
+# Decorators
+
+装饰器 是一种特殊类型的声明，它能够被附加到类声明，方法， 访问符，属性或参数上。 装饰器使用 `@expression` 这种形式，`expression` 求值后必须为一个函数，它会在运行时被调用，被装饰的声明信息做为参数传入
+
+https://www.tslang.cn/docs/handbook/decorators.html
+
+## 类装饰器
+类装饰器在类声明之前被声明（紧靠着类声明）。 类装饰器应用于类构造函数，可以用来监视，修改或替换类定义。 类装饰器不能用在声明文件中( .d.ts)，也不能用在任何外部上下文中（比如declare的类）
+
+类装饰器表达式会在运行时当作函数被调用，类的构造函数作为其唯一的参数。
+
+首先，先造一个装饰工厂器函数生产需要的装饰器：
+```typescript
+function color(value: string) { // 这是一个装饰器工厂
+    return function (target) { //  这是装饰器
+        // do something with "target" and "value"...
+    }
+}
+```
+
+然后贴着你的 class 整起来：
+```typescript
+function sealed(constructor: Function) {
+    Object.seal(constructor);
+    Object.seal(constructor.prototype);
+}
+
+@sealed
+class Greeter {
+    greeting: string;
+    constructor(message: string) {
+        this.greeting = message;
+    }
+    greet() {
+        return "Hello, " + this.greeting;
+    }
+}
+```
+
+## 方法装饰器
+
+方法装饰器表达式会在运行时当作函数被调用，传入下列3个参数：
+- 对于静态成员来说是类的构造函数，对于实例成员是类的原型对象。
+- 成员的名字。
+- 成员的属性描述符。
+来一个例子：
+```typescript
+function enumerable(value: boolean) {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        descriptor.enumerable = value;
+    };
+}
+
+class Greeter {
+    greeting: string;
+    constructor(message: string) {
+        this.greeting = message;
+    }
+
+    @enumerable(false)
+    greet() {
+        return "Hello, " + this.greeting;
+    }
+}
+```
+
+类似的，还有 访问器装饰器
+
+```typescript
+...
+    @configurable(false)
+    get x() { return this._x; }
+...
+```
+
+## 属性装饰器
+
+属性装饰器表达式会在运行时当作函数被调用，传入下列2个参数：
+
+- 对于静态成员来说是类的构造函数，对于实例成员是类的原型对象
+- 成员的名字
+
+## 参数装饰器
+
+参数装饰器表达式会在运行时当作函数被调用，传入下列3个参数：
+
+- 对于静态成员来说是类的构造函数，对于实例成员是类的原型对象
+- 成员的名字
+- 参数在函数参数列表中的索引
+
+参数装饰器的返回值会被忽略
+
 
 # annotation file
 
@@ -701,39 +943,52 @@ npm install @types/jquery --save-dev
 - /// <reference /> 三斜线指令
 
 # Advance
+
 ## Type alias 类型别名
 
 使用 `type` 关键字来给一个类型起个新名字，常用于联合类型
+
 ```typescript
 type Name = string;
 type NameResolver = () => string;
 type NameOrResolver = Name | NameResolver;
 function getName(n: NameOrResolver): Name {
-    if (typeof n === 'string') {
-        return n;
-    } else {
-        return n();
-    }
+  if (typeof n === "string") {
+    return n;
+  } else {
+    return n();
+  }
 }
 ```
 
 ### 字符串字面量类型
+
 用来约束取值只能是某几个字符串中的一个：
+
 ```typescript
-type EventNames = 'click' | 'scroll' | 'mousemove';
+type EventNames = "click" | "scroll" | "mousemove";
 function handleEvent(ele: Element, event: EventNames) {
-    // do something
+  // do something
 }
 
-handleEvent(document.getElementById('hello'), 'scroll');  // yes
-handleEvent(document.getElementById('world'), 'dbclick'); // no
+handleEvent(document.getElementById("hello"), "scroll"); // yes
+handleEvent(document.getElementById("world"), "dbclick"); // no
 ```
 
+## 三斜线指令
+
+三斜线引用告诉编译器在编译过程中要引入的额外的文件
+
+三斜线指令仅可放在包含它的文件的最顶端
 
 
+## 使用 jsdoc 做类型检查
+
+https://www.tslang.cn/docs/handbook/type-checking-javascript-files.html
 
 
-
+## Mixins
+https://www.tslang.cn/docs/handbook/mixins.html
 
 
 

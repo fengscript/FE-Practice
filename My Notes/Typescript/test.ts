@@ -78,3 +78,18 @@ class Dog extends Animal {
 
 enum Colors {Red, Green, Yellow};
 Colors.Green;
+
+interface arrayMember {
+  length: number;
+}
+
+function createArray<T extends arrayMember>(length: number, member: T):Array<T>{
+  let array:Array<T> = [];
+  
+  console.log(member.length)
+  
+  for (let index = 0; index < length; index++) {
+    array[index] = member;
+  }
+  return array;
+}

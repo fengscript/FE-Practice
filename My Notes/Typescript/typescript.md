@@ -3,6 +3,10 @@
 参考：
 https://ts.xcatliu.com
 
+Document:https://www.tslang.cn/docs/handbook/basic-types.html
+
+Playground:https://www.tslang.cn/play/index.html
+
 ## 编译使用
 
 ```bash

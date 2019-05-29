@@ -1,63 +1,49 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <h1></h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a
-          href="https://vuejs.org"
-          target="_blank"
-        >Core Docs</a></li>
-      <li><a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >Forum</a></li>
-      <li><a
-          href="https://gitter.im/vuejs/vue"
-          target="_blank"
-        >Gitter Chat</a></li>
-      <li><a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >vue-router</a></li>
-      <li><a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >vuex</a></li>
-      <li><a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >vue-loader</a></li>
-      <li><a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >awesome-vue</a></li>
-    </ul>
+
     <Test />
+    <router-link to="/foo">Tab1</router-link>
+    <router-link to="/bar">Tab2</router-link>
+
+    <br>
+    <br>
+    <router-view></router-view>
+
+    <user-info v-bind:users="users">{{users}}</user-info>
+    <componentTest></componentTest>
+    <template id="componentTestTemplate">
+      <div>
+        <span>2</span>
+        <span>1</span>
+      </div>
+    </template>
+
+    <formArea></formArea>
   </div>
 </template>
 
 <script>
 import Test from "./Test.vue";
 
+const componentTest = {
+  template: 'componentTestTemplate'
+};
+
 export default {
   name: "app",
-  template:{
-     Test
-  },
+  // template: {
+  //   Test
+  // },
   components: {
-    Test
+    Test,
+    componentTest,
+    "user-info": "user-info"
   },
   data() {
     return {
-      msg: "Welcome to Your Vue.js App"
+      msg: "Welcome to Your Vue.js App",
+      users: ["Hi", "Hello", "AUOK"]
     };
   }
 };

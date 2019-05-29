@@ -1,6 +1,7 @@
 # watch 和 computed
 
 ## computed
+
 自动计算一段复杂逻辑并返回结果
 
 同时，也可以将同一函数定义为一个方法而不是一个计算属性。两种方式的最终结果确实是完全相同的。不同的是
@@ -8,6 +9,7 @@
 **计算属性是基于它们的依赖进行缓存的**
 
 计算属性默认只有 **`getter`** ，不过在需要时你也可以提供一个 setter
+
 ```js
 computed: {
   fullName: {
@@ -25,13 +27,11 @@ computed: {
 }
 ```
 
-
 ## watch
+
 有一些数据需要随着其它数据变动而变动时，可以用 `watch`，最好用在 **需要在数据变化时执行异步或开销较大的操作**
 
-
 # 生命周期钩子
-
 
 - beforeCreate
 - created
@@ -42,16 +42,17 @@ computed: {
 - beforeDestroy
 - destroyed
 
-
 > 生命周期钩子上不要使用箭头函数，比如 `created: () => console.log(this.a)` 或 `vm.$watch('a', newValue => this.myMethod())` 因为箭头函数是和父级上下文绑定在一起的，this 不会是如你所预期的 Vue 实例
 
-
 # Event
-有时候要访问原始DOM事件，用 `$event` 传进去
-```javascript
 
+有时候要访问原始 DOM 事件，用 `$event` 传进去
+
+```javascript
 ```
+
 ## `Modifiers`
+
 - `.stop`
 - `.prevent`
 - `.capture`
@@ -64,12 +65,14 @@ computed: {
 - `.native`
 - `.sync`
 
-
 ## 自定义事件
+
 ### 自定义组件的 `v-model`
+
 > `v-model` 默认会利用名为 `value` 的 `prop` 和名为 `input` 的事件
 
 可以用 `model` 选项自定义 `value` 特性的值：
+
 ```jsx
 Vue.component('base-checkbox', {
   model: {
@@ -92,41 +95,48 @@ Vue.component('base-checkbox', {
 ```
 
 ### 原生事件绑定到组件
+
 `$listeners`
 
 ## 全局方法
 
 - `$emit(name, param)`
 
-
 # Component
-**组件直接在 `DOM`中使用时，组件名最好遵循 `W3C规格`，即是用 `短横线连接` **
 
+**组件直接在 `DOM` 中使用时，组件名最好遵循 `W3C规格`，即用 `短横线连接` **
 
 全局注册
+
 ```javascript
-Vue.component('my-component-name', {
+Vue.component("my-component-name", {
   // ... options ...
-})
+});
 ```
 
 局部注册
+
 ```javascript
-var ComponentA = { /* ... */ }
-var ComponentB = { /* ... */ }
+var ComponentA = {
+  /* ... */
+};
+var ComponentB = {
+  /* ... */
+};
 
 new Vue({
-  el: '#app',
+  el: "#app",
   components: {
-    'component-a': ComponentA,
-    'component-b': ComponentB
+    "component-a": ComponentA,
+    "component-b": ComponentB
   }
-})
+});
 ```
 
-
 ## Template
+
 模版先声明，再注册，再到组件中使用：
+
 ```vue
 <div id="app">
   <test-component></test-component>
@@ -134,13 +144,11 @@ new Vue({
 
 <template id="testTemplate"></template>
 
-Vue.component('test-component',{
-    template: '#testTemplate'
-})
-
+Vue.component('test-component',{ template: '#testTemplate' })
 ```
 
 还有这个，没想到吧。。
+
 ```
 <script type="text/x-template" id="myComponent">
     <div>This is a component</div>
@@ -151,11 +159,12 @@ Vue.component('my-component',{
 })
 ```
 
-
-
 ## 通信
+
 ### Sub -> Sup
+
 父组件通过 `props` 给实例子组件传值：
+
 ```javascript
 Vue.component('blog-post', {
   props: ['title'],
@@ -166,18 +175,21 @@ Vue.component('blog-post', {
 ```
 
 也可以 `:bind`来动态传：
+
 ```javascript
-<blog-post v-bind:title="post.title"></blog-post>
+<blog-post v-bind:title="post.title" />
 ```
 
 **父级 prop 的更新会向下流动到子组件中 —— 单向数据流**
 
 ### Sup -> Sub
+
 在子组件中`$.emit(method)`,然后在父组件上监听这个事件
 
 也可以 `$.emit(method, value)` 来带一个值过去，然后再用 `$.event`取到，而这个值会被 **作为第一个参数传入这个方法**
 
 ## 组件中使用 `v-model`
+
 ```js
 Vue.component('custom-input', {
   props: ['value'],
@@ -193,10 +205,10 @@ Vue.component('custom-input', {
 <custom-input v-model="searchText"></custom-input>
 ```
 
-
 ### 父子组件传值
 
 父
+
 ```js
 <component v-bind:sonValueName = "fatherName" @reciveEvt = "doSth"></component>
 export default ={
@@ -213,6 +225,7 @@ export default ={
 ```
 
 子
+
 ```js
 export default = {
     data(){
@@ -230,13 +243,15 @@ export default = {
 ## Slot
 
 ## `is`特性
+
 使用 is 特性来切换不同的组件
+
 ```javascript
-<component v-bind:is="currentTabComponent"></component>
+<component v-bind:is="currentTabComponent" />
 ```
 
-
 ## `<keep-alive>`
+
 ```javascript
 <!-- 失活的组件将会被缓存！-->
 <keep-alive>
@@ -247,9 +262,11 @@ export default = {
 # Animation&Transition
 
 ## 元素过渡
+
 用 `<transition></transition>`包裹起来的元素会被过渡处理
 
 进入/离开的过渡中，会有 6 个 class 切换：
+
 - `v-enter`
 - `v-enter-active`
 - `v-enter-to`
@@ -257,16 +274,18 @@ export default = {
 - `v-leave-active`
 - `v-leave-to`
 
-> 对于这些在过渡中切换的类名来说，如果你使用一个没有名字的` <transition>`，则 `v-` 是这些类名的默认前缀。如果你使用了 `<transition name="box">`，那么 `v-enter` 会替换为 `box-enter`
+> 对于这些在过渡中切换的类名来说，如果你使用一个没有名字的`<transition>`，则 `v-` 是这些类名的默认前缀。如果你使用了 `<transition name="box">`，那么 `v-enter` 会替换为 `box-enter`
 
 即，CSS 样式类名要写成：
+
 ```css
-.box-enter{
- transition: all .3s ease;
+.box-enter {
+  transition: all 0.3s ease;
 }
 ```
 
 比如常见的一个过渡：
+
 ```css
 .modal-enter-active,
 .modal-leave-active {
@@ -278,16 +297,17 @@ export default = {
 }
 ```
 
+要用第三方 CSS 动画库时，类名可以用这些特性来改：
 
-要用第三方CSS动画库时，类名可以用这些特性来改：
 - enter-class
 - enter-active-class
 - enter-to-class (2.1.8+)
 - leave-class
 - leave-active-class
-- leave-to-class 
+- leave-to-class
 
 比如：
+
 ```javascript
 <transition
   name="custom-classes-transition"
@@ -297,23 +317,26 @@ export default = {
 ```
 
 ### 列表过渡
+
 `<transition-group>` 组件
 
 这个时候
+
 - 过渡模式不可用，因为我们不再相互切换特有的元素
 - 内部元素 **总是需要** 提供唯一的 `key` 属性值
 
 ### 排序过渡
-因为位置突变，可以使用 `v-move`  特性，在元素的改变定位的过程中应用过渡，CSS类名同上面 `name` 设置：
+
+因为位置突变，可以使用 `v-move` 特性，在元素的改变定位的过程中应用过渡，CSS 类名同上面 `name` 设置：
 
 > 这里官方 demo 上面根本没见 `v-move` 特性。。。。。
 
 ### 过渡模式
+
 因为 `<transition>` 的默认行为 - 进入和离开同时发生
 
 - `in-out`：新元素先进行过渡，完成之后当前元素过渡离开
 - `out-in`：当前元素先进行过渡，完成之后新元素过渡进入
-
 
 ```javascript
 <transition name="fade" mode="out-in">
@@ -322,7 +345,9 @@ export default = {
 ```
 
 ### 多组件过渡
+
 显式的使用 `key`或者动态组件：
+
 ```javascript
 <transition name="component-fade" mode="out-in">
   <component v-bind:is="view"></component>
@@ -351,18 +376,21 @@ new Vue({
 ```
 
 ### 其他特性
-- `appear`:通过 `appear` 特性设置节点在初始渲染的过渡
-- `type` 
 
+- `appear`:通过 `appear` 特性设置节点在初始渲染的过渡
+- `type`
 
 **同时使用过渡和动画时，可以使用 `type` 特性并设置 `animation` 或 `transition` 来明确声明你需要 Vue 监听的类型**
 
 - `:duration`
+
 ```javascript
 <transition :duration="1000">...</transition>
 <transition :duration="{ enter: 500, leave: 800 }">...</transition>
 ```
+
 ### Hook
+
 ```javascript
 <transition
   v-on:before-enter="beforeEnter"
@@ -378,19 +406,20 @@ new Vue({
   <!-- ... -->
 </transition>
 ```
+
 https://cn.vuejs.org/v2/guide/transitions.html
 
-
-
 ## 数据状态过渡
+
 比如：
+
 - 数字和运算
 - 颜色的显示
 - SVG 节点的位置
 - 元素的大小和其他的属性
 
-
 通过 `watch` 侦听器来监听任何数值属性的更新：
+
 ```javascript
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
 
@@ -418,22 +447,22 @@ new Vue({
 })
 ```
 
-
 # Other
+
 ## 响应式规则
+
 要注意的是，最好提前初始化好所有所需属性，当需要在对象上新添加属性时，应该：
 `Vue.set(obj, 'newProp', 123)`
 
 或者用 `...` 扩展运算符来复制到一个新对象：
-```javascript
-state.obj = { ...state.obj, newProp: 123 }
-```
 
+```javascript
+state.obj = { ...state.obj, newProp: 123 };
+```
 
 > 所有的 DOM 操作都由 Vue 来处理，你编写的代码只需要关注逻辑层面即可
 
 > 当一个 `Vue` 实例被创建时，`data`中的属性被注入到 `Vue`的响应式系统，但是只有当实例被创建时 `data` 中存在的属性才是响应式的
-
 
 ## 一些 `Directives`
 
@@ -447,19 +476,19 @@ state.obj = { ...state.obj, newProp: 123 }
 - `v-for`
 - `v-move`
 
-
-- `key` 来使元素不被复用
+* `key` 来使元素不被复用
 
 ### 简写
-- `v-bind:key="value"`  => `:key="value"`
-- `v-on:event="method"`  => `@event="method"`
 
-
+- `v-bind:key="value"` => `:key="value"`
+- `v-on:event="method"` => `@event="method"`
 
 ## `v-model`
+
 > `v-model` 会忽略所有表单元素的 `value`、`checked`、`selected` 特性的初始值而总是将 `Vue` 实例的数据作为数据来源。你应该通过 `JavaScript` 在组件的 `data` 选项中声明初始值。
 
 其实
+
 ```javascript
 <input v-model="searchText">
 // 等价于：
@@ -469,13 +498,16 @@ state.obj = { ...state.obj, newProp: 123 }
   v-on:input="searchText = $event.target.value"
 >
 ```
+
 **需要注意的：**
+
 > `v-model` 会忽略所有表单元素的 `value`、`checked`、`selected` 特性的初始值而总是将 `Vue` 实例的数据作为数据来源。你应该通过 JavaScript 在组件的 `data` 选项中声明初始值。
 
 ### 怎么用
+
 - `radio` 绑到一个变量（字符串类型）
   - 多选一
-  每一项设置 `value`，然后绑定到同一个变量（字符串类型）
+    每一项设置 `value`，然后绑定到同一个变量（字符串类型）
 - `checkbox` 同上，但也可以设一个 `boolean`
   - 多选一
   ```javascript
@@ -487,12 +519,14 @@ state.obj = { ...state.obj, newProp: 123 }
     <label for="mike">Mike</label>
   ```
 - `selected`
-  还是绑到一个字符变量，然后要设置默认值，就给对应的option `v-bind:value=''`
+  还是绑到一个字符变量，然后要设置默认值，就给对应的 option `v-bind:value=''`
 - `selected` 多选
   多选的话还是绑定的数组
 
 ### 自定义输入组件
+
 `v-model`原本算是个银弹：
+
 ```javascript
 <input v-model="searchText">
 // 就是
@@ -503,45 +537,48 @@ state.obj = { ...state.obj, newProp: 123 }
 ```
 
 因此，在自定义组件时，`v-model`就是这样子：
+
 ```javascript
-<custom-input
-  v-bind:value="searchText"
-  v-on:input="searchText = $event"
-></custom-input>
+<custom-input v-bind:value="searchText" v-on:input="searchText = $event" />
 ```
-想一下，想让它正常工作，就要处理 `value` 这个prop 还有把原生的 `input` 事件搞出来，于是需要：
+
+想一下，想让它正常工作，就要处理 `value` 这个 prop 还有把原生的 `input` 事件搞出来，于是需要：
+
 - 将其 value 特性绑定到一个名叫 value 的 prop 上
 - 在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出
 
 处理一下：
-```javascript
-<custom-input v-model="searchText"></custom-input>
 
-Vue.component('custom-input', {
-  props: ['value'],
+```javascript
+<custom-input v-model="searchText" />;
+
+Vue.component("custom-input", {
+  props: ["value"],
   template: `
     <input
       v-bind:value="value"
       v-on:input="$emit('input', $event.target.value)"
     >
   `
-})
+});
 ```
 
-
 ## `v-for`
+
 1. 对于数组的以下不能直接检测到
+
    - 利用索引直接设置一个项时，如：`vm.items[indexOfItem] = newValue`
    - 当你修改数组的长度时，如：`vm.items.length = newLength`
 
-    这样子解决： `Vue.set(vm.items, indexOfItem, newValue)` 或 `vm.$set(vm.items, indexOfItem, newValue)`
+   这样子解决： `Vue.set(vm.items, indexOfItem, newValue)` 或 `vm.$set(vm.items, indexOfItem, newValue)`
 
-    第二个可以 `vm.items.splice(newLength)`
+   第二个可以 `vm.items.splice(newLength)`
+
 2. 不能检测对象属性的添加或删除
    可以使用 `Vue.set(object, key, value)` 方法向嵌套对象添加响应式属性
 
-
 可以直接给 `v-for` 要遍历出来的对象加一个方法（或者计算属性）：
+
 ```javascript
 <li v-for="n in even(numbers)">{{ n }}</li>
 data: {
@@ -556,23 +593,24 @@ methods: {
 }
 ```
 
-
 ## nextTick
 
-
 # 踩坑
+
 ## `<transition>`不出来
+
 尝试调整 `<transition>` 的位置，比如之前这样子就不行：
+
 ```javascript
 <template>
   <transition>
-   <div class='modal-root'>
-   </div>
+    <div class="modal-root" />
   </transition>
 </template>
 ```
 
-调整成了这样子就OK了：
+调整成了这样子就 OK 了：
+
 ```javascript
 <template>
   <div class="root">
@@ -595,28 +633,69 @@ methods: {
 ```
 
 ## `v-show/if` 的 `opacity`动画
-退出动画不出现元素直接消失，css里面要用 `-leave-to` 而不是 `-leave`
 
+退出动画不出现元素直接消失，css 里面要用 `-leave-to` 而不是 `-leave`
 
 # VueRouter
+
+## use
+
+1. 添加 `vuerouter`
+2. 将组件 (components) 映射到路由 (routes)
+3. 告诉 Vue Router 在哪里渲染它们
+
+```javascript
+import Vue from "vue";
+import VueRouter from "vue-router";
+
+Vue.use(VueRouter);
+
+const Tab1 = { template: "<div>foo</div>" };
+const Tab2 = { template: "<div>bar</div>" };
+
+const routes = [
+  { path: "/foo", component: Tab1 },
+  { path: "/bar", component: Tab2 }
+];
+
+const router = new VueRouter({
+  routes // (缩写) 相当于 routes: routes
+});
+
+...
+<router-link to="/foo">Tab1</router-link>
+<router-link to="/bar">Tab2</router-link>
+
+
+<router-view></router-view>
+...
+new Vue({
+  el: '#app',
+  store,
+  router,
+  render: h => h(Test)
+})
+```
 
 router hooks
 全局的, 单个路由独享的, 或者组件级的。
 
 参数或查询的改变并不会触发进入/离开的导航守卫
 全局的
+
 - beforeResolve
 - beforeEach
 - beforeEnter
-单个路由的
+  单个路由的
 - afterEach
-组件内
+  组件内
 - beforeRouteEnter
 - beforeRouteUpdate
 - beforeRouteLeave
 
 # MVC MVVM
-> MVC，MVP和MVVM都是常见的软件架构设计模式（Architectural Pattern），它通过分离关注点来改进代码的组织方式。不同于设计模式（Design Pattern），只是为了解决一类问题而总结出的抽象方法，一种架构模式往往使用了多种设计模式。
+
+> MVC，MVP 和 MVVM 都是常见的软件架构设计模式（Architectural Pattern），它通过分离关注点来改进代码的组织方式。不同于设计模式（Design Pattern），只是为了解决一类问题而总结出的抽象方法，一种架构模式往往使用了多种设计模式。
 
 `Model` 层用于封装和应用程序的业务逻辑相关的数据以及对数据的处理方法
 

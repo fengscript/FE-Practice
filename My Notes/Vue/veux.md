@@ -9,12 +9,12 @@
 import store from "./state/state";
 new vue({
   el: '#app',
-  router,
+  router, 
   store,
   render: h => h(app)
 })
 ```
-然后在组件里，就随便 `this.$store` 来玩了！
+然后在组件里，就随便 `this.$store` 来玩了！ 
 
 
  

@@ -18,7 +18,7 @@ class Animal {
   }
   //静态方法不需要实例化，而是直接通过类来调用：
   static isAnimal(a) {
-    return a instanceof Animal;
+    return a instanceof Anim al;
   }
 }
 

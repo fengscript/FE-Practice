@@ -5,5 +5,6 @@ export default {
   throttle: _.throttle,
   size: _.size,
   pick: _.pick,
-  isEmpty: _.isEmpty
+  isEmpty: _.isEmpty,
+  getRandom: (min, max) => Math.round(Math.random() * (max - min)) + min,
 };

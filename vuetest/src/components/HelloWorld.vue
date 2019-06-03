@@ -9,11 +9,13 @@
     </ul>
     Show input from sub at here:{{showIputStr}}
     <button @click='showInput'>Get value from Sub</button>
+    <Forms />
   </div>
 </template>
 
 <script>
 import List from "./List";
+import Forms from "./Forms";
 
 export default {
   name: "HelloWorld",
@@ -32,7 +34,8 @@ export default {
     msg: String
   },
   components: {
-    List
+    List,
+    Forms
   },
   methods: {
     getValue(payload) {

@@ -67,6 +67,8 @@ computed: {
 
 ## 自定义事件
 
+v-on 事件监听器在 DOM 模板中会被自动转换为全小写 (因为 HTML 是大小写不敏感的)，所以 v-on:myEvent 将会变成 v-on:myevent——导致 myEvent 不可能被监听到
+
 ### 自定义组件的 `v-model`
 
 > `v-model` 默认会利用名为 `value` 的 `prop` 和名为 `input` 的事件
@@ -109,11 +111,12 @@ Vue.component('base-checkbox', {
 全局注册
 
 ```javascript
-Vue.component("my-component-name", {
+Vue.component("tag-name", {
   // ... options ...
 });
 ```
 
+**全局注册完，就可以通过 `<tag-name><tag-name/>` 的形式引用此组件**
 局部注册
 
 ```javascript
@@ -132,6 +135,8 @@ new Vue({
   }
 });
 ```
+
+**局部注册的组件只能挂载到执行注册的 Vue 实例内部的 `components` 属性上**
 
 ## Template
 
@@ -167,7 +172,10 @@ Vue.component('my-component',{
 
 ```javascript
 Vue.component('blog-post', {
-  props: ['title'],
+  //props:['title'],
+  props: {
+    title: String,
+  }
   template: '<h3>{{ title }}</h3>'
 })
 
@@ -184,10 +192,45 @@ Vue.component('blog-post', {
 
 ### Sup -> Sub
 
-在子组件中`$.emit(method)`,然后在父组件上监听这个事件
+在子组件中`$emit(method)`,然后在调用此组件的位置上（父组件上）使用 `v-on:fromSub='supHandle'` 监听这个事件
 
-也可以 `$.emit(method, value)` 来带一个值过去，然后再用 `$.event`取到，而这个值会被 **作为第一个参数传入这个方法**
+也可以 `$emit(method, value)` 来带一个值过去，然后再用 `$event`取到
 
+如果是通过一个方法传过去，那么这个值会被 **作为第一个参数传入这个方法**
+
+父
+
+```js
+<component :sonValueName = "fatherName" @evtName = "doSth"></component>
+export default ={
+    data(){
+        fatherName:{
+            prop1:xxx,
+            prop2:xxx,
+        },
+    }
+    methods:{
+        doSth(){},
+    }
+}
+```
+
+子
+
+```js
+//component 组件定义处：
+export default = {
+    data(){
+        return{
+            props:xxx,
+        }
+    },
+    props: ["sonValueName"],
+    methods:xxx(e){
+        this.$emit("evtName", e.target.value);
+    }
+}
+```
 ## 组件中使用 `v-model`
 
 ```js
@@ -205,40 +248,6 @@ Vue.component('custom-input', {
 <custom-input v-model="searchText"></custom-input>
 ```
 
-### 父子组件传值
-
-父
-
-```js
-<component v-bind:sonValueName = "fatherName" @reciveEvt = "doSth"></component>
-export default ={
-    data(){
-        fatherName:{
-            prop1:xxx,
-            prop2:xxx,
-        },
-    }
-    methods:{
-        doSth(){},
-    }
-}
-```
-
-子
-
-```js
-export default = {
-    data(){
-        return{
-            props:xxx,
-        }
-    },
-    props: ["sonValueName"],
-    methods:xxx(){
-        this.$emit("evtName", this.props);
-    }
-}
-```
 
 ## Slot
 
@@ -450,6 +459,8 @@ new Vue({
 # Other
 
 ## 响应式规则
+
+`data` 上的值，都可以直接通过 `this.xxx` 取到
 
 要注意的是，最好提前初始化好所有所需属性，当需要在对象上新添加属性时，应该：
 `Vue.set(obj, 'newProp', 123)`
@@ -702,3 +713,45 @@ router hooks
 控制器 `Controller` ：需要响应用户的操作、同步更新 `View` 和 `Model` ，定义用户界面对用户输入的响应方式，连接模型和视图，控制应用程序的流程，处理用户的行为和数据上的改变
 
 `MVC` 模式的业务逻辑主要集中在 `Controller`
+
+# lodash 引入及其优化
+
+1. 全量引入
+
+2. 按需加载
+
+`npm i babel-plugin-lodash lodash-webpack-plugin -D`
+
+配置 .babelrc 文件
+
+```javascript
+"plugins": [
+  "lodash"
+]
+```
+
+https://juejin.im/post/5cd4d991e51d453a4a357e69#heading-12
+
+3. 制作自己的 `utiles` 库
+
+### throttle
+
+```javascript
+import _ from "lodash";
+
+...
+methods: {
+    inputToEmit:
+      _.throttle(function(e) {
+        this.$emit("sendInput", e.target.value);
+        console.log(e.target.value);
+      }, 500),
+  }
+};
+```
+
+他们内部已经 apply 了函数的 context，所以对于箭头函数来说，它的 context 是 window，对于匿名函数来说，它的 context 是调用时的 context。
+
+# 优化
+
+https://juejin.im/post/5b7f7d886fb9a01a1e0203cb

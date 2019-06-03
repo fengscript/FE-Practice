@@ -6,6 +6,8 @@
       <button @click="inc">+</button>
       <button @click="dec">-</button>
       <button @click="evtTrigger">event test</button>
+      <input type="text" :value='inputValue'>
+      subComponent - {{subComponent}}
     </div>
 
   </div>
@@ -16,7 +18,10 @@
 export default {
   name: "test",
   data() {
-    return {};
+    return {
+        props:['subComponent'],
+        inputValue:'123',
+    };
   },
   computed: {
     count() {

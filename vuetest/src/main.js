@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Test from './Test.vue'
+import router from './router'
 import store from './store'
-import router from "./router";
+
+import _ from './helpers.js'
+Object.defineProperty(Vue.prototype, '$_', { value: _ });
+
+Vue.config.productionTip = false
 
 new Vue({
-  el: '#app',
-  store,
   router,
-  // render: h => h(Test)
-  render:function (app) { 
-    return app(App);
-   }
-})
+  store,
+  render: h => h(App)
+}).$mount('#app')

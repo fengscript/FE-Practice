@@ -718,6 +718,13 @@ router hooks
 
 1. 全量引入
 
+- 插入到 vue 中：
+```javascript
+import _ from './helpers.js'
+Object.defineProperty(Vue.prototype, '$_', { value: _ });
+```
+**暂时有问题，不能生效**
+
 2. 按需加载
 
 `npm i babel-plugin-lodash lodash-webpack-plugin -D`
@@ -732,17 +739,31 @@ router hooks
 
 https://juejin.im/post/5cd4d991e51d453a4a357e69#heading-12
 
-3. 制作自己的 `utiles` 库
+3. 按需制作自己的 `utiles` 库
 
-### throttle
+`helpers.js`:
+```javascript
+import _ from "lodash";
+export default {
+  cloneDeep: _.cloneDeep,
+  debounce: _.debounce,
+  throttle: _.throttle,
+  size: _.size,
+  pick: _.pick,
+  isEmpty: _.isEmpty
+};
+
+```
+
+
+`component.js`
 
 ```javascript
 import _ from "lodash";
 
 ...
 methods: {
-    inputToEmit:
-      _.throttle(function(e) {
+    inputToEmit:_.throttle(function(e) {
         this.$emit("sendInput", e.target.value);
         console.log(e.target.value);
       }, 500),

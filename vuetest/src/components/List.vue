@@ -13,8 +13,7 @@
 </template>
 
 <script>
-// import _ from "../helpers.js";
-// Vue.prototype.$_ = _
+import _ from "../helpers.js";
 
 export default {
   name: "List",
@@ -25,7 +24,7 @@ export default {
     users: Array
   },
   methods: {
-    inputToEmit: this.$_.debounce(function(e) {
+    inputToEmit: _.debounce(function(e) {
       this.$emit("sendInput", e.target.value);
       console.log(e.target.value);
     }, 500)

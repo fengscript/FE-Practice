@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form action="">
+    <form action="get">
       <div>
         <h3>Radio - {{radio}}</h3>
         <input
@@ -76,15 +76,50 @@
             disabled
             value=""
           >请选择</option>
-          <option v-for="(item,index) in options" :key='index' :value=item.value >{{item.text}}</option>
+          <option
+            v-for="(item,index) in options"
+            :key='index'
+            :value=item.value
+          >{{item.text}}</option>
         </select>
+        <button
+          @click="TEST"
+          type="button"
+        >TEST</button>
       </div>
 
     </form>
+    <div>
+      <br>
+      <br>
+      <h3>Vuex test</h3>
+      <input
+        v-model="vuexName"
+        type="text"
+        placeholder="Input name"
+      >
+      <input
+        v-model="vuexValue"
+        type="text"
+        placeholder="Input value"
+      >
+      <button
+        @click='formAdd'
+        type="button"
+      >Add</button>
+      <button
+        @click='formRemove'
+        type="button"
+      >Remove</button>
+      <div class="input-show">{{getItems}}</div>
+      <div class="input-show">length : {{getLength}}</div>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Forms",
   data() {
@@ -99,11 +134,43 @@ export default {
         { text: "Three", value: "C" }
       ],
       dynamicSelect: "A",
+      vuexName: "",
+      vuexValue: ""
     };
   },
-  methods: {}
+  computed: {
+    ...mapGetters(["getLength", "getItems"])
+    // getLength() {
+    //   return this.$store.getters.getLength;
+    // }
+  },
+  methods: {
+    TEST() {},
+    formClear() {
+      this.vuexName = "";
+      this.vuexValue = "";
+    },
+    formAdd() {
+      this.$store.commit("add", {
+        name: this.vuexName,
+        value: this.vuexValue
+      });
+      this.formClear();
+    },
+    formRemove() {
+      this.$store.commit("remove", {
+        name: this.vuexName
+      });
+      this.formClear();
+    }
+  }
 };
 </script>
 
-<style>
+<style scoped>
+.input-show {
+  margin: 10px auto;
+  width: 200px;
+  border: 1px solid #8134af;
+}
 </style>

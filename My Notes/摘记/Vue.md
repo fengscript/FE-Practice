@@ -11,3 +11,12 @@ https://www.jb51.net/article/129228.htm
 ---
 
 > 使用了scoped属性之后，父组件的style样式将不会渗透到子组件中，然而子组件的根节点元素会同时被设置了scoped的父css样式和设置了scoped的子css样式影响 
+
+
+
+在 `from ` 放一个 `button` 元素点击会直接刷新页面，给 `button` 加一个  `type="button"` 即可
+
+
+
+`Vue` 或者 `Vuex` 中对对象操作时，为了避开 Vue 不能检测到属性被删除的限制，保持对象的响应式， 需要 [Vue.set( target, key, value )](https://cn.vuejs.org/v2/api/#Vue-set)和 [Vue.delete( target, key )](https://cn.vuejs.org/v2/api/#Vue-delete)
+

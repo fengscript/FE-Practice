@@ -157,12 +157,65 @@ var Counter = {
 有 `vue.js`  `vuex.js`, `html`中引入，然后 `Vue.use(Vuex)`:
 
 
-#### 3 `mapState`
-当一个组件需要获取多个状态时候，将这些状态都声明为计算属性会有些重复和冗余，`mapState` 帮助生成计算属性，防止多次声明计算属性
-
-> 如果有些状态严格属于单个组件，最好还是作为组件的局部状态
-
 ## 3.3 getter
+
+```javascript
+const store = new Vuex.Store({
+  state: {
+    todos: [
+      { id: 1, text: '...', done: true },
+      { id: 2, text: '...', done: false }
+    ]
+  },
+  getters: {
+    doneTodos: state => {
+      return state.todos.filter(todo => todo.done)
+    }
+  }
+})
+```
+
+或者 `combineSelector`，Getter 也可以接受其他 getter 作为第二个参数：
+```javascript
+getters: {
+  // ...
+  doneTodosCount: (state, getters) => {
+    return getters.doneTodos.length
+  }
+}
+```
+
+
+从 `view` 访问：
+```javascript
+store.getters.doneTodos // -> [{ id: 1, text: '...', done: true }]
+
+//或者
+
+computed: {
+  doneTodosCount () {
+    return this.$store.getters.doneTodosCount
+  }
+}
+```
+
+注意：不需要再加个 `()` 调用：
+`return getters.doneTodos.length` 即可
+
+
+或者可以在 `getters` 中返回一个函数，然后接受参数，就可以对 `state` 里面做特定查询：
+```javascript
+getters: {
+  // ...
+  getTodoById: (state) => (id) => {
+    return state.todos.find(todo => todo.id === id)
+  }
+}
+...
+store.getters.getTodoById(2) // -> { id: 2, text: '...', done: false }
+
+```
+
 
 ## 3.4 mutation
 **mutation 都是同步事务**
@@ -232,9 +285,69 @@ state.vuex.dispatch("increFromAction");
 ```
 
 
+# 拆分组合
+```javascript
+const moduleA = {
+    state: {
+        maState: 'A'
+    }
+};
+
+const moduleB = {
+    state: {
+        mbState: 'B'
+    }
+};
+
+const store = new Vuex.Store({
+    modules: {
+        a: moduleA,
+        b: moduleB
+    },
+    state: {
+        rtState: 'Root'
+    }
+});
+
+console.log(store.state.a.maState); // A
+console.log(store.state.b.mbState); // B
+console.log(store.state.rtState); // Root
+```
+
+
+# 4 `map`
+## 4.1 `mapState`
+当一个组件需要获取多个状态时候，将这些状态都声明为计算属性会有些重复和冗余，`mapState` 帮助生成计算属性，防止多次声明计算属性
+
+> 如果有些状态严格属于单个组件，最好还是作为组件的局部状态
 
 
 
+## 4.2 `mapGetters`
+将 store 中的 getter 映射到局部计算属性：
+```javascript
+
+import { mapGetters } from 'vuex'
+
+export default {
+  // ...
+  computed: {
+  // 使用对象展开运算符将 getter 混入 computed 对象中
+    ...mapGetters([
+      'doneTodosCount',
+      'anotherGetter',
+      // ...
+    ])
+  }
+}
+```
+或者另外起名字：
+```javascript
+mapGetters({
+  // 把 `this.doneCount` 映射为 `this.$store.getters.doneTodosCount`
+  doneCount: 'doneTodosCount'
+})
+```
 
 
 

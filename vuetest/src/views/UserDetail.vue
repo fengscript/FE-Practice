@@ -1,6 +1,6 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div>
+    <h3>I'm details info</h3>
   </div>
 </template>
 
@@ -8,5 +8,8 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
+h3{
+    color:#FFC75F;
+}
 </style>

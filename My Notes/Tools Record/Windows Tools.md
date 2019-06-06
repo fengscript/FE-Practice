@@ -74,6 +74,15 @@ cd config
 vi user-aliases.cmd
 ```
 
+
+## Vscode
+自定义快捷键:
+```bash
+Ctrl+P  keybindings
+```
+
+
+
 # Chrome Extendtions
 
 - workona 管理 session 和 tabs

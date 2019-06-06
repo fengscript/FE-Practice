@@ -1,5 +1,7 @@
 
-# 浅谈vue中慎用style的scoped属性
+
+## style的scoped属性
+
 https://www.jb51.net/article/129228.htm
 > 总结一下scoped三条渲染规则
 >
@@ -20,3 +22,10 @@ https://www.jb51.net/article/129228.htm
 
 `Vue` 或者 `Vuex` 中对对象操作时，为了避开 Vue 不能检测到属性被删除的限制，保持对象的响应式， 需要 [Vue.set( target, key, value )](https://cn.vuejs.org/v2/api/#Vue-set)和 [Vue.delete( target, key )](https://cn.vuejs.org/v2/api/#Vue-delete)
 
+
+
+`vue-router` 
+
+默认 `hash` 模式：使用 `URL` 的 `hash` 来模拟一个完整的 `URL` ，于是当 `URL` 改变时，页面不会重新加载。
+
+ history 模式：利用 `history.pushState` API 来完成 URL 跳转而无须重新加载页面

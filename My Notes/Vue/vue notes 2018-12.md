@@ -8,8 +8,10 @@
 
 **计算属性是基于它们的依赖进行缓存的**
 
-计算属性默认只有 **`getter`** ，不过在需要时你也可以提供一个 setter
+其中的 `this` 指向 `vm` 实例，所以可以直接在 `computed` 中 `this.xxx` 来调用 `data` 中的属性
 
+计算属性默认只有 **`getter`** ，不过在需要时你也可以提供一个 setter
+ 
 ```js
 computed: {
   fullName: {
@@ -648,7 +650,9 @@ methods: {
 退出动画不出现元素直接消失，css 里面要用 `-leave-to` 而不是 `-leave`
 
 # VueRouter
+`vue-router` 默认 `hash` 模式 —— 使用 `URL` 的 `hash` 来模拟一个完整的 `URL` ，于是当 `URL` 改变时，页面不会重新加载。
 
+ history 模式:利用 `history.pushState` API 来完成 URL 跳转而无须重新加载页面
 ## use
 
 1. 添加 `vuerouter`
@@ -687,8 +691,9 @@ new Vue({
   render: h => h(Test)
 })
 ```
+通过注入路由器，可以在任何组件内通过 `this.$router` 访问路由器，也可以通过 `this.$route` 访问当前路由
 
-router hooks
+## router hooks
 全局的, 单个路由独享的, 或者组件级的。
 
 参数或查询的改变并不会触发进入/离开的导航守卫
@@ -703,6 +708,60 @@ router hooks
 - beforeRouteEnter
 - beforeRouteUpdate
 - beforeRouteLeave
+
+```javascript
+router.beforeEach((to, from, next) => {
+  if (!to.name) {
+    console.log('void router')
+    return false;
+  }
+  next();
+})
+```
+全局前置守卫：
+```javascript
+router.beforeEach((to, from, next) => {
+  // ...
+})
+```
+next:
+- next()
+- next(false)
+- next('/')
+- next(error)
+
+**守卫是异步解析执行**，此时导航在所有守卫 `resolve` 完之前一直处于 等待中。
+
+确保要调用 `next` 方法，否则钩子就不会被 `resolved`。
+
+
+## router object
+
+
+
+- router.beforeEach
+- router.beforeResolve
+- router.afterEach
+- router.push
+- router.replace
+- router.go
+- router.back
+- router.forward
+
+
+
+
+```bash
+[fullPath: "/users"
+hash: ""
+matched: [{…}]
+meta: {}
+name: "users"
+params: {}
+path: "/users"
+query: {}]
+```
+
 
 # MVC MVVM
 

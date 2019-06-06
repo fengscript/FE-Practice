@@ -9,7 +9,6 @@ export default new Vuex.Store({
   },
   mutations: {
     add: (state, { name, value }) => Vue.set(state.items, name, value),
-    // (state.items[name] = value),
     remove: (state, { name }) => Vue.delete(state.items, name)
   },
   getters: {

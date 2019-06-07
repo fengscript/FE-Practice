@@ -7,13 +7,16 @@
       :style=styleBlock
     >Return</button>
 
-    <router-link to='./UserDetail'>Detail 1</router-link>   |
-    <router-link to='./UserDetail'>Detail 2</router-link>
+    <router-link to='users/:username/userDetail'>Detail 1</router-link> |
+    <router-link to='./userDetail2'>Detail 2</router-link>
+    --------------------
     <router-view id="user-detail"></router-view>
   </div>
 </template>
 
 <script>
+// import UserDetail from "./views/UserDetail.vue";
+
 export default {
   data() {
     return {
@@ -25,7 +28,9 @@ export default {
       this.$router.back();
     }
   },
-  component: {}
+  components: {
+    // UserDetail
+  }
 };
 </script>
 

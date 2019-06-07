@@ -24,7 +24,7 @@
       class="user-list"
     >Go</router-link>
     <div class="content-box">
-      <router-view />
+      <router-view id="user-info-view"></router-view>
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@
 export default {
   computed: {
     getId() {
-      return `./UserInfo/${this.userSelect}`;
+      return `/users/${this.userSelect}`;
     }
   },
   data() {

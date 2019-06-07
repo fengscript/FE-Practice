@@ -3,15 +3,19 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Users from "./views/Users.vue";
 import UserInfo from "./views/UserInfo.vue";
-// import UserDetail from "./views/UserDetail.vue";
+import UserDetail from "./views/UserDetail.vue";
 
 const UserDetail1 = {
   template: `<h3>I'm details info 1</h3>`
-}
+};
 
 const UserDetail2 = {
   template: `<h3>I'm details info 2</h3>`
-}
+};
+
+const nothing = {
+  template: `<h3>oops nothing</h3>`
+};
 
 Vue.use(Router);
 
@@ -30,20 +34,21 @@ const router = new Router({
       component: Users
     },
     {
-      path: "/userinfo/:username",
-      name: "userinfo",
+      path: "/users/:username",
+      name: "users",
       component: UserInfo,
       children: [
         {
-          path: "",
-          name: "userDetail",
-          component: UserDetail1
-        },
-        {
           path: "userDetail",
           name: "userDetail",
-          component: UserDetail2
-        }
+          component: UserDetail
+        },
+        // {
+        //   path: "userDetail2",
+        //   name: "userDetail2",
+        //   component: UserDetail2
+        // },
+        // { path: "", name: "nothing", component: nothing }
       ]
     },
     {

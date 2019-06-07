@@ -696,19 +696,18 @@ new Vue({
 ## router hooks
 全局的, 单个路由独享的, 或者组件级的。
 
-参数或查询的改变并不会触发进入/离开的导航守卫
-全局的
 
-- beforeResolve
-- beforeEach
-- beforeEnter
-  单个路由的
-- afterEach
-  组件内
-- beforeRouteEnter
-- beforeRouteUpdate
-- beforeRouteLeave
+**参数或查询的改变并不会触发进入/离开的导航守卫。可以通过观察 `$route` 对象来应对这些变化，或使用 `beforeRouteUpdate` 的组件内守卫**
 
+
+
+
+- 全局前置守卫： `router.beforeEach`
+- 全局解析守卫：`router.beforeResolve` 
+  导航被确认之前，同时在所有组件内守卫和异步路由组件被解析之后，解析守卫就被调用
+- 全局后置钩子：`router.afterEach((to, from) => {})`
+- 路由内独享守卫：` beforeEnter (to, from, next)`
+  
 ```javascript
 router.beforeEach((to, from, next) => {
   if (!to.name) {
@@ -718,6 +717,32 @@ router.beforeEach((to, from, next) => {
   next();
 })
 ```
+
+单个路由的
+
+
+- afterEach
+
+
+组件内
+- beforeRouteEnter
+- beforeRouteUpdate
+- beforeRouteLeave
+
+
+`beforeRouteEnter` 守卫不能访问 `this`，因为守卫在导航确认前被调用,因此即将登场的新组件还没被创建。
+
+可以通过传一个回调给 `next` 来访问组件实例。在导航被确认的时候执行回调，并且把组件实例作为回调方法的参数。
+```javascript
+beforeRouteEnter (to, from, next) {
+  next(vm => {
+    // 通过 `vm` 访问组件实例
+  })
+}
+```
+
+`beforeRouteUpdate` 和 `beforeRouteLeave` 可以直接用 `this` 已经可用了
+
 全局前置守卫：
 ```javascript
 router.beforeEach((to, from, next) => {
@@ -732,18 +757,22 @@ next:
 
 **守卫是异步解析执行**，此时导航在所有守卫 `resolve` 完之前一直处于 等待中。
 
-确保要调用 `next` 方法，否则钩子就不会被 `resolved`。
+**确保要调用 `next` 方法，否则钩子就不会被 `resolved`**
+
+禁止用户在还未保存修改前突然离开可以通过 `next(false)` 来取消
+
+或者给传一个 `return false`
+
+https://router.vuejs.org/zh/guide/advanced/navigation-guards
 
 
 ## router object
 
-
-
 - router.beforeEach
 - router.beforeResolve
 - router.afterEach
-- router.push
-- router.replace
+- router.push 向 history 栈添加一个新的记录
+- router.replace 不会向 history 添加新记录，替换掉当前的 history 记录
 - router.go
 - router.back
 - router.forward
@@ -760,6 +789,45 @@ name: "users"
 params: {}
 path: "/users"
 query: {}]
+```
+
+
+## 命名视图
+不想嵌套而是同级展示时，就可以给 `router-view` 命名：
+`<router-view class="view three" name="b"></router-view>`
+
+一个视图使用一个组件渲染，因此对于同个路由，多个视图就需要多个组件
+
+同样可以继续嵌套
+
+
+## 重定向 别名
+
+重定向：当用户访问 `/a` 时，`URL` 将会被替换成 `/b` ，然后匹配路由为 `/b` 
+
+别名: `/a` 的别名是 `/b` ，意味着，当用户访问 `/b` 时，`URL` 会保持为 `/b` ，但是路由匹配则为 `/a` ，就像用户访问 `/a` 一样
+
+> “别名”的功能让你可以自由地将 UI 结构映射到任意的 URL，而不是受限于配置的嵌套路由结构。
+
+
+## 组件模式传参
+```javascript
+const User = {
+  props: ['id'],
+  template: '<div>User {{ id }}</div>'
+}
+const router = new VueRouter({
+  routes: [
+    { path: '/user/:id', component: User, props: true },
+
+    // 对于包含命名视图的路由，你必须分别为每个命名视图添加 `props` 选项：
+    {
+      path: '/user/:id',
+      components: { default: User, sidebar: Sidebar },
+      props: { default: true, sidebar: false }
+    }
+  ]
+})
 ```
 
 

@@ -1,25 +1,18 @@
 {
-  "name": "koa-fyg",
+  "name": "hello-koa2",
   "version": "1.0.0",
   "description": "Hello Koa 2 example with async",
-  "main": "router.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node router.js",
-    "build": "babel -d lib/ src/"
+    "start": "node app.js"
   },
   "keywords": [
     "koa",
     "async"
   ],
-  "author": "FYG",
   "license": "Apache-2.0",
   "dependencies": {
-    "koa": "2.0.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.24.0",
-    "babel-preset-es2015": "^6.24.0",
-    "babel-preset-stage-3": "^6.22.0",
-    "webpack": "^2.3.3"
+    "koa": "*",
+    "koa-router":">7"
   }
 }

@@ -26,6 +26,13 @@
     <div class="content-box">
       <router-view id="user-info-view"></router-view>
     </div>
+
+    <ul>
+      <li
+        v-for="(v, i) in list"
+        :key="i"
+      >{{v.text}}</li>
+    </ul>
   </div>
 </template>
 
@@ -36,8 +43,19 @@ export default {
       return `/users/${this.userSelect}`;
     }
   },
+  mounted() {
+    setTimeout(_ => {
+      this.list = [{ text: 666 }, { text: 666 }, { text: 666 }];
+    }, 1000);
+    setTimeout(_ => {
+      this.list.forEach((v, i) => {
+        v.text = i;
+      });
+    }, 2000);
+  },
   data() {
     return {
+      list:[],
       userList: [
         { name: "Html", id: 0 },
         { name: "Css", id: 1 },

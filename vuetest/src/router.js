@@ -13,10 +13,7 @@ const UserDetail2 = {
   template: `<h3>I'm details info 2</h3>`
 };
 
-const nothing = {
-  template: `<h3>oops nothing</h3>`
-};
-
+const UserHome = { template: "<div>Home</div>" };
 Vue.use(Router);
 
 const router = new Router({
@@ -38,17 +35,17 @@ const router = new Router({
       name: "users",
       component: UserInfo,
       children: [
+        { path: "", name: "UserHome", component: UserHome },
         {
           path: "userDetail",
           name: "userDetail",
           component: UserDetail
         },
-        // {
-        //   path: "userDetail2",
-        //   name: "userDetail2",
-        //   component: UserDetail2
-        // },
-        // { path: "", name: "nothing", component: nothing }
+        {
+          path: "userDetail2",
+          name: "userDetail2",
+          component: UserDetail2
+        }
       ]
     },
     {

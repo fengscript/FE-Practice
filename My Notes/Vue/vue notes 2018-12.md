@@ -44,7 +44,7 @@ computed: {
 - beforeDestroy
 - destroyed
 
-> 生命周期钩子上不要使用箭头函数，比如 `created: () => console.log(this.a)` 或 `vm.$watch('a', newValue => this.myMethod())` 因为箭头函数是和父级上下文绑定在一起的，this 不会是如你所预期的 Vue 实例
+> 生命周期钩子上不要使用箭头函数，比如 `created: () => console.log(this.a)` 或 `vm.$watch('a', newValue => this.myMethod())` 因为箭头函数是和父级上下文绑定在一起的，`this` 不会是如你所预期的 `Vue` 实例
 
 # Event
 
@@ -693,6 +693,59 @@ new Vue({
 ```
 通过注入路由器，可以在任何组件内通过 `this.$router` 访问路由器，也可以通过 `this.$route` 访问当前路由
 
+
+## 嵌套
+注意的是 `router-link` 中的 `to` 的路径要写全：
+```javascript
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+<div id="app">
+  <p>
+    <router-link to="/user/foo">/user/foo</router-link>
+    <router-link to="/user/xxx/profile">/user/xxx/profile</router-link>
+    <router-link to="/user/xxx/posts">/user/xxx/posts</router-link>
+  </p>
+  <router-view></router-view>
+</div>
+--------------------------------
+const User = {
+  template: `
+    <div class="user">
+      <h2>User {{ $route.params.id }}</h2>
+      <router-view></router-view>
+    </div>
+  `
+}
+
+const UserHome = { template: '<div>Home</div>' }
+const UserProfile = { template: '<div>Profile</div>' }
+const UserPosts = { template: '<div>Posts</div>' }
+
+const router = new VueRouter({
+  routes: [
+    { path: '/user/:id', component: User,
+      children: [
+        // UserHome will be rendered inside User's <router-view>
+        // when /user/:id is matched
+        { path: '', component: UserHome },
+				
+        // UserProfile will be rendered inside User's <router-view>
+        // when /user/:id/profile is matched
+        { path: 'profile', component: UserProfile },
+
+        // UserPosts will be rendered inside User's <router-view>
+        // when /user/:id/posts is matched
+        { path: 'posts', component: UserPosts }
+      ]
+    }
+  ]
+})
+
+const app = new Vue({ router }).$mount('#app')
+```
+
+
 ## router hooks
 全局的, 单个路由独享的, 或者组件级的。
 
@@ -830,6 +883,11 @@ const router = new VueRouter({
 })
 ```
 
+## 数据获取
+
+当然导航完成前，或者导航完成后获取数据都是可以的
+
+https://router.vuejs.org/zh/guide/advanced/data-fetching
 
 # MVC MVVM
 

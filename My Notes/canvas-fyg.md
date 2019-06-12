@@ -315,3 +315,31 @@ drawWave3.init("c3");
 drawWave3.run();
 ```
 
+
+
+
+
+# 性能优化
+
+<https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas>
+
+
+
+1. 用CSS设置大的背景图
+2. 用CSS transforms特性缩放画布
+3. 使用多层画布去画一个复杂的场景
+4. 不要在用drawImage时缩放图像
+5. 避免浮点数的坐标点，用整数取而代之
+6. 在离屏canvas上预渲染相似的图形或重复的对象
+7. 关闭透明度   `var ctx = canvas.getContext('2d', { alpha: false });`
+
+other
+
+- 将画布的函数调用集合到一起（例如，画一条折线，而不要画多条分开的直线）
+- 避免不必要的画布状态改变
+- 渲染画布中的不同点，而非整个新状态
+- 尽可能避免 [`shadowBlur`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowBlur)特性
+- 尽可能避免[text rendering](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_text)
+- 使用不同的办法去清除画布([`clearRect()`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/clearRect) vs. [`fillRect()`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/fillRect) vs. 调整canvas大小)
+-  有动画，请使用[`window.requestAnimationFrame()`](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame) 而非[`window.setInterval()`](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setInterval)
+- 请谨慎使用大型物理库

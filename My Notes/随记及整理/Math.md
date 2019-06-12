@@ -9,3 +9,16 @@ Math.random() * (max - min) + min;
 ```javascript
 Math.round(Math.random() * (max - min)) + min;
 ```
+
+
+
+
+
+# 取整
+
+```js
+rounded = (0.5 + somenum) | 0;
+rounded = ~~ (0.5 + somenum);
+rounded = (0.5 + somenum) << 0;
+```
+

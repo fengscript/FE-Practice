@@ -1,3 +1,13 @@
+# init
+```bash
+npm init -y
+然后
+npm install -S json-server
+```
+
+
+
+
 # 换源加速
 ```
 npm config set registry https://registry.npm.taobao.org 
@@ -26,6 +36,12 @@ npm install nrm -g
 ```
 npm install nvm -g
 ```
+
+## mock
+
+`json-server`
+
+`s+enter` 生成一个 snapshot
 
 # 踩坑
 ## `node-gyp` 报错

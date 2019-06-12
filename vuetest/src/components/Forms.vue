@@ -118,7 +118,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState,mapGetters } from "vuex";
 
 export default {
   name: "Forms",
@@ -139,7 +139,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getLength", "getItems"])
+    ...mapGetters(["getLength", "getItems"]),
+    ...mapState({
+      t: state => state.t
+    })
     // getLength() {
     //   return this.$store.getters.getLength;
     // }

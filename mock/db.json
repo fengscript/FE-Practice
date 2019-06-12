@@ -1,0 +1,29 @@
+{
+  "person": [
+    {
+      "id": 1,
+      "gender": "man"
+    },
+    {
+      "id": 2,
+      "gender": "woman"
+    }
+  ],
+  "contents": [
+    {
+      "id": 1,
+      "text": "HTML"
+    },
+    {
+      "id": 2,
+      "text": "CSS"
+    },
+    {
+      "id": 3,
+      "text": "JAVASCRIPT"
+    },
+    {
+      "id": 4
+    }
+  ]
+}

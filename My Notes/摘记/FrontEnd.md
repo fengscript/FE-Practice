@@ -72,7 +72,7 @@ app.get("/welcome", function(req, res) {
 
 除了**对不受信任的输入内容做限制、长度做控制之外**，其他防范策略：
 1.  HTTP的 Content-Security-Policy 头部策略
-    
+  
     服务端只允许加载同域资源：`Content-Security-Policy: default-src 'self'` 
     
     前端：`<meta http-equiv="Content-Security-Policy" content="form-action 'self';">`
@@ -205,3 +205,28 @@ error: TypeError: Failed to execute 'json' on 'Response': body stream is locked
 ```
 
 > Response methode like 'json', 'text' can be called once, and then it locks.
+
+
+
+
+
+# RESTful API
+
+Resource Representational State Transfer：资源在网络中以某种表现形式进行状态转移
+
+==**URL定位资源，用HTTP动词（GET,POST,DELETE,DETC）描述操作**==
+
+REST描述的是在网络中 client 和 server 的一种交互形式；我们更多关注的是如何设计 RESTful API
+
+
+
+URL中只使用名词来指定资源，原则上不使用动词
+
+GET    获取资源，
+POST  新建资源（也可以用于更新资源），
+PUT    更新资源，
+DELETE  删除资源
+
+如：
+`DELETE http://api.qc.com/v1/friends ` 删除好友
+

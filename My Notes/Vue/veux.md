@@ -316,31 +316,23 @@ console.log(store.state.rtState); // Root
 
 
 # 4 `map`
-## 4.1 `mapState`
+`mapState`,`mapGetters`
 当一个组件需要获取多个状态时候，将这些状态都声明为计算属性会有些重复和冗余，`mapState` 帮助生成计算属性，防止多次声明计算属性
 
+一句话：将 `store` 中的 `state`, `getter` 映射到局部计算属性：
 > 如果有些状态严格属于单个组件，最好还是作为组件的局部状态
 
-
-
-## 4.2 `mapGetters`
-将 store 中的 getter 映射到局部计算属性：
 ```javascript
+import { mapState, mapGetters } from "vuex";
 
-import { mapGetters } from 'vuex'
-
-export default {
-  // ...
-  computed: {
-  // 使用对象展开运算符将 getter 混入 computed 对象中
-    ...mapGetters([
-      'doneTodosCount',
-      'anotherGetter',
-      // ...
-    ])
-  }
-}
+computed: {
+    // 使用对象展开运算符将 getter 混入 computed 对象中
+    ...mapGetters(["getLength", "getItems"]),
+    ...mapState({
+      t: state => state.t
+    })
 ```
+
 或者另外起名字：
 ```javascript
 mapGetters({
@@ -348,7 +340,6 @@ mapGetters({
   doneCount: 'doneTodosCount'
 })
 ```
-
 
 
 

@@ -11,7 +11,7 @@
 其中的 `this` 指向 `vm` 实例，所以可以直接在 `computed` 中 `this.xxx` 来调用 `data` 中的属性
 
 计算属性默认只有 **`getter`** ，不过在需要时你也可以提供一个 setter
- 
+
 ```js
 computed: {
   fullName: {
@@ -50,7 +50,20 @@ computed: {
 
 有时候要访问原始 DOM 事件，用 `$event` 传进去
 
-```javascript
+```vue
+<button v-on:click="warn('Form cannot be submitted yet.', $event)">
+  Submit
+</button>
+...
+
+// ...
+methods: {
+  warn: function (message, event) {
+    // 现在我们可以访问原生事件对象
+    if (event) event.preventDefault()
+    alert(message)
+  }
+}
 ```
 
 ## `Modifiers`
@@ -100,7 +113,11 @@ Vue.component('base-checkbox', {
 
 ### 原生事件绑定到组件
 
-`$listeners`
+`$listeners`属性是一个对象，里面包含了作用在这个组件上的所有监听器
+
+有了这个 `$listeners` 属性，你就可以配合 `v-on="$listeners"` 将所有的事件监听器指向这个组件的某个特定的子元素
+
+
 
 ## 全局方法
 
@@ -759,29 +776,33 @@ const app = new Vue({ router }).$mount('#app')
 - 全局解析守卫：`router.beforeResolve` 
   导航被确认之前，同时在所有组件内守卫和异步路由组件被解析之后，解析守卫就被调用
 - 全局后置钩子：`router.afterEach((to, from) => {})`
-- 路由内独享守卫：` beforeEnter (to, from, next)`
+- 路由内独享守卫：`router.beforeEnter (to, from, next)`
   
 ```javascript
-router.beforeEach((to, from, next) => {
-  if (!to.name) {
-    console.log('void router')
-    return false;
-  }
-  next();
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/foo',
+      component: Foo,
+      beforeEnter: (to, from, next) => {
+        if (!to.name) {
+          console.log('void router')
+          return false;
+        }
+        next();
+      }
+    }
+  ]
 })
 ```
 
-单个路由的
 
-
-- afterEach
 
 
 组件内
 - beforeRouteEnter
 - beforeRouteUpdate
 - beforeRouteLeave
-
 
 `beforeRouteEnter` 守卫不能访问 `this`，因为守卫在导航确认前被调用,因此即将登场的新组件还没被创建。
 

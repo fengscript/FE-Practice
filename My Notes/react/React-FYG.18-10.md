@@ -63,7 +63,7 @@ function BlueDatePicker() {
 
 > `React DOM` 使用 `camelCase` 来定义属性的名称，而不是使用 `HTML` 的属性名称
 
-## `props.children`
+## props.children
 在包含开始和结束标签的 JSX 表达式中，标记之间的内容作为特殊的参数传递：
 - 可以在开始和结束标签之间放入一个字符串，则 props.children 就是那个字符串
 - 可以将任何 {} 包裹的 JavaScript 表达式作为子代传递

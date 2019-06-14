@@ -154,6 +154,13 @@ var countedNames = names.reduce(function (allNames, name) {
 });
 ```
 
+`arr.reduce(callback(accumulator, currentValue[, index[, array]])[, initialValue])`
+
+ initialValue:如果没有提供初始值，则将使用数组中的第一个元素。 在没有初始值的空数组上调用 reduce 将报错
+
+
+accumulator
+累计器累计回调的返回值; 它是上一次调用回调时返回的累积值，或initialValue
 
 
 

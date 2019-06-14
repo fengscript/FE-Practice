@@ -95,3 +95,13 @@ rounded = (0.5 + somenum) << 0;
 ```
 
 <https://www.cnblogs.com/rubylouvre/p/3570636.html>
+
+
+# Tools
+
+## 判断是否是 Array
+```javascript
+function isArray(arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]';
+}
+```

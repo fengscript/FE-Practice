@@ -1,6 +1,13 @@
 # preview
 webpack 本身维护了一套模块系统，这套模块系统兼容了所有前端历史进程下的模块规范，包括 amd commonjs es6 等
 
+`import` 和 `module` 区别：遵循的模块化规范不一样
+
+
+TC39 委员会提出 es6 module
+
+CommonJS 还是 ES6 Module 输出都可以看成是一个具备多个属性或者方法的对象；
+
 # CommonJS
 `Node` 应用由`CommonJS`模块组成，采用 `CommonJS` 模块规范。
 

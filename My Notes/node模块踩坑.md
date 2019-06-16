@@ -1,6 +1,7 @@
 # init
 ```bash
 npm init -y
+// 这个 -y 是自己替你回答一堆 yes  不然 init 会问你一堆问题
 然后
 npm install -S json-server
 ```

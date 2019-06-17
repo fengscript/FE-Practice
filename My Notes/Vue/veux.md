@@ -17,7 +17,7 @@ new vue({
 然后在组件里，就随便 `this.$store` 来玩了！ 
 
 
- 
+
 ------
 # 1 目标
 为了解决以下问题：
@@ -37,7 +37,7 @@ new vue({
 - view，以声明方式将 state 映射到视图；
 - actions，响应在 view 上的用户输入导致的状态变化。
 
- 
+
 # 2 使用
 
 在一个模块化的打包系统中，必须显式地通过 `Vue.use()` 来调用 `Vuex`：
@@ -60,7 +60,7 @@ Vue.use(Vuex)
 通过 `store.state` 来获取状态对象
 
 - mutation
- 
+
 通过 `store.commit` 方法触发状态变更
 
 > 改变 `store` 中的状态的唯一途径就是显式地提交 (commit) `mutations`
@@ -260,13 +260,18 @@ store.commit({
 
 **注意**：
 1. 最好提前在你的 store 中初始化好所有所需属性
-2. 在对象上添加新属性
+2. 在对象上添加新属性时候
 `Vue.set(obj, 'newProp', 123)`
 或者用新对象替换老对象
 `state.obj = { ...state.obj, newProp: 123 }`
 
+> Vuex 的 store 中的状态是响应式的
+
+所以 ，要么一开始就声明好需要的数据，要么你要添加新数据时候就要合并原state并且返回一个新的state
+
 3. 可以使用常量替代 `Mutation` 事件类型
-4.  `mutation` 必须是同步函数,任何在回调函数中进行的状态的改变都是不可追踪的。
+
+4. `mutation` 必须是同步函数,任何在回调函数中进行的状态的改变都是不可追踪的。
 
 ### 组件提交 Mutation
 组件中使用 `this.$store.commit('xxx')` 提交 mutation

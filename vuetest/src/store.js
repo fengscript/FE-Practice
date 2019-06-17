@@ -23,19 +23,10 @@ export default new Vuex.Store({
     getPerson: state => state.persons
   },
   actions: {
-    fetchPersonData(commit) {
-      // API.fetch("localhost:3000/person").then(data => {
-      //   commit("setPerson", data);
-      // });
-
-      fetch("http://localhost:3000/contents", {
-        method: "GET"
-      })
-        .then(response => response.json())
-        .then(response => console.log("Success:", JSON.stringify(response)))
-        .then(data => {
-          commit("setPerson", data);
-        });
+    fetchPersonData({ commit }) {
+      API.fetchPerson().then(data => {
+        commit("setPerson", data);
+      });
     }
   }
 });

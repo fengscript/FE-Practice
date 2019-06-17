@@ -33,6 +33,14 @@ computed: {
 
 有一些数据需要随着其它数据变动而变动时，可以用 `watch`，最好用在 **需要在数据变化时执行异步或开销较大的操作**
 
+我觉得的 computed 和 watch 的区别：
+
+两个都是 get
+
+computed 靠系统触发或者依赖的数据触发
+
+而 watch 的set是自定义的，data触发
+
 # 生命周期钩子
 
 - beforeCreate
@@ -762,8 +770,10 @@ const router = new VueRouter({
 const app = new Vue({ router }).$mount('#app')
 ```
 
+children 时候，父路由就不用写 `name` 属性了
 
 ## router hooks
+
 全局的, 单个路由独享的, 或者组件级的。
 
 

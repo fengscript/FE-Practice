@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "About",
   data() {
@@ -14,14 +15,21 @@ export default {
       preRender: "Get info now..."
     };
   },
+  computed: {
+    ...mapGetters(["getPersons"])
+  },
+  watch: {
+    getPersons(data) {
+      if (this.preRender) {
+        this.preRender = this.getPersons;
+        console.log(this.getPersons);
+      }
+    }
+  },
+  created() {},
+  beforeMount() {},
   mounted() {
-    this.$store
-      .dispatch("fetchPersonData")
-      .then(data => {
-        console.log(data);
-      });
-
-    // const persons = this.$store.getters.getPerson();
+    this.$store.dispatch("fetchPersonData");
   },
   props: {},
   components: {},

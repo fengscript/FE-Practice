@@ -20,7 +20,7 @@ const base = {
 };
 const API = {
   fetchPerson() {
-    return base.fetch("http://localhost:3000/perso");
+    return base.fetch("http://localhost:3000/person");
   }
 };
 export default API;

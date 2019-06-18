@@ -20,7 +20,7 @@ export default new Vuex.Store({
   getters: {
     getLength: state => Object.keys(state.items).length,
     getItems: state => state.items,
-    getPerson: state => state.persons
+    getPersons: state => state.persons
   },
   actions: {
     fetchPersonData({ commit }) {

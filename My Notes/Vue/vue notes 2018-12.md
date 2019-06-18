@@ -193,6 +193,10 @@ Vue.component('my-component',{
 
 ## 通信
 
+向子孙后代传值，也可以用参考了React的  `provide` 和 `inject`
+
+<https://cn.vuejs.org/v2/api/#provide-inject>
+
 ### Sub -> Sup
 
 父组件通过 `props` 给实例子组件传值：
@@ -219,7 +223,7 @@ Vue.component('blog-post', {
 
 ### Sup -> Sub
 
-在子组件中`$emit(method)`,然后在调用此组件的位置上（父组件上）使用 `v-on:fromSub='supHandle'` 监听这个事件
+在子组件中`$emit(method)`,然后在**调用此组件的位置**上（父组件上）使用 `v-on:method='supHandle'` 监听这个事件
 
 也可以 `$emit(method, value)` 来带一个值过去，然后再用 `$event`取到
 
@@ -232,8 +236,8 @@ Vue.component('blog-post', {
 export default ={
     data(){
         fatherName:{
-            prop1:xxx,
-            prop2:xxx,
+            prop1:String,
+            prop2:Number,
         },
     }
     methods:{
@@ -249,7 +253,7 @@ export default ={
 export default = {
     data(){
         return{
-            props:xxx,
+            props:String,
         }
     },
     props: ["sonValueName"],
@@ -258,6 +262,64 @@ export default = {
     }
 }
 ```
+
+
+### 子组件调用父组件方法
+1. 子组件方法中使用 `this.$parent.xxx()` 即可
+2. 子组件中 `this.emit()` 调用的地方 `:methodName = 'xxx'` 监测
+3. 父组件调用的标签上绑定 `prop` 把方法传入子组件中，在子组件里直接调用这个方法
+
+```js
+// 父组件
+<template>
+  <div>
+    <child :fatherMethod="fatherMethod"></child>
+  </div>
+</template>
+<script>
+  import child from '~/components/dam/child';
+  export default {
+    components: {
+      child
+    },
+    methods: {
+      fatherMethod() {
+        console.log('测试');
+      }
+    }
+  };
+</script>
+//子组件
+<template>
+  <div>
+    <button @click="childMethod()">点击</button>
+  </div>
+</template>
+<script>
+  export default {
+    props: {
+      fatherMethod: {
+        type: Function,
+        default: null
+      }
+    },
+    methods: {
+      childMethod() {
+        if (this.fatherMethod) {
+          this.fatherMethod();
+        }
+      }
+    }
+  };
+</script>
+```
+
+
+
+### 父组件调用子组件方法
+
+子组件上定义`ref="refName"`,  父组件的方法中用 `this.$refs.refName.method` 去调用子组件方法
+
 ## 组件中使用 `v-model`
 
 ```js
@@ -276,7 +338,16 @@ Vue.component('custom-input', {
 ```
 
 
+
+## 父组件中调用子组件方法
+
+
+
 ## Slot
+
+
+
+## Refs
 
 ## `is`特性
 

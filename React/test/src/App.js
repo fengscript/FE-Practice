@@ -21,6 +21,7 @@ function App() {
       </header>
       {Test.OriginFunction("fyg")}
       <Test.Functional name="FYG"/>
+      <Test.Hook  />
     </div>
   );
 }

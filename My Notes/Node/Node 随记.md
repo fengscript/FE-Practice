@@ -117,7 +117,7 @@ setTimeout(() => {
 
 require 过的文件会加载到缓存，所以多次 require 同一个文件（模块）不会重复加载 
 
-判断是否是程序的入口文件有两种方式: require.main === module（推荐） module.parent === null
+判断是否是程序的入口文件有两种方式: `require.main === module`（推荐） `module.parent === null`
 
 ### 注意循环引用
 循环引用（或循环依赖）简单点来说就是 a 文件 require 了 b 文件，然后 b 文件又反过来 require 了 a 文件。我们用 a->b 代表 b require 了 a。
@@ -128,7 +128,7 @@ require 过的文件会加载到缓存，所以多次 require 同一个文件（
 1. 通过分离共用的代码到另一个文件解决，如上面简单的情况，可拆出共用的代码到 c 中，如下:
  c->a 
  c->b 
- 
+
 2. 不在最外层 require，在用到的地方 require，通常在函数的内部 
 
  > 要时刻注意你项目的依赖关系不要过于复杂，哪天你发现一个你明明已经 exports 了的方法报 undefined is not a function，我们就该提醒一下自己：哦，也许是它来了。 -.-

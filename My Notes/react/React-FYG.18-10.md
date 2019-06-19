@@ -533,9 +533,9 @@ function App() {
 
 > 一般情况下，如果你引用一个后面没跟 () 的方法，例如 onClick={this.handleClick} ，那你就应该 绑定(bind) 该方法。
 
-> 引用一个方法是后面没有()，如 onClick = {this.handleClick}，就会绑定该方法
+> 引用一个方法时后面没有()，如 onClick = {this.handleClick}，就会绑定该方法
 
-就是说，为了在子组件中访问父组件属性和方法，要绑定 `this` 到父组件的 `context`，要么
+就是说，为了在子组件中使用  this， 访问父组件属性和方法，要绑定 `this` 到父组件的 `context`，要么
 
 ```javascript
 class XXX extends Component {

@@ -111,3 +111,8 @@ let vm = new Proxy(data, {
 
 但是有性能问题
 
+
+
+# vuex 中拉取数据后给view
+
+因为拉取数据一般是异步，所以怎么在 view 里面

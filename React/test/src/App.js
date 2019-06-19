@@ -1,6 +1,7 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Test from "./t/hoook";
 
 function App() {
   return (
@@ -14,11 +15,12 @@ function App() {
           className="App-link"
           href="https://reactjs.org"
           target="_blank"
-          rel="noopener noreferrer"
-        >
+          rel="noopener noreferrer">
           Learn React
         </a>
       </header>
+      {Test.OriginFunction("fyg")}
+      <Test.Functional name="FYG"/>
     </div>
   );
 }

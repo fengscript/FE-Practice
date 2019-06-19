@@ -34,7 +34,7 @@ npm ERR!     C:\Users\DIM-FYG\AppData\Roaming\npm-cache\_logs\2018-03-08T05_47_5
 
 所以咱可以，cmd 或者 pws 开
 ```bash
-netstate -ano
+netstat -ano
 ```
 检查是哪个 `pid` 占了 8080，然后
 ```bash

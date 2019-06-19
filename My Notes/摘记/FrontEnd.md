@@ -241,8 +241,9 @@ DELETE  删除资源
 5. 优化 js 文件加载顺序
 6. 合并多个CSS文件
 7. 图片、字体文件优化处理
-8. 尽量避免重定向
+8. 尽量避免重定向?
 9. PWA AMP
+10.  webpack thunk打包
 
 
 谷歌AMP可以利用谷歌提供的CDN做缓存网页的内容。谷歌AMP缓存是一个基于proxy的内容分发网络：
@@ -258,8 +259,29 @@ DELETE  删除资源
 
 
 1. Web Worker
+
 2. 做好重构，优化代码性能
+
 3. 循环、同步改异步
+
+4. 引用类型值的手动释放，减少闭包 
+
+   在闭包中的局布变量会自动回收有些情况不会被 回收一直占用空间，如异步，计时器，事件绑定 不会被 回收最好手动处理一下
+
+5. CSS3动画开启硬件加速
+
+6. 触发频繁的事件用 theottle 或者 debounce
+
+   - `throttle`：节流 给定时间间隔内只执行一次事件
+   - `debounce`：防抖 通过推迟每次事件执行的时间来减少不必要的事件触发
+   - mouse move 时减少计算次数：debounce
+   - input 中输入文字自动发送 ajax 请求进行自动补全： debounce
+   - ajax 请求合并，不希望短时间内大量的请求被重复发送：debounce
+   - resize window 重新计算样式或布局：debounce 或 throttle
+   - scroll 时触发操作，如随动效果：throttle
+   - 对用户输入的验证，不想停止输入再进行验证，而是每n秒进行验证：throttle
+
+7. 事件代理
 
 
 # border-radius 有锯齿

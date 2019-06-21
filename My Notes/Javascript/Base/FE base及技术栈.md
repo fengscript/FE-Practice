@@ -269,7 +269,7 @@ f(1, 2, 3, 4); // 6 (the fourth parameter is not destructured)
 
 # Cookie
 
-必须包含
+必须包含 key，value
 其他选项包括：`expires`、`domain`、`path`、`secure`、`HttpOnly`
 
 只有与创建了 `Cookie` 同级目录或者子目录的页面才可以访问 `Cookie`，如果要让其父级，或者父级的兄弟来访问，就需要设置 `path`，比如设置为 `path='/'` 来让其他目录可以访问
@@ -336,7 +336,7 @@ hash 实现路由的时候，最本质的原理就是 hash 值的变化，会引
 
 # Css
 
-1. `position` 的所有值
+##  position  的所有值
 
 - initial
 - inherit
@@ -347,13 +347,27 @@ hash 实现路由的时候，最本质的原理就是 hash 值的变化，会引
 - fixed
 - sticky
 
-2. Flex
+##  Flex
 
-- `flex-grow`: 只有在 `flex` 容器中有剩余空间时才会生效
-- `flex-shrink`: 只有在 `flex` 容器空间不足时才会生效
-- `flex` : `flex-grow`, `flex-shrink`, `flex-based` 的缩写
+- `flex-grow`: 只有在 `flex` 容器中有剩余空间时才会生效，定义项目的放大比例，如果存在剩余空间，不放大
+- `flex-shrink`: 只有在 `flex` 容器空间不足时才会生效， 定义项目的缩小比例
+- `flex-basis` ： 定义在分配多余空间之前，项目占据的主轴空间，浏览器根据这个属性来计算主轴是否有多余空间
+- `flex` : `flex-grow`, `flex-shrink`, `flex-basis` 的缩写，
 
-3. box-sizing
-4. 垂直居中
-5. `unset` : `inherit` + `initial`
+其他属性：
+
+- `justify-content`
+- `align-items` 项目在交叉轴上如何对齐
+- `align-content` 定义多跟轴线对齐方式，一条轴线该属性不起作用
+- `align-self` 允许单个项目与其他项目不一样的对齐方式，可覆盖align-items属性
+- `order` 定义项目的排列顺序，数值越小，排列越靠前
+- `flex-wrap`
+- `flex-direction`
+- `flex-flow` flex-direction 和  flex-wrap 的简写
+
+
+## Other
+1. box-sizing
+2. 垂直居中
+3. `unset` : `inherit` + `initial`
    比如，一个不可继承属性：`border`

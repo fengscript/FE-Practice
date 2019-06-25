@@ -56,5 +56,26 @@
         margin-left: 100px;
       }
     </style>
+
+    <h1>3 flex</h1>
+
+    <div class="parent3">
+      <div class="l-child3 test-left">左边固定1 左边固定2 左边固定3</div>
+      <div class="r-child3 test-right">右边自适应1 右边自适应2 右边自适应3</div>
+    </div>
+    <style>
+      .parent3 {
+        display: flex;
+        background: #ddd;
+      }
+      .l-child3 {
+        flex: 0 0 100px;
+        background: #bbb;
+      }
+      .r-child3 {
+        width: 100%;
+        background: #999;
+      }
+    </style>
   </body>
 </html>

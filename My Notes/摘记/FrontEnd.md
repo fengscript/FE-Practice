@@ -210,28 +210,6 @@ error: TypeError: Failed to execute 'json' on 'Response': body stream is locked
 
 
 
-# RESTful API
-
-Resource Representational State Transfer：资源在网络中以某种表现形式进行状态转移
-
-==**URL定位资源，用HTTP动词（GET,POST,DELETE,DETC）描述操作**==
-
-REST描述的是在网络中 client 和 server 的一种交互形式；我们更多关注的是如何设计 RESTful API
-
-
-
-URL中只使用名词来指定资源，原则上不使用动词
-
-GET    获取资源，
-POST  新建资源（也可以用于更新资源），
-PUT    更新资源，
-DELETE  删除资源
-
-如：
-`DELETE http://api.qc.com/v1/friends ` 删除好友
-
-
-
 # 移动端性能调优
 
 1. 上 http2.0
@@ -305,3 +283,32 @@ RGB565 是16位的，2个字节，5+6+5，第一字节的前5位是R，后三位
 RGB555 也是16位的，2个字节，RGB各5位，有1位未用。
 
 RGB888 是24位的，3个字节。
+
+
+
+
+
+
+
+# iframe
+
+**iframe和iframe的关系**
+
+首先需要说明的是，w3c已经不推荐使用frame，而推荐使用iframe，iframe也就是inline frame（行内frame），顾名思义它具有css的行内框特性，正是因为这一特性才引出来iframe 高度100%时，出现垂直滚动条
+
+**通过window获取iframe**
+
+window.frames是个伪数组，可以通过window.frames[index]或window.frames[name]来获取iframe 
+window.frames[index],索引是从左往右，从上往下的，从0开始，通常我们使用window.frames[name]来获取frame
+
+**通过iframe获取window、document**
+如果想获取iframe里的window或者document，可以使用 
+iframe.contentWindow、iframe.contentDocument 
+iframe.contentDocument=iframe.contentWindow.document，不过iframe.contentDocument在IE8及以下的版本不支持。
+
+**window获取顶级窗口、父窗口**
+获取顶级窗口：window.top 
+获取父级窗口：window.parent 
+导航栏回退：history.back(); 注意回退的请求，会有缓存。 
+前进：history.forward() history.back()和history.forward()仅仅是为了方便分别代替history.go(-1)和history.go(1)
+

@@ -16,7 +16,7 @@ const Hook = () => {
     alert(` I'm Effect! `);
 
     return () => {};
-  });
+  }, []);
 
   return (
     <div>

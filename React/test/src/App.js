@@ -2,6 +2,9 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Test from "./t/hoook";
+import AddNumber from "./t/AddNumber";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 function App() {
   return (
@@ -20,8 +23,11 @@ function App() {
         </a>
       </header>
       {Test.OriginFunction("fyg")}
-      <Test.Functional name="FYG"/>
-      <Test.Hook  />
+      <Test.Functional name="FYG" />
+      <Test.Hook />
+      <Provider store={store}>
+        <AddNumber />
+      </Provider>
     </div>
   );
 }

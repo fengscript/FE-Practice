@@ -57,8 +57,20 @@ redux-hook：<https://codesandbox.io/s/react-hook-redux-zvx57>
 
 - 返回：一对当前状态和一个让你更新它的函数的值
 - 参数：state 的 init 值
-
 - `const [count, setCount] = useState(0);`
+
+调用这个方法时候：
+
+```react
+<button
+  onClick={() => {
+    setCount(count + 1);
+  }}>
+  Click Me
+</button>
+```
+
+
 
 `useEffect`
 
@@ -72,7 +84,9 @@ useEffect(() => {
 ```
 
 - 返回：一个函数来指定如何“清除”副作用
-  这个函数会在会在组件销毁或者后续渲染重新执行副作用函数时被调用
+  **这个函数会在会在组件销毁或者后续渲染重新执行副作用函数时被调用****
+  
+  
   
   > 所谓 Effect，拉取数据，修改 DOM 等有副作用称为 Effect
 
@@ -80,7 +94,29 @@ useEffect(() => {
 
 默认情况下，React 会在每次渲染后调用副作用函数 —— **包括**第一次渲染的时候
 
+
+
+useEffect 中定义的副作用函数的执行不会阻碍浏览器更新视图，也就是说这些函数是异步执行的，而之前的 componentDidMount 或 componentDidUpdate 中的代码则是同步执行的
+
+
+
 执行时机：在浏览器完成布局与绘制之后，传给 useEffect 的函数会延迟调用。这使得它适用于许多常见的副作用场景，比如如设置订阅和事件处理等情况，因此不应在函数中执行阻塞浏览器更新屏幕的操作
+
+
+
+每次重新渲染都要执行一遍这些副作用函数，显然是不经济的。为了跳过一些不必要的计算，给 `useEffect` 传入一个依赖：
+
+```react
+useEffect(()=>{
+  alert(count+1)
+},[count])
+```
+
+
+
+要是只传入一个空数组 `[ ]` ，可以让组件只在首次渲染的时候执行这个 `useEffect` ，但是容易造成 bug
+
+
 
 ## 2.2 Custom Hooks
 
@@ -159,3 +195,10 @@ https://react.docschina.org/docs/hooks-reference.html#usereducer
 
 #### <http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/>
 
+
+
+# render proops
+
+那些写成 class 的组件，它们本身包含了状态，所以复用这类组件就变得很麻烦
+
+渲染属性指的是使用一个值为函数的 prop 来传递需要动态渲染的 nodes 或组件

@@ -312,3 +312,25 @@ iframe.contentDocument=iframe.contentWindow.document，不过iframe.contentDocum
 导航栏回退：history.back(); 注意回退的请求，会有缓存。 
 前进：history.forward() history.back()和history.forward()仅仅是为了方便分别代替history.go(-1)和history.go(1)
 
+
+
+
+
+# Vue 开发环境手动搭
+
+https://zhuanlan.zhihu.com/p/67720854
+
+vue-cli` 给我们做的事情：
+
+1. `es6` 代码转换
+2. `scss/stylus` 转 css
+3. `.vue` 文件转换为 `.js` 文件
+4. 引入资源文件
+5. 添加 css 前缀
+6. 清理旧代码、构建新代码
+7. 打包，服务器热加载
+
+
+
+
+

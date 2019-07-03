@@ -11,14 +11,16 @@ const ADD_NUMBER = payload => {
     payload
   };
 };
+
 const actions = {
-  ADD_NUMBER: ADD_NUMBER
+  ADD_NUMBER
 };
+
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case ADD_NUMBER:
-      return { ...state.count, ...ADD_NUMBER.payload };
+    case "ADD_NUMBER":
+      return { ...state, count: state.count + action.payload };
     default:
       return state;
   }

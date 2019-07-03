@@ -13,7 +13,7 @@ const Hook = () => {
   const [info, setInfo] = useState({ name: "", age: 0 });
 
   useEffect(() => {
-    alert(` I'm Effect! `);
+    // alert(` I'm Effect! `);
 
     return () => {};
   }, []);

@@ -20,7 +20,7 @@ import { connect } from "react-redux";
 // }
 
 const AddNumber = ({ ...props }) => {
-  const { count, ADD_NUMBER } = props;
+  const { count, ADD_NUMBER, Sagatest } = props;
   return (
     <div>
       <div>{count}</div>
@@ -29,6 +29,13 @@ const AddNumber = ({ ...props }) => {
           ADD_NUMBER(1);
         }}>
         Add
+      </button>
+
+      <button
+        onClick={() => {
+          Sagatest();
+        }}>
+        Saga
       </button>
     </div>
   );
@@ -39,7 +46,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = {
-  ADD_NUMBER: actions.ADD_NUMBER
+  ADD_NUMBER: actions.ADD_NUMBER,
+  Sagatest: actions.SAGATEST
 };
 
 export default connect(

@@ -9,7 +9,6 @@ INSERT INTO Products VALUES('id','name',NULL,'2018-08') -- 数据库中运行 NU
 
 /*表名和 VALUES 里面的字段值必须完全对应，但是插入到表里面时候，会自己匹配，不一定跟表里面顺序完全一致*/
 INSERT INTO Products(name, id, time, price) VALUES('name','id',NULL,'2018-08')
-
 ```
 
 

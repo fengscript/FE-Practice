@@ -81,9 +81,9 @@ Subversion
 
 只移出跟踪区，不删除文件：`git rm --cached xxx`
 
-## Revert
+##  Modify Commit
 
-### `amend` 修改最后一次提交
+### amend  修改最后一次提交
 
 ```bash
 $ git commit -m 'initial commit'
@@ -93,13 +93,15 @@ $ git commit --amend
 
 三条命令最终只是产生一个提交，第二个提交命令修正了第一个的提交内容
 
-### `checkout --` 取消对文件的修改(没有 暂存 或者 commit)
+###  checkout --  取消对文件的修改(没有 暂存 或者 commit)
 
 ```bash
 git checkout -- <file>
 ```
 
-### `reset` 取消已经暂存的文件
+###  reset  
+
+删除指定的commit，取消已经暂存的文件
 
 ```bash
 git reset HEAD <file>...
@@ -112,12 +114,20 @@ git reset --soft HEAD~ // HEAD~ (HEAD 的父结点)
 ```
 
 
-### `revert` 添加一次新的提交覆盖上次提交
+###  revert  添加一次新的提交覆盖上次提交
 ```bash
-git revert
+git revert HEAD  撤销前一次 commit
+git revert HEAD^  撤销前前一次 commit
+git revert xxxxx
 ```
 
 很明显，`HEAD` 后移了
+
+撤销 某次操作，此次操作之前和之后的commit和history都会保留，并且把这次撤销作为一次最新的提交
+
+ git reset 是把HEAD向后移动了一下，而git revert是HEAD继续前进
+
+git revert是用一次新的commit来回滚之前的commit，git reset是直接删除指定的commit
 
 
 
@@ -203,10 +213,10 @@ git checkout -b myBranch origin/branch
 
     a.远程已有 `remote_branch` 分支并且已经关联本地分支 `local_branch` 且本地已经切换到 `local_branch`
     - `git push`
-
+    
     b.远程已有 `remote_branch` 分支但未关联本地分支 `local_branch` 且本地已经切换到 `local_branch`
     - `git push -u origin/remote_branch`
-
+    
     c.远程没有 `remote_branch` 分支，本地已经切换到 `local_branch`
     - `git push origin local_branch:remote_branch`
 
@@ -272,6 +282,7 @@ git merge master
   - `git submodule update --remote xxx` (Sup Directory) 自动进入子目录抓取相关更新
 
 - Push
+  
   - `push` 时候检查本地子模块更改是否提交 `git push --recurse-submodules=check`
 
 ## rebase
@@ -305,7 +316,7 @@ git push origin TagName
 git push origin --tag   // all tags
 ```
 
-# `HEAD` `head`
+# HEAD  head
 
 `HEAD` 是 `current branch` ，默认指向当前分支的最新提交，`checkout` 会指向新的分支
 

@@ -1,6 +1,17 @@
 import createAction from "./tool";
 import { createStore } from "redux";
 
+//  saga
+import createSagaMiddleware from "redux-saga";
+import { applyMiddleware } from "redux";
+// import { helloSaga } from "./saga";
+
+const sagaMiddleware = createSagaMiddleware();
+//  saga end
+function* helloSaga() {
+  console.log("Hello Sagas!");
+}
+
 const initState = {
   count: -1
 };
@@ -12,8 +23,16 @@ const ADD_NUMBER = payload => {
   };
 };
 
+const SAGATEST = payload => {
+  return {
+    type: "SAGATEST",
+    payload
+  };
+};
+
 const actions = {
-  ADD_NUMBER
+  ADD_NUMBER,
+  SAGATEST
 };
 
 const reducer = (state = initState, action) => {
@@ -27,5 +46,8 @@ const reducer = (state = initState, action) => {
   }
 };
 
-const store = createStore(reducer);
+// const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+
+sagaMiddleware.run(helloSaga);
 export { actions, store };

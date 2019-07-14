@@ -1,16 +1,12 @@
 import createAction from "./tool";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 
 //  saga
 import createSagaMiddleware from "redux-saga";
-import { applyMiddleware } from "redux";
-// import { helloSaga } from "./saga";
+import rootSaga from "./saga";
 
 const sagaMiddleware = createSagaMiddleware();
 //  saga end
-function* helloSaga() {
-  console.log("Hello Sagas!");
-}
 
 const initState = {
   count: -1
@@ -25,7 +21,7 @@ const ADD_NUMBER = payload => {
 
 const SAGATEST = payload => {
   return {
-    type: "SAGATEST",
+    type: "INCREASE_ASYNC",
     payload
   };
 };
@@ -41,6 +37,8 @@ const reducer = (state = initState, action) => {
     case "ADD_NUMBER":
       // return { count: count + 1 };
       return { ...state, count: state.count + action.payload };
+    case "INCREASE_ASYNC":
+      return { ...state, count: state.count + action.payload };
     default:
       return state;
   }
@@ -49,5 +47,8 @@ const reducer = (state = initState, action) => {
 // const store = createStore(reducer);
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(helloSaga);
-export { actions, store };
+sagaMiddleware.run(rootSaga);
+const selectors = {
+  getCount: state => state.count
+};
+export { actions, store, selectors };

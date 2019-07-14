@@ -46,5 +46,5 @@ redux-saga 是一个用于管理副作用的中间件（又称异步 action）�
 - select: 对应的是redux中的getState
   - `const state= yield select()`
 - fork: 相当于web work，不会阻塞主线程，在非阻塞调用中十分有用
-- takeEvery
-- takeLatest
+- takeEvery: 监听到多个相同的action，并执行相应的方法
+- takeLatest: 执行最近的那个被触发的action

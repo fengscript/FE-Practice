@@ -33,7 +33,7 @@ const AddNumber = ({ ...props }) => {
 
       <button
         onClick={() => {
-          Sagatest();
+          Sagatest(1);
         }}>
         Saga
       </button>

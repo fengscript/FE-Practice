@@ -37,7 +37,7 @@ redux-saga 是一个用于管理副作用的中间件（又称异步 action）�
   //返回的action为：
   {
     type:'login'
-  }
+  } 
   ```
 
 - call: `call(fn, ...args)` 传入的函数 fn 可以是普通函数，也可以是 generator ,返回一个描述对象
@@ -47,7 +47,8 @@ redux-saga 是一个用于管理副作用的中间件（又称异步 action）�
 - select: 对应的是 redux 中的 getState
   - `const state= yield select()`
 - fork: 相当于 web work，不会阻塞主线程，在非阻塞调用中十分有用
-- takeEvery: 监听到多个相同的 action，并执行相应的方法
+- takeEvery: 监听到多个相同的 action，并执行相应的方法。 被调用的任务无法控制何时被调用， 它们将在每次 action 被匹配时一遍又一遍地被调用。并且它们也无法控制何时停止监听
+  - take: 与 action 被 推向（pushed） 任务处理函数不同，Saga 是自己主动 拉取（pulling） action 的
 - takeLatest: 执行最近的那个被触发的 action
 
 ## work flow

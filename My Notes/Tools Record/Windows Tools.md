@@ -20,7 +20,7 @@
 - 火绒
 - Q-dir
 - 向日葵
-
+- uTools https://u.tools/ 启动器 插件
 
 
 **Study**

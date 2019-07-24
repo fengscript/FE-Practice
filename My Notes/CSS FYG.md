@@ -12,22 +12,25 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
 `selector : nth-child ( n )` 选择属于 `selector`  的父元素下第 `n` 个子元素
 
 ## nth-of-type
-`selector : nth-of-type ( n )` 选择属于 `selector`  的父元素下第 `n` 个元素的每个 `selector` 元素
+`selector : nth-of-type ( n )` ：选择属于 `selector`  的父元素下每种类型元素的第 `n` 个元素的**每个** `selector` 元素
+
+~~选择属于 `selector`  的父元素下第 `n` 个元素的每个 `selector` 元素~~
 
 如下：
 ```html
 <ul class="demo">
     <p class="list">zero</p>
-    <li class="list">one</li>
+    <p class="list">one</p>
     <li class="list">two</li>
+    <li class="list">three</li>
 </ul>
 
 <style>
-.list:nth-child(2){
-    color: red;     //使 one 变红
+.list:nth-child(1){
+    color: red;     //使 zero 变红
 }
 .list:nth-of-type(2){
-    color: blue;    //使 two 变蓝
+    color: blue;    //使 one three 变蓝
 }
 </style>
 ```
@@ -196,6 +199,50 @@ js里面控制需要驼峰
 ```js
 object.style.animationPlayState="paused"
 ```
+
+## 鼠标滑入线条跟随
+```html
+<ul>
+  <li class="menu">HTML</li>
+  <li class="menu">CSS3</li>
+  <li class="menu">Javascript</li>
+  <li class="menu">React</li>
+</ul>
+<style>
+  ul {
+    list-style: none;
+  }
+  .menu {
+    position: relative;
+    float: left;
+    margin: 0 10px;
+    padding: 0 4px;
+    cursor: pointer;
+  }
+  /* .menu:hover ~ .menu {
+    color: red;
+  } */
+  .menu::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 0%;
+    height: 100%;
+    transition: .35s all linear;
+    border-bottom: 2px solid #000;
+  }
+  .menu:hover::before {
+    width: 100%;
+    left: 0;
+  }
+  .menu:hover ~ .menu::before {
+    left: 0;
+  }
+</style>
+```
+
+
 
 # 4 布局
 

@@ -28,10 +28,27 @@
 - typora
 - mendeley 文献阅读管理 https://www.mendeley.com/
 
-## **Media**
+**Media**
 
 - xnview
 - potplayer
+- Listen 1
+- music tools 音乐下载
+**System**
+- refus 引导盘制作
+
+
+**Work**
+ppt
+- iSlide
+- PA 口袋动画
+- OneKey Tool
+- pixel map generator
+
+## Mac
+
+
+
 # Some Config
 
 ## cmder

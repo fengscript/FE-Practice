@@ -236,13 +236,20 @@ object.style.animationPlayState="paused"
     width: 100%;
     left: 0;
   }
-  .menu:hover ~ .menu::before {
+  /* .menu:hover ~ .menu::before {
+    left: 0;
+  } */
+  .menu:hover + .menu::before {
     left: 0;
   }
 </style>
 ```
 
-
+提醒一下自己：
+- 相邻兄弟选择器 A + B
+- 普通兄弟选择器 A ~ B
+- 子选择器 A > B
+- 后代选择器 A B
 
 # 4 布局
 

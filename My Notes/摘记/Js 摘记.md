@@ -84,7 +84,7 @@ c// {x: 2, y: 4, a: 1}
 
 # Math
 
-取整：
+## 取整：
 
 > 虽然 javascript 提供了很方便的一些取整方法，像Math.floor，Math.ceil，parseInt，但是，国外友人做过测试，parseInt这个方法做了一些额外的工作（比如检测数据是不是有效的数值，parseInt 甚至先将参数转换成了字符串!），所以，直接用parseInt的话相对来说比较消耗性能
 
@@ -95,6 +95,17 @@ rounded = (0.5 + somenum) << 0;
 ```
 
 <https://www.cnblogs.com/rubylouvre/p/3570636.html>
+
+
+## 循环取值
+
+```javascript
+const getIndex = () => dots.indexOf(dotActive);
+
+const getPreIndex = () => (getIndex() - 1 + dots.length) % dots.length;
+
+const getNextIndex = () => (getIndex() + 1) % dots.length;
+```
 
 
 # Tools

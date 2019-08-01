@@ -7,9 +7,12 @@ class Animal {
     //es7 静态属性
     static age = 27;
   constructor(name) {
+    // es6 实例属性
     this.name = name;
+    // 调用 es7实例属性
     console.log(this.id)
   }
+	//公有方法
   sayHi() {
     return `Hi, ${this.name}`;
   }
@@ -19,7 +22,8 @@ class Animal {
   set name(value){
       console.log(`setter: ${value}`);
   }
-  //静态方法不需要实例化，而是直接通过类来调用：
+  //静态方法
+	//不需要实例化，而是直接通过类来调用：
   static isAnimal(a) {
     return a instanceof Animal;
   }
@@ -41,7 +45,7 @@ class Cat extends Animal {
 
 # class
 
-## 定义一个类
+## 定义
 
 两种方法：
 
@@ -58,20 +62,30 @@ let Rectangle = class Rectangle {...}
 - **不会提升**
 - `constructor` 方法是类的默认方法，通过 new 命令生成对象实例时，自动调用该方法。
 - 一个类必须有 `constructor` 方法，如果没有显式定义，一个空的 `constructor` 方法会被默认添加。
-- `constructor` 方法默认返回实例对象（`this`），完全可以指定返回另外一个对象。
-
-- 定义“类”的方法的时候，前面不需要加上 `function` 关键字
 - **方法之间不需要逗号分隔**
-- 当一个对象调用静态或原型方法时，如果该对象没有 `this` 值 ，那么“this”值在被调用的函数内部将为 `undefined` 。不会发生自动包装。
+- 当一个对象调用静态或原型方法时，如果该对象没有 `this` 值 ，那么 `this` 值在被调用的函数内部将为 `undefined` 。不会发生自动包装。
 - **类的所有方法都定义在类的 `prototype` 属性上面**
 - 类的内部所有定义的方法，都是不可枚举的（`non-enumerable`）
 - 在 `class` 中。同时具有 `__proto__` 和 `prototype` 两个属性，存在两条继承链。
 - 子类的 `__proto__` 属性，表示构造函数的继承，总是指向父类。
 - 子类的 prototype 的 `__proto__` 属性表示方法的继承，总是指向父类的 `prototype` 属性。
 
+
+
+## 实例对象
+
+- `constructor` 方法默认返回实例对象（`this`），完全可以指定返回另外一个对象。
+- 实例的属性除非显式定义，否则都是定义在原型对象上
+- 类的所有实例共享一个原型对象
+- 类相当于实例的原型，所有在类中定义的方法都会被实例继承
+
+
+
+
+
 ## 私有方法
 
-也没提供私有方法，而且 **模块内部的所有方法都是对外可见**，所以可以这样子移出去：
+没提供私有方法，而且 **模块内部的所有方法都是对外可见**，所以可以这样子移出去来模拟私有方法：
 
 ```javascript
 class Widget {
@@ -108,7 +122,7 @@ export default class myClass {
 }
 ```
 
-## static
+## 静态方法
 
 类相当于实例的原型，**所有在类中定义的方法，都会被实例继承**
 
@@ -177,7 +191,9 @@ Foo.innerProp = 1; //也是OK的 旧写法
 
 ## this
 
-类的方法内部如果含有 `this`，那么它将指向 **类的实例**，但是在外面单独使用这个方法时 `this` 就会指向该刚发运行时所在的环境而找不到方法报错，解决方式是在构造方法 `constructor` 中绑定一下，或者使用箭头函数：
+类的方法内部如果含有 `this`，那么它将指向 **类的实例**
+
+但是在外面单独使用这个方法时 `this` 就会指向该刚发运行时所在的环境而找不到方法报错，解决方式是在构造方法 `constructor` 中绑定一下，或者使用箭头函数：
 
 ```js
 class Logger{

@@ -251,6 +251,10 @@ object.style.animationPlayState="paused"
 - 子选择器 A > B
 - 后代选择器 A B
 
+div p	选择 <div> 元素内部的所有 <p> 元素。	1
+div>p	选择父元素为 <div> 元素的所有 <p> 元素。
+
+
 # 4 布局
 
 ## 4.1 BFC (Block Formatting Context)
@@ -564,3 +568,6 @@ span {
  `background-attachment` : scroll | fixed | local | inherit
  如果指定了 `background-image` ，那么 `background-attachment` 决定背景是在视口中固定的还是随包含它的区块滚动的。
  
+
+ ## object-fit
+ 设置图片的缩放

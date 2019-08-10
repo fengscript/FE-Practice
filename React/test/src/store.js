@@ -9,7 +9,8 @@ const sagaMiddleware = createSagaMiddleware();
 //  saga end
 
 const initState = {
-  count: -1
+  count: -1,
+  data: ""
 };
 
 const ADD_NUMBER = payload => {
@@ -26,6 +27,13 @@ const SAGATEST = payload => {
   };
 };
 
+const GET_DATA = payload => {
+  return {
+    type: "GET_DATA",
+    payload
+  };
+};
+
 const actions = {
   ADD_NUMBER,
   SAGATEST
@@ -37,8 +45,10 @@ const reducer = (state = initState, action) => {
     case "ADD_NUMBER":
       // return { count: count + 1 };
       return { ...state, count: state.count + action.payload };
-    case "INCREASE_ASYNC":
-      return { ...state, count: state.count + action.payload };
+    // case "INCREASE_ASYNC":
+    //   return { ...state, count: state.count + action.payload };
+    case "GET_DATA":
+      return { ...state, data: action.payload };
     default:
       return state;
   }

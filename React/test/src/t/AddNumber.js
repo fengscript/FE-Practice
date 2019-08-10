@@ -28,7 +28,7 @@ const AddNumber = ({ ...props }) => {
         onClick={() => {
           ADD_NUMBER(1);
         }}>
-        Add
+        AddNumber
       </button>
 
       <button

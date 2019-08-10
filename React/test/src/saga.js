@@ -13,31 +13,49 @@ import {
 import { selectors } from "./store";
 import _data from "./mockData";
 
-const delay = second => new Promise(res => setTimeout(res, second * 1000));
+export const delay = second =>
+  new Promise(res => {
+    console.log(`I will delay ${second} second`);
+    setTimeout(res, second * 1000);
+  });
 
 async function fetchData(url) {
   const response = await fetch(url);
   return response.json();
 }
 
-export function* increaseAsync() {
-  const getCount = yield select();
-  yield fetchData(_data.remote).then(res => {
-    
-    const data = JSON.stringify(res);
+// function fetchData(url) {
+//   return fetch(url).then(response => {
+//     return response.json();
+//   });
+// }
 
+export function* increaseAsync() {
+  console.log("saga invoke");
+
+  yield delay(1);
+
+  yield fetchData(_data.remote).then(res => {
+    const data = JSON.stringify(res);
     console.log(data);
   });
-  // yield delay(1);
-  // console.log(getCount.count);
 
-  //   yield put({
-  //     type: "INCREASE_ASYNC",
-  //     payload: 1
-  //   });
+  yield put({
+    type: "ADD_NUMBER",
+    payload: 3
+  });
 
-  console.log("data end");
+  const getCount = yield select();
+
+  console.log(getCount);
+
+  // let t = call(delay, 1000);
+  // console.log(t);
 }
+
+// let a = increaseAsync();
+// console.log(a.next().value);
+
 // INCREASE_ASYNC
 export function* watchIncreasementAsync() {
   yield takeEvery("INCREASE_ASYNC", increaseAsync);

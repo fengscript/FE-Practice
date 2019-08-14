@@ -2,6 +2,9 @@
 
 > 由于 `JSX` 编译后会调用 `React.createElement` 方法，所以在你的 `JSX` 代码中必须首先声明 `React` 变量
 
+
+函数式组件
+
 ```jsx
 const OriginFunction = name => {
   return <h3>I will show you OriginFunction - {name}</h3>;
@@ -19,7 +22,7 @@ const Functional = ({ name }) => {
 <Test.Functional name="FYG" />;
 ```
 
-有效的 React 组件接收唯一带有数据的 ==props（代表属性）对象== 与并返回一个 React 元素。这类组件被称为函数组件
+有效的 React 组件接收唯一带有数据的 ==props（代表属性）对象== 与并返回一个 React 元素。这类组件被称为函数式组件
 
 _所以，函数式组件接受 props 时候要解构_
 
@@ -84,7 +87,7 @@ useEffect(() => {
 ```
 
 - 返回：一个函数来指定如何“清除”副作用
-  **这个函数会在会在组件销毁或者后续渲染重新执行副作用函数时被调用****
+  **这个函数会在会在组件销毁或者后续渲染重新执行副作用函数时被调用**
   
   
   

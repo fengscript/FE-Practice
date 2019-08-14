@@ -3,7 +3,7 @@ import { increaseAsync, delay } from "./saga";
 
 const gen = increaseAsync();
 test("increaseAsync Saga must call delay(1000)", () => {
-  expect(gen.next().value).toEqual(call(delay, 1000));
+  expect(gen.next().value).toEqual(call(delay, 1));
 });
 
 test("increaseAsync Saga must dispatch an INCREMENT action", () => {

@@ -5,8 +5,7 @@ import Test from "./t/hoook";
 import AddNumber from "./t/AddNumber";
 import { Provider } from "react-redux";
 import { store } from "./store";
-
-
+import { Login } from "./Login";
 
 function App() {
   return (
@@ -30,6 +29,9 @@ function App() {
       <Provider store={store}>
         <AddNumber />
       </Provider>
+      {/* <Provider store={store}> */}
+      <Login />
+      {/* </Provider> */}
     </div>
   );
 }

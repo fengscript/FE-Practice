@@ -33,8 +33,8 @@ async function fetchData(url) {
 export function* increaseAsync() {
   console.log("saga invoke");
 
-  yield delay(1);
-
+  yield call(delay, 1);
+  
   yield fetchData(_data.remote).then(res => {
     const data = JSON.stringify(res);
     console.log(data);

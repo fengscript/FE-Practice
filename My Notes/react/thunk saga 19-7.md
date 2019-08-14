@@ -41,6 +41,8 @@ redux-saga 是一个用于管理副作用的中间件（又称异步 action）�
   ```
 
 - call: `call(fn, ...args)` 传入的函数 fn 可以是普通函数，也可以是 generator ,返回一个描述对象
+  - 不立即执行异步调用，相反，call 创建了一条描述结果的信息。 就像在 Redux 里你使用 action 创建器，创建一个将被 Store 执行的、描述 action 的纯文本对象。 
+  - 描述的 action 会被 generator 自动调用
   
   - `yield call(fetch,'/userInfo',username)`
 - put: 对应与 redux 中的 dispatch
@@ -49,7 +51,7 @@ redux-saga 是一个用于管理副作用的中间件（又称异步 action）�
 - select: 对应的是 redux 中的 getState
   
   - `const state= yield select()`
-- fork: 相当于 web work，不会阻塞主线程，在非阻塞调用中十分有用
+- fork: 相当于 web work，任务会在后台启动，调用者也可以继续它自己的流程，而不用等待被 fork 的任务结束
 - takeEvery: 监听到多个相同的 action，并执行相应的方法。 被调用的任务无法控制何时被调用， 它们将在每次 action 被匹配时一遍又一遍地被调用。并且它们也无法控制何时停止监听
   
   - take: 与 action 被 推向（pushed） 任务处理函数不同，Saga 是自己主动 拉取（pulling） action 的
@@ -174,3 +176,55 @@ export default function* rootSaga() {
 }
 
 ```
+
+
+
+## 声明式 Effect
+
+Effect 可以看作是发送给 middleware 的指令以执行某些操作（调用某些异步函数，发起一个 action 到 store，等等），即不立即执行异步调用，而是创建了一条描述结果的 plain javascript object，让 saga 变得可测
+
+`redux-saga` middleware 将确保执行这些指令并将指令的结果回馈给 Generator
+
+- put : 创建 dispatch effect
+- call: 创建返回 Promise 的 effect
+- takeEvery('*')（使用通配符 * 模式），就能捕获发起的所有类型的 action
+
+
+## 错误处理
+
+一般使用 `try-catch` 捕获错误，然后发出处理错误的 `action`
+
+测试时候用 `Generator` 的 `throw`方法 :
+```js
+assert.deepEqual(
+  iterator.throw(error).value,
+  put({ type: 'PRODUCTS_REQUEST_FAILED', error }),
+  "fetchProducts should yield an Effect put({ type: 'PRODUCTS_REQUEST_FAILED', error })"
+)
+```
+
+或者让你的 API 服务返回一个正常的含有错误标识的值。可以捕捉 Promise 的拒绝操作，并将它们映射到一个错误字段对象：
+https://redux-saga-in-chinese.js.org/docs/basics/ErrorHandling.html
+
+```javascript
+import Api from './path/to/api'
+import { call, put } from 'redux-saga/effects'
+
+function fetchProductsApi() {
+  return Api.fetch('/products')
+    .then(response => ({ response }))
+    .catch(error => ({ error }))
+}
+
+function* fetchProducts() {
+  const { response, error } = yield call(fetchProductsApi)
+  if (response)
+    yield put({ type: 'PRODUCTS_RECEIVED', products: response })
+  else
+    yield put({ type: 'PRODUCTS_REQUEST_FAILED', error })
+}
+```
+
+
+## 监听未来action
+

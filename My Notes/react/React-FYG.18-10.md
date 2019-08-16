@@ -388,7 +388,7 @@ HTML 的表单元素自然地保留了一些内部状态
 
 ### textarea
 
-> html 中，<textarea> 元素通过它的子节点定义了它的文本值 `<texarea>xxx</texarea>`
+> html 中，`<textarea> ` 元素通过它的子节点定义了它的文本值 '<texarea>xxx</texarea>'
 
 而 `react` 中用 `value` 来控制对 `texarea` 元素的赋值，所以更像单行文本输入框：
 

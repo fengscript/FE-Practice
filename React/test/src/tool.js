@@ -40,5 +40,3 @@ export default function createAction(type, actionCreator, metaCreator) {
     return action;
   };
 }
-
-const createActions = () => {};

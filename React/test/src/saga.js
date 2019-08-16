@@ -34,7 +34,7 @@ export function* increaseAsync() {
   console.log("saga invoke");
 
   yield call(delay, 1);
-  
+
   yield fetchData(_data.remote).then(res => {
     const data = JSON.stringify(res);
     console.log(data);
@@ -48,13 +48,7 @@ export function* increaseAsync() {
   const getCount = yield select();
 
   console.log(getCount);
-
-  // let t = call(delay, 1000);
-  // console.log(t);
 }
-
-// let a = increaseAsync();
-// console.log(a.next().value);
 
 // INCREASE_ASYNC
 export function* watchIncreasementAsync() {
@@ -65,14 +59,44 @@ function helloSaga() {
   console.log("Hello Sagas!");
 }
 
-// function fetchJson(url) {
-//   return fetch("http://localhost:3333/person").then(response =>
-//     response.json()
-//   );
-// }
+// LOGIN LOGOUT TEST
 
-// fetchData().then(data => console.log(JSON.stringify(data)));
+export function* watchLoginState() {
+  while (true) {
+    yield take("LOGIN");
+    console.log("start login");
+    yield delay(1);
+    console.log("login finish");
+    yield take("LOGOUT");
+    console.log("start logout");
+    yield delay(1);
+    console.log("logout finish");
+  }
+}
+
+// NO-BLOCK SAGA
+function* auth(user, pwd) {
+  try {
+    // const getToken = localStorage.getItem(user);
+    const getToken = yield call(localStorage.getItem, user);
+    yield put({ type: "LOGIN_SUCCESS" });
+    return getToken;
+  } catch (error) {
+    yield put({ type: "LOGIN_ERROR" });
+  }
+}
+
+function* loginFlow() {
+  while (true) {
+    const token = call(auth, "fyg", "123");
+    if (token) {
+      yield call(localStorage.setItem({ token }));
+      yield take("LOGOUT");
+      yield call(localStorage.removeItem("token"));
+    }
+  }
+}
 
 export default function* rootSaga() {
-  yield all([helloSaga(), watchIncreasementAsync()]);
+  yield all([helloSaga(), watchIncreasementAsync(), watchLoginState()]);
 }

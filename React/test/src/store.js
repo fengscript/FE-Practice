@@ -10,7 +10,33 @@ const sagaMiddleware = createSagaMiddleware();
 
 const initState = {
   count: -1,
-  data: ""
+  data: "",
+  userstate: "null"
+};
+
+const LOGIN = payload => {
+  return {
+    type: "LOGIN",
+    payload
+  };
+};
+const LOGOUT = payload => {
+  return {
+    type: "LOGOUT",
+    payload
+  };
+};
+const LOG_SUCCESS = payload => {
+  return {
+    type: "LOG_SUCCESS",
+    payload
+  };
+};
+const LOGIN_ERROR = payload => {
+  return {
+    type: "LOGIN_ERROR",
+    payload
+  };
 };
 
 const ADD_NUMBER = payload => {
@@ -36,7 +62,9 @@ const GET_DATA = payload => {
 
 const actions = {
   ADD_NUMBER,
-  SAGATEST
+  SAGATEST,
+  LOGIN,
+  LOGOUT
 };
 
 const reducer = (state = initState, action) => {
@@ -49,6 +77,14 @@ const reducer = (state = initState, action) => {
     //   return { ...state, count: state.count + action.payload };
     case "GET_DATA":
       return { ...state, data: action.payload };
+    case "LOGIN":
+      return { ...state, userstate: "login" };
+    case "LOGOUT":
+      return { ...state, userstate: "logout" };
+    case "LOG_SUCCESS":
+      return { ...state, userstate: "success" };
+    case "LOGIN_ERROR":
+      return { ...state, userstate: "error" };
     default:
       return state;
   }

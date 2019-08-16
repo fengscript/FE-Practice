@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import { actions, store } from "../store";
+import { actions } from "../store";
 import { connect } from "react-redux";
 
 // class AddNumber extends Component {
@@ -19,7 +19,7 @@ import { connect } from "react-redux";
 //   }
 // }
 
-const AddNumber = ({ ...props }) => {
+const AddNumber = props => {
   const { count, ADD_NUMBER, Sagatest } = props;
   return (
     <div>

@@ -41,8 +41,10 @@ redux-saga 是一个用于管理副作用的中间件（又称异步 action）�
   ```
 
 - call: `call(fn, ...args)` 传入的函数 fn 可以是普通函数，也可以是 generator ,返回一个描述对象
-  - 不立即执行异步调用，相反，call 创建了一条描述结果的信息。 就像在 Redux 里你使用 action 创建器，创建一个将被 Store 执行的、描述 action 的纯文本对象。 
+  - 不立即执行异步调用，相反，call 创建了一条描述结果的信息。 就像在 Redux 里你使用 action 创建器，创建一个将被 Store 执行的、描述 action 的纯文本对象。
+
   - 描述的 action 会被 generator 自动调用
+  - middleware 会暂停 Generator，直到返回的 Promise 被 resolve
   
   - `yield call(fetch,'/userInfo',username)`
 - put: 对应与 redux 中的 dispatch
@@ -52,10 +54,40 @@ redux-saga 是一个用于管理副作用的中间件（又称异步 action）�
   
   - `const state= yield select()`
 - fork: 相当于 web work，任务会在后台启动，调用者也可以继续它自己的流程，而不用等待被 fork 的任务结束
+
+
 - takeEvery: 监听到多个相同的 action，并执行相应的方法。 被调用的任务无法控制何时被调用， 它们将在每次 action 被匹配时一遍又一遍地被调用。并且它们也无法控制何时停止监听
   
-  - take: 与 action 被 推向（pushed） 任务处理函数不同，Saga 是自己主动 拉取（pulling） action 的
+- take: 与 action 被 推向（pushed） 任务处理函数不同，Saga 是自己主动 拉取（pulling） action 的
+  take 让我们通过全面控制 action 观察进程来构建复杂的控制流成为可能
+
+  会暂停 Generator 直到一个匹配的 action 被发起了
+
+  - 因为是自主拉取了 action，所以可以自主控制流程，比如：
+  ```javascript
+  function* watchFirstThreeTodosCreation() {
+    for (let i = 0; i < 3; i++) {
+      const action = yield take('TODO_CREATED')
+    }
+    yield put({type: 'SHOW_CONGRATULATION'})
+  }
+  ```
+  
+  - 比如相比 take，想实现 `login` ，`logout` 的逻辑， takeEvery 要写两次，而 take 可以在一个地方统一写逻辑：
+    ```javascript
+    function* loginFlow() {
+      while (true) {
+        yield take('LOGIN')
+        // ... perform the login logic
+        yield take('LOGOUT')
+        // ... perform the logout logic
+      }
+    }
+    ```
+
+  
 - takeLatest: 执行最近的那个被触发的 action
+  
 
 
 ### call 
@@ -226,5 +258,5 @@ function* fetchProducts() {
 ```
 
 
-## 监听未来action
+## 无阻塞调用
 

@@ -100,7 +100,7 @@ import customName from './export-default';
 customName(); // 'foo'
 ```
 
-使用 `export default` 时，对应的 `import` 语句不需要使用大括号；不使用 `export default` 时，对应的 `import` 语句需要使用大括号
+==使用 `export default` 导出模块内变量时，对应的 `import` 语句不需要使用大括号；不使用 `export default` 导出时，对应的 `import` 语句需要使用大括号==
 
 > 显然，一个模块只能有一个默认输出，因此 `export default` 命令只能使用一次
 

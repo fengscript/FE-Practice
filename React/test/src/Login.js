@@ -2,21 +2,21 @@ import React, { useState, useEffect } from "react";
 import { actions, store } from "./store";
 import { connect } from "react-redux";
 
-const Login = (props) => {
+const Login = props => {
   const [password, setPassword] = useState("");
   const [state, setState] = useState("");
-  const {SET_LOGIN, SET_LOGOUT} = props;
+  const { SET_LOGIN, SET_LOGOUT, LOGIN_REQUEST } = props;
 
   useEffect(() => {
     return () => {};
   }, []);
 
   const handleLogin = () => {
-    SET_LOGIN()
+    SET_LOGIN();
     setState("Login");
   };
   const handleLogout = () => {
-    SET_LOGOUT()
+    SET_LOGOUT();
     setState("Logout");
   };
   return (
@@ -62,7 +62,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = {
   SET_LOGIN: actions.LOGIN,
-  SET_LOGOUT: actions.LOGOUT
+  SET_LOGOUT: actions.LOGOUT,
 };
 
 export default connect(

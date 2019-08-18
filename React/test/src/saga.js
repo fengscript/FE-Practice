@@ -59,44 +59,68 @@ function helloSaga() {
   console.log("Hello Sagas!");
 }
 
-// LOGIN LOGOUT TEST
+// NO-BLOCK SAGA
+function* storeLoginInfo(key, value) {
+  yield localStorage.setItem(key, value);
+}
+function* storeGetInfo(key) {
+  return yield localStorage.getItem(key);
+}
+function* storeClear() {
+  yield localStorage.clear();
+}
 
-export function* watchLoginState() {
+function* watchLogin() {
   while (true) {
     yield take("LOGIN");
-    console.log("start login");
-    yield delay(1);
-    console.log("login finish");
-    yield take("LOGOUT");
-    console.log("start logout");
-    yield delay(1);
-    console.log("logout finish");
+    yield call(storeLoginInfo, "fyg", "123");
+    yield put({
+      type: "SET_LOGININFO",
+      payload: "fyg"
+    });
+    console.log("store_success");
   }
 }
 
-// NO-BLOCK SAGA
-function* auth(user, pwd) {
-  try {
-    // const getToken = localStorage.getItem(user);
-    const getToken = yield call(localStorage.getItem, user);
-    yield put({ type: "LOGIN_SUCCESS" });
-    return getToken;
-  } catch (error) {
-    yield put({ type: "LOGIN_ERROR" });
-  }
-}
 
 function* loginFlow() {
   while (true) {
-    const token = call(auth, "fyg", "123");
+    yield take("LOGOUT");
+    const token = yield call(storeGetInfo,'fyg');
+    // const token = localStorage.getItem('fyg');
+    console.log("get token :"+token);
     if (token) {
-      yield call(localStorage.setItem({ token }));
-      yield take("LOGOUT");
-      yield call(localStorage.removeItem("token"));
+      yield call(storeClear);
+    } else {
+      console.log("auth error");
+      yield put({ type: "LOGIN_ERROR" });
     }
   }
 }
 
+export function* watchLoginState() {
+  yield takeEvery("LOGIN_SUCCESS", () => {
+    console.log("LOGIN_SUCCESS");
+  });
+  yield takeEvery("SET_LOGININFO", () => {
+    console.log("SET_LOGININFO");
+  });
+  while (true) {
+    yield take("LOGIN");
+    console.log("start login");
+    yield take("LOGOUT");
+    console.log("start logout");
+    yield take("LOGIN_ERROR");
+    console.log("LOGIN_ERROR");
+  }
+}
+
 export default function* rootSaga() {
-  yield all([helloSaga(), watchIncreasementAsync(), watchLoginState()]);
+  yield all([
+    helloSaga(),
+    watchIncreasementAsync(),
+    watchLoginState(),
+    watchLogin(),
+    loginFlow()
+  ]);
 }

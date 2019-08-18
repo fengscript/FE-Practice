@@ -11,7 +11,8 @@ const sagaMiddleware = createSagaMiddleware();
 const initState = {
   count: -1,
   data: "",
-  userstate: "null"
+  userstate: "null",
+  username: "null"
 };
 
 const LOGIN = payload => {
@@ -26,7 +27,7 @@ const LOGOUT = payload => {
     payload
   };
 };
-const LOG_SUCCESS = payload => {
+const LOGIN_SUCCESS = payload => {
   return {
     type: "LOG_SUCCESS",
     payload
@@ -35,6 +36,14 @@ const LOG_SUCCESS = payload => {
 const LOGIN_ERROR = payload => {
   return {
     type: "LOGIN_ERROR",
+    payload
+  };
+};
+
+
+const SETLOGININFO = payload => {
+  return {
+    type: "SET_LOGININFO",
     payload
   };
 };
@@ -64,7 +73,10 @@ const actions = {
   ADD_NUMBER,
   SAGATEST,
   LOGIN,
-  LOGOUT
+  LOGOUT,
+  SETLOGININFO,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
 };
 
 const reducer = (state = initState, action) => {
@@ -78,10 +90,12 @@ const reducer = (state = initState, action) => {
     case "GET_DATA":
       return { ...state, data: action.payload };
     case "LOGIN":
-      return { ...state, userstate: "login" };
+      return { ...state, userstate: "login..." };
     case "LOGOUT":
       return { ...state, userstate: "logout" };
-    case "LOG_SUCCESS":
+    case "SET_LOGININFO":
+      return { ...state, username: action.payload };
+    case "LOGIN_SUCCESS":
       return { ...state, userstate: "success" };
     case "LOGIN_ERROR":
       return { ...state, userstate: "error" };
@@ -94,7 +108,10 @@ const reducer = (state = initState, action) => {
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(rootSaga);
+
+// selectors
 const selectors = {
-  getCount: state => state.count
+  getCount: state => state.count,
+  getLoginInfo: state => state.username
 };
 export { actions, store, selectors };

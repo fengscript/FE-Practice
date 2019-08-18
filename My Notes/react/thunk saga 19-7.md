@@ -25,72 +25,77 @@ redux-saga 是一个用于管理副作用的中间件（又称异步 action）�
 > 通过使用 Effect 类函数，可以方便单元测试，我们不需要测试副作用函数的返回结果。只需要比较执行 Effect 方法后返回的描述对象，与我们所期望的描述对象是否相同即可。
 
 - take: 监听 action，返回的是监听到的 action 对象
-	```javascript
+  ```javascript
   const loginAction = {
-    type:'login'
+  type:'login'
   }
   //
   dispatch(loginAction)
 
-  //在saga中使用：
+  //在 saga 中使用：
   const action = yield take('login');
-  //返回的action为：
+  //返回的 action 为：
   {
-    type:'login'
-  } 
+  type:'login'
+  }
+
+  ```
+
   ```
 
 - call: `call(fn, ...args)` 传入的函数 fn 可以是普通函数，也可以是 generator ,返回一个描述对象
+
   - 不立即执行异步调用，相反，call 创建了一条描述结果的信息。 就像在 Redux 里你使用 action 创建器，创建一个将被 Store 执行的、描述 action 的纯文本对象。
 
   - 描述的 action 会被 generator 自动调用
   - middleware 会暂停 Generator，直到返回的 Promise 被 resolve
-  
+
   - `yield call(fetch,'/userInfo',username)`
+
 - put: 对应与 redux 中的 dispatch
-  
+
   - `yield put({type:'login'})`
+
 - select: 对应的是 redux 中的 getState
-  
+
   - `const state= yield select()`
+
 - fork: 相当于 web work，任务会在后台启动，调用者也可以继续它自己的流程，而不用等待被 fork 的任务结束
 
+* takeEvery: 监听到多个相同的 action，并执行相应的方法。 被调用的任务无法控制何时被调用， 它们将在每次 action 被匹配时一遍又一遍地被调用。并且它们也无法控制何时停止监听
 
-- takeEvery: 监听到多个相同的 action，并执行相应的方法。 被调用的任务无法控制何时被调用， 它们将在每次 action 被匹配时一遍又一遍地被调用。并且它们也无法控制何时停止监听
-  
-- take: 与 action 被 推向（pushed） 任务处理函数不同，Saga 是自己主动 拉取（pulling） action 的
+* take: 与 action 被 推向（pushed） 任务处理函数不同，Saga 是自己主动 拉取（pulling） action 的
   take 让我们通过全面控制 action 观察进程来构建复杂的控制流成为可能
 
   会暂停 Generator 直到一个匹配的 action 被发起了
 
   - 因为是自主拉取了 action，所以可以自主控制流程，比如：
+
   ```javascript
   function* watchFirstThreeTodosCreation() {
     for (let i = 0; i < 3; i++) {
-      const action = yield take('TODO_CREATED')
+      const action = yield take("TODO_CREATED");
     }
-    yield put({type: 'SHOW_CONGRATULATION'})
+    yield put({ type: "SHOW_CONGRATULATION" });
   }
   ```
-  
+
   - 比如相比 take，想实现 `login` ，`logout` 的逻辑， takeEvery 要写两次，而 take 可以在一个地方统一写逻辑：
     ```javascript
     function* loginFlow() {
       while (true) {
-        yield take('LOGIN')
+        yield take("LOGIN");
         // ... perform the login logic
-        yield take('LOGOUT')
+        yield take("LOGOUT");
         // ... perform the logout logic
       }
     }
     ```
 
-  
-- takeLatest: 执行最近的那个被触发的 action
-  
+* takeLatest: 执行最近的那个被触发的 action
 
+### call
 
-### call 
 ```javascript
 ...
 yield delay(1000)
@@ -103,10 +108,10 @@ yield call(delay, 1000)
 而在 yield call(delay, 1000) 的情况下，yield 后的表达式 call(delay, 1000) 被传递给 next 的调用者。call 就像 put， 返回一个 Effect，告诉 middleware 使用给定的参数调用给定的函数。实际上，无论是 put 还是 call 都不执行任何 dispatch 或异步调用，它们只是简单地返回 plain Javascript 对象
 
 即：
-```javascript
-call(delay, 1000)        // => { CALL: {fn: delay, args: [1000]}}
-```
 
+```javascript
+call(delay, 1000); // => { CALL: {fn: delay, args: [1000]}}
+```
 
 ## work flow
 
@@ -175,7 +180,7 @@ const mapDispatchToProps = {
 ...
 ```
 
-3. `saga` 中使用 `take`  监听需要的 `action` 的 `type` ，然后使用 `put` 发出转换后的 action
+3. `saga` 中使用 `take` 监听需要的 `action` 的 `type` ，然后使用 `put` 发出转换后的 action
 
 `saga.js`
 
@@ -209,8 +214,6 @@ export default function* rootSaga() {
 
 ```
 
-
-
 ## 声明式 Effect
 
 Effect 可以看作是发送给 middleware 的指令以执行某些操作（调用某些异步函数，发起一个 action 到 store，等等），即不立即执行异步调用，而是创建了一条描述结果的 plain javascript object，让 saga 变得可测
@@ -218,45 +221,94 @@ Effect 可以看作是发送给 middleware 的指令以执行某些操作（调�
 `redux-saga` middleware 将确保执行这些指令并将指令的结果回馈给 Generator
 
 - put : 创建 dispatch effect
-- call: 创建返回 Promise 的 effect
-- takeEvery('*')（使用通配符 * 模式），就能捕获发起的所有类型的 action
-
+- call: 创建返回 Promise 的 effect, call 操作是用来发起异步操作的，对于 generator 来说，call 是阻塞的操作，它在 Generator 调用结束之前不能执行或处理任何其他事情
+- fork:非阻塞操作，任务会在后台执行，此时的执行流可以继续往后面执行而不用等待结果返回
+- takeEvery('_')（使用通配符 _ 模式），就能捕获发起的所有类型的 action
+- take: takeEvery 是每次 action 触发的时候都响应，而 take 则是**执行流执行到 take 语句时才响应**。takeEvery 只是监听 action, 并执行相对应的处理函数，对何时执行 action 以及如何响应 action 并没有多大的控制权，被调用的任务无法控制何时被调用，并且它们也无法控制何时停止监听，它只能在每次 action 被匹配时一遍又一遍地被调用。但是 take 可以在 generator 函数中决定何时响应一个 action 以及 响应后的后续操作
 
 ## 错误处理
 
 一般使用 `try-catch` 捕获错误，然后发出处理错误的 `action`
 
 测试时候用 `Generator` 的 `throw`方法 :
+
 ```js
 assert.deepEqual(
   iterator.throw(error).value,
-  put({ type: 'PRODUCTS_REQUEST_FAILED', error }),
+  put({ type: "PRODUCTS_REQUEST_FAILED", error }),
   "fetchProducts should yield an Effect put({ type: 'PRODUCTS_REQUEST_FAILED', error })"
-)
+);
 ```
 
 或者让你的 API 服务返回一个正常的含有错误标识的值。可以捕捉 Promise 的拒绝操作，并将它们映射到一个错误字段对象：
 https://redux-saga-in-chinese.js.org/docs/basics/ErrorHandling.html
 
 ```javascript
-import Api from './path/to/api'
-import { call, put } from 'redux-saga/effects'
+import Api from "./path/to/api";
+import { call, put } from "redux-saga/effects";
 
 function fetchProductsApi() {
-  return Api.fetch('/products')
+  return Api.fetch("/products")
     .then(response => ({ response }))
-    .catch(error => ({ error }))
+    .catch(error => ({ error }));
 }
 
 function* fetchProducts() {
-  const { response, error } = yield call(fetchProductsApi)
-  if (response)
-    yield put({ type: 'PRODUCTS_RECEIVED', products: response })
-  else
-    yield put({ type: 'PRODUCTS_REQUEST_FAILED', error })
+  const { response, error } = yield call(fetchProductsApi);
+  if (response) yield put({ type: "PRODUCTS_RECEIVED", products: response });
+  else yield put({ type: "PRODUCTS_REQUEST_FAILED", error });
 }
 ```
 
-
 ## 无阻塞调用
 
+fork 和 cancel 实现非阻塞任务
+
+
+## 同时进行
+yield 后面是一个数组时，那么数组里面的操作将按照 Promise.all 的执行规则来执行，genertor 会阻塞知道所有的 effects 被执行完成
+
+```javascript
+import { call } from 'redux-saga/effects'
+//同步执行
+const [users, products] = yield [
+  call(fetch, '/users'),
+  call(fetch, '/products')
+]
+
+//而不是
+//顺序执行
+const users = yield call(fetch, '/users'),
+      products = yield call(fetch, '/products')
+```
+# 踩坑
+
+`call` 时候，有时候直接传进去函数方法不行，需要给 `call` 里面放进去 Promise 或者一个 Generation：
+
+```javascript
+// 这样子就NOT OK
+function* loginFlow() {
+  while (true) {
+    ...
+      yield call(localStorage.clear);
+  }
+}
+
+// 这样子就可以
+function* storeClear() {
+  yield localStorage.clear();
+}
+
+function* loginFlow() {
+  while (true) {
+    yield take("LOGOUT");
+    const token = localStorage.getItem('fyg');
+    if (token) {
+      yield call(storeClear);
+    } else {
+      console.log("auth error");
+      yield put({ type: "LOGIN_ERROR" });
+    }
+  }
+}
+```

@@ -56,7 +56,7 @@ redux-hook：<https://codesandbox.io/s/react-hook-redux-zvx57>
 
 ## 2.1 走起
 
-`useState`
+### useState
 
 - 返回：一对当前状态和一个让你更新它的函数的值
 - 参数：state 的 init 值
@@ -74,8 +74,7 @@ redux-hook：<https://codesandbox.io/s/react-hook-redux-zvx57>
 ```
 
 
-
-`useEffect`
+### useEffect
 
 ```javascript
 useEffect(() => {
@@ -118,6 +117,13 @@ useEffect(()=>{
 
 
 要是只传入一个空数组 `[ ]` ，可以让组件只在首次渲染的时候执行这个 `useEffect` ，但是容易造成 bug
+
+
+### useReducer
+
+`const [state, dispatch] = useReducer(reducer, initState);`
+
+对于复杂的state操作逻辑，嵌套的state的对象，使用useReducer
 
 
 
@@ -183,11 +189,21 @@ function FriendListItem(props) {
 
 
 - `useContext` 不使用组件嵌套就可以订阅 React 的 Context
-- `useReducer` 通过 reducer 来管理组件本地的复杂 state
 - `useLayoutEffect` 会在所有的 DOM 变更之后同步调用 effect。可以使用它来读取 DOM 布局并同步触发重渲染。在浏览器执行绘制之前，useLayoutEffect 内部的更新计划将被同步刷新
 
 这里有有用的 FQ：
 https://react.docschina.org/docs/hooks-reference.html#usereducer
+
+
+
+
+
+
+
+
+
+
+
 
 # 生命周期
 

@@ -26,6 +26,36 @@ const Functional = ({ name }) => {
 
 _所以，函数式组件接受 props 时候要解构_
 
+## js expression
+可以将 任何 JavaScript **表达式** 作为子表达式传递, 用 `{}` 包起来即可：
+```javascript
+function Item(props) {
+  return <li>{props.message}</li>;
+}
+
+function TodoList() {
+  const todos = ['finish doc', 'submit pr', 'nag dan to review'];
+  return (
+    <ul>
+      {todos.map((message) => <Item key={message} message={message} />)}
+    </ul>
+  );
+}
+```
+
+表达式！！！
+
+所以 
+```javascript
+return(
+  <div>
+    { a? <span>a</span> : '' }
+  </div>
+)
+```
+就OK，而往里面塞 `if` 就不ok
+
+
 # 2 Hooks
 
 WHY？

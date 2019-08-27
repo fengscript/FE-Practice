@@ -6,6 +6,7 @@ import AddNumber from "./t/AddNumber";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import Login from "./Login";
+import JsxTest from "./jsxTest";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       <Provider store={store}>
         <Login />
       </Provider>
+      <JsxTest />
     </div>
   );
 }

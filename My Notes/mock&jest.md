@@ -27,6 +27,8 @@ test.only : 只运行一个测试
 ## LifeCycle
 当 before 和 after 的块在 describe 块内部时，则其只适用于该 describe 块内的测试
 
+beforeEach 和 afterEach 能够通过与 异步代码测试 相同的方式处理异步代码
+
 - beforeEach()：在 describe 函数中每个 Spec 执行之前执行。
 - afterEach()： 在 describe 函数中每个 Spec 数执行之后执行。
 - beforeAll()：在 describe 函数中所有的 Specs 执行之前执行，但只执行一次，在 Sepc 之间并不会被执行。
@@ -251,6 +253,53 @@ describe('Tab components', () => {
   })
 })
 ```
+
+## jest.fn()
+
+```javascript
+test("mock test", () => {
+ const mock = jest.fn(()=> 'jest.fn test');
+ expect(mock()).toBe('jest.fn test'); //函数返回结果
+ expect(mock).toHaveBeenCalled(); //函数被调用
+ expect(mock).toHaveBeenCalledTimes(1); //调用1次
+});
+
+test("mock 返回值", () => {
+  const mock = jest.fn();
+  mock.mockReturnValue("return value"); //mock 返回值
+  expect(mock()).toBe("return value");
+});
+
+test("mock promise", () => {
+  const mock = jest.fn();
+  mock.mockResolvedValue("promise resolve"); // mock promise
+
+  expect(mock("promise")).resolves.toBe("promise resolve");
+  expect(mock).toHaveBeenCalledWith("promise"); // 调用参数检验
+});
+
+//或者使用赋值的形式 
+function add(v1,v2){
+  return v1 + v2
+}
+
+add = jest.fn()
+
+test("mock dependency", () => {
+  add(1,2)
+  expect(add).toHaveBeenCalledWith(1,2)
+});
+
+```
+
+## jest.mock()
+
+```javascript
+
+```
+
+
+
 
 # 3 react-saga-testing
 

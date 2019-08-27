@@ -22,3 +22,6 @@
   - jest
   - enzyme
   - jest-enzyme
+- sioon
+- deep-freeze
+- 

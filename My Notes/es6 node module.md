@@ -106,6 +106,23 @@ customName(); // 'foo'
 
 > 本质上，`export default` 就是输出一个叫做 `default` 的变量或方法，然后系统允许你为它取任意名字
 
+
+
+一个一个导出：
+
+```js
+export const function aaa(){}
+export const obj = {}
+```
+
+一次性导出时，必须以对象形式：
+
+```js
+export {a, b}
+```
+
+
+
 ## import
 
 - 加载指定模块：

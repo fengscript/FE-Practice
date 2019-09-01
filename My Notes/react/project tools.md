@@ -25,3 +25,4 @@
 - sioon
 - deep-freeze
 - formik
+- yup

@@ -330,7 +330,13 @@ test('saga', (t) => {
 })
 ```
 
-# 4 deepFreeze 
+# 4 selector
+
+# 5 action
+
+# 6 reducer
+
+# 7 deepFreeze 
 
 `deepFreeze.js`
 
@@ -366,7 +372,7 @@ expect(reduce(stateBefore, action)).toEqual(stateAfter)
 
 
 
-# 5 sinon
+# 8 sinon
 
 JavaScript test spies, stubs and mocks.
 
@@ -425,7 +431,7 @@ it('should pass object with correct values to save', function() {
 mock与stub的功能一样都是用来替换指定的函数，如果你想替换掉一个对象中的多个方法，这时mock就可以发挥作用了，但是如果仅仅是替换对象中的一个函数，那么stub更加简单易用，当我们使用mock的时候应该十分小心，因为大量的替换原有代码逻辑，会导致test变的脆弱
 
 
-# 6 json-server
+# 9 json-server
 
 ```bash
 npm install -g json-server

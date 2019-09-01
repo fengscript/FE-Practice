@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import Login from "./Login";
 import JsxTest from "./jsxTest";
-import FormikTest1 from "./form/FormikTest1.js";
+import FormNomal, { FormikTest, FormikHelper } from "./form/FormikTest1.js";
 
 function App() {
   return (
@@ -35,7 +35,9 @@ function App() {
         <Login />
       </Provider>
       <JsxTest />
-      <FormikTest1 />
+      <FormNomal />
+      <FormikTest />
+      <FormikHelper />
     </div>
   );
 }

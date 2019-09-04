@@ -380,8 +380,8 @@ Sinon通过所谓的测试替代(test-double)轻松消除测试的复杂度
 
 https://segmentfault.com/a/1190000010372634
 
-## spies
-spies的主要用途是收集有关函数调用的信息。可以使用它们来帮助验证事物，例如是否调用了函数等
+## spy
+spy的作用在于可以监视一个函数被调用的情况。spy相当于给我们感兴趣的函数加了一层wrapper，于是记录下了这个函数被调用过几次，每次传入的参数是什么以及每次返回的结果是什么，或是抛出了怎样的异常。
 
 检查传递给函数的参数
 ```js
@@ -408,7 +408,9 @@ it('should pass object with correct values to save', function() {
 - 触发不会触发的代码路径，例如错误处理
 - 来帮助测试异步代码更容易
 
-用于替代有问题的代码，即使写入测试困难的代码。这通常是外部网络连接，数据库或其他非JavaScript引起的。这些问题是它们经常需要手动设置。例如，在运行测试之前，我们需要填写一个带有测试数据的数据库，这使得运行和写入更复杂。
+测试函数f1，f1依赖于函数f2，我们需要测试f1在f2的不同表现之下有怎样的表现。但是让f2有不同的表现可能会很不容易，有可能需要复杂的配置或是精巧的捏造，或是f2出现某种表现的几率很小等等。这时stub就可派上用场，stub就是人为设定的f2的替代品。我们可以设定stub在怎样的输入下有怎样特定的表现，从而不再阻碍对f1的测试。
+
+例如，在运行测试之前，我们需要填写一个带有测试数据的数据库，这使得运行和写入更复杂。
 ```js
 it('should pass object with correct values to save', function() {
   var save = sinon.stub(Database, 'save');
@@ -428,7 +430,24 @@ it('should pass object with correct values to save', function() {
 
 
 ## mock
-mock与stub的功能一样都是用来替换指定的函数，如果你想替换掉一个对象中的多个方法，这时mock就可以发挥作用了，但是如果仅仅是替换对象中的一个函数，那么stub更加简单易用，当我们使用mock的时候应该十分小心，因为大量的替换原有代码逻辑，会导致test变的脆弱
+mock在Sinon.js中用于对一个object的活动进行监视。一个object被mock以后，就可以设定我们对这个object有怎样的预期。这里的预期例如：某方法被调用了多少次（或至少至多多少次）、某方法一定没被调用、某方法被输入怎样的参数来调用、等等。
+
+mock对一个object的监视类似于spy对一个函数的监视。两者的关键区别在于使用场景，spy客观地监视了一个函数的表现，对这个函数的调用都真正执行了。而mock出的object收到了数据或是调用并没有真正执行，一切针对mock的调用都是假的。所以mock可以用来测试具有side effect的函数，这里的side effect泛指和外部对象有数据交互或者是调用，比如调用外部对象的方法、向server发送数据、和UI对象有交互、写日志等
+```javascript
+var sinon = require("sinon");
+
+var obj = {
+  ...
+};
+
+var mock = sinon.mock(obj);
+mock.expect("f").atLeast(2).withArgs(10); // obj.f(10)调用至少出现过2次
+
+...
+
+mock.verify(); // 测试此时的obj是否满足上面的mock设定条件
+mock.restore();
+```
 
 
 # 9 json-server

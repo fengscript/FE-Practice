@@ -1,51 +1,53 @@
 import React, { Component } from "react";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from "formik";
 export default class FormNomal extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {value: ''};
-  
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
-    }
-  
-    handleChange(event) {
-      this.setState({value: event.target.value});
-    }
-  
-    handleSubmit(event) {
-      alert('A name was submitted: ' + this.state.value);
-      event.preventDefault();
-    }
-  
-    render() {
-      return (
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name:
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-      );
-    }
+  constructor(props) {
+    super(props);
+    this.state = { value: "" };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
 
+  handleSubmit(event) {
+    alert("A name was submitted: " + this.state.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
 
 export const FormikTest = () => (
   <div>
     <h1>Anywhere in your app!</h1>
     <Formik
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ email: "", password: "" }}
       validate={values => {
         let errors = {};
         if (!values.email) {
-          errors.email = 'Required';
+          errors.email = "Required";
         } else if (
           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
         ) {
-          errors.email = 'Invalid email address';
+          errors.email = "Invalid email address";
         }
         return errors;
       }}
@@ -54,8 +56,7 @@ export const FormikTest = () => (
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
         }, 400);
-      }}
-    >
+      }}>
       {({
         values,
         errors,
@@ -63,7 +64,7 @@ export const FormikTest = () => (
         handleChange,
         handleBlur,
         handleSubmit,
-        isSubmitting,
+        isSubmitting
         /* and other goodies */
       }) => (
         <form onSubmit={handleSubmit}>
@@ -96,15 +97,15 @@ export const FormikHelper = () => (
   <div>
     <h1>Anywhere in your app!</h1>
     <Formik
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ email: "", password: "" }}
       validate={values => {
         let errors = {};
         if (!values.email) {
-          errors.email = 'Required';
+          errors.email = "Required";
         } else if (
           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
         ) {
-          errors.email = 'Invalid email address';
+          errors.email = "Invalid email address";
         }
         return errors;
       }}
@@ -119,11 +120,30 @@ export const FormikHelper = () => (
           <Field type="email" name="email" />
           {errors.email && touched.email && <div>{errors.email}</div>}
           <Field type="text" name="social.facebook" />
-          {errors.social && errors.social.facebook &&
+          {errors.social &&
+            errors.social.facebook &&
             touched.social.facebook && <div>{errors.social.facebook}</div>}
           <Field type="text" name="social.twitter" />
-          {errors.social && errors.social.twitter &&
-            touched.social.twitter && <div>{errors.social.twitter}</div>}
+          {errors.social && errors.social.twitter && touched.social.twitter && (
+            <div>{errors.social.twitter}</div>
+          )}
+          {status && status.msg && <div>{status.msg}</div>}
+          <button type="submit" disabled={isSubmitting}>
+            Submit
+          </button>
+          <h3>By more Field handle error message</h3>
+          <Field type="email" name="email" />
+          <ErrorMessage name="email" component="div" />
+          <Field type="text" className="error" name="social.facebook" />
+          <ErrorMessage name="social.facebook">
+            {errorMessage => <div className="error">{errorMessage}</div>}
+          </ErrorMessage>
+          <Field type="text" name="social.twitter" />
+          <ErrorMessage
+            name="social.twitter"
+            className="error"
+            component="div"
+          />
           {status && status.msg && <div>{status.msg}</div>}
           <button type="submit" disabled={isSubmitting}>
             Submit
@@ -131,6 +151,5 @@ export const FormikHelper = () => (
         </Form>
       )}
     />
-      
   </div>
 );

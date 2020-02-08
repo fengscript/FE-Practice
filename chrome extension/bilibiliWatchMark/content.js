@@ -24,7 +24,6 @@ const initSetMark = cb => {
           .querySelectorAll(".list-box li")
           [Number(i) - 1].querySelector("a")
           .appendChild(createMarkElement());
-        console.log("add one");
       });
       if (typeof cb === "function") {
         cb();

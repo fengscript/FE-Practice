@@ -1,0 +1,19 @@
+{
+  "name": "BiliBili Record",
+  "description": "Base Level Extension",
+  "version": "1.0",
+  "manifest_version": 2,
+  "background":{
+    "scripts":["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "css": []
+    }
+  ],
+  "permissions":["storage"]
+}

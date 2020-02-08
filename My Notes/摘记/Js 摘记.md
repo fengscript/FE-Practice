@@ -121,3 +121,31 @@ var myDate = new Date();
 myDate.setFullYear(y, m - 1, d);
 var week = myDate.getDay();
 ```
+
+# Regexp
+
+## replace
+
+```js
+function replacer(match, p1, p2, p3, offset, string) {
+  // p1 is nondigits, p2 digits, and p3 non-alphanumerics
+  return [p1, p2, p3].join(" - ");
+}
+var newString = "abc12345#$*%".replace(/([^\d]*)(\d*)([^\w]*)/, replacer);
+console.log(newString); // abc - 12345 - #$*%
+```
+
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace
+
+## match
+
+```js
+var str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+var regexp = /[A-E]/gi;
+var matches_array = str.match(regexp);
+
+console.log(matches_array);
+// ['A', 'B', 'C', 'D', 'E', 'a', 'b', 'c', 'd', 'e']
+```
+
+http://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/match

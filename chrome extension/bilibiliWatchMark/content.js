@@ -1,4 +1,3 @@
-const watchList = document.querySelector(".list-box");
 let currentList = [];
 
 const createMarkElement = () => {
@@ -15,23 +14,28 @@ const setSingleMark = n => {
     [n - 1].appendChild(createMarkElement());
 };
 
-const initSetMark = () => {
+const initSetMark = cb => {
   chrome.storage.sync.get(["current"], items => {
     if (items.current) {
+      console.log("load current list:", items.current);
       current = items.current;
       items.current.forEach(i => {
         document
           .querySelectorAll(".list-box li")
           [Number(i) - 1].querySelector("a")
           .appendChild(createMarkElement());
+        console.log("add one");
       });
+      if (typeof cb === "function") {
+        cb();
+      }
     }
   });
 };
 
 const bindWatchEvent = () => {
-  watchList &&
-    watchList.addEventListener("click", function(e) {
+  document.querySelector(".list-box") &&
+    document.querySelector(".list-box").addEventListener("click", function(e) {
       if (e.target.nodeName === "A") {
         const href = e.target.href;
         const current = href.match(/(?<=\?p=)\d+/)[0];
@@ -71,3 +75,22 @@ bindWatchEvent();
 window.onload = function() {
   checkLoadFinish();
 };
+
+// var callback = function(mutationsList) {
+//   getTargetElement &&
+//     initSetMark(() => {
+//       debugger;
+//       observer.disconnect();
+//     });
+// };
+
+// var observer = new MutationObserver(callback);
+
+// let t = setInterval(function() {
+//   if (document.getElementById("multi_page")) {
+//     observer.observe(document.getElementById("multi_page"), {
+//       childList: true
+//     });
+//     clearInterval(t);
+//   }
+// }, 1000);

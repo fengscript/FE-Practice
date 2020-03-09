@@ -1,95 +1,121 @@
-let currentList = [];
+(function() {
+  /**
+   * key: bilibili video id
+   * value : current watch list
+   * like - avxxxxx : [1,2,3]
+   */
 
-const createMarkElement = () => {
-  const temp = document.createElement("span");
-  temp.className = "__mark";
-  temp.textContent = "✔️";
-  temp.style.float = "right";
-  return temp;
-};
-
-const setSingleMark = n => {
-  document
-    .querySelectorAll(".list-box li a")
-    [n - 1].appendChild(createMarkElement());
-};
-
-const initSetMark = cb => {
-  chrome.storage.sync.get(["current"], items => {
-    if (items.current) {
-      console.log("load current list:", items.current);
-      current = items.current;
-      items.current.forEach(i => {
-        document
-          .querySelectorAll(".list-box li")
-          [Number(i) - 1].querySelector("a")
-          .appendChild(createMarkElement());
-      });
-      if (typeof cb === "function") {
-        cb();
-      }
-    }
+  let history =
+    (window.localStorage.getItem("bilibili-history") &&
+      JSON.parse(window.localStorage.getItem("bilibili-history"))) ||
+    {};
+  const currentVideoId = window.location.pathname.replace("/video/", "");
+  // initial watched video list
+  history[currentVideoId] = [];
+  // start
+  toStartWithMethodConfig({
+    chromeExtensionMethond: true,
+    bindEventMethod: false
   });
-};
 
-const bindWatchEvent = () => {
-  document.querySelector(".list-box") &&
-    document.querySelector(".list-box").addEventListener("click", function(e) {
-      if (e.target.nodeName === "A") {
+  /**
+   *
+   * funtions
+   */
+  function toStartWithMethodConfig(
+    obj = { chromeExtensionMethond: false, bindEventMethod: true }
+  ) {
+    /**
+     * to use chrome.tab onUpdate() method handle this
+     */
+    if (obj.chromeExtensionMethond) {
+
+      // chrome.tabs.onUpdated.addListener(function() {
+      //   console.log("tabs updated");
+      //   const currentIndex = window.location.search.replace("?p=", "");
+
+      //   setMarkWithEvent(currentIndex);
+      // });
+    } else {
+      bindEvent("click", "router-link-active", e => {
         const href = e.target.href;
-        const current = href.match(/(?<=\?p=)\d+/)[0];
-        if (!~currentList.indexOf(current)) {
-          currentList.push(current);
-          chrome.storage.sync.set({ current: currentList });
-          setSingleMark(current);
-        }
+        const currentIndex = href.match(/(?<=\?p=)\d+/)[0] - 1;
+        /**
+         *     document.querySelectorAll(".list-box li a")[currentIndex].querySelector('._mark-viwed')
+         *  will return dom, so !... = false
+         */
+
+        setMarkWithEvent(currentIndex);
+      });
+    }
+  }
+
+  function setMarkWithEvent(currentIndex) {
+    if (
+      !~history[currentVideoId].indexOf(currentIndex) &&
+      !document
+        .querySelectorAll(".list-box li a")
+        [currentIndex].querySelector("._mark-viwed")
+    ) {
+      history[currentVideoId].push(currentIndex);
+
+      window.localStorage.setItem("bilibili-history", JSON.stringify(history));
+
+      setMarkByIndex(document.querySelectorAll(".list-box li a")[currentIndex]);
+    }
+  }
+
+  // init setMark
+  checkLoadFinish(".router-link-active").then(() => {
+    // console.log(document.querySelector(".router-link-active"));
+    window.localStorage.getItem("bilibili-history") &&
+      JSON.parse(window.localStorage.getItem("bilibili-history"))[
+        currentVideoId
+      ].forEach(item =>
+        setMarkByIndex(document.querySelectorAll(".list-box li a")[item])
+      );
+  });
+
+  function setMarkByIndex(target, callback) {
+    const tempElement = document.createElement("i");
+    tempElement.className = "_mark-viwed";
+    tempElement.textContent = "✔️";
+    tempElement.style.cssText = "float:right;";
+    target && target.appendChild(tempElement);
+
+    if (typeof callback === "function") {
+      callback();
+    }
+  }
+
+  function bindEvent(type, target, callback) {
+    document.body.addEventListener(type, function(e) {
+      if (e.target.classList.contains(target)) {
+        callback(e);
       }
     });
-};
-
-const getTargetElement = () =>
-  document.body.contains(document.querySelectorAll(".list-box li a")[0]);
-
-const checkLoadFinish = () => {
-  if (getTargetElement()) {
-    let timer = setTimeout(function() {
-      if (getTargetElement()) {
-        window.clearTimeout(timer);
-        initSetMark();
-      } else {
-        checkLoadFinish();
-      }
-    }, 500);
-  } else {
-    let reCheck = setInterval(function() {
-      window.clearInterval(reCheck);
-      checkLoadFinish();
-    }, 500);
   }
-};
 
-// init & start
-bindWatchEvent();
+  function checkLoadFinish(target) {
+    return new Promise((resolve, reject) => {
+      let timer = setInterval(function() {
+        if (document.querySelector(target)) {
+          clearInterval(timer);
+          resolve();
+        }
+      }, 500);
+    });
+  }
 
-window.onload = function() {
-  checkLoadFinish();
-};
-
-// var callback = function(mutationsList) {
-//   getTargetElement &&
-//     initSetMark(() => {
-//       debugger;
-//       observer.disconnect();
-//     });
-// };
-
-// var observer = new MutationObserver(callback);
-
-// let t = setInterval(function() {
-//   if (document.getElementById("multi_page")) {
-//     observer.observe(document.getElementById("multi_page"), {
-//       childList: true
-//     });
-//     clearInterval(t);
-//   }
-// }, 1000);
+  // function chromeTabWatch = state => {
+  //   if (state === true) {
+  //     chrome.runtime.onMessage.addListener(
+  //       function(message, sender, semdResponse) {
+  //         console.log(message);
+  //         if (message.bilibili === "updated"){
+           
+  //         }
+  //      });
+  //   }
+  // }
+})();

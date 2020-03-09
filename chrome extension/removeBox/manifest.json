@@ -1,5 +1,5 @@
 {
-  "name": "BiliBili Record",
+  "name": "remove login box",
   "description": "Base Level Extension",
   "version": "1.0",
   "manifest_version": 2,
@@ -8,10 +8,5 @@
       "matches": ["http://*/*", "https://*/*"],
       "js": ["content.js"]
     }
-  ],
-  "permissions": ["activeTab", "storage", "tabs"],
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  }
+  ]
 }

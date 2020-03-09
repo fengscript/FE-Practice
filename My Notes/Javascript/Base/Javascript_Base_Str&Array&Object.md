@@ -238,3 +238,38 @@ let a = {name:'obj'};
 let b = Object.create(a);
 b.obj;  //null
 ```
+
+
+# 深拷贝
+1. JSON.parse(JSON.stringify(oldArr))
+
+```js
+let arr = [0, 1, 2, 3]
+let newArr = JSON.parse(JSON.stringify(arr))
+newArr[0] = 4
+console.log(newArr, arr)
+```
+问题是，对于
+```js
+let obj = {
+    nul: null,
+    und: undefined,
+    sym: Symbol('sym'),
+    str: 'str',
+    bol: true,
+    num: 45,
+    arr: [1, 4],
+    reg: /[0-9]/,
+    dat: new Date(),
+    fun: function() {},  
+}
+console.log(JSON.parse(JSON.stringify(obj)))
+```
+- undefined
+- symbol
+- function
+会被忽略掉
+
+
+2. assign
+将源对象（source）的所有可枚举属性，复制到目标对象

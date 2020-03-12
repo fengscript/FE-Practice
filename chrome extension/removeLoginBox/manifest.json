@@ -1,0 +1,13 @@
+{
+  "name": "remove login box",
+  "description": "Base Level Extension",
+  "version": "1.0",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_start",
+      "js": ["content.js"]
+    }
+  ]
+}

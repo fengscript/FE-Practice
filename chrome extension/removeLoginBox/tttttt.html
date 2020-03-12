@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      console.time("reset - reset");
+      //   setInterval(function() {
+      // }, 50);
+
+
+      function step(timestamp) {
+        test = function() {};
+        console.timeEnd("reset - reset");
+        console.log("reset", test);
+        window.requestAnimationFrame(step);
+      }
+
+      window.requestAnimationFrame(step);
+    </script>
+  </head>
+  <body>
+    <script>
+      console.time("onload");
+        window.onload = function() {
+          console.timeEnd("onload");
+
+          test();
+        };
+
+    //   setTimeout(function() {
+    //     console.timeEnd("onload");
+    //     test();
+    //   }, 0);
+
+      function test() {
+        console.log("trigger");
+      }
+    </script>
+  </body>
+</html>

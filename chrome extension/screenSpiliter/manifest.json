@@ -1,0 +1,23 @@
+{
+  "name": "remove login box",
+  "description": "Base Level Extension",
+  "version": "1.0",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_end",
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": ["tabs"],
+  "commands": {
+    "split-screen-left": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+A",
+        "mac": "Command+Shift+A"
+      },
+      "description": "Toggle tab to left"
+    }
+  }
+}

@@ -1,23 +1,34 @@
 {
-  "name": "remove login box",
+  "name": "tab page spiliter",
   "description": "Base Level Extension",
   "version": "1.0",
   "manifest_version": 2,
-  "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*"],
-      "run_at": "document_end",
-      "js": ["content.js"]
-    }
-  ],
-  "permissions": ["tabs"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": ["tabs", "system.display"],
   "commands": {
     "split-screen-left": {
       "suggested_key": {
-        "default": "Ctrl+Shift+A",
-        "mac": "Command+Shift+A"
+        "default": "Shift+Alt+Q",
+        "mac": "Shift+Alt+Q"
       },
       "description": "Toggle tab to left"
+    },
+    "split-screen-right": {
+      "suggested_key": {
+        "default": "Shift+Alt+E",
+        "mac": "Shift+Alt+E"
+      },
+      "description": "Toggle tab to right"
+    },
+    "split-screen-full": {
+      "suggested_key": {
+        "default": "Shift+Alt+W",
+        "mac": "Shift+Alt+W"
+      },
+      "description": "Toggle tab to full screen"
     }
   }
 }

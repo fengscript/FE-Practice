@@ -18,15 +18,7 @@
       </ul>
     </section>
     <input type="file" name="file" id="file-input" @change="handleInput" />
-    <Textarea ="targetValue"/>
-    <!-- <textarea
-      v-model="targetValue"
-      name="output"
-      id="output"
-      cols="80"
-      rows="15"
-      placeholder="Wainting for convert your image..."
-    /> -->
+    <Textarea :data="convertedText" />
   </div>
 </template>
 <script>
@@ -36,7 +28,7 @@ export default {
   data() {
     return {
       file: null,
-      targetValue: "",
+      convertedText: "",
       dragOver: false
     };
   },
@@ -45,13 +37,13 @@ export default {
   components: { Textarea },
   methods: {
     handlePaste(e) {
-      this.convert(e.clipboardData.files[0]);
+      this.outPut(e.clipboardData.files[0]);
     },
     handleClick() {
       document.getElementById("file-input").click();
     },
     handleDrop(e) {
-      this.convert(e.dataTransfer.files[0]);
+      this.outPut(e.dataTransfer.files[0]);
     },
     handleDragOver() {
       this.dragOver = true;
@@ -60,19 +52,29 @@ export default {
       this.dragOver = false;
     },
     handleInput(e) {
-      this.convert(e.target.files[0]);
+      this.outPut(e.target.files[0]);
     },
-    convert(file) {
-      this.file = file;
-      this.readBase64(data => {
-        this.targetValue = data;
+    async outPut(file) {
+      this.convertedText = await this.readBase64(file);
+    },
+    readBase64(file) {
+      return new Promise(resolve => {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => resolve(reader.result));
+        reader.readAsDataURL(file);
       });
-    },
-    async readBase64(cb) {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => cb(reader.result));
-      await reader.readAsDataURL(this.file);
     }
+    // outPut(file) {
+    //   this.file = file;
+    //   this.readBase64(data => {
+    //     this.convertedText = data;
+    //   });
+    // },
+    // async readBase64(cb) {
+    // const reader = new FileReader();
+    // reader.addEventListener("load", () => cb && cb(reader.result));
+    // await reader.readAsDataURL(this.file);
+    // }
   }
 };
 </script>

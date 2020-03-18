@@ -1,6 +1,6 @@
 <template>
   <textarea
-    v-model="targetValue"
+    v-model="data"
     name="output"
     id="output"
     cols="80"
@@ -10,7 +10,15 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "TriggerSection",
+  data() {
+    return {};
+  },
+  props: {
+    data: String
+  }
+};
 </script>
 
 <style>
@@ -18,5 +26,4 @@ textarea {
   padding: 12px;
   text-align: justify;
 }
-
 </style>

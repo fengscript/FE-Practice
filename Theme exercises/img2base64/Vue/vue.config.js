@@ -29,7 +29,7 @@ module.exports = {
     extract: true, // 允许生成 CSS source maps?
     sourceMap: false, // pass custom options to pre-processor loaders. e.g. to pass options to // sass-loader, use { sass: { ... } }
     loaderOptions: {}, // Enable CSS modules for all css / pre-processor files. // This option does not affect *.vue files.
-    modules: false
+    requireModuleExtension: false
   }, // use thread-loader for babel & TS in production build // enabled by default if the machine has more than 1 cores
 
   parallel: require("os").cpus().length > 1, // PWA 插件相关配置 // see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa

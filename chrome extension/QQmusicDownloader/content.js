@@ -1,26 +1,23 @@
-(function() {
-    // https://588ku.com/image/77.html
-  function addCode(code) {
-    var JS = document.createElement("script");
-    JS.text = code;
-    document.head.appendChild(JS);
-  }
-  
-  addCode(`document.querySelector('#user-login').removeAttribute('id')`);
-})();
-
-
 // (function() {
-//     let hadAddCode = false;
 //   function addCode(code) {
-//     var JS = document.createElement("script");
-//     JS.text = code;
-//     setInterval(function() {
-//         if (hadAddCode === false) {
-//             document.head && document.head.appendChild(JS);
-//             hadAddCode = true;
-//         }
-//     }, 1);
+//     var script = document.createElement("script");
+//     script.text = code;
+//     document.head.appendChild(script);
 //   }
-//   addCode(`setInterval(function(){Time20Login = function(){};console.log(Time20Login);},1);`);
+//   addCode(`document.querySelector('#user-login').removeAttribute('id')`);
 // })();
+document.querySelector(".js_btn_down").addEventListener("click", handleClick);
+document.querySelector(".js_down").addEventListener("click", handleClick);
+
+function handleClick() {
+  console.log(" hi hi hi");
+  setTimeout(function() {
+    document.querySelector(".popup__subtit").innerText =
+      "QQ Music Download Exercise";
+    document.querySelector(
+      ".popup__desc"
+    ).innerHTML = `<a target='_blank' href="${document
+      .querySelector("#h5audio_media")
+      .getAttribute("src")}">直接下载</a>`;
+  }, 100);
+}

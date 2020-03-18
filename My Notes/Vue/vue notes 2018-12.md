@@ -39,7 +39,7 @@ computed: {
 
 computed 靠系统触发或者依赖的数据触发
 
-而 watch 的set是自定义的，data触发
+而 watch 的 set 是自定义的，data 触发
 
 # 生命周期钩子
 
@@ -62,15 +62,8 @@ computed 靠系统触发或者依赖的数据触发
 <button v-on:click="warn('Form cannot be submitted yet.', $event)">
   Submit
 </button>
-...
-
-// ...
-methods: {
-  warn: function (message, event) {
-    // 现在我们可以访问原生事件对象
-    if (event) event.preventDefault()
-    alert(message)
-  }
+... // ... methods: { warn: function (message, event) { //
+现在我们可以访问原生事件对象 if (event) event.preventDefault() alert(message) }
 }
 ```
 
@@ -124,8 +117,6 @@ Vue.component('base-checkbox', {
 `$listeners`属性是一个对象，里面包含了作用在这个组件上的所有监听器
 
 有了这个 `$listeners` 属性，你就可以配合 `v-on="$listeners"` 将所有的事件监听器指向这个组件的某个特定的子元素
-
-
 
 ## 全局方法
 
@@ -193,7 +184,7 @@ Vue.component('my-component',{
 
 ## 通信
 
-向子孙后代传值，也可以用参考了React的  `provide` 和 `inject`
+向子孙后代传值，也可以用参考了 React 的 `provide` 和 `inject`
 
 <https://cn.vuejs.org/v2/api/#provide-inject>
 
@@ -263,8 +254,8 @@ export default = {
 }
 ```
 
-
 ### 子组件调用父组件方法
+
 1. 子组件方法中使用 `this.$parent.xxx()` 即可
 2. 子组件中 `this.emit()` 调用的地方 `:methodName = 'xxx'` 监测
 3. 父组件调用的标签上绑定 `prop` 把方法传入子组件中，在子组件里直接调用这个方法
@@ -314,11 +305,9 @@ export default = {
 </script>
 ```
 
-
-
 ### 父组件调用子组件方法
 
-子组件上定义`ref="refName"`,  父组件的方法中用 `this.$refs.refName.method` 去调用子组件方法
+子组件上定义`ref="refName"`, 父组件的方法中用 `this.$refs.refName.method` 去调用子组件方法
 
 ## 组件中使用 `v-model`
 
@@ -337,15 +326,9 @@ Vue.component('custom-input', {
 <custom-input v-model="searchText"></custom-input>
 ```
 
-
-
 ## 父组件中调用子组件方法
 
-
-
 ## Slot
-
-
 
 ## Refs
 
@@ -746,9 +729,11 @@ methods: {
 退出动画不出现元素直接消失，css 里面要用 `-leave-to` 而不是 `-leave`
 
 # VueRouter
+
 `vue-router` 默认 `hash` 模式 —— 使用 `URL` 的 `hash` 来模拟一个完整的 `URL` ，于是当 `URL` 改变时，页面不会重新加载。
 
- history 模式:利用 `history.pushState` API 来完成 URL 跳转而无须重新加载页面
+history 模式:利用 `history.pushState` API 来完成 URL 跳转而无须重新加载页面
+
 ## use
 
 1. 添加 `vuerouter`
@@ -787,11 +772,13 @@ new Vue({
   render: h => h(Test)
 })
 ```
+
 通过注入路由器，可以在任何组件内通过 `this.$router` 访问路由器，也可以通过 `this.$route` 访问当前路由
 
-
 ## 嵌套
+
 注意的是 `router-link` 中的 `to` 的路径要写全：
+
 ```javascript
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
@@ -825,7 +812,7 @@ const router = new VueRouter({
         // UserHome will be rendered inside User's <router-view>
         // when /user/:id is matched
         { path: '', component: UserHome },
-				
+
         // UserProfile will be rendered inside User's <router-view>
         // when /user/:id/profile is matched
         { path: 'profile', component: UserProfile },
@@ -847,40 +834,34 @@ children 时候，父路由就不用写 `name` 属性了
 
 全局的, 单个路由独享的, 或者组件级的。
 
-
 **参数或查询的改变并不会触发进入/离开的导航守卫。可以通过观察 `$route` 对象来应对这些变化，或使用 `beforeRouteUpdate` 的组件内守卫**
 
-
-
-
 - 全局前置守卫： `router.beforeEach`
-- 全局解析守卫：`router.beforeResolve` 
+- 全局解析守卫：`router.beforeResolve`
   导航被确认之前，同时在所有组件内守卫和异步路由组件被解析之后，解析守卫就被调用
 - 全局后置钩子：`router.afterEach((to, from) => {})`
 - 路由内独享守卫：`router.beforeEnter (to, from, next)`
-  
+
 ```javascript
 const router = new VueRouter({
   routes: [
     {
-      path: '/foo',
+      path: "/foo",
       component: Foo,
       beforeEnter: (to, from, next) => {
         if (!to.name) {
-          console.log('void router')
+          console.log("void router");
           return false;
         }
         next();
       }
     }
   ]
-})
+});
 ```
 
-
-
-
 组件内
+
 - beforeRouteEnter
 - beforeRouteUpdate
 - beforeRouteLeave
@@ -888,6 +869,7 @@ const router = new VueRouter({
 `beforeRouteEnter` 守卫不能访问 `this`，因为守卫在导航确认前被调用,因此即将登场的新组件还没被创建。
 
 可以通过传一个回调给 `next` 来访问组件实例。在导航被确认的时候执行回调，并且把组件实例作为回调方法的参数。
+
 ```javascript
 beforeRouteEnter (to, from, next) {
   next(vm => {
@@ -899,12 +881,15 @@ beforeRouteEnter (to, from, next) {
 `beforeRouteUpdate` 和 `beforeRouteLeave` 可以直接用 `this` 已经可用了
 
 全局前置守卫：
+
 ```javascript
 router.beforeEach((to, from, next) => {
   // ...
-})
+});
 ```
+
 next:
+
 - next()
 - next(false)
 - next('/')
@@ -920,7 +905,6 @@ next:
 
 https://router.vuejs.org/zh/guide/advanced/navigation-guards
 
-
 ## router object
 
 - router.beforeEach
@@ -931,9 +915,6 @@ https://router.vuejs.org/zh/guide/advanced/navigation-guards
 - router.go
 - router.back
 - router.forward
-
-
-
 
 ```bash
 [fullPath: "/users"
@@ -946,8 +927,8 @@ path: "/users"
 query: {}]
 ```
 
-
 ## 命名视图
+
 不想嵌套而是同级展示时，就可以给 `router-view` 命名：
 `<router-view class="view three" name="b"></router-view>`
 
@@ -955,34 +936,33 @@ query: {}]
 
 同样可以继续嵌套
 
-
 ## 重定向 别名
 
-重定向：当用户访问 `/a` 时，`URL` 将会被替换成 `/b` ，然后匹配路由为 `/b` 
+重定向：当用户访问 `/a` 时，`URL` 将会被替换成 `/b` ，然后匹配路由为 `/b`
 
 别名: `/a` 的别名是 `/b` ，意味着，当用户访问 `/b` 时，`URL` 会保持为 `/b` ，但是路由匹配则为 `/a` ，就像用户访问 `/a` 一样
 
 > “别名”的功能让你可以自由地将 UI 结构映射到任意的 URL，而不是受限于配置的嵌套路由结构。
 
-
 ## 组件模式传参
+
 ```javascript
 const User = {
-  props: ['id'],
-  template: '<div>User {{ id }}</div>'
-}
+  props: ["id"],
+  template: "<div>User {{ id }}</div>"
+};
 const router = new VueRouter({
   routes: [
-    { path: '/user/:id', component: User, props: true },
+    { path: "/user/:id", component: User, props: true },
 
     // 对于包含命名视图的路由，你必须分别为每个命名视图添加 `props` 选项：
     {
-      path: '/user/:id',
+      path: "/user/:id",
       components: { default: User, sidebar: Sidebar },
       props: { default: true, sidebar: false }
     }
   ]
-})
+});
 ```
 
 ## 数据获取
@@ -1006,10 +986,12 @@ https://router.vuejs.org/zh/guide/advanced/data-fetching
 1. 全量引入
 
 - 插入到 vue 中：
+
 ```javascript
-import _ from './helpers.js'
-Object.defineProperty(Vue.prototype, '$_', { value: _ });
+import _ from "./helpers.js";
+Object.defineProperty(Vue.prototype, "$_", { value: _ });
 ```
+
 **暂时有问题，不能生效**
 
 2. 按需加载
@@ -1029,6 +1011,7 @@ https://juejin.im/post/5cd4d991e51d453a4a357e69#heading-12
 3. 按需制作自己的 `utiles` 库
 
 `helpers.js`:
+
 ```javascript
 import _ from "lodash";
 export default {
@@ -1039,9 +1022,7 @@ export default {
   pick: _.pick,
   isEmpty: _.isEmpty
 };
-
 ```
-
 
 `component.js`
 
@@ -1063,3 +1044,32 @@ methods: {
 # 优化
 
 https://juejin.im/post/5b7f7d886fb9a01a1e0203cb
+
+# 2020
+
+## Forms
+
+file
+
+```js
+<input type="file" @change="getFile">
+
+methods: {
+  getFile (e) {
+    var files = e.target.files
+  }
+}
+
+```
+
+method 2:
+
+```js
+<input type="file" ref="file">
+<button @click="getFile">获取文件</button>
+ methods: {
+    getFile() {
+      console.log(this.$refs.file.files)
+    },
+}
+```

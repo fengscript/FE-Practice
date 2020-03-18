@@ -3,12 +3,15 @@
 (function() {
   function getActiveTab() {
     return new Promise(resolve => {
+      console.log("promise init");
       chrome.tabs.query({ active: true }, tabs => {
-        resolve(tabs[0].id);
+        tabs && resolve(tabs[0].id);
       });
     });
   }
-
+  getActiveTab().then(id => {
+    console.log(id);
+  });
   // async function getIdAsync() {
   //   return await chrome.tabs.query({ active: true }, tabs => {
   //     return tabs[0].id;
@@ -38,7 +41,7 @@
     });
     // getIdAsync();
     // const id = getIdAsync();
-    console.log(id);
+
     // setTimeout(function() {
     //   chrome.windows.create(
     //     {

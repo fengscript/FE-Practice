@@ -149,3 +149,79 @@ console.log(matches_array);
 ```
 
 http://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/match
+
+# image 2 base64
+
+1. canvas
+
+```js
+/**
+ *
+ * @param img html的img标签
+ * @param ext 图片格式
+ * @returns {string}
+ */
+function getImageBase64(img, ext) {
+  var canvas = document.createElement("canvas"); //创建canvas DOM元素，并设置其宽高和图片一样
+  canvas.width = img.width;
+  canvas.height = img.height;
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0, img.width, img.height); //使用画布画图
+  var dataURL = canvas.toDataURL("image/" + ext); //返回的是一串Base64编码的URL并指定格式
+  canvas = null; //释放
+  return dataURL;
+  // use
+  var user_icon = document.getElementById("icon");
+  user_icon.src = img_path; //指定图片路径
+  user_icon.onload = function() {
+    base64 = getImageBase64(user_icon, fileExt); //base64编码
+  };
+}
+```
+
+or
+
+```javascript
+/**
+ *
+ * @param url 图片路径
+ * @param ext 图片格式
+ * @param callback 结果回调
+ */
+function getUrlBase64(url, ext, callback) {
+  var canvas = document.createElement("canvas"); //创建canvas DOM元素
+  var ctx = canvas.getContext("2d");
+  var img = new Image();
+  img.crossOrigin = "Anonymous";
+  img.src = url;
+  img.onload = function() {
+    canvas.height = 60; //指定画板的高度,自定义
+    canvas.width = 85; //指定画板的宽度，自定义
+    ctx.drawImage(img, 0, 0, 60, 85); //参数可自定义
+    var dataURL = canvas.toDataURL("image/" + ext);
+    callback.call(this, dataURL); //回掉函数获取Base64编码
+    canvas = null;
+  };
+}
+//use
+getUrlBase64(path, ext, function(base64) {
+  console.log(base64); //base64编码值
+});
+```
+
+2. fileReader
+
+```javascript
+function getBase64(file, callback) {
+  const reader = new FileReader();
+
+  reader.addEventListener("load", () => callback(reader.result));
+
+  reader.readAsDataURL(file);
+}
+// Usage Ex:
+
+getBase64(fileObjectFromInput, function(base64Data) {
+  console.log("base 64 of file is", base64Data); //here you can have your code which uses base64 for its operation,//file to base64 by oneshubh
+});
+```

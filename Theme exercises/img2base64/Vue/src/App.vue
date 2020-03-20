@@ -25,11 +25,9 @@ export default {
     },
     readBase64(file) {
       return new Promise(resolve => {
-        setTimeout(function() {
           const reader = new FileReader();
           reader.addEventListener("load", () => resolve(reader.result));
           reader.readAsDataURL(file);
-        }, 2000);
       });
     }
     // outPut(file) {

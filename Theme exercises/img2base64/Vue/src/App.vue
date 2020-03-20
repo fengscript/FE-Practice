@@ -1,28 +1,12 @@
 <template>
   <div id="app">
-    <section
-      class="img-trigger-box"
-      :class="{ 'drag-over': dragOver }"
-      id="img-trigger-box"
-      @click="handleClick"
-      @drop.prevent="handleDrop"
-      @dragover.prevent="handleDragOver"
-      @dragleave="handleDragLeave"
-      @paste="handlePaste"
-    >
-      <h3>Covert image to base64</h3>
-      <ul class="text-list">
-        <li>1. Click to select image</li>
-        <li>2. Drago into this box</li>
-        <li>3. Paste</li>
-      </ul>
-    </section>
-    <input type="file" name="file" id="file-input" @change="handleInput" />
+    <TriggerSection @output="output" />
     <Textarea :data="convertedText" />
   </div>
 </template>
 <script>
 import Textarea from "./components/Textarea";
+import TriggerSection from "./components/TriggerSection";
 export default {
   name: "App",
   data() {
@@ -34,34 +18,18 @@ export default {
   },
   computed: {},
   props: {},
-  components: { Textarea },
+  components: { Textarea, TriggerSection },
   methods: {
-    handlePaste(e) {
-      this.outPut(e.clipboardData.files[0]);
-    },
-    handleClick() {
-      document.getElementById("file-input").click();
-    },
-    handleDrop(e) {
-      this.outPut(e.dataTransfer.files[0]);
-    },
-    handleDragOver() {
-      this.dragOver = true;
-    },
-    handleDragLeave() {
-      this.dragOver = false;
-    },
-    handleInput(e) {
-      this.outPut(e.target.files[0]);
-    },
-    async outPut(file) {
+    async output(file) {
       this.convertedText = await this.readBase64(file);
     },
     readBase64(file) {
       return new Promise(resolve => {
-        const reader = new FileReader();
-        reader.addEventListener("load", () => resolve(reader.result));
-        reader.readAsDataURL(file);
+        setTimeout(function() {
+          const reader = new FileReader();
+          reader.addEventListener("load", () => resolve(reader.result));
+          reader.readAsDataURL(file);
+        }, 2000);
       });
     }
     // outPut(file) {
@@ -90,30 +58,5 @@ export default {
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
-}
-
-.img-trigger-box {
-  color: #42b983;
-  cursor: pointer;
-  width: 32.5rem;
-  height: 15rem;
-  margin: 4rem 0 2rem 0;
-  border: 1px solid #42b983;
-}
-input {
-  display: none;
-}
-.drag-over {
-  outline: 2px dashed #ccc;
-}
-textarea {
-  padding: 12px;
-  text-align: justify;
-}
-.text-list {
-  text-align: left;
-  list-style: none;
-  margin-left: 8rem;
-  resize: vertical;
 }
 </style>

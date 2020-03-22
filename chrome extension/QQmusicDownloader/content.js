@@ -2,8 +2,9 @@
 // })();
 function addCode(code) {
   var script = document.createElement("script");
+  script.className = "99999999999999999999999999"
   script.text = code;
-  document.head.appendChild(script);
+  document.body.appendChild(script);
 }
 // addCode(`console.log('11111111111111111')`)
 
@@ -14,8 +15,11 @@ function loadJs(url) {
 }
 
 const scriptText = `
+alert(123)
+console.log("111111111111111111", document.querySelector(".js_btn_down"))
 document.querySelector(".js_btn_down").addEventListener("click", function (e) {
   console.log(" hi hi hi");
+  alert(1)
 );`;
 
 addCode(scriptText);

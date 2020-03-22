@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <section class="container">
+      <section class="img-trigger-box" id="img-trigger-box">
+        <h3>Covert image to base64</h3>
+        <ul class="text-list">
+          <li>1. Click to select image</li>
+          <li>2. Drago into this box</li>
+          <li>3. Paste</li>
+        </ul>
+        <input type="file" name="file" id="file-input" />
+      </section>
+      <textarea
+        name="output"
+        id="output"
+        cols="80"
+        rows="15"
+        placeholder="Wainting for convert your image..."
+      ></textarea>
+    </section>
+    <script src="./tools.js"></script>
+    <script>
+      const input = document.getElementById("file-input");
+      const troggerBox = document.getElementById("img-trigger-box");
+      const outPutBox = document.getElementById("output");
+      input.addEventListener("change", handleChange);
+      troggerBox.addEventListener("click", handleClick);
+      troggerBox.addEventListener("drop", handleDrop);
+      troggerBox.addEventListener("dragover", handleDragOver);
+      troggerBox.addEventListener("dragleave", handleDragLeave);
+      troggerBox.addEventListener("paste", handlePaste);
+
+      function handleClick(e) {
+        input.click();
+      }
+      function handleChange(e) {
+        output(e.target.files[0]);
+      }
+      function handleDrop(e) {
+        e.preventDefault();
+        output(e.dataTransfer.files[0]);
+        troggerBox.classList.remove("drag-over");
+      }
+
+      function handleDragOver(e) {
+        e.preventDefault();
+        troggerBox.classList.add("drag-over");
+      }
+
+      function handleDragLeave(e) {
+        troggerBox.classList.remove("drag-over");
+      }
+
+      function handlePaste(e) {
+        output(e.clipboardData.files[0]);
+      }
+
+      async function output(file) {
+        outPutBox.innerText = await readBase64(file);
+      }
+      function readBase64(file) {
+        return new Promise(resolve => {
+          const reader = new FileReader();
+          reader.addEventListener("load", () => resolve(reader.result));
+          reader.readAsDataURL(file);
+        });
+      }
+    </script>
+  </body>
+</html>

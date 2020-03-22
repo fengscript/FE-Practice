@@ -69,6 +69,7 @@ input {
 }
 .drag-over {
   outline: 2px dashed #ccc;
+  outline-offset: 4px;
 }
 textarea {
   padding: 12px;

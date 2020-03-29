@@ -20,16 +20,31 @@ all_frames : 将 js 和 css 注入到 `matches` 匹配到的所有 frame 中，�
       "js": ["content.js"]
     }
   ],
-  "permissions": ["activeTab", "storage", "tabs"]
+  "permissions": ["activeTab", "storage", "tabs"],
+  "web_accessible_resources" : [
+    "images/*",
+    "style.css"
+  ]
 }
 
 ```
+
+- permissions
+- web_accessible_resources : 插入图片需要这个
 
 # content & background
 
 content 中的代码，不能直接读取到原页面函数等
 
 background 中 数组里面脚本的顺序会影响脚本执行
+
+## load external manifest
+add to the `web_accessible_resources`, then
+```js
+//Code for displaying <extensionDir>/images/myimage.png:
+var imgURL = chrome.runtime.getURL("images/myimage.png");
+document.getElementById("someImage").src = imgURL;
+```
 
 ## run_at
 
@@ -104,4 +119,9 @@ chrome.windows.create(
 
 # tips
 
-有时候，扩展有 error 会造成函数运行问题
+有时候，扩展有 error 会造成函数运行问题，所以即使清理
+
+
+# Notes
+https://stackoverflow.com/questions/9515704/insert-code-into-the-page-context-using-a-content-script/9517879#9517879
+

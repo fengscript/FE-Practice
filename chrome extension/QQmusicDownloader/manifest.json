@@ -9,5 +9,8 @@
       "css": ["style.css"],
       "js": ["content.js"]
     }
+  ],
+  "web_accessible_resources":[
+    "insert.js"
   ]
 }

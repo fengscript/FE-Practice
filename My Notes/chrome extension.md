@@ -39,7 +39,9 @@ content 中的代码，不能直接读取到原页面函数等
 background 中 数组里面脚本的顺序会影响脚本执行
 
 ## load external manifest
+
 add to the `web_accessible_resources`, then
+
 ```js
 //Code for displaying <extensionDir>/images/myimage.png:
 var imgURL = chrome.runtime.getURL("images/myimage.png");
@@ -100,6 +102,15 @@ document.getElementById("someImage").src = imgURL;
    给个 `active: true`即可
    `chrome.tabs.query({ active: true }, e => {})`
 
+永远当前 windows
+
+```
+  {
+      active: true,
+      currentWindow: true
+    },
+```
+
 3. 创建新窗口
    `chrome.windows.create`
    可以给一个 tabId，用前面已有的 tab 的 id 的话，会把原来 tab 挪过来
@@ -121,7 +132,6 @@ chrome.windows.create(
 
 有时候，扩展有 error 会造成函数运行问题，所以即使清理
 
-
 # Notes
-https://stackoverflow.com/questions/9515704/insert-code-into-the-page-context-using-a-content-script/9517879#9517879
 
+https://stackoverflow.com/questions/9515704/insert-code-into-the-page-context-using-a-content-script/9517879#9517879

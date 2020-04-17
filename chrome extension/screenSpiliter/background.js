@@ -1,58 +1,58 @@
-/* eslint-disable no-undef */
-// to avoid chrome var be alert
+/* eslint-disable */
 (function() {
-  function getActiveTab() {
+  class Shortcut {
+    SplitScreenLeft() {
+      return {
+        width: Math.round(fullWidth / 2),
+        left: 0
+      };
+    }
+    SplitScreenRight() {
+      return {
+        width: Math.round(fullWidth / 2),
+        left: Math.round(fullWidth / 2)
+      };
+    }
+    SplitScreenFull() {
+      return {
+        width: fullWidth,
+        left: 0
+      };
+    }
+
+    execute() {}
+  }
+})()(function() {
+  const getActiveTab = () => {
     return new Promise(resolve => {
-      console.log("promise init");
-      chrome.tabs.query({ active: true }, tabs => {
+      console.log("getActiveTab promise init");
+      chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
         tabs && resolve(tabs[0].id);
       });
     });
-  }
-  getActiveTab().then(id => {
-    console.log(id);
-  });
-  // async function getIdAsync() {
-  //   return await chrome.tabs.query({ active: true }, tabs => {
-  //     return tabs[0].id;
-  //   });
-  // }
-  // async function getIdAsync() {
-  //   const id = await getActiveTab.then(id => id);
-  // }
-  // async function getId() {
-  //   return await getActiveTab().then();
-  // }
-  chrome.commands.onCommand.addListener(command => {
-    console.log("Command:", command);
-    chrome.tabs.query({ active: true }, tabs => {
-      // 3353
+  };
 
-      chrome.windows.create(
-        {
-          tabId: tabs[0].id
-          // left:,
-          // top:,
-        },
-        obj => {
-          alert(JSON.stringify(obj));
-        }
-      );
+  const fullWidth = window.screen.availWidth;
+  const commandMap = {
+    "split-screen-left": {
+      width: Math.round(fullWidth / 2),
+      left: 0
+    },
+    "split-screen-right": {
+      width: Math.round(fullWidth / 2),
+      left: Math.round(fullWidth / 2)
+    },
+    "split-screen-full": {
+      width: fullWidth,
+      left: 0
+    }
+  };
+  chrome.commands.onCommand.addListener(async command => {
+    const tabId = await getActiveTab();
+
+    chrome.windows.create({
+      tabId,
+      ...commandMap[command]
     });
-    // getIdAsync();
-    // const id = getIdAsync();
-
-    // setTimeout(function() {
-    //   chrome.windows.create(
-    //     {
-    //       tabId: 3353
-    //       // left:,
-    //       // top:,
-    //     },
-    //     obj => {
-    //       alert(JSON.stringify(obj));
-    //     }
-    //   );
-    // }, 3000);
   });
 })();

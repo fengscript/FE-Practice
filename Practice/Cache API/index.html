@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const cacheApi = (name, url, expired) => {
+        let cache = {};
+        let start = new Date().getTime();
+        return async () => {
+          let end = new Date().getTime();
+ 
+           
+          cache[name] = cache[name] || (await (await fetch(url)).json());
+
+          return cache[name];
+        };
+      };
+      const user = await cacheApi("fyg", "https://randomuser.me/api/", 5);
+      setInterval(async () => {
+        const data = await user();
+        console.log(data.results[0].name);
+      }, 1000);
+
+      /**
+       * version 1
+       */
+      // const getUser = async (name) => {
+      //     if (cache[name]) {
+      //       return Promise.resolve(cache[name]);
+      //     }
+
+      // return new Promise((resolve) => {
+      //   fetch("https://randomuser.me/api/")
+      //     .then((res) => {
+      //       return res.json();
+      //     })
+      //     .then((data) => {
+      //       cache[name] = data;
+      //       resolve(data);
+      //     });
+      // });
+      //   };
+
+      /**
+       * version 2
+       */
+      // const getUser = async (name) => {
+      //     if (cache[name]) {
+      //       return Promise.resolve(cache[name]);
+      //     }
+      //     const res = await fetch("https://randomuser.me/api/");
+      //     const data = await  res.json();
+
+      //     cache[name] = data;
+
+      //     return data;
+      //   };
+
+      //   setInterval(async () => {
+      //     getUser("fyg").then((data) => {
+      //       console.log(data.results[0].name);
+      //     });
+      //   }, 1000);
+
+      /**
+       * version 3
+       */
+      // let cache = {};
+      //   const getUser = async (name) => {
+      //     cache[name] =
+      //       cache[name] ||
+      //       (await (await fetch("https://randomuser.me/api/")).json());
+
+      //     return cache[name];
+      //   };
+
+      /**
+       * version 4
+       */
+
+      //   const getUser = async (name) => {
+      //     getUser.cache[name] =
+      //       getUser.cache[name] ||
+      //       (await (await fetch("https://randomuser.me/api/")).json());
+
+      //     return getUser.cache[name];
+      //   };
+      //   getUser.cache = {};
+
+      /**
+       * version 5
+       */
+      //   const getUser = async (name) => {
+      //     getUser.cache = getUser.cache || {};
+
+      //     getUser.cache[name] =
+      //       getUser.cache[name] ||
+      //       (await (await fetch("https://randomuser.me/api/")).json());
+
+      //     return getUser.cache[name];
+      //   };
+
+      //   setInterval(async () => {
+      //     const user = await getUser("fyg");
+      //     console.log(data.results[0].name);
+      //   }, 1000);
+
+      /**
+       * version 6
+       */
+
+      //    const cacheApi = (name, url) => {
+      //     let cache = {};
+      //     return async () => {
+      //       cache[name] = cache[name] || (await (await fetch(url)).json());
+
+      //       return cache[name];
+      //     };
+      //   };
+      //   const user = await cacheApi("fyg", "https://randomuser.me/api/");
+      //   setInterval(async () => {
+      //     const data = await user();
+      //     console.log(data.results[0].name);
+      //   }, 1000);
+
+      /**
+       * clouser
+       */
+      //   const count = () => {
+      //     let a = 0;
+      //     return () => ++a;
+      //   };
+      //   const increase = count();
+      //   console.log(increase());
+      //   console.log(increase());
+      //   console.log(increase());
+    </script>
+  </body>
+</html>

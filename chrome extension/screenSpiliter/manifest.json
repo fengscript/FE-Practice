@@ -4,7 +4,7 @@
   "version": "1.0",
   "manifest_version": 2,
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["tool.js", "background.js"],
     "persistent": false
   },
   "permissions": ["tabs", "system.display"],
@@ -30,5 +30,11 @@
       },
       "description": "Toggle tab to full screen"
     }
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://randomuser.me/api"],
+      "js": ["content.js"]
+    }
+  ]
 }

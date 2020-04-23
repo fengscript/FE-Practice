@@ -1,0 +1,13 @@
+{
+  "name": "Json Viwer",
+  "description": "Base Level Extension",
+  "version": "1.0",
+  "manifest_version": 2,
+  "permissions": ["tabs", "system.display"],
+  "content_scripts": [
+    {
+      "matches": ["https://randomuser.me/api"],
+      "js": ["content.js"]
+    }
+  ]
+}

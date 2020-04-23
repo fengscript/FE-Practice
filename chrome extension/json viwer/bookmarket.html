@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const str = JSON.stringify(
+        JSON.parse(document.querySelector("pre").innerText),
+        (key, value) => {
+          if (typeof value === "string") {
+            // /http|https/
+            // /https{0, 1}/
+            if (/https?/.test(value)) {
+              return `<a href="${value}" target="_blank">${value}</a>`;
+            } else {
+              return `<string style=color:green>${value}</string>`;
+            }
+          }
+
+          if (typeof value === "number") {
+            return `<number style=color:blue>${value}</number>`;
+          }
+
+          return value;
+          // 去掉number左右被加上去的 引号
+        },
+        2
+      ).replace(/"(<number.+?<\/number>)"/g, (m, m1) => m1);
+
+      document.body.innerHTML = `<pre>${str}</pre>`;
+    </script>
+  </body>
+</html>

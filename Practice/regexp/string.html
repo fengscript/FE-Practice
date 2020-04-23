@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const str = "get1_install2_app3_list4_by5_android6";
+      const expected = "get1InstallApp3ListBy5Android";
+
+      const convert = (str) => {
+        /**
+         * implementation 1
+         */
+        let result = "";
+        for (let index = 0; index < str.length; index++) {
+          if (str[i] === "_") {
+            continue;
+          }
+
+          let value = str[index];
+
+          if (str[index - 1] === "_") {
+            value = str[index].toUpperCase();
+          }
+
+          if (typeof +str[index] === "number" && !isNaN(+str[index])) {
+            value = str[index] % 2 === 0 ? "" : str[index];
+          }
+          result += value;
+        }
+        return result;
+      };
+
+      /**
+       * implementation 2
+       */
+      const convert = (str) => {
+        return str.split("_").reduce((acc, cur, index) => {
+          /**
+           * cur.slice(0, 1) 第一个
+           * cur.slice(1, -1) 第一个到最后一个之间的
+           * cur.slice(-1) 显而易见最后一个
+           */
+
+          return (
+            acc.slice(0, -1) +
+            // 确保只要是偶数就去掉
+            (acc.slice(-1) % 2 === 0 ? "" : acc.slice(-1)) +
+            cur.slice(0, 1).toUpperCase() +
+            cur.slice(1, -1) +
+            (cur.slice(-1) % 2 === 0 ? "" : cur.slice(-1))
+          );
+        });
+        return result;
+      };
+
+      /**
+       * implementation 3
+       */
+
+      const covert = (str) => {
+        const result = str.replace(/(\w)(\w+?)(\d)_?/g, (m, m1, m2, m3) =>
+          m1.toUpperCase() + m2 + (m3 % 2) === 0 ? "" : m3
+        );
+        return result.charAt(0).toLowerCase() + result.slice(1);
+        // or
+        return str
+          .replace(/(\w)(\w+?)(\d)_?/g, (m, m1, m2, m3) =>
+            m1.toUpperCase() + m2 + (m3 % 2) === 0 ? "" : m3
+          )
+          .replace(/(\w)(.+)/, (m, m1, m2) => m1.toLowerCase() + m2);
+      };
+      console.assert(
+        convert(str) === expected,
+        `EXPECTED VALUE IS ${expected}, but got ${convert(str)}`
+      );
+    </script>
+  </body>
+</html>

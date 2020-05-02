@@ -1,22 +1,15 @@
 /* eslint-disable */
 (function () {
-  const getActiveTab = () =>
-    new Promise((resolve) => {
-      console.log("getActiveTab promise init");
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        tabs && resolve(tabs[0].id);
-      });
-    });
   const shortcut = new Shortcut();
-  // command is
-  chrome.commands.onCommand.addListener(async (command) => {
-    const tabId = await getActiveTab();
+  chrome.commands.onCommand.addEventListener((command) => {
+    // 再次优化，这里只关心 ecxute ，不关心你里面具体做了什么
+    shortcut.execute(command);
 
-    chrome.windows.create({
-      tabId,
-      // ...shortcut.execute[command].bind(shortcut),
-      ...shortcut.execute[command](),
-    });
+    // chrome.windows.create({
+    //   tabId,
+    //   // ...shortcut.execute[command].bind(shortcut),
+    //   ...shortcut.execute[command](),
+    // });
   });
 })();
 

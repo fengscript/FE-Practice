@@ -49,6 +49,24 @@ port:
 
 
 
+# HMR
+
+Hot Module Replace
+
+
+
+`Webpack-dev-server` 内置了 HMR 插件，启用
+
+
+
+```javascript
+plugins:[
+  new webpack.HotModuleReplacePlugin()
+]
+```
+
+命令: `webpack-dev-server --hotOnly`
+
 
 
 

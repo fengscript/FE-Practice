@@ -323,6 +323,16 @@ demo.onkeyup = function() {
 };
 ```
 
+
+
+### 利用
+
+
+
+
+
+
+
 ## Router
 
 hash 实现路由的时候，最本质的原理就是 hash 值的变化，会引发一个 hashchange 事件，可以根据这个 hash 值的变化，加载不同的 DOM

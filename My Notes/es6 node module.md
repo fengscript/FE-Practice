@@ -32,7 +32,7 @@ Node为每个模块提供一个 `exports` 变量，指向 `module.exports`
 # ES6 Module
 ES6使用 `export` 和 `import` 来导出、导入模块。
 
-`expor` t命令规定的是对外的接口，必须与模块内部的变量建立一一对应关系。
+`export `命令规定的是对外的接口，必须与模块内部的变量建立一一对应关系。
 
 ```javascript
 // 写法一

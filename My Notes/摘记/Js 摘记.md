@@ -225,3 +225,13 @@ getBase64(fileObjectFromInput, function(base64Data) {
   console.log("base 64 of file is", base64Data); //here you can have your code which uses base64 for its operation,//file to base64 by oneshubh
 });
 ```
+
+ 
+
+#Sort
+
+- 如果compareFunction(a,b)小于0，则a排列到b之前；
+- 如果 compareFunction(a, b)等于0，a和b的相对位置不变（并不保证）;
+- 如果 compareFunction(a, b)大于0，b排列到a之前；
+
+map 遍历性能好于 forEach

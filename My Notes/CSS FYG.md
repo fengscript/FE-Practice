@@ -555,7 +555,7 @@ span {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
- ```
+```
 
  ## background 简写
 可以在一次声明中定义一个或多个属性：background-clip、background-color、background-image、background-origin、background-position、background-repeat、background-size，和 background-attachment。
@@ -567,7 +567,34 @@ span {
 
  `background-attachment` : scroll | fixed | local | inherit
  如果指定了 `background-image` ，那么 `background-attachment` 决定背景是在视口中固定的还是随包含它的区块滚动的。
- 
+
 
  ## object-fit
  设置图片的缩放
+
+
+
+
+
+# Experience
+
+## IE
+
+`unset` 不支持，用 `inherit`：
+
+```
+left： 0
+or
+left: inherit
+```
+
+
+
+
+
+# Hacks
+
+
+
+
+

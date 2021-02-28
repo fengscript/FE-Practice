@@ -34,7 +34,7 @@ all_frames : 将 js 和 css 注入到 `matches` 匹配到的所有 frame 中，�
 
 # content & background
 
-content 中的代码，不能直接读取到原页面函数等
+==content 中的代码，不能直接读取到原页面函数等==
 
 background 中 数组里面脚本的顺序会影响脚本执行
 

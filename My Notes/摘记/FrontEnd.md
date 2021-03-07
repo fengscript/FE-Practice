@@ -1,3 +1,11 @@
+# 跨域
+
+浏览器安全策略限制的是脚本，而并不限制src，form提交之类的请求。
+
+另外ajax是提交了的（调试工具中很容易看到请求已经发出），只是脚本无法获得结果
+
+
+
 # Web 安全
 
 https://segmentfault.com/a/1190000019158228
@@ -86,7 +94,6 @@ app.get("/welcome", function(req, res) {
 防范：
 
 1. 验证码 / Token
-2. 
 3. 判断 `referer` 属性，但是不能全部依赖于此
 
 ## 点击劫持
@@ -260,6 +267,14 @@ error: TypeError: Failed to execute 'json' on 'Response': body stream is locked
    - 对用户输入的验证，不想停止输入再进行验证，而是每n秒进行验证：throttle
 
 7. 事件代理
+
+
+
+### debounce & throttle
+
+**debounce**: The debounce technical allow us to “group” multiple sequential calls in a single one.
+
+**throttle**: throttle guarantees the execution of the function regulary, at least X milliseconds.
 
 
 # border-radius 有锯齿

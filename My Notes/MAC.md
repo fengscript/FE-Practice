@@ -24,3 +24,11 @@ source ~/.bash_profile
 brew update
 ```
 https://musoucrow.github.io/2017/03/29/brew_changing/
+
+
+
+没钱就去这里先：
+
+macbl.com
+
+macwk.com

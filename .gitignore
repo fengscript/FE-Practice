@@ -1,3 +1,5 @@
 node_modules
 babylon.custom.js
-.vscode
+*/.DS_Store
+
+

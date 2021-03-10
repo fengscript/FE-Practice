@@ -1,76 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
-
-
-
-
+  <body>
     <script>
-        // 简单的单例
+      // 简单的单例
 
-        var Singleton = function (name) {
-            this.name = name;
-            this.instance = null;
+      var Singleton = function (name) {
+        this.name = name;
+        this.instance = null;
 
-            if (typeof this.getName != 'function') {
-                Singleton.prototype.getName = function () {
-                    return this.name
-                };
-            }
-            
+        if (typeof this.getName != 'function') {
+          Singleton.prototype.getName = function () {
+            return this.name;
+          };
         }
-        Singleton.getInstance = function (name) {
-            console.log(this.instance)
-            if (!this.instance) {
-                this.instance = new Singleton(name)
-            }
-            return this.instance
-        };
+      };
+      Singleton.getInstance = function (name) {
+        console.log(this.instance);
+        if (!this.instance) {
+          this.instance = new Singleton(name);
+        }
+        return this.instance;
+      };
 
+      var a = Singleton.getInstance('fyg');
+      var b = Singleton.getInstance('FYG');
+      console.log(a === b);
 
-        var a = Singleton.getInstance('fyg');
-        var b = Singleton.getInstance('FYG');
-        console.log(a === b);
+      //         var Singleton = function (name) {
+      //             this.name = name;
+      //         }
+      //         Singleton.prototype.getName = function () {
+      //             return this.name
+      //         };
+      //         Singleton.getInstance = (function (name) {
+      //             var instance = null;
+      //             return function (name) {
+      //                 if (!this.instance) {
+      //                     this.instance = new Singleton(name)
+      //                 }
 
-        //         var Singleton = function (name) {
-        //             this.name = name;
-        //         }
-        //         Singleton.prototype.getName = function () {
-        //             return this.name
-        //         };
-        //         Singleton.getInstance = (function (name) {
-        //             var instance = null;
-        //             return function (name) {
-        //                 if (!this.instance) {
-        //                     this.instance = new Singleton(name)
-        //                 }
+      //             }
+      //             return this.instance
+      //         })();
 
-        //             }
-        //             return this.instance
-        //         })();
+      //         var test = new Singleton('fyg');
+      //         console.log(test.getName());
+      //         var test2 = new Singleton('FYG');
+      //         console.log(test2.getName());
 
-        //         var test = new Singleton('fyg');
-        //         console.log(test.getName());
-        //         var test2 = new Singleton('FYG');
-        //         console.log(test2.getName());
+      // // test test2是同一个对象 下面 a === b就可以证实
 
-        // // test test2是同一个对象 下面 a === b就可以证实
-
-        //         var a = Singleton.getInstance('fyg');
-        //         var b = Singleton.getInstance('FYG');
-        //         console.log(a);
-        //         console.log(a === b);
-        //         var c = Singleton.getName('FYG');
-        //         console.log(c);
+      //         var a = Singleton.getInstance('fyg');
+      //         var b = Singleton.getInstance('FYG');
+      //         console.log(a);
+      //         console.log(a === b);
+      //         var c = Singleton.getName('FYG');
+      //         console.log(c);
     </script>
-</body>
-
+  </body>
 </html>

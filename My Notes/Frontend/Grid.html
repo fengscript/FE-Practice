@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div>1
+
+        <div class="inner">1-1</div>
+      </div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+    </div>
+
+    <style>
+      /* .inner{
+        width: 80px;
+        height: 20px;
+        border: 2px solid red;
+        color: white;
+      }
+      .inner{
+        color: black;
+      } */
+      .wrapper {
+        width: 800px;
+        height: 600px;
+        border: 2px solid #f76707;
+        border-radius: 5px;
+        background-color: #fff4e6;
+
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 2fr;
+        grid-template-rows: 2fr 1fr 1fr 2fr;
+        /* grid-template-columns: repeat(auto-fill, 200px); */
+      }
+      .wrapper > div {
+        text-align: center;
+        margin: 2px;
+        border: 2px solid #ffa94d;
+        border-radius: 5px;
+        background-color: #ffd8a8;
+        padding: 1em;
+        color: #d9480f;
+      }
+    </style>
+  </body>
+</html>

@@ -352,3 +352,21 @@ https://zhuanlan.zhihu.com/p/67720854
 浏览器安全策略限制的是脚本，而并不限制src，form提交之类的请求。
 
 另外ajax是提交了的（调试工具中很容易看到请求已经发出），只是脚本无法获得结果
+
+# Functions
+
+## setInterval 只执行一次
+
+```
+setInterval(function(){console.log(1)}, 1000)
+```
+
+setInterval： 按照指定的周期（以毫秒计）来调用函数或计算表达式
+
+`function(){console.log(1)` 没有返回值，第二次就是一个 undefined 了所以需要
+
+```
+const fn = () => console.log(1)
+setInterval(fn, 1000)
+```
+

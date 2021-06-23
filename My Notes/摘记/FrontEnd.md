@@ -370,3 +370,20 @@ const fn = () => console.log(1)
 setInterval(fn, 1000)
 ```
 
+
+
+
+
+# 上传文件
+
+## Ajax formdata 为空
+
+https://github.com/fncheng/js-learn/issues/3
+
+## 手写 formData
+
+https://developer.mozilla.org/zh-CN/docs/Web/API/FormData/Using_FormData_Objects
+
+formData
+
+https://developer.mozilla.org/zh-CN/docs/Web/API/FormData/append

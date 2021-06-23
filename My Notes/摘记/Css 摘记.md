@@ -50,3 +50,26 @@ div {
   clip-path: polygon(100vw 0, 0% 0vh, 100vw 100vh);
 }
 ```
+
+
+
+# 多行文本省略
+
+```tsx
+// 单行
+overflow:hidden; //超出的文本隐藏
+
+text-overflow:ellipsis; //溢出用省略号显示
+
+white-space:nowrap; //溢出不换行
+// 多行
+overflow:hidden; 
+
+text-overflow:ellipsis;
+
+display:-webkit-box; 
+
+-webkit-box-orient:vertical;
+
+-webkit-line-clamp:2;
+```
